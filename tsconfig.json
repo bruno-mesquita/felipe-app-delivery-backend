@@ -1,0 +1,29 @@
+{
+  "compilerOptions": {
+    "lib": ["ES6"],
+    "target": "ESNext",
+    "module": "commonjs",
+    "outDir": "dist",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@config/*": ["./src/config/*"],
+      "@domain/*": ["./src/domain/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@application/*": ["./src/application/*"],
+      "@dtos/*": ["./src/dtos/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types",
+      "./src/@types"
+    ],
+    "esModuleInterop": true,
+    "removeComments": true,
+    "resolveJsonModule": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "sourceMap": true
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -1,0 +1,27 @@
+{
+  "presets": [
+    ["@babel/preset-env", { "targets": { "node": "current" } }],
+    ["@babel/preset-typescript", { "onlyRemoveTypeImports": true }]
+  ],
+  "plugins": [
+    ["@babel/plugin-proposal-decorators", { "legacy": true }],
+    ["@babel/plugin-proposal-class-properties", { "loose" : true }],
+    [
+      "module-resolver",
+      {
+        "root": ["."],
+        "alias": {
+          "@config": ["./src/config"],
+          "@domain": ["./src/domain"],
+          "@shared": ["./src/shared"],
+          "@application": ["./src/application"],
+          "@dtos": ["./src/dtos"]
+        }
+      }
+    ]
+  ],
+  "ignore": [
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}
