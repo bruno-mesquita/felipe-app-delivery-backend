@@ -1,24 +1,25 @@
 {
    "type": "postgres",
    "host": "localhost",
-   "port": 3306,
-   "username": "test",
-   "password": "test",
-   "database": "test",
+   "port": 5432,
+   "username": "postgres",
+   "password": "root",
+   "database": "salesapi",
    "synchronize": true,
    "logging": false,
+
    "entities": [
-      "src/domain/**/*.ts"
+      "src/domain/**/typeorm/entities/*.ts"
    ],
    "migrations": [
-      "src/migration/**/*.ts"
+    "./src/shared/typeorm/migrations/*.ts"
    ],
    "subscribers": [
       "src/subscriber/**/*.ts"
    ],
    "cli": {
+      "migrationsDir": "./src/shared/typeorm/migrations",
       "entitiesDir": "src/domain",
-      "migrationsDir": "src/migration",
       "subscribersDir": "src/subscriber"
    }
 }
