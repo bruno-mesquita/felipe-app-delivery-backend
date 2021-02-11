@@ -1,4 +1,5 @@
 import { Entity, Column } from 'typeorm';
+import { hashSync, compareSync } from 'bcryptjs';
 
 import EntityBase from '@shared/entity';
 
@@ -18,6 +19,14 @@ class User extends EntityBase {
 
   @Column({ type: 'varchar' })
   cpf!: string;
+
+  private hashPassword(): void {
+    this.password = hashSync(this.password);
+  }
+
+  public comparePassword(comparePassword: string): boolean {
+    return compareSync(comparePassword, this.password);
+  }
 }
 
 export default User;
