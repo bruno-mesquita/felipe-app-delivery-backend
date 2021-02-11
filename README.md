@@ -7,5 +7,3 @@
 # Rodar migração para o banco de dados
   # yarn typeorm migration:run
 
-
-
