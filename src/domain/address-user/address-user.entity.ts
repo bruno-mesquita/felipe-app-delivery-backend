@@ -1,9 +1,18 @@
-import { Entity, Column } from 'typeorm';
+import { Entity, OneToOne, JoinColumn } from 'typeorm';
 
-class AddressUser {
-  user_id: string;
+import EntityBase from '@shared/entity';
+import { User } from '@domain/user';
+import { Address } from '@domain/address';
 
-  address: string;
+@Entity({ name: 'address-user' })
+class AddressUser extends EntityBase {
+  @OneToOne(() => User)
+  @JoinColumn()
+  user_id: User;
+
+  @OneToOne(() => Address)
+  @JoinColumn()
+  address_id: Address;
 }
 
 export default AddressUser;

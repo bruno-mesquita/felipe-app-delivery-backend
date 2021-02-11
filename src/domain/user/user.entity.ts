@@ -1,25 +1,42 @@
-import { Entity, Column } from 'typeorm';
+import {
+  Entity,
+  Column,
+  OneToOne,
+  JoinColumn,
+  BeforeInsert,
+  OneToMany,
+} from 'typeorm';
 import { hashSync, compareSync } from 'bcryptjs';
 
 import EntityBase from '@shared/entity';
+import { Image } from '@domain/image';
+import { Order } from '@domain/order';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'users' })
 class User extends EntityBase {
-  @Column({ type: 'varchar' })
-  name!: string;
+  @Column()
+  name: string;
 
-  @Column({ type: 'varchar' })
-  email!: string;
+  @Column()
+  email: string;
 
-  @Column({ type: 'varchar' })
-  password!: string;
+  @Column()
+  password: string;
 
-  @Column({ type: 'varchar' })
-  cellphone!: string;
+  @Column()
+  cellphone: string;
 
-  @Column({ type: 'varchar' })
-  cpf!: string;
+  @Column()
+  cpf: string;
 
+  @OneToOne(() => Image)
+  @JoinColumn()
+  image_id: Image;
+
+  @OneToMany(() => Order, (order) => order.user_id)
+  orders: Order[];
+
+  @BeforeInsert()
   private hashPassword(): void {
     this.password = hashSync(this.password);
   }

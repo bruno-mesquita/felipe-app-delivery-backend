@@ -1,19 +1,41 @@
-class Order {
-  order_date: string;
+import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from 'typeorm';
 
-  form_of_payment: string;
+import EntityBase from '@shared/entity';
+import { Evaluation } from '@domain/evaluation';
+import { User } from '@domain/user';
+import { Store } from '@domain/store';
+import {
+  CustomerStatusOrderType,
+  CustomerStatusType,
+  FormOfPaymentType,
+} from './order.types';
 
+@Entity()
+class Order extends EntityBase {
+  @Column()
+  order_date: Date;
+
+  @Column()
+  form_of_payment: FormOfPaymentType;
+
+  @Column()
   discount: number;
 
-  customer_status_order: string;
+  @Column()
+  customer_status_order: CustomerStatusOrderType;
 
-  customer_status: string;
+  @Column()
+  customer_status: CustomerStatusType;
 
+  @ManyToOne(() => User, (user) => user.orders)
   user_id: string;
 
-  evaluation_id: string;
+  @OneToOne(() => Evaluation)
+  @JoinColumn()
+  evaluation_id: Evaluation;
 
-  store_id: string;
+  @ManyToOne(() => Store, (store) => store.orders)
+  store_id: Store;
 }
 
 export default Order;
