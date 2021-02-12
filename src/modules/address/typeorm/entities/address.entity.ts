@@ -1,18 +1,10 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  OneToOne,
-  JoinColumn,
-} from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 
-import StateAddress from './stateAddress.entity';
+import City from '@modules/city/typeorm/entity';
+import EntityBase from '@shared/utils/entity';
 
 @Entity('address')
-class Address {
-  @PrimaryGeneratedColumn('uuid')
-  id: string;
-
+class Address extends EntityBase {
   @Column()
   street: string;
 
@@ -22,16 +14,12 @@ class Address {
   @Column()
   neighborhood: string;
 
-  @Column()
-  city: string;
+  @OneToOne(() => City)
+  @JoinColumn({ name: 'city_id' })
+  city: City;
 
   @Column()
-  cep: number;
-
-  // Um endereço tem um estado e um estado tem um endereço
-  @OneToOne(() => StateAddress)
-  @JoinColumn({ name: 'state_id' })
-  state: StateAddress;
+  cep: string;
 }
 
 export default Address;
