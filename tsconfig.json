@@ -1,23 +1,21 @@
 {
   "compilerOptions": {
     "lib": ["ES6"],
-    "target": "ESNext", // es5
+    "target": "ESNext",
     "module": "commonjs",
     "allowJs": true,
     "sourceMap": true,
-    "outDir": "dist", // build
+    "outDir": "dist",
     "rootDir": "src",
     "removeComments": true,
-
-    "strict": true,                           /* Enable all strict type-checking options. */
-    "noImplicitAny": true,                    /* Raise error on expressions and declarations with an implied 'any' type. */
-    "strictPropertyInitialization": false,  /* Enable strict checking of property initialization in classes. */
-
-    "moduleResolution": "node",            /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */
+    "strict": true,
+    "noImplicitAny": true,
+    "strictPropertyInitialization": false,
+    "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
       "@config/*": ["./src/config/*"],
-      "@domain/*": ["./src/domain/*"],
+      "@domain/*": ["src/modules/*"],
       "@modules/*": ["src/modules/*"],
       "@shared/*": ["./src/shared/*"],
       "@application/*": ["./src/application/*"],
@@ -28,17 +26,15 @@
       "./node_modules/@types",
     ],
     "esModuleInterop": true,
-
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-
     "resolveJsonModule": true,
-    "skipLibCheck": true,                     /* Skip type checking of declaration files. */
-    "forceConsistentCasingInFileNames": true  /* Disallow inconsistently-cased references to the same file. */
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "exclude": [
     "node_modules",
-    "dist" // build
+    "dist"
   ],
   "include":
   [

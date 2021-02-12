@@ -4,12 +4,11 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd -r tsconfig-paths/register --respawn --transpile-only --clear src/http/main.ts",
+    "dev": "tsnd -r tsconfig-paths/register --respawn --transpile-only src/shared/http/server.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/http/index.js",
     "test": "jest",
-    "deve": "ts-node-dev -r tsconfig-paths/register --inspect --transpile-only --ignore-watch node_modules src/shared/http/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+    "typeorm": "node ./node_modules/typeorm/cli.js"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -46,6 +45,8 @@
     "@typescript-eslint/eslint-plugin": "^4.14.2",
     "@typescript-eslint/parser": "^4.14.2",
     "babel-plugin-module-resolver": "^4.1.0",
+    "babel-plugin-parameter-decorator": "^1.0.16",
+    "babel-plugin-transform-typescript-metadata": "^0.3.1",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-config-prettier": "^7.2.0",
@@ -55,9 +56,7 @@
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "ts-jest": "^26.5.0",
-    "ts-node": "3.3.0",
     "ts-node-dev": "^1.1.1",
-    "tsconfig-paths": "^3.9.0",
-    "typescript": "3.3.3333"
+    "typescript": "^4.1.5"
   }
 }

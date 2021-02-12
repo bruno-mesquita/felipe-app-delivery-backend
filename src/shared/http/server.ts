@@ -1,3 +1,4 @@
+import '@config/env';
 import 'reflect-metadata';
 import express from 'express';
 import cors from 'cors';
@@ -11,6 +12,6 @@ app.use(express.json());
 
 app.use(routes);
 
-app.listen(3333, () => {
-  console.log('Server started ON! http://localhost:3333/');
+app.listen(process.env.API_PORT, () => {
+  console.log(`Server started ON! ${process.env.API_PORT}`);
 });

@@ -1,4 +1,4 @@
-import addressRouter from '@domain/address/routes/address.routes';
+import addressRouter from '@modules/address/routes/address.routes';
 import { Router } from 'express';
 
 const routes = Router();

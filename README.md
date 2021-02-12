@@ -1,9 +1,8 @@
-# Ferramentas
-  # Docker, instalação => docker run --name postgres -e POSTGRES_PASSWORD=root -p 5432:5432 -d postgres
+# Backend - FlashFood
 
-# Criar um migração
-  # yarn typeorm migration:create -n NomeDaEntidade
+## Ferramentas
+  Docker, instalação => docker run --name postgres -e POSTGRES_PASSWORD=root -p 5432:5432 -d postgres
 
-# Rodar migração para o banco de dados
-  # yarn typeorm migration:run
+
+
 

@@ -1,9 +1,6 @@
 /*
-
  * For a detailed explanation regarding each configuration property and type check, visit:
-
  * https://jestjs.io/docs/en/configuration.html
-
  */
 
 import { pathsToModuleNameMapper } from 'ts-jest/utils'; // eslint-disable-line
@@ -260,7 +257,7 @@ export default {
 
   // Indicates whether each individual test should be reported during the run
 
-  // verbose: undefined,
+  verbose: true,
 
   // An array of regexp patterns that are matched against all source file paths before re-running tests in watch mode
 
