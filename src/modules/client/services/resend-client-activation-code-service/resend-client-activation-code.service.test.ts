@@ -22,7 +22,7 @@ const clientId = v4();
 
 const clientWithoutCode = v4();
 
-describe('Testes para serviço de reenvio do codigo para ativação da conta', () => {
+describe.skip('Testes para serviço de reenvio do codigo para ativação da conta', () => {
   beforeAll(async () => {
     await connection.create();
   });

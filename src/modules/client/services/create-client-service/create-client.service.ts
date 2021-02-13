@@ -1,11 +1,7 @@
 /**
-
  * @fileoverview Criação do serviço responsavel pela criação do cliente
-
  *
-
  * @author Bruno Mesquita
-
  */
 
 import { getCustomRepository } from 'typeorm';
@@ -46,12 +42,13 @@ class CreateClientService {
       if (userExists) throw new Error('Já existe um cliente cadastrado com esse email ou cpf');
 
       // Criando a classe
-
       const user = userRepository.create(createClientDto);
 
-      // Gerando codigo de ativação e Enviando sms de ativação
+      // Salvando no db
+      await userRepository.save(user);
 
-      const clientActivationCode = clientActivationCodeRepository.createFromClientId(user.getId());
+      // Gerando codigo de ativação e Enviando sms de ativação
+      const clientActivationCode = clientActivationCodeRepository.createFromClient(user);
 
       const sendResult = await smsService.send(user.cellphone, clientActivationCode.generateCode());
 
@@ -60,12 +57,9 @@ class CreateClientService {
       }
 
       // Salvando no db
-
-      await userRepository.save(user);
-
       await clientActivationCodeRepository.save(clientActivationCode);
 
-      return { result: user.id, err: null };
+      return { result: user.getId(), err: null };
     } catch (err) {
       return { result: '', err: err.message };
     }
