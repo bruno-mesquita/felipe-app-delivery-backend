@@ -13,6 +13,7 @@ import compression from 'compression';
 import helmet from 'helmet';
 
 import routes from './routes';
+import '../typeorm';
 
 const app = express();
 

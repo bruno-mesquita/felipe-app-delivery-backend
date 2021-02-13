@@ -1,7 +1,8 @@
-import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from 'typeorm';
+import { PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, BeforeInsert } from 'typeorm';
+import { v4 } from 'uuid';
 
 abstract class Entity {
-  @PrimaryGeneratedColumn({ type: 'uuid' })
+  @PrimaryGeneratedColumn('uuid')
   id: string;
 
   @CreateDateColumn()
@@ -15,6 +16,11 @@ abstract class Entity {
 
   public getId(): string {
     return this.id;
+  }
+
+  @BeforeInsert()
+  public insertId(): void {
+    this.id = v4();
   }
 }
 

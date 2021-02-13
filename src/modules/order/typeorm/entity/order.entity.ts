@@ -11,20 +11,20 @@ class Order extends EntityBase {
   @Column()
   order_date: Date;
 
-  @Column()
+  @Column({ type: 'varchar' })
   form_of_payment: FormOfPaymentType;
 
   @Column()
   discount: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   customer_status_order: CustomerStatusOrderType;
 
-  @Column()
+  @Column({ type: 'varchar' })
   customer_status: CustomerStatusType;
 
   @ManyToOne(() => Client, (client) => client.orders)
-  client_id: string;
+  client_id: Client;
 
   @OneToOne(() => Evaluation)
   @JoinColumn()

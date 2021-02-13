@@ -1,7 +1,5 @@
 import { createConnection, getConnection } from 'typeorm';
 
-import Entity from './entity';
-
 const connection = {
   async create() {
     return createConnection();

@@ -18,7 +18,7 @@ class ClientActivationCode extends EntityBase {
   code: string;
 
   @OneToOne(() => Client)
-  @JoinColumn()
+  @JoinColumn({ name: 'client_id' })
   client_id: Client;
 
   // Implementar

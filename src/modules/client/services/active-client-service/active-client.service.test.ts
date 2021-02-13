@@ -15,7 +15,7 @@ const clientActiveId = v4();
 const clientWitoutCode = v4();
 const code = '';
 
-describe('Testes para o serviço de ativação do cliente', () => {
+describe.skip('Testes para o serviço de ativação do cliente', () => {
   beforeAll(async () => {
     const conn = await connection.create();
   });
