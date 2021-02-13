@@ -4,7 +4,7 @@
    "port": 5432,
    "username": "postgres",
    "password": "root",
-   "database": "delivery-app",
+   "database": "salesapi",
    "synchronize": true,
    "logging": false,
 

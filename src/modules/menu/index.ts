@@ -1,1 +1,1 @@
-export { default as Menu } from './menu.entity';
+export { default as Menu } from './typeorm/entity/menu.entity';

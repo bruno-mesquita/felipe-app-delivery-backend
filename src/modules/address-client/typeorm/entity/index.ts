@@ -2,7 +2,7 @@ import { Entity, OneToOne, JoinColumn, Column } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import { Client } from '@modules/client';
-import Address from '@modules/address/typeorm/entities/address.entity';
+import Address from '@modules/address/typeorm/entity/address.entity';
 
 @Entity({ name: 'address-client' })
 class AddressClient extends EntityBase {
