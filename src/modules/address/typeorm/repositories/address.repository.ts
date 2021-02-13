@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Address from '../entities/address.entity';
+import Address from '../entity/address.entity';
 
 @EntityRepository(Address)
 export default class AddressRepository extends Repository<Address> {

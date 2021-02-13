@@ -1,1 +1,1 @@
-export { default as Evaluation } from './evaluation.entity';
+export { default as Evaluation } from './typeorm/entity/evaluation.entity';

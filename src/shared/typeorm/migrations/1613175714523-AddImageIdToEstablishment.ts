@@ -1,12 +1,6 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  TableColumn,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, TableColumn, TableForeignKey } from 'typeorm';
 
-export class AddImageIdToEstablishment1613175714523
-  implements MigrationInterface {
+export class AddImageIdToEstablishment1613175714523 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
       'establishment',

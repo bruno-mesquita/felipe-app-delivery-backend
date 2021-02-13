@@ -1,9 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  TableColumn,
-  TableForeignKey,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, TableColumn, TableForeignKey } from 'typeorm';
 
 export class AddCityIdToAddress1613148229889 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {

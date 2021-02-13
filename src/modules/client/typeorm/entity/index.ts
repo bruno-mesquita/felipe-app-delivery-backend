@@ -1,8 +1,11 @@
 import { Entity, Column, OneToOne, JoinColumn, BeforeInsert, OneToMany } from 'typeorm';
+
 import { hashSync, compareSync } from 'bcryptjs';
 
 import EntityBase from '@shared/utils/entity';
+
 import { Image } from '@modules/image';
+
 import { Order } from '@modules/order';
 
 @Entity({ name: 'client' })

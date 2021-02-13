@@ -6,7 +6,7 @@
 
 import { getCustomRepository } from 'typeorm';
 
-import Address from '../typeorm/entities/address.entity';
+import Address from '../typeorm/entity/address.entity';
 import AddressRepository from '../typeorm/repositories/address.repository';
 import { IRequest } from './types';
 

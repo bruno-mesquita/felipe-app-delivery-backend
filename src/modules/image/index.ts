@@ -1,1 +1,1 @@
-export { default as Image } from './image.entity';
+export { default as Image } from './typeorm/entity/image.entity';

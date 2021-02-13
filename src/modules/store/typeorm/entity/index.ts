@@ -7,7 +7,7 @@
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
-import Address from '@modules/address/typeorm/entities/address.entity';
+import Address from '@modules/address/typeorm/entity/address.entity';
 import { Image } from '@modules/image';
 import { StoreCategory } from '@modules/store-category';
 import { Menu } from '@modules/menu';

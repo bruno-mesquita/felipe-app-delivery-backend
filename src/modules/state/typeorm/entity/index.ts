@@ -1,7 +1,11 @@
 /**
+
  * @fileoverview Criação da entidade State
+
  *
+
  * @author Bruno Mesquita
+
  */
 
 import { Column, Entity } from 'typeorm';

@@ -36,6 +36,11 @@ export class CreateClient1613150354200 implements MigrationInterface {
             type: 'boolean',
           },
           {
+            name: 'cellphone',
+            type: 'varchar',
+            isUnique: true,
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',

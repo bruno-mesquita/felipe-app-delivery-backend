@@ -1,1 +1,1 @@
-export { default as ProductOrder } from './product-order.entity';
+export { default as ProductOrder } from './typeorm/entity/product-order.entity';
