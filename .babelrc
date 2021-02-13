@@ -14,9 +14,8 @@
         "root": ["."],
         "alias": {
           "@config": ["./src/config"],
-          "@domain": ["./src/domain"],
+          "@modules": ["./src/modules"],
           "@shared": ["./src/shared"],
-          "@application": ["./src/application"],
           "@dtos": ["./src/dtos"]
         }
       }

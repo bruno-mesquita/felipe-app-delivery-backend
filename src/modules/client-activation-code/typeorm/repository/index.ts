@@ -13,6 +13,10 @@ class ClientActivationCodeRepository extends Repository<ClientActivationCode> {
   createFromClientId(clientId: string): ClientActivationCode {
     return (this.create({ client_id: clientId } as any) as unknown) as ClientActivationCode;
   }
+
+  async findOneByClientId(clientId: string) {
+    return this.findOne({ where: { client_id: clientId } });
+  }
 }
 
 export default ClientActivationCodeRepository;

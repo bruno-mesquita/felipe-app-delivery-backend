@@ -21,12 +21,9 @@ class ClientActivationCode extends EntityBase {
   @JoinColumn()
   client_id: Client;
 
-  public addAtempts(): void {
-    this.attempts += 1;
-  }
-
   // Implementar
   public generateCode(): string {
+    this.attempts += 1;
     const code = `code${this.attempts}`;
 
     this.code = code;
@@ -36,6 +33,10 @@ class ClientActivationCode extends EntityBase {
 
   public getCode(): string {
     return this.code;
+  }
+
+  public compareCode(code: string): boolean {
+    return this.code === code;
   }
 }
 
