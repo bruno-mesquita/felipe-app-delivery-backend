@@ -6,7 +6,12 @@
 
 import { Request, Response } from 'express';
 
-import { ActiveClientService, CreateClientService, UpdateProfileService } from './services';
+import {
+  ActiveClientService,
+  CreateClientService,
+  UpdateProfileService,
+  UpdatePasswordClientService,
+} from './services';
 
 class ClientController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -31,7 +36,7 @@ class ClientController {
 
       if (result.err) throw new Error(result.err);
 
-      return res.status(201).json(result);
+      return res.status(200).json(result);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
@@ -45,7 +50,21 @@ class ClientController {
 
       if (result.err) throw new Error(result.err);
 
-      return res.status(201).json(result);
+      return res.status(200).json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async updatePassword(req: Request, res: Response): Promise<Response> {
+    try {
+      const updatePasswordClientService = new UpdatePasswordClientService();
+
+      const result = await updatePasswordClientService.execute(req.body);
+
+      if (result.err) throw new Error(result.err);
+
+      return res.status(200).json(result);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

@@ -54,6 +54,10 @@ class Client extends EntityBase {
     this.email = email;
     this.cellphone = phone;
   }
+
+  public setPassword(password: string): void {
+    this.password = hashSync(password, 8);
+  }
 }
 
 export default Client;

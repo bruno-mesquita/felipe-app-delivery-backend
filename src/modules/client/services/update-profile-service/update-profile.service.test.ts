@@ -1,6 +1,6 @@
 import connection from '@shared/utils/typeorm-helpers';
 
-describe('', () => {
+describe('Testes para o serviço de atualização do perfil do usuário', () => {
   beforeAll(async () => {
     await connection.create();
   });
