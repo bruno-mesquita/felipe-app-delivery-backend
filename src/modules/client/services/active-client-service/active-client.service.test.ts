@@ -42,7 +42,7 @@ describe('Testes para o serviço de ativação do cliente', () => {
 
     const { err } = await activeClientService.execute(code, clientActiveId);
 
-    expect(err).toBe(null);
+    expect(err).not.toBe(null);
     done();
   });
 
@@ -51,7 +51,7 @@ describe('Testes para o serviço de ativação do cliente', () => {
 
     const { err } = await activeClientService.execute(code, 'asdasdasd');
 
-    expect(err).toBe(null);
+    expect(err).not.toBe(null);
     done();
   });
 
@@ -60,7 +60,7 @@ describe('Testes para o serviço de ativação do cliente', () => {
 
     const { err } = await activeClientService.execute(code, v4());
 
-    expect(err).toBe(null);
+    expect(err).not.toBe(null);
     done();
   });
 
@@ -69,7 +69,7 @@ describe('Testes para o serviço de ativação do cliente', () => {
 
     const { err } = await activeClientService.execute(code, clientWitoutCode);
 
-    expect(err).toBe(null);
+    expect(err).not.toBe(null);
     done();
   });
 
@@ -78,7 +78,7 @@ describe('Testes para o serviço de ativação do cliente', () => {
 
     const { err } = await activeClientService.execute('code', clientId);
 
-    expect(err).toBe(null);
+    expect(err).not.toBe(null);
     done();
   });
 });

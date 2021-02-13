@@ -27,7 +27,7 @@ class ActiveClientService {
 
       if (user.isActive()) throw new Error('Esse usuário já se encontra ativo');
 
-      const clientActivationCode = await clientActivationCodeRepository.findOneByCliendId(user.getId());
+      const clientActivationCode = await clientActivationCodeRepository.findOneByClientId(user.getId());
 
       if (!clientActivationCode) throw new Error('Erro ao pegar codigo de ativação');
 
