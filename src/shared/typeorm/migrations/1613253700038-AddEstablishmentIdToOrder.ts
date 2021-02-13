@@ -1,21 +1,21 @@
 import { MigrationInterface, QueryRunner, TableColumn, TableForeignKey } from 'typeorm';
 
-export class AddCategoryIdToEstablishment1613176916870 implements MigrationInterface {
+export class AddEstablishmentIdToOrder1613253700038 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.addColumn(
-      'establishment',
+      'order',
       new TableColumn({
-        name: 'category_id',
+        name: 'establishment_id',
         type: 'uuid',
       })
     );
 
     await queryRunner.createForeignKey(
-      'establishment',
+      'order',
       new TableForeignKey({
-        name: 'CategoryEetablishment',
-        columnNames: ['category_id'],
-        referencedTableName: 'category_establishment',
+        name: 'EstablishmentOrder',
+        columnNames: ['establishment_id'],
+        referencedTableName: 'establishment',
         referencedColumnNames: ['id'],
         onDelete: 'CASCADE',
       })
@@ -23,7 +23,7 @@ export class AddCategoryIdToEstablishment1613176916870 implements MigrationInter
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropForeignKey('establishment', 'CategoryEetablishment');
-    await queryRunner.dropColumn('establishment', 'category_id');
+    await queryRunner.dropForeignKey('order', 'EstablishmentOrder');
+    await queryRunner.dropForeignKey('order', 'establishment_id');
   }
 }

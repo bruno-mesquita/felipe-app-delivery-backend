@@ -12,14 +12,14 @@ export class CreateEstablishment1613174684442 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
-            default: 'gen_random_uuid ()',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'name',
             type: 'varchar',
           },
           {
-            name: 'telephone',
+            name: 'cellphone',
             type: 'varchar',
           },
           {
@@ -29,6 +29,11 @@ export class CreateEstablishment1613174684442 implements MigrationInterface {
           },
           {
             name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'deleted_at',
             type: 'timestamp',
             default: 'now()',
           },

@@ -17,6 +17,7 @@ export class AddImageIdToEstablishment1613175714523 implements MigrationInterfac
         columnNames: ['image_id'],
         referencedTableName: 'image',
         referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
       })
     );
   }

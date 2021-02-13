@@ -12,7 +12,7 @@ export class CreateClient1613150354200 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
-            default: 'gen_random_uuid ()',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'name',
@@ -48,6 +48,11 @@ export class CreateClient1613150354200 implements MigrationInterface {
           },
           {
             name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'deleted_at',
             type: 'timestamp',
             default: 'now()',
           },

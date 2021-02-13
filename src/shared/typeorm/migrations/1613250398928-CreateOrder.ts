@@ -1,10 +1,11 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { boolean } from 'yup/lib/locale';
 
-export class CreateAddress1613147037560 implements MigrationInterface {
+export class CreateOrder1613250398928 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.createTable(
       new Table({
-        name: 'address',
+        name: 'order',
 
         columns: [
           {
@@ -15,20 +16,38 @@ export class CreateAddress1613147037560 implements MigrationInterface {
             default: 'uuid_generate_v4()',
           },
           {
-            name: 'street',
+            name: 'request_date',
+            type: 'date',
+          },
+          {
+            name: 'form_of_payment',
             type: 'varchar',
           },
           {
-            name: 'number',
-            type: 'int',
+            name: 'total',
+            type: 'decimal',
+            precision: 10,
+            scale: 2,
           },
           {
-            name: 'neighborhood',
+            name: 'discount',
+            type: 'decimal',
+            precision: 10,
+            scale: 2,
+          },
+          {
+            name: 'order-status-client',
             type: 'varchar',
           },
           {
-            name: 'cep',
+            name: 'order-status',
             type: 'varchar',
+          },
+          {
+            name: 'freight_value',
+            type: 'decimal',
+            precision: 10,
+            scale: 2,
           },
           {
             name: 'created_at',
@@ -51,6 +70,6 @@ export class CreateAddress1613147037560 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    await queryRunner.dropTable('address');
+    await queryRunner.dropTable('order');
   }
 }

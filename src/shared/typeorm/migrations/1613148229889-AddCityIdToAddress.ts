@@ -17,6 +17,7 @@ export class AddCityIdToAddress1613148229889 implements MigrationInterface {
         columnNames: ['city_id'],
         referencedTableName: 'city_address',
         referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
       })
     );
   }

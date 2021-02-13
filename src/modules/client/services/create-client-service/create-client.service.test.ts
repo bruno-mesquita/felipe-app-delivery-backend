@@ -23,9 +23,9 @@ describe('Testes para o serviço de criação de usuário', () => {
 
       email: 'jonatas@gmail.com',
 
-      cpf: '34355343433',
+      password: 'jooj123',
 
-      cellphone: '12345472514',
+      cpf: '34355343433',
     });
   });
 

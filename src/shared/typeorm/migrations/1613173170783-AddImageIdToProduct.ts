@@ -17,6 +17,7 @@ export class AddImageIdToProduct1613173170783 implements MigrationInterface {
         columnNames: ['image_id'],
         referencedTableName: 'image',
         referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
       })
     );
   }

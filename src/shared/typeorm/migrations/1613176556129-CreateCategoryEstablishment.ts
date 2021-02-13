@@ -12,7 +12,7 @@ export class CreateCategoryEstablishment1613176556129 implements MigrationInterf
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
-            default: 'gen_random_uuid ()',
+            default: 'uuid_generate_v4()',
           },
           {
             name: 'name',
@@ -25,6 +25,11 @@ export class CreateCategoryEstablishment1613176556129 implements MigrationInterf
           },
           {
             name: 'updated_at',
+            type: 'timestamp',
+            default: 'now()',
+          },
+          {
+            name: 'deleted_at',
             type: 'timestamp',
             default: 'now()',
           },

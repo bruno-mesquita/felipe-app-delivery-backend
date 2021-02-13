@@ -17,6 +17,7 @@ export class AddStateIdToCityAddress1613149011482 implements MigrationInterface 
         columnNames: ['state_id'],
         referencedTableName: 'state_address',
         referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
       })
     );
   }

@@ -17,6 +17,7 @@ export class AddAddressIdToEstablishment1613175012657 implements MigrationInterf
         columnNames: ['address_id'],
         referencedTableName: 'address',
         referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
       })
     );
   }

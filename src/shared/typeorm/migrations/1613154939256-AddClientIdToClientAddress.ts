@@ -17,6 +17,7 @@ export class AddClientIdToClientAddress1613154939256 implements MigrationInterfa
         columnNames: ['client_id'],
         referencedTableName: 'client',
         referencedColumnNames: ['id'],
+        onDelete: 'CASCADE',
       })
     );
   }
