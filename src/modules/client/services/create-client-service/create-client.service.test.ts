@@ -1,11 +1,7 @@
 /**
-
  * @fileoverview Casos de testes para a criação do cliente
-
  *
-
  * @author Bruno Mesquita
-
  */
 
 import connection from '@shared/utils/typeorm-helpers';

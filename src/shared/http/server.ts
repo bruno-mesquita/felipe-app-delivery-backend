@@ -17,12 +17,11 @@ import '../typeorm';
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
+app.use(cors());
 app.use(compression());
 app.use(helmet());
 app.disable('x-powered-by');
-
 app.use(routes);
 
 app.listen(process.env.API_PORT, () => {

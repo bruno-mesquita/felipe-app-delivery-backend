@@ -13,5 +13,6 @@ const routes = Router();
 
 routes.post('/', clientController.create);
 routes.post('/activate', clientController.activate);
+routes.put('/', clientController.updateProfile);
 
 export default routes;

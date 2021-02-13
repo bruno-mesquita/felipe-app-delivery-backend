@@ -48,6 +48,12 @@ class Client extends EntityBase {
   public activate(): void {
     this.active = true;
   }
+
+  public updateProfile(name: string, email: string, phone: string): void {
+    this.name = name;
+    this.email = email;
+    this.cellphone = phone;
+  }
 }
 
 export default Client;
