@@ -1,14 +1,14 @@
 import { Entity, OneToOne, JoinColumn, Column } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
-import User from '@modules/user';
+import { Client } from '@modules/client';
 import Address from '@modules/address/typeorm/entities/address.entity';
 
-@Entity({ name: 'address-user' })
-class AddressUser extends EntityBase {
-  @OneToOne(() => User)
+@Entity({ name: 'address-client' })
+class AddressClient extends EntityBase {
+  @OneToOne(() => Client)
   @JoinColumn()
-  user_id: User;
+  client_id: Client;
 
   @OneToOne(() => Address)
   @JoinColumn()
@@ -18,4 +18,4 @@ class AddressUser extends EntityBase {
   nickname: string;
 }
 
-export default AddressUser;
+export default AddressClient;

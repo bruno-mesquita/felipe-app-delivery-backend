@@ -1,19 +1,12 @@
-import {
-  Entity,
-  Column,
-  OneToOne,
-  JoinColumn,
-  BeforeInsert,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, BeforeInsert, OneToMany } from 'typeorm';
 import { hashSync, compareSync } from 'bcryptjs';
 
 import EntityBase from '@shared/utils/entity';
 import { Image } from '@modules/image';
 import { Order } from '@modules/order';
 
-@Entity({ name: 'users' })
-class User extends EntityBase {
+@Entity({ name: 'client' })
+class Client extends EntityBase {
   @Column()
   name: string;
 
@@ -24,26 +17,23 @@ class User extends EntityBase {
   password: string;
 
   @Column()
-  test1: string;
-
-  @Column()
   cellphone: string;
 
   @Column()
   cpf: string;
 
-  @Column()
+  @Column({ default: false })
   active: boolean;
 
   @OneToOne(() => Image)
   @JoinColumn()
   image_id: Image;
 
-  @OneToMany(() => Order, (order) => order.user_id)
+  @OneToMany(() => Order, (order) => order.client_id)
   orders: Order[];
 
   @BeforeInsert()
-  private hashPassword(): void {
+  hashPassword(): void {
     this.password = hashSync(this.password, 8);
   }
 
@@ -56,4 +46,4 @@ class User extends EntityBase {
   }
 }
 
-export default User;
+export default Client;

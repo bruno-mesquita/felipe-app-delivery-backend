@@ -4,12 +4,12 @@
    "port": 5432,
    "username": "postgres",
    "password": "root",
-   "database": "salesapi",
+   "database": "delivery-app",
    "synchronize": true,
    "logging": false,
 
    "entities": [
-      "src/domain/**/typeorm/entities/*.ts"
+      "src/modules/**/typeorm/entity/*.ts"
    ],
    "migrations": [
     "./src/shared/typeorm/migrations/*.ts"

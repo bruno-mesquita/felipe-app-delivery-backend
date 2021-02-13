@@ -1,1 +1,1 @@
-export { default as StoreCategory } from './store-category.entity';
+export { default as StoreCategory } from './typeorm/entity';

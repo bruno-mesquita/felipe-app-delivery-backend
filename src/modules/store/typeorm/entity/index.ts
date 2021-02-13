@@ -1,5 +1,12 @@
+/**
+ * @fileoverview Criação da entidade Store
+ *
+ * @author Bruno Mesquita
+ */
+
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
+import EntityBase from '@shared/utils/entity';
 import Address from '@modules/address/typeorm/entities/address.entity';
 import { Image } from '@modules/image';
 import { StoreCategory } from '@modules/store-category';
@@ -7,7 +14,7 @@ import { Menu } from '@modules/menu';
 import { Order } from '@modules/order';
 
 @Entity()
-class Store {
+class Store extends EntityBase {
   @Column()
   name: string;
 
