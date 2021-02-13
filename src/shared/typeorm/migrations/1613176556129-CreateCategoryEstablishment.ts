@@ -12,6 +12,7 @@ export class CreateCategoryEstablishment1613176556129 implements MigrationInterf
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
+            default: 'gen_random_uuid ()',
           },
           {
             name: 'name',

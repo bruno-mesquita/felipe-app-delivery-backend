@@ -12,6 +12,7 @@ export class CreateClient1613150354200 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
+            default: 'gen_random_uuid ()',
           },
           {
             name: 'name',

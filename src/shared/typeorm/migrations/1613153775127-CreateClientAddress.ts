@@ -12,6 +12,7 @@ export class CreateClientAddress1613153775127 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
+            default: 'gen_random_uuid ()',
           },
           {
             name: 'nickname',

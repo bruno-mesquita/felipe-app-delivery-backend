@@ -1,20 +1,30 @@
 /**
+
  * @fileoverview Casos de testes para a criação do cliente
+
  *
+
  * @author Bruno Mesquita
+
  */
 
 import connection from '@shared/utils/typeorm-helpers';
+
 import CreateUserService from './create-client.service';
+
 import ClientRepository from '../../typeorm/repository';
 
 describe('Testes para o serviço de criação de usuário', () => {
   beforeAll(async () => {
     const conn = await connection.create();
+
     await conn.getCustomRepository(ClientRepository).insert({
       name: 'Jonatas',
+
       email: 'jonatas@gmail.com',
+
       cpf: '34355343433',
+
       cellphone: '12345472514',
     });
   });
@@ -27,19 +37,25 @@ describe('Testes para o serviço de criação de usuário', () => {
     await connection.clear();
   });
 
-  it.skip('Deveria criar um usuário', async (done) => {
+  it('Deveria criar um usuário', async (done) => {
     const createUserService = new CreateUserService();
 
     const result = await createUserService.execute({
       name: 'Bruno',
+
       email: 'bruno@gmail.com',
+
       cellphone: '12981315901',
+
       confirmPassword: 'senhaforte',
+
       password: 'senhaforte',
+
       cpf: '00000000000',
     });
 
     expect(result.err).toBe(null);
+
     done();
   });
 
@@ -48,14 +64,20 @@ describe('Testes para o serviço de criação de usuário', () => {
 
     const result = await createUserService.execute({
       name: 'Bruno',
+
       email: 'bruno@gmail.com',
+
       cellphone: '12981315901',
+
       confirmPassword: 'senhafraca',
+
       password: 'senhaforte',
+
       cpf: '00000000000',
     });
 
     expect(result.err).not.toBe(null);
+
     done();
   });
 
@@ -64,14 +86,20 @@ describe('Testes para o serviço de criação de usuário', () => {
 
     const result = await createUserService.execute({
       name: 'Bruno',
+
       email: 'brunogmail.com',
+
       cellphone: '12981315901',
+
       confirmPassword: 'senhaforte',
+
       password: 'senhaforte',
+
       cpf: '00000000000',
     });
 
     expect(result.err).not.toBe(null);
+
     done();
   });
 
@@ -80,14 +108,20 @@ describe('Testes para o serviço de criação de usuário', () => {
 
     const result = await createUserService.execute({
       name: 'Bruno',
+
       email: 'bruno@gmail.com',
+
       cellphone: '129813159016',
+
       confirmPassword: 'senhaforte',
+
       password: 'senhaforte',
+
       cpf: '00000000000',
     });
 
     expect(result.err).not.toBe(null);
+
     done();
   });
 
@@ -96,14 +130,20 @@ describe('Testes para o serviço de criação de usuário', () => {
 
     const result = await createUserService.execute({
       name: 'Bruno',
+
       email: 'bruno@gmail.com',
+
       cellphone: '12981315901',
+
       confirmPassword: 'senhaforte',
+
       password: 'senhaforte',
+
       cpf: '000000000002',
     });
 
     expect(result.err).not.toBe(null);
+
     done();
   });
 
@@ -112,14 +152,20 @@ describe('Testes para o serviço de criação de usuário', () => {
 
     const result = await createUserService.execute({
       name: 'Bruno',
+
       email: 'bruno@gmail.com',
+
       cellphone: '12981315901',
+
       confirmPassword: 'senhaforte',
+
       password: 'senhaforte',
+
       cpf: '34355343433',
     });
 
     expect(result.err).not.toBe(null);
+
     done();
   });
 
@@ -128,14 +174,20 @@ describe('Testes para o serviço de criação de usuário', () => {
 
     const result = await createUserService.execute({
       name: 'Bruno',
+
       email: 'jonatas@gmail.com',
+
       cellphone: '12981315901',
+
       confirmPassword: 'senhafraca',
+
       password: 'senhaforte',
+
       cpf: '00000000000',
     });
 
     expect(result.err).not.toBe(null);
+
     done();
   });
 
@@ -144,14 +196,20 @@ describe('Testes para o serviço de criação de usuário', () => {
 
     const result = await createUserService.execute({
       name: 'Bruno',
+
       email: 'bruno@gmail.com',
+
       cellphone: '1200000000',
+
       confirmPassword: 'senhafraca',
+
       password: 'senhaforte',
+
       cpf: '00000000000',
     });
 
     expect(result.err).not.toBe(null);
+
     done();
   });
 });

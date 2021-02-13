@@ -12,6 +12,7 @@ export class CreateCityAddress1613147629244 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
+            default: 'gen_random_uuid ()',
           },
           {
             name: 'name',

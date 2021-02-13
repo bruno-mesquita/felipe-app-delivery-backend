@@ -1,17 +1,25 @@
 /**
+
  * @fileoverview Casos de testes para o serviço de reenvio do codigo para ativação da conta
+
  *
+
  * @author Bruno Mesquita
+
  */
 
 import { v4 } from 'uuid';
 
 import connection from '@shared/utils/typeorm-helpers';
+
 import ClientActivationCodeRepository from '@modules/client-activation-code/typeorm/repository';
+
 import ClientRepository from '../../typeorm/repository';
+
 import ResendClientActivationCodeService from './resend-client-activation-code.service';
 
 const clientId = v4();
+
 const clientWithoutCode = v4();
 
 describe('Testes para serviço de reenvio do codigo para ativação da conta', () => {
@@ -33,6 +41,7 @@ describe('Testes para serviço de reenvio do codigo para ativação da conta', (
     const { err } = await resendClientActivationCodeService.execute(clientId);
 
     expect(err).toBe(null);
+
     done();
   });
 
@@ -42,6 +51,7 @@ describe('Testes para serviço de reenvio do codigo para ativação da conta', (
     const { err } = await resendClientActivationCodeService.execute('asdasdasd');
 
     expect(err).not.toBe(null);
+
     done();
   });
 
@@ -51,6 +61,7 @@ describe('Testes para serviço de reenvio do codigo para ativação da conta', (
     const { err } = await resendClientActivationCodeService.execute(v4());
 
     expect(err).not.toBe(null);
+
     done();
   });
 
@@ -60,6 +71,7 @@ describe('Testes para serviço de reenvio do codigo para ativação da conta', (
     const { err } = await resendClientActivationCodeService.execute(clientWithoutCode);
 
     expect(err).not.toBe(null);
+
     done();
   });
 });

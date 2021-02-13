@@ -12,6 +12,7 @@ export class CreateAddress1613147037560 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
+            default: 'gen_random_uuid ()',
           },
           {
             name: 'street',

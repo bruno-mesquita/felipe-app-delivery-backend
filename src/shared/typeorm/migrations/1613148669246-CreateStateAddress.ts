@@ -12,6 +12,7 @@ export class CreateStateAddress1613148669246 implements MigrationInterface {
             type: 'uuid',
             isPrimary: true,
             generationStrategy: 'uuid',
+            default: 'gen_random_uuid ()',
           },
           {
             name: 'name',
