@@ -1,5 +1,7 @@
 /**
  * @fileoverview Criação do schema de validação para criação do cliente
+ *
+ * @author Bruno Mesquita
  */
 
 import { object, SchemaOf, string } from 'yup';

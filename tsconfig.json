@@ -17,7 +17,6 @@
       "@config/*": ["./src/config/*"],
       "@modules/*": ["src/modules/*"],
       "@shared/*": ["./src/shared/*"],
-      "@application/*": ["./src/application/*"],
       "@dtos/*": ["./src/dtos/*"]
     },
     "typeRoots": [
