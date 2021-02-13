@@ -37,6 +37,10 @@ class ClientActivationCode extends EntityBase {
   public getCode(): string {
     return this.code;
   }
+
+  public compareCode(code: string): boolean {
+    return this.code === code;
+  }
 }
 
 export default ClientActivationCode;

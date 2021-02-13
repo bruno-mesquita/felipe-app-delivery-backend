@@ -44,6 +44,10 @@ class Client extends EntityBase {
   public comparePassword(comparePassword: string): boolean {
     return compareSync(comparePassword, this.password);
   }
+
+  public activate(): void {
+    this.active = true;
+  }
 }
 
 export default Client;
