@@ -1,1 +1,1 @@
-export { default as Store } from './store.entity';
+export { default as Store } from './typeorm/entity';

@@ -21,8 +21,8 @@
       "@dtos/*": ["./src/dtos/*"]
     },
     "typeRoots": [
-      "@types",
-      "./node_modules/@types",
+      "./src/@types",
+      "./node_modules/@types"
     ],
     "esModuleInterop": true,
     "experimentalDecorators": true,
@@ -35,8 +35,5 @@
     "node_modules",
     "dist"
   ],
-  "include":
-  [
-    "src/**/*"
-  ],
+  "include": ["src"]
 }

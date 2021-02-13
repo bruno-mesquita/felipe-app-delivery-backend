@@ -2,7 +2,7 @@ import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import { Evaluation } from '@modules/evaluation';
-import { User } from '@modules/user';
+import { Client } from '@modules/client';
 import { Store } from '@modules/store';
 import {
   CustomerStatusOrderType,
@@ -27,8 +27,8 @@ class Order extends EntityBase {
   @Column()
   customer_status: CustomerStatusType;
 
-  @ManyToOne(() => User, (user) => user.orders)
-  user_id: string;
+  @ManyToOne(() => Client, (client) => client.orders)
+  client_id: string;
 
   @OneToOne(() => Evaluation)
   @JoinColumn()

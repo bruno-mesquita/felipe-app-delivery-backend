@@ -7,7 +7,7 @@
 import { getCustomRepository } from 'typeorm';
 
 import Address from '../typeorm/entities/address.entity';
-import AddressRepository from '../typeorm/repositories/addressRepository';
+import AddressRepository from '../typeorm/repositories/address.repository';
 import { IRequest } from './types';
 
 export default class CreateAddressService {
