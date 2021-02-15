@@ -17,18 +17,10 @@ describe.skip('Testes para o serviço de criação de usuário', () => {
     /* await conn.getCustomRepository(ClientRepository).insert({
       name: 'Jonatas',
       email: 'jonatas@gmail.com',
-<<<<<<< HEAD
-
-      password: 'jooj123',
-
-      cpf: '34355343433',
-    });
-=======
       cpf: '34355343433',
       cellphone: '12345472514',
       password: 'senhaforte',
     }); */
->>>>>>> d645c4c08523b8525d01e68a90f063bff37dcf9f
   });
 
   afterAll(async () => {
