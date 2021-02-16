@@ -27,13 +27,11 @@ class Order extends EntityBase {
   @Column('decimal')
   discount: number;
 
-  // Editar esse coluna de string -------------------------------
   @Column({ type: 'varchar' })
-  'order-status-client': CustomerStatusType;
+  client_order_status: CustomerStatusType;
 
-  // Editar esse coluna de string -------------------------------
-  @Column()
-  'order-status': StatusOrderType;
+  @Column({ type: 'varchar' })
+  order_status: StatusOrderType;
 
   @Column('decimal')
   freight_value: number;

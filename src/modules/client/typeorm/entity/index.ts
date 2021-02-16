@@ -25,9 +25,9 @@ class Client extends EntityBase {
   @Column({ default: false })
   active: boolean;
 
-  @OneToOne(() => Image)
+  @OneToOne(() => Image, (image) => image.client)
   @JoinColumn()
-  image_id: Image;
+  image: Image;
 
   @OneToMany(() => Order, (order) => order.client_id)
   orders: Order[];

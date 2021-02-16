@@ -1,5 +1,4 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { boolean } from 'yup/lib/locale';
 
 export class CreateOrder1613250398928 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -36,11 +35,11 @@ export class CreateOrder1613250398928 implements MigrationInterface {
             scale: 2,
           },
           {
-            name: 'order-status-client',
+            name: 'client_order_status',
             type: 'varchar',
           },
           {
-            name: 'order-status',
+            name: 'order_status',
             type: 'varchar',
           },
           {
