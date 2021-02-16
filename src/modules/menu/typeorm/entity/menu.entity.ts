@@ -5,7 +5,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 
@@ -19,7 +19,8 @@ class Menu extends EntityBase {
   name: string;
 
   @ManyToOne(() => Store, (store) => store.menus)
-  store_id: Store;
+  @JoinColumn({ name: 'establishment_id' })
+  establishment_id: Store;
 
   @ManyToOne(() => Product, (product) => product.menu_id)
   products: Product[];

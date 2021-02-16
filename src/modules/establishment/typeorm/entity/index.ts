@@ -23,18 +23,18 @@ class Store extends EntityBase {
   cellphone: string;
 
   @OneToOne(() => Address)
-  @JoinColumn()
+  @JoinColumn({ name: 'address_id' })
   address_id: Address;
 
   @OneToOne(() => Image)
-  @JoinColumn()
+  @JoinColumn({ name: 'image_id' })
   image_id: Image;
 
   @OneToOne(() => StoreCategory)
-  @JoinColumn()
+  @JoinColumn({ name: 'category_id' })
   category_id: StoreCategory;
 
-  @OneToMany(() => Menu, (menu) => menu.store_id)
+  @OneToMany(() => Menu, (menu) => menu.establishment_id)
   menus: Menu[];
 
   @OneToMany(() => Order, (order) => order.store_id)

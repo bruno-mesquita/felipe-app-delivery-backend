@@ -37,6 +37,7 @@ class Order extends EntityBase {
   freight_value: number;
 
   @ManyToOne(() => Client, (client) => client.orders)
+  @JoinColumn({ name: 'client_id' })
   client_id: Client;
 
   @OneToOne(() => Evaluation)
