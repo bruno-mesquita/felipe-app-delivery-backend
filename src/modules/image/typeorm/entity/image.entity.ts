@@ -1,8 +1,14 @@
+/**
+ * @fileoverview entidade de produtos
+ *
+ * @author Bruno Mesquita
+ */
+
 import { Column, Entity } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 
-@Entity()
+@Entity('image')
 class Image extends EntityBase {
   @Column()
   name: string;

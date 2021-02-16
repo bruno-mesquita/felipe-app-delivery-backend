@@ -2,6 +2,7 @@
  * @fileoverview Criação da entidade Store
  *
  * @author Bruno Mesquita
+ * @author Jonatas Rosa Moura
  */
 
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
@@ -9,17 +10,17 @@ import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import EntityBase from '@shared/utils/entity';
 import Address from '@modules/address/typeorm/entity/address.entity';
 import { Image } from '@modules/image';
-import { StoreCategory } from '@modules/store-category';
+import { StoreCategory } from '@modules/establishment-category';
 import { Menu } from '@modules/menu';
 import { Order } from '@modules/order';
 
-@Entity()
+@Entity('establishment')
 class Store extends EntityBase {
   @Column()
   name: string;
 
-  @Column()
-  phone: string;
+  @Column({ unique: true })
+  cellphone: string;
 
   @OneToOne(() => Address)
   @JoinColumn()
@@ -36,7 +37,7 @@ class Store extends EntityBase {
   @OneToMany(() => Menu, (menu) => menu.store_id)
   menus: Menu[];
 
-  @OneToOne(() => Order, (order) => order.store_id)
+  @OneToMany(() => Order, (order) => order.store_id)
   orders: Order[];
 }
 

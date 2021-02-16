@@ -1,3 +1,10 @@
+/**
+ * @fileoverview entidade de produtos
+ *
+ * @author Bruno Mesquita
+ * @author Jonatas Rosa Moura
+ */
+
 import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
@@ -6,12 +13,12 @@ import { Product } from '@modules/product';
 
 import { Order } from '@modules/order';
 
-@Entity()
-class ProductOrder extends EntityBase {
+@Entity('item_order')
+class ItemOrder extends EntityBase {
   @Column()
-  amount: number;
+  quantity: number;
 
-  @Column()
+  @Column('decimal')
   total: number;
 
   @OneToOne(() => Product)
@@ -23,4 +30,4 @@ class ProductOrder extends EntityBase {
   order_id: Order;
 }
 
-export default ProductOrder;
+export default ItemOrder;

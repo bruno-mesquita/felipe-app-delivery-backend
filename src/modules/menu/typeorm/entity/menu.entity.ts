@@ -1,12 +1,19 @@
+/**
+ * @fileoverview entidade de produtos
+ *
+ * @author Bruno Mesquita
+ * @author Jonatas Rosa Moura
+ */
+
 import { Column, Entity, ManyToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 
-import { Store } from '@modules/store';
+import { Store } from '@modules/establishment';
 
 import { Product } from '@modules/product';
 
-@Entity()
+@Entity('menu')
 class Menu extends EntityBase {
   @Column()
   name: string;

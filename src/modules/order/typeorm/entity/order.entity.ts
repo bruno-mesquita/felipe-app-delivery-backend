@@ -1,27 +1,42 @@
+/**
+ * @fileoverview entidade de produtos
+ *
+ * @author Bruno Mesquita
+ * @author Jonatas Rosa Moura
+ */
+
 import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import { Evaluation } from '@modules/evaluation';
 import { Client } from '@modules/client';
-import { Store } from '@modules/store';
-import { CustomerStatusOrderType, CustomerStatusType, FormOfPaymentType } from '../../order.types';
+import { Store } from '@modules/establishment';
+import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from '../../order.types';
 
-@Entity()
+@Entity('order')
 class Order extends EntityBase {
   @Column()
-  order_date: Date;
+  request_date: Date;
 
   @Column({ type: 'varchar' })
   form_of_payment: FormOfPaymentType;
 
-  @Column()
+  @Column('decimal')
+  total: number;
+
+  @Column('decimal')
   discount: number;
 
+  // Editar esse coluna de string -------------------------------
   @Column({ type: 'varchar' })
-  customer_status_order: CustomerStatusOrderType;
+  'order-status-client': CustomerStatusType;
 
-  @Column({ type: 'varchar' })
-  customer_status: CustomerStatusType;
+  // Editar esse coluna de string -------------------------------
+  @Column()
+  'order-status': StatusOrderType;
+
+  @Column('decimal')
+  freight_value: number;
 
   @ManyToOne(() => Client, (client) => client.orders)
   client_id: Client;

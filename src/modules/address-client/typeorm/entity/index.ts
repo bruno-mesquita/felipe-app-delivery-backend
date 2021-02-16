@@ -1,11 +1,21 @@
+/**
+ * @fileoverview Casos de testes para a criação do cliente
+ *
+ * @author Bruno Mesquita
+ * @author Jonatas Rosa Moura
+ */
+
 import { Entity, OneToOne, JoinColumn, Column } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import { Client } from '@modules/client';
 import Address from '@modules/address/typeorm/entity/address.entity';
 
-@Entity({ name: 'address-client' })
+@Entity('client_address')
 class AddressClient extends EntityBase {
+  @Column()
+  nickname: string;
+
   @OneToOne(() => Client)
   @JoinColumn()
   client_id: Client;
@@ -13,9 +23,6 @@ class AddressClient extends EntityBase {
   @OneToOne(() => Address)
   @JoinColumn()
   address_id: Address;
-
-  @Column()
-  nickname: string;
 }
 
 export default AddressClient;

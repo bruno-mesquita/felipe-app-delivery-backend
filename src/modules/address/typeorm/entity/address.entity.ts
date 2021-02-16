@@ -1,6 +1,6 @@
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 
-import City from '@modules/city/typeorm/entity';
+import City from '@modules/address-city/typeorm/entity';
 
 import EntityBase from '@shared/utils/entity';
 

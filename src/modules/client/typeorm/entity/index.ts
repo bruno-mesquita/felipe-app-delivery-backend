@@ -5,21 +5,21 @@ import EntityBase from '@shared/utils/entity';
 import { Image } from '@modules/image';
 import { Order } from '@modules/order';
 
-@Entity({ name: 'client' })
+@Entity('client')
 class Client extends EntityBase {
   @Column()
   name: string;
 
-  @Column()
+  @Column({ unique: true })
   email: string;
 
   @Column()
   password: string;
 
-  @Column()
+  @Column({ unique: true })
   cellphone: string;
 
-  @Column()
+  @Column({ unique: true })
   cpf: string;
 
   @Column({ default: false })
