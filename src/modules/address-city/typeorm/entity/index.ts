@@ -5,7 +5,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, ManyToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 import State from '@modules/address-state/typeorm/entity';
 import EntityBase from '@shared/utils/entity';
@@ -19,6 +19,7 @@ class City extends EntityBase {
   active: Boolean;
 
   @ManyToOne(() => State, (state) => state.cities)
+  @JoinColumn({ name: 'state_id' })
   state: State;
 }
 

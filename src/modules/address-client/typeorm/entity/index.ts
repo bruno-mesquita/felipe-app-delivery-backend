@@ -17,11 +17,11 @@ class AddressClient extends EntityBase {
   nickname: string;
 
   @OneToOne(() => Client)
-  @JoinColumn()
+  @JoinColumn({ name: 'client_id' })
   client_id: Client;
 
   @OneToOne(() => Address)
-  @JoinColumn()
+  @JoinColumn({ name: 'address_id' })
   address_id: Address;
 }
 

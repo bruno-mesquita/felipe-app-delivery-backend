@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Criação da entidade City
+ *
+ * @author Bruno Mesquita
+ */
+
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 
 import City from '@modules/address-city/typeorm/entity';
