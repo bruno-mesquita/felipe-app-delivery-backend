@@ -20,7 +20,7 @@ class Evaluation extends EntityBase {
   message: string;
 
   @OneToOne(() => Order)
-  @JoinColumn()
+  @JoinColumn({ name: 'order_id' })
   order_id: Order;
 }
 

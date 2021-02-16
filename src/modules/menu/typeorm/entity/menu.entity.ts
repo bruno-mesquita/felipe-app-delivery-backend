@@ -18,11 +18,11 @@ class Menu extends EntityBase {
   @Column()
   name: string;
 
-  @ManyToOne(() => Store, (store) => store.menus)
+  @ManyToOne(() => Store, (stablishment) => stablishment.menus)
   @JoinColumn({ name: 'establishment_id' })
-  establishment_id: Store;
+  establishment: Store;
 
-  @ManyToOne(() => Product, (product) => product.menu_id)
+  @ManyToOne(() => Product, (product) => product.menu)
   products: Product[];
 }
 

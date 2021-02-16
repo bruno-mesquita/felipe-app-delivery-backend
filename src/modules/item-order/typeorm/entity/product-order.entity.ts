@@ -22,11 +22,11 @@ class ItemOrder extends EntityBase {
   total: number;
 
   @OneToOne(() => Product)
-  @JoinColumn()
+  @JoinColumn({ name: 'product_id' })
   product_id: Product;
 
   @OneToOne(() => Order)
-  @JoinColumn()
+  @JoinColumn({ name: 'order_id' })
   order_id: Order;
 }
 

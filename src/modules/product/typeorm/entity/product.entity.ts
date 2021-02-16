@@ -25,11 +25,12 @@ class Product extends EntityBase {
   description: string;
 
   @OneToOne(() => Image)
-  @JoinColumn()
+  @JoinColumn({ name: 'image_id' })
   image_id: Image;
 
   @ManyToOne(() => Menu, (menu) => menu.products)
-  menu_id: Menu;
+  @JoinColumn({ name: 'menu_id' })
+  menu: Menu;
 }
 
 export default Product;

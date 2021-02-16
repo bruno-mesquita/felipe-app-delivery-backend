@@ -8,6 +8,7 @@ import { Column, Entity, OneToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import { Client } from '@modules/client';
+import Establishment from '@modules/establishment/typeorm/entity';
 
 @Entity('image')
 class Image extends EntityBase {

@@ -41,11 +41,12 @@ class Order extends EntityBase {
   client_id: Client;
 
   @OneToOne(() => Evaluation)
-  @JoinColumn()
+  @JoinColumn({ name: 'evaluation_id' })
   evaluation_id: Evaluation;
 
   @ManyToOne(() => Store, (store) => store.orders)
-  store_id: Store;
+  @JoinColumn({ name: 'establishment_id' })
+  establishment: Store;
 }
 
 export default Order;

@@ -15,30 +15,34 @@ import { Menu } from '@modules/menu';
 import { Order } from '@modules/order';
 
 @Entity('establishment')
-class Store extends EntityBase {
+class Establishment extends EntityBase {
   @Column()
   name: string;
 
   @Column({ unique: true })
   cellphone: string;
 
+  // Relacionamento de outras tabelas
+
   @OneToOne(() => Address)
   @JoinColumn({ name: 'address_id' })
-  address_id: Address;
+  address: Address;
 
   @OneToOne(() => Image)
   @JoinColumn({ name: 'image_id' })
-  image_id: Image;
+  image: Image;
 
   @OneToOne(() => StoreCategory)
   @JoinColumn({ name: 'category_id' })
-  category_id: StoreCategory;
+  category: StoreCategory;
 
-  @OneToMany(() => Menu, (menu) => menu.establishment_id)
+  // Relacionamento para outras tabelas
+
+  @OneToMany(() => Menu, (menu) => menu.establishment)
   menus: Menu[];
 
-  @OneToMany(() => Order, (order) => order.store_id)
+  @OneToMany(() => Order, (order) => order.establishment)
   orders: Order[];
 }
 
-export default Store;
+export default Establishment;
