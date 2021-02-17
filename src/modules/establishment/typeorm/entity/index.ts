@@ -5,7 +5,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import Address from '@modules/address/typeorm/entity/address.entity';
@@ -13,6 +13,7 @@ import { Image } from '@modules/image';
 import { StoreCategory } from '@modules/establishment-category';
 import { Menu } from '@modules/menu';
 import { Order } from '@modules/order';
+import { hashSync } from 'bcryptjs';
 
 @Entity('establishment')
 class Establishment extends EntityBase {
@@ -52,6 +53,13 @@ class Establishment extends EntityBase {
 
   @OneToMany(() => Order, (order) => order.establishment)
   orders: Order[];
+
+  // funcionalidaddes
+
+  @BeforeInsert()
+  hashPassword(): void {
+    this.password = hashSync(this.password, 8);
+  }
 }
 
 export default Establishment;
