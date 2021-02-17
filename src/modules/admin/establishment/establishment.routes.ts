@@ -12,10 +12,9 @@ import { Router } from 'express';
 
 import EstablishmentController from './controllers/EstablishmentAdminController';
 
-const routerEstablishment = Router();
-
+const establishmentRouter = Router();
 const establishmentController = new EstablishmentController();
 
-routerEstablishment.post('/', establishmentController.create);
+establishmentRouter.post('/', establishmentController.create);
 
-export default routerEstablishment;
+export default establishmentRouter;

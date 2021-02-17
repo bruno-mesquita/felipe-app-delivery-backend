@@ -14,19 +14,17 @@ import CreateEstablishmentService from '../services/create-establishment-service
 
 class EstablishmentController {
   async create(req: Request, res: Response): Promise<Response> {
-    const { name, email, cellphone, password, confirmPassword } = req.body;
+    try {
+      const createEstablishmentService = new CreateEstablishmentService();
 
-    const createEstablishment = new CreateEstablishmentService();
+      const establishment = await createEstablishmentService.execute(req.body);
 
-    const establishment = await createEstablishment.execute({
-      name,
-      email,
-      cellphone,
-      password,
-      confirmPassword,
-    });
+      if (establishment.err) throw new Error(establishment.err);
 
-    return res.json(establishment);
+      return res.status(201).json(establishment);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
   }
 }
 

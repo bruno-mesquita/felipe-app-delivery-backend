@@ -20,24 +20,34 @@ class CreateEstablishmentService {
       const emailExists = await establishmentRepository.findByEmail(establishmentProps.email);
       const cellphoneExists = await establishmentRepository.findByCellphone(establishmentProps.cellphone);
 
+      // Verificar se o email já existe
+
       if (emailExists) {
-        throw new Error('Email não encontrado.');
+        throw new Error('Email já cadastrado.');
       }
 
+      // Verificar se o contato já existe
+
       if (cellphoneExists) {
-        throw new Error('Número de contato não encontrado.');
+        throw new Error('Número de contato já cadastrado.');
       }
+
+      // Verificando se as senhas são iguais
 
       if (establishmentProps.confirmPassword !== establishmentProps.password) {
         throw new Error('Senhas não são iguais.');
       }
 
+      // Fazendo Validação do DTO
+
       const valid = createEstablishmentSchema.isValidSync(establishmentProps);
 
       if (!valid) throw new Error('Por favor reveja seus dados.');
 
+      // Criando a classe
       const establishment = establishmentRepository.create(establishmentProps);
 
+      // Salvando no db
       await establishmentRepository.save(establishment);
 
       return { result: establishment, err: null };

@@ -1,10 +1,18 @@
+import { Router } from 'express';
+
 import addressRouter from '@modules/address/routes/address.routes';
 import { clientRoutes } from '@modules/client';
-import { Router } from 'express';
+
+// Admin
+import establishmentRouter from '@modules/admin/establishment/establishment.routes';
 
 const routes = Router();
 
 routes.use('/address', addressRouter);
 routes.use('/clients', clientRoutes);
+
+// Routas do Admin
+
+routes.use('/store', establishmentRouter);
 
 export default routes;
