@@ -1,20 +1,21 @@
 {
   "presets": [
     ["@babel/preset-env", { "targets": { "node": "current" } }],
-    ["@babel/preset-typescript", { "onlyRemoveTypeImports": true }]
+    "@babel/preset-typescript"
   ],
   "plugins": [
     ["@babel/plugin-proposal-decorators", { "legacy": true }],
     ["@babel/plugin-proposal-class-properties", { "loose" : true }],
+    "babel-plugin-transform-typescript-metadata",
     [
       "module-resolver",
       {
         "root": ["."],
         "alias": {
-          "@config": ["./src/config"],
-          "@modules": ["./src/modules"],
-          "@shared": ["./src/shared"],
-          "@dtos": ["./src/dtos"]
+          "@config": "./src/config",
+          "@modules": "./src/modules",
+          "@shared": "./src/shared",
+          "@dtos": "./src/dtos"
         }
       }
     ]

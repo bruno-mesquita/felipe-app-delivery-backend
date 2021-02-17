@@ -1,5 +1,5 @@
 /**
- * @fileoverview Criação da entidade City
+ * @fileoverview Criação da entidade Produto
  *
  * @author Bruno Mesquita
  * @author Jonatas Rosa Moura
@@ -29,7 +29,6 @@ class Product extends EntityBase {
   image_id: Image;
 
   @ManyToOne(() => Menu, (menu) => menu.products)
-  @JoinColumn({ name: 'menu_id' })
   menu: Menu;
 }
 
