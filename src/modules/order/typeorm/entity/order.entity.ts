@@ -10,7 +10,7 @@ import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from 'typeorm';
 import EntityBase from '@shared/utils/entity';
 import { Evaluation } from '@modules/evaluation';
 import { Client } from '@modules/client';
-import { Store } from '@modules/establishment';
+import { Establishment } from '@modules/establishment';
 import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from '../../order.types';
 
 @Entity('order')
@@ -44,9 +44,9 @@ class Order extends EntityBase {
   @JoinColumn({ name: 'evaluation_id' })
   evaluation_id: Evaluation;
 
-  @ManyToOne(() => Store, (store) => store.orders)
+  @ManyToOne(() => Establishment, (store) => store.orders)
   @JoinColumn({ name: 'establishment_id' })
-  establishment: Store;
+  establishment: Establishment;
 }
 
 export default Order;

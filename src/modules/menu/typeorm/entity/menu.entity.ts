@@ -9,7 +9,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 
-import { Store } from '@modules/establishment';
+import { Establishment } from '@modules/establishment';
 
 import { Product } from '@modules/product';
 
@@ -18,9 +18,9 @@ class Menu extends EntityBase {
   @Column()
   name: string;
 
-  @ManyToOne(() => Store, (stablishment) => stablishment.menus)
+  @ManyToOne(() => Establishment, (stablishment) => stablishment.menus)
   @JoinColumn({ name: 'establishment_id' })
-  establishment: Store;
+  establishment: Establishment;
 
   @ManyToOne(() => Product, (product) => product.menu)
   products: Product[];
