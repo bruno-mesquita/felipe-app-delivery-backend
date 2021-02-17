@@ -11,7 +11,7 @@ import EstablishmentRepository from '@modules/establishment/typeorm/repository/e
 import Establishment from '@modules/establishment/typeorm/entity';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
-import createEstablishmentSchema from '../../validation/create-client.validation';
+import createEstablishmentSchema from '../../validation/create-establishment.validation';
 
 class CreateEstablishmentService {
   public async execute(establishmentProps: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {

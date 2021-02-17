@@ -15,7 +15,5 @@ routes.use('/clients', clientRoutes);
 // Routas do Admin
 
 routes.use('/store', establishmentRouter);
-// routes.use('/store', establishmentRouter);
-// routes.use('/store', establishmentRouter);
 
 export default routes;
