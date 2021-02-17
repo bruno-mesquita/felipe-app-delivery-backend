@@ -1,22 +1,22 @@
 /**
 
- * @fileoverview Criação do schema de validação para atualização do cliente
+ * @fileoverview Criação do schema de validação para atualização do estabelecimento
 
  *
 
- * @author Bruno Mesquita
+ * @author Jonatas Rosa Moura
 
  */
 
 import { object, SchemaOf, string } from 'yup';
 
-import { UpdateClientDto } from '../dtos/update-client-dto';
+import { UpdateEstablishmentDto } from '../dtos/update-establishment-dto';
 
 const REQUIRED = 'Campo obrigátorio';
 
 const phoneRegxp = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
 
-const schema: SchemaOf<UpdateClientDto> = object({
+const schema: SchemaOf<UpdateEstablishmentDto> = object({
   id: string().required(REQUIRED),
 
   name: string().required(REQUIRED),

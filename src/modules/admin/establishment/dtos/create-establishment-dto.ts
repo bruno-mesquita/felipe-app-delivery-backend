@@ -1,5 +1,6 @@
 /**
  * @fileoverview Criação de DTOs exclusivos do estabelecimento
+ * @author Jonatas Rosa Moura
  */
 
 export interface CreateEstablishmentDto {
