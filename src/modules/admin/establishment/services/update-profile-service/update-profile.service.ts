@@ -18,7 +18,7 @@ import { UpdateEstablishmentDto } from '../../dtos/update-establishment-dto';
 
 import updateEstablishmentValidation from '../../validation/update-establishment-validation';
 
-class UpdateProfileEstablishment {
+class UpdateProfileEstablishmentService {
   async execute(updateEstablishmentDto: UpdateEstablishmentDto): Promise<ServiceResponse<boolean>> {
     try {
       const establishmentRepository = getCustomRepository(EstablishmentRepository);
@@ -50,4 +50,4 @@ class UpdateProfileEstablishment {
   }
 }
 
-export default UpdateProfileEstablishment;
+export default UpdateProfileEstablishmentService;
