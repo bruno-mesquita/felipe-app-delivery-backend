@@ -9,4 +9,5 @@ export interface CreateEstablishmentDto {
   password: string;
   confirmPassword: string;
   cellphone: string;
+  active: boolean;
 }

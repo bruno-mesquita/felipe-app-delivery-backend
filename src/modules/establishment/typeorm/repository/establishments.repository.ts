@@ -3,7 +3,17 @@ import Establishment from '../entity';
 
 @EntityRepository(Establishment)
 class EstablishmentRepository extends Repository<Establishment> {
-  public async findById(name: string): Promise<Establishment | undefined> {
+  public async findById(id: string): Promise<Establishment | undefined> {
+    const establishment = this.findOne({
+      where: {
+        id,
+      },
+    });
+
+    return establishment;
+  }
+
+  public async findByName(name: string): Promise<Establishment | undefined> {
     const establishment = this.findOne({
       where: {
         name,

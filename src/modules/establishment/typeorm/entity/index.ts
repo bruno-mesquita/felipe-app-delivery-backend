@@ -5,7 +5,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, Tree } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import Address from '@modules/address/typeorm/entity/address.entity';
