@@ -10,7 +10,7 @@
 
 import { Request, Response } from 'express';
 
-import CreateEstablishmentService from '../services/create-establishment-service';
+import CreateEstablishmentService from '../services/create-establishment-service/create-establishment-service';
 
 class EstablishmentController {
   async create(req: Request, res: Response): Promise<Response> {
