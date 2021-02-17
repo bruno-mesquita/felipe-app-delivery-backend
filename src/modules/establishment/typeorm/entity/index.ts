@@ -22,6 +22,15 @@ class Establishment extends EntityBase {
   @Column({ unique: true })
   cellphone: string;
 
+  @Column({ unique: true })
+  email: string;
+
+  @Column()
+  password: string;
+
+  @Column()
+  active: boolean;
+
   // Relacionamento de outras tabelas
 
   @OneToOne(() => Address)

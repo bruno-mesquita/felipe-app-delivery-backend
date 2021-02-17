@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { boolean } from 'yup/lib/locale';
 
 export class CreateEstablishment1613174684442 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -19,8 +20,22 @@ export class CreateEstablishment1613174684442 implements MigrationInterface {
             type: 'varchar',
           },
           {
+            name: 'email',
+            type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'password',
+            type: 'varchar',
+          },
+          {
             name: 'cellphone',
             type: 'varchar',
+            isUnique: true,
+          },
+          {
+            name: 'active',
+            type: 'boolean',
           },
           {
             name: 'created_at',

@@ -5,10 +5,9 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
-import Establishment from '@modules/establishment/typeorm/entity';
 
 @Entity('category_establishment')
 class StoreCategory extends EntityBase {

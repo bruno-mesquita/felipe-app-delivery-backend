@@ -1,11 +1,18 @@
 import { EntityRepository, Repository } from 'typeorm';
-
 import Client from '../entity';
 
 @EntityRepository(Client)
-class UserRepository extends Repository<Client> {
-  async findOneByEmailOrCpf(email: string, cpf: string) {
-    return this.findOne({ where: [{ email }, { cpf }] });
+class ClientRepository extends Repository<Client> {
+  public async findOneByEmailOrCpf(email: string, cpf: string) {
+    // return this.findOne({ where: [{ email }, { cpf }] });
+    const clientX = await this.findOne({
+      where: {
+        email,
+        cpf,
+      },
+    });
+
+    return clientX;
   }
 
   async findById(clientId: string) {
@@ -13,4 +20,4 @@ class UserRepository extends Repository<Client> {
   }
 }
 
-export default UserRepository;
+export default ClientRepository;
