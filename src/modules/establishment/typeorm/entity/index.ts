@@ -13,7 +13,7 @@ import { Image } from '@modules/image';
 import { StoreCategory } from '@modules/establishment-category';
 import { Menu } from '@modules/menu';
 import { Order } from '@modules/order';
-import { hashSync } from 'bcryptjs';
+import { compareSync, hashSync } from 'bcryptjs';
 
 @Entity('establishment')
 class Establishment extends EntityBase {
@@ -59,6 +59,28 @@ class Establishment extends EntityBase {
   @BeforeInsert()
   hashPassword(): void {
     this.password = hashSync(this.password, 8);
+  }
+
+  public isActive(): boolean {
+    return this.active;
+  }
+
+  public comparePassword(comparePassword: string): boolean {
+    return compareSync(comparePassword, this.password);
+  }
+
+  public activate(): void {
+    this.active = true;
+  }
+
+  public updateProfile(name: string, email: string, cellphone: string): void {
+    this.name = name;
+    this.email = email;
+    this.cellphone = cellphone;
+  }
+
+  public setPassword(password: string): void {
+    this.password = hashSync(password, 8);
   }
 }
 
