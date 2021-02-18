@@ -6,11 +6,13 @@ import { clientRoutes } from '@modules/client';
 
 // Admin
 import establishmentRouter from '@modules/admin/establishment/establishment.routes';
+import productRouter from '@modules/product/controllers/product.routes';
 
 const routes = Router();
 
 routes.use('/address', addressRouter);
 routes.use('/clients', clientRoutes);
+routes.use('/product', productRouter);
 
 // Routas do Admin
 
