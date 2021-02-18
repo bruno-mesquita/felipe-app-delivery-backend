@@ -12,6 +12,7 @@ import { Request, Response } from 'express';
 import CreateProductService from '../services/create-product-service/create-product.service';
 import { ListProductsService } from '../services/list-product-service/list-product.service';
 import { ShowProductService } from '../services/show-product-service/show-product.service';
+import { UpdateProductService } from '../services/update-product-service/update-product.service';
 
 class ProductController {
   async list(req: Request, res: Response): Promise<Response> {
@@ -47,6 +48,24 @@ class ProductController {
       const product = await createProductService.execute(req.body);
 
       return res.status(201).json(product);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async update(req: Request, res: Response) {
+    try {
+      const { id } = req.params;
+      const updateProductService = new UpdateProductService();
+
+      const updateProduct = await updateProductService.execute({
+        ...req.body,
+        id,
+      });
+
+      if (updateProduct.err) throw new Error(updateProduct.err);
+
+      return res.status(200).json(updateProduct);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

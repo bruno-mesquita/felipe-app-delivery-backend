@@ -2,11 +2,9 @@
 
  * @fileoverview Criação do schema de validação para atualização do estabelecimento
 
- *
-
  * @author Jonatas Rosa Moura
 
- */
+*/
 
 import { object, SchemaOf, string } from 'yup';
 
