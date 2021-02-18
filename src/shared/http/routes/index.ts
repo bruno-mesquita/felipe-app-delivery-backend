@@ -5,8 +5,8 @@ import addressRouter from '@modules/address/routes/address.routes';
 import { clientRoutes } from '@modules/client';
 
 // Admin
-import establishmentRouter from '@modules/admin/establishment/establishment.routes';
-import productRouter from '@modules/product/controllers/product.routes';
+import establishmentRouter from '@modules/admin/modules/establishment/establishment.routes';
+import productRouter from '@modules/product/product.routes';
 
 const routes = Router();
 

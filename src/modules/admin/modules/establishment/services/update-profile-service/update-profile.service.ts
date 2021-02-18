@@ -27,7 +27,7 @@ class UpdateProfileEstablishmentService {
 
       const valid = updateEstablishmentValidation.isValidSync(updateEstablishmentDto);
 
-      if (valid) throw new Error('Dados inválidos');
+      if (!valid) throw new Error('Dados inválidos');
 
       // verificando se o estabelecimento existe
 
@@ -35,7 +35,7 @@ class UpdateProfileEstablishmentService {
 
       if (!establishment) throw new Error('Estabelecimento não encontrado.');
 
-      if (!establishment.isActive()) throw new Error('Esse estabelecimento não se encontra ativo');
+      if (establishment.isActive()) throw new Error('Esse estabelecimento não se encontra ativo');
 
       const { name, email, cellphone } = updateEstablishmentDto;
 

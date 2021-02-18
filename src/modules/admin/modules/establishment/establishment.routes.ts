@@ -16,8 +16,6 @@ const establishmentRouter = Router();
 const establishmentController = new EstablishmentController();
 
 establishmentRouter.post('/', establishmentController.create);
-establishmentRouter.get('/:id', establishmentController.show);
-establishmentRouter.get('/', establishmentController.list);
 establishmentRouter.put('/:id', establishmentController.updateProfile);
 
 export default establishmentRouter;

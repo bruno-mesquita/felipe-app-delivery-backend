@@ -11,37 +11,9 @@
 import { Request, Response } from 'express';
 
 import CreateEstablishmentService from '../services/create-establishment-service/create-establishment.service';
-import ListEstablishmentService from '../services/list-establishment-service/list-establishment.service';
-import ShowEstablishmentService from '../services/show-establishment-service/show-establishment.service';
 import UpdateProfileEstablishmentService from '../services/update-profile-service/update-profile.service';
 
 class EstablishmentController {
-  async list(req: Request, res: Response): Promise<Response> {
-    try {
-      const listEstablishments = new ListEstablishmentService();
-
-      const establishment = await listEstablishments.execute();
-
-      return res.status(201).json(establishment);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
-  async show(req: Request, res: Response): Promise<Response> {
-    try {
-      const { id } = req.params;
-
-      const showEstablishment = new ShowEstablishmentService();
-
-      const establishment = await showEstablishment.execute({ id });
-
-      return res.status(201).json(establishment);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
   async create(req: Request, res: Response): Promise<Response> {
     try {
       const createEstablishmentService = new CreateEstablishmentService();
@@ -58,13 +30,9 @@ class EstablishmentController {
 
   async updateProfile(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
       const updateProfileService = new UpdateProfileEstablishmentService();
 
-      const updateProfileEstablishment = await updateProfileService.execute({
-        ...req.body,
-        id,
-      });
+      const updateProfileEstablishment = await updateProfileService.execute(req.body);
 
       if (updateProfileEstablishment.err) throw new Error(updateProfileEstablishment.err);
 

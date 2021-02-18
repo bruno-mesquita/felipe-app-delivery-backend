@@ -1,15 +1,13 @@
 /**
- * @fileoverview entidade de produtos
+ * @fileoverview entidade de Avaliação
  *
  * @author Bruno Mesquita
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
-
-import { Order } from '@modules/order';
 
 @Entity('evaluation_order')
 class Evaluation extends EntityBase {
@@ -18,10 +16,6 @@ class Evaluation extends EntityBase {
 
   @Column()
   message: string;
-
-  @OneToOne(() => Order)
-  @JoinColumn({ name: 'order_id' })
-  order_id: Order;
 }
 
 export default Evaluation;

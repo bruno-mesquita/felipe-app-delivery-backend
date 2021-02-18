@@ -1,14 +1,12 @@
 /**
- * @fileoverview entidade de produtos
+ * @fileoverview entidade de Image
  *
  * @author Bruno Mesquita
  */
 
-import { Column, Entity, OneToOne } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
-import { Client } from '@modules/client';
-import Establishment from '@modules/establishment/typeorm/entity';
 
 @Entity('image')
 class Image extends EntityBase {
@@ -17,9 +15,6 @@ class Image extends EntityBase {
 
   @Column()
   encoded: string;
-
-  @OneToOne(() => Client, (client) => client.image)
-  client: Client;
 }
 
 export default Image;
