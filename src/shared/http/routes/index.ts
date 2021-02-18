@@ -1,7 +1,7 @@
 import { Router } from 'express';
 
 // normal user
-import addressRouter from '@modules/address/routes/address.routes';
+import addressRouter from '@modules/address/address.routes';
 import { clientRoutes } from '@modules/client';
 
 // Admin

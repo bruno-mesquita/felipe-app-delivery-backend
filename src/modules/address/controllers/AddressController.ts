@@ -1,22 +1,26 @@
+/**
+
+ * @fileoverview Controller do Endereço
+
+ *
+
+ * @author Jonatas Rosa Moura
+
+ */
+
 import { Request, Response } from 'express';
-import CreateAddressService from '../services/createAddressService';
+import CreateAddressService from '../services/create-address-service/create-address.service';
 
 export default class AddressController {
-  public async create(request: Request, response: Response): Promise<Response> {
-    const { street, number, neighborhood, city, cep } = request.body;
+  async create(req: Request, res: Response): Promise<Response> {
+    try {
+      const createAddressService = new CreateAddressService();
 
-    const createAddress = new CreateAddressService();
+      const address = await createAddressService.execute(req.body);
 
-    console.log(createAddress);
-
-    const address = await createAddress.execute({
-      street,
-      number,
-      neighborhood,
-      city,
-      cep,
-    });
-
-    return response.json(address);
+      return res.status(201).json(address);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
   }
 }

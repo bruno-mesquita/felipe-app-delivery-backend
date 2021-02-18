@@ -23,9 +23,7 @@ export default class AddressRepository extends Repository<Address> {
     return address;
   }
 
-  public async findByNeighborhood(
-    neighborhood: string
-  ): Promise<Address | undefined> {
+  public async findByNeighborhood(neighborhood: string): Promise<Address | undefined> {
     const address = await this.findOne({
       where: {
         neighborhood,

@@ -3,7 +3,8 @@
  *
  * @author Bruno Mesquita
  * @author Jonatas Rosa Moura
- */
+
+*/
 
 import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
 
