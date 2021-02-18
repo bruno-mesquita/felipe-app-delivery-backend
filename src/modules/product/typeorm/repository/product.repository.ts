@@ -1,6 +1,6 @@
 /**
 
- * @fileoverview Criação do schema de validação para criação do estabelecimento
+ * @fileoverview Criação do schema de validação para criação do produto
 
  *
 

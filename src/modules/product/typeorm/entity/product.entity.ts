@@ -19,7 +19,7 @@ class Product extends EntityBase {
   name: string;
 
   @Column()
-  price: string;
+  price: number;
 
   @Column()
   description: string;
