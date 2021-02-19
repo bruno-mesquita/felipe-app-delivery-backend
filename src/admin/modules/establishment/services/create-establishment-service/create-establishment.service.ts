@@ -1,23 +1,33 @@
 /**
+
  * @fileoverview Casos de testes para a criação do estabelecimento
+
  *
+
  * @author Bruno Mesquita
+
  * @author Jonatas Rosa Moura
+
  */
 
 import { getCustomRepository } from 'typeorm';
 
-/* import EstablishmentRepository from '../../'; */
 import Establishment from 'src/core/establishment';
+
 import { ServiceResponse } from '@shared/utils/service-response';
+import { EstablishmentRepository } from '../../repository';
+
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
+
 import createEstablishmentSchema from '../../validation/create-client.validation';
 
 class CreateEstablishmentService {
   public async execute(establishmentProps: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
     try {
       const establishmentRepository = getCustomRepository(EstablishmentRepository);
+
       const emailExists = await establishmentRepository.findByEmail(establishmentProps.email);
+
       const cellphoneExists = await establishmentRepository.findByCellphone(establishmentProps.cellphone);
 
       // Verificar se o email já existe
@@ -45,9 +55,11 @@ class CreateEstablishmentService {
       if (!valid) throw new Error('Por favor reveja seus dados.');
 
       // Criando a classe
+
       const establishment = establishmentRepository.create(establishmentProps);
 
       // Salvando no db
+
       await establishmentRepository.save(establishment);
 
       return { result: establishment, err: null };

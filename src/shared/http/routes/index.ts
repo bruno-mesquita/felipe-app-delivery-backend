@@ -1,11 +1,10 @@
 import { Router } from 'express';
 
-import clientRoutes from '@custumer/routes';
-import storeRoutes from '@store/routes';
+import adminRouter from '@admin/admin.routes';
 
 const routes = Router();
 
-routes.use('/app', clientRoutes);
-routes.use('/store', storeRoutes);
+// routes.use('/app', clientRoutes);
+routes.use('/store', adminRouter);
 
 export default routes;
