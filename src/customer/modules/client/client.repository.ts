@@ -11,6 +11,10 @@ class ClientRepository extends Repository<Client> {
   async findById(clientId: string) {
     return this.findOne({ where: { id: clientId } });
   }
+
+  async findByEmail(email: string) {
+    return this.findOne({ where: { email } });
+  }
 }
 
 export default ClientRepository;
