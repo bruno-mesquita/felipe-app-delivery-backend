@@ -4,7 +4,7 @@
  * @author Bruno, Jonatas
  */
 
-import '@config/env';
+import 'dotenv/config';
 import 'reflect-metadata';
 
 import express from 'express';
