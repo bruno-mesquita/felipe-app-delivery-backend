@@ -13,12 +13,10 @@ import { getCustomRepository } from 'typeorm';
 import { validate } from 'uuid';
 
 import { ServiceResponse } from '@shared/utils/service-response';
+import SmsService from '@shared/utils/sms';
 
-import ClientRepository from '@modules/client/typeorm/repository';
-
-import ClientActivationCodeRepository from '@modules/client-activation-code/typeorm/repository';
-
-import SmsService from '@modules/sms';
+import ClientRepository from '../../client.repository';
+import { ClientActivationCodeRepository } from '../../../client-activation-code';
 
 class ResendClientActivationCodeService {
   async execute(clientId: string): Promise<ServiceResponse<boolean>> {
@@ -37,7 +35,7 @@ class ResendClientActivationCodeService {
 
       if (!client) throw new Error('Cliente não encontrado');
 
-      const clientActivationCode = await clientActivationCodeRepository.findOneByClientId(client.getId());
+      const clientActivationCode = await clientActivationCodeRepository.findByClientId(client.getId());
 
       if (!clientActivationCode) throw new Error('Codigo de ativação não encontrado');
 

@@ -8,7 +8,7 @@ import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdatePasswordClientDto } from '../../dtos/update-password-client-dto';
-import ClientRepository from '../../typeorm/repository';
+import ClientRepository from '../../client.repository';
 import updatePasswordClientValidation from '../../validation/update-password-client.validation';
 
 class UpdatePasswordClientService {

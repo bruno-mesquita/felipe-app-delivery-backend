@@ -8,8 +8,8 @@ import { getCustomRepository } from 'typeorm';
 import { validate } from 'uuid';
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import ClientActivationCodeRepository from '@modules/client-activation-code/typeorm/repository';
-import UserRepository from '../../typeorm/repository';
+import { ClientActivationCodeRepository } from '../../../client-activation-code';
+import UserRepository from '../../client.repository';
 
 class ActiveClientService {
   async execute(code: string, clientId: string): Promise<ServiceResponse<boolean>> {
@@ -27,7 +27,7 @@ class ActiveClientService {
 
       if (user.isActive()) throw new Error('Esse usuário já se encontra ativo');
 
-      const clientActivationCode = await clientActivationCodeRepository.findOneByClientId(user.getId());
+      const clientActivationCode = await clientActivationCodeRepository.findByClientId(user.getId());
 
       if (!clientActivationCode) throw new Error('Erro ao pegar codigo de ativação');
 

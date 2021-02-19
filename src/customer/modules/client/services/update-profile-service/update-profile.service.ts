@@ -12,7 +12,7 @@ import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
 
-import ClientRepository from '../../typeorm/repository';
+import ClientRepository from '../../client.repository';
 
 import { UpdateClientDto } from '../../dtos/update-client-dto';
 

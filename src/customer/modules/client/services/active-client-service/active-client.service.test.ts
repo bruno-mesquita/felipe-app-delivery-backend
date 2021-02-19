@@ -8,7 +8,7 @@ import { v4 } from 'uuid';
 
 import connection from '@shared/utils/typeorm-helpers';
 import ActiveClientService from './active-client.service';
-import ClientRepository from '../../typeorm/repository';
+import ClientRepository from '../../client.repository';
 
 const clientId = v4();
 const clientActiveId = v4();

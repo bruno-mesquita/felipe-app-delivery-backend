@@ -12,9 +12,9 @@ import { v4 } from 'uuid';
 
 import connection from '@shared/utils/typeorm-helpers';
 
-import ClientActivationCodeRepository from '@modules/client-activation-code/typeorm/repository';
+import { ClientActivationCodeRepository } from '../../../client-activation-code';
 
-import ClientRepository from '../../typeorm/repository';
+import ClientRepository from '../../client.repository';
 
 import ResendClientActivationCodeService from './resend-client-activation-code.service';
 
