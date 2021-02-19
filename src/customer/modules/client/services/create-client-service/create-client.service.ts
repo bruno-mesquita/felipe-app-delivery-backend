@@ -6,11 +6,11 @@
 
 import { getCustomRepository } from 'typeorm';
 
-import SmsService from '@modules/sms';
+import SmsService from '@shared/utils/sms';
 
-import ClientActivationCodeRepository from '@modules/client-activation-code/typeorm/repository';
+import { ClientActivationCodeRepository } from '../../../client-activation-code';
 
-import UserRepository from '../../typeorm/repository';
+import UserRepository from '../../client.repository';
 
 import { CreateClientDto } from '../../dtos/create-client-dto';
 
