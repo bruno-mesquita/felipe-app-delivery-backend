@@ -12,7 +12,7 @@ import { getCustomRepository } from 'typeorm';
 
 import Product from 'src/core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { ProductRepository } from '../../typeorm/repository/product.repository';
+import { ProductRepository } from '../../repository/product.repository';
 
 export class ShowProductService {
   async execute(id: string): Promise<ServiceResponse<Product | null>> {

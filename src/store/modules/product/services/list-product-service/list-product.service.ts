@@ -9,7 +9,7 @@ import { getCustomRepository } from 'typeorm';
 
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { ProductRepository } from '../../typeorm/repository/product.repository';
+import { ProductRepository } from '../../repository/product.repository';
 
 export class ListProductsService {
   async execute(): Promise<ServiceResponse<Product[] | null>> {

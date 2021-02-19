@@ -11,7 +11,7 @@ import { getCustomRepository } from 'typeorm';
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateProductDto } from '../../dtos/update-product-dto';
-import { ProductRepository } from '../../typeorm/repository/product.repository';
+import { ProductRepository } from '../../repository/product.repository';
 import updateProductValidation from '../../validation/update-product.validation';
 
 export class UpdateProductService {

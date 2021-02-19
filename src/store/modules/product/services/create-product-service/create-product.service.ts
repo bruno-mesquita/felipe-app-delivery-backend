@@ -9,7 +9,7 @@ import { getCustomRepository } from 'typeorm';
 
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { ProductRepository } from '../../typeorm/repository/product.repository';
+import { ProductRepository } from '../../repository/product.repository';
 import { CreateProductDto } from '../../dtos/create-product-dto';
 import createProductSchema from '../../validation/create-product.validation';
 
