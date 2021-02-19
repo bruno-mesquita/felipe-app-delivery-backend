@@ -1,10 +1,18 @@
 /**
 
+
+
  * @fileoverview Criação do serviço para atualização do perfil do estabelecimento
+
+
 
  *
 
+
+
  * @author Jonatas Rosa Moura
+
+
 
  */
 
@@ -12,7 +20,7 @@ import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
 
-import EstablishmentRepository from '@modules/establishment/typeorm/repository/establishments.repository';
+import { EstablishmentRepository } from '../../repository';
 
 import { UpdateEstablishmentDto } from '../../dtos/update-establishment-dto';
 

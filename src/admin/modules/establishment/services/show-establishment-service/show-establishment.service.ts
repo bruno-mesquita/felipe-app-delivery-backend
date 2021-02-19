@@ -1,18 +1,27 @@
 /**
 
+
+
  * @fileoverview serviço de exibição de um estabelecimento
+
+
 
  *
 
+
+
  * @author Jonatas Rosa Moura
+
+
 
  */
 
 import { getCustomRepository } from 'typeorm';
 
-import { Establishment } from '@modules/establishment';
-import EstablishmentRepository from '@modules/establishment/typeorm/repository/establishments.repository';
+import Establishment from '@core/establishment';
+
 import { ServiceResponse } from '@shared/utils/service-response';
+import { EstablishmentRepository } from '../../repository';
 
 interface IRequest {
   id: string;
