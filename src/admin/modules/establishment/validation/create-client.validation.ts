@@ -8,31 +8,12 @@
 
  * @fileoverview Criação do schema de validação para criação do estabelecimento
 
-
-
-
-
-
-
  *
-
-
-
-
-
-
-
  * @author Bruno Mesquita
 
 
 
  * @author Jonatas Rosa Moura
-
-
-
-
-
-
 
  */
 

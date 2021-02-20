@@ -8,9 +8,7 @@ import { Router } from 'express';
 
 import { AuthEstablishmentController } from './auth-login-controller';
 
-const authEstablishmentRoutes = Router();
+export const authEstablishmentRoutes = Router();
 const authEstablishmentController = new AuthEstablishmentController();
 
-authEstablishmentRoutes.post('/login', authEstablishmentController.login);
-
-export default authEstablishmentRoutes;
+authEstablishmentRoutes.post('/', authEstablishmentController.login);

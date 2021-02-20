@@ -3,6 +3,6 @@ import establishmentRouter from './modules/establishment/establishment.routes';
 
 const adminRouter = Router();
 
-adminRouter.use(establishmentRouter);
+adminRouter.use('/store', establishmentRouter);
 
 export default adminRouter;

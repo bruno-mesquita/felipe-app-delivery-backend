@@ -8,6 +8,7 @@ import { EstablishmentRepository } from '@admin/modules/establishment/repository
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import { getCustomRepository } from 'typeorm';
+import { compareSync, hashSync } from 'bcryptjs'; // Teste senha
 import { LoginEstablishmentDto } from '../../dtos/login-establishment';
 import { IEstablishmentAuth } from '../../dtos/login-token-dto';
 import loginValidation from '../../validation/login-establishment.validation';
@@ -26,6 +27,10 @@ export class LoginEstablishmentLoginService {
         throw new Error('Estabelecimento não encontrado.');
       }
 
+      console.log(compareSync(loginEstablishment.password, establishment.password));
+
+      console.log(establishment.comparePassword(loginEstablishment.password));
+
       if (!establishment.comparePassword(loginEstablishment.password)) {
         throw new Error('Credenciais inválidas.');
       }
@@ -34,7 +39,7 @@ export class LoginEstablishmentLoginService {
 
       return { result: { token, establishment }, err: null };
     } catch (err) {
-      return { result: null, err: 'Erro no login.' };
+      return { result: null, err: err.message };
     }
   }
 }

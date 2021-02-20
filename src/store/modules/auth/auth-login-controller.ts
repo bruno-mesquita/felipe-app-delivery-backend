@@ -16,6 +16,8 @@ export class AuthEstablishmentController {
 
       if (result.err) throw new Error(result.err);
 
+      console.log(result);
+
       return res.json(result.result);
     } catch (err) {
       return res.status(401).json({ err: err.message });
