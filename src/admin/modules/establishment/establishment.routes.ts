@@ -1,19 +1,8 @@
 /**
-
-
-
  * @fileoverview cadastrando rotas do estabelecimento
 
-
-
  *
-
-
-
  * @author Jonatas Rosa Moura
-
-
-
  */
 
 import { Router } from 'express';
