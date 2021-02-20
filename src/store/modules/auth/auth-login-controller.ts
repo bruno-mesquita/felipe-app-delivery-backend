@@ -7,8 +7,8 @@
 import { Request, Response } from 'express';
 import { LoginEstablishmentLoginService } from './services/login-service/login-establishment.service';
 
-export class SessionsController {
-  async create(req: Request, res: Response): Promise<Response> {
+export class AuthEstablishmentController {
+  async login(req: Request, res: Response): Promise<Response> {
     try {
       const loginService = new LoginEstablishmentLoginService();
 
