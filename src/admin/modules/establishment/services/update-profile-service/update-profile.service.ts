@@ -1,19 +1,7 @@
 /**
-
-
-
  * @fileoverview Criação do serviço para atualização do perfil do estabelecimento
-
-
-
  *
-
-
-
  * @author Jonatas Rosa Moura
-
-
-
  */
 
 import { getCustomRepository } from 'typeorm';
@@ -43,7 +31,7 @@ class UpdateProfileEstablishmentService {
 
       if (!establishment) throw new Error('Estabelecimento não encontrado.');
 
-      if (establishment.isActive()) throw new Error('Esse estabelecimento não se encontra ativo');
+      if (!establishment.isActive()) throw new Error('Esse estabelecimento não se encontra ativo');
 
       const { name, email, cellphone } = updateEstablishmentDto;
 

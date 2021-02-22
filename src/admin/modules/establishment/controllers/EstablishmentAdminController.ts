@@ -60,9 +60,10 @@ class EstablishmentController {
 
   async updateProfile(req: Request, res: Response): Promise<Response> {
     try {
+      const { id } = req.params;
       const updateProfileService = new UpdateProfileEstablishmentService();
 
-      const updateProfileEstablishment = await updateProfileService.execute(req.body);
+      const updateProfileEstablishment = await updateProfileService.execute({ ...req.body, id });
 
       if (updateProfileEstablishment.err) throw new Error(updateProfileEstablishment.err);
 
