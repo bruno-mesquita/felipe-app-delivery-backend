@@ -7,10 +7,28 @@
 import { Request, Response } from 'express';
 
 import CreateEstablishmentService from '../services/create-establishment-service/create-establishment.service';
+import ShowEstablishmentService from '../services/show-establishment-service/show-establishment.service';
 
 import UpdateProfileEstablishmentService from '../services/update-profile-service/update-profile.service';
 
 class EstablishmentController {
+  async show(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params;
+      const showEstablishmentService = new ShowEstablishmentService();
+
+      if (!showEstablishmentService) throw new Error('Estabelecimento não encontrado.');
+
+      const establishment = await showEstablishmentService.execute({ id });
+
+      if (!id) throw new Error('Estabelecimeto inválido.');
+
+      return res.status(200).json(establishment);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
   async create(req: Request, res: Response): Promise<Response> {
     try {
       const createEstablishmentService = new CreateEstablishmentService();
