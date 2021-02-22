@@ -1,19 +1,7 @@
 /**
-
-
-
  * @fileoverview serviço de listagem dos estabelecimentos
-
-
-
  *
-
-
-
  * @author Jonatas Rosa Moura
-
-
-
  */
 
 import { getCustomRepository } from 'typeorm';
