@@ -6,8 +6,8 @@ import { authRoutes } from './modules/auth';
 
 const routes = Router();
 
-routes.use(authRoutes);
+routes.use('/auth', authRoutes);
 
-routes.use(clientRoutes);
+routes.use('/', clientRoutes);
 
 export default routes;

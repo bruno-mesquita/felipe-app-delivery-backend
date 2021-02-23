@@ -8,6 +8,7 @@ import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
 
+import Establishment from '@core/establishment';
 import { EstablishmentRepository } from '../../repository';
 
 import { UpdateEstablishmentDto } from '../../dtos/update-establishment-dto';
@@ -15,7 +16,7 @@ import { UpdateEstablishmentDto } from '../../dtos/update-establishment-dto';
 import updateEstablishmentValidation from '../../validation/update-establishment-validation';
 
 class UpdateProfileEstablishmentService {
-  async execute(updateEstablishmentDto: UpdateEstablishmentDto): Promise<ServiceResponse<boolean>> {
+  async execute(updateEstablishmentDto: UpdateEstablishmentDto): Promise<ServiceResponse<Establishment | boolean>> {
     try {
       const establishmentRepository = getCustomRepository(EstablishmentRepository);
 
@@ -39,7 +40,7 @@ class UpdateProfileEstablishmentService {
 
       await establishmentRepository.save(establishment);
 
-      return { result: true, err: null };
+      return { result: establishment || true, err: null };
     } catch (err) {
       return { err: err.message, result: false };
     }

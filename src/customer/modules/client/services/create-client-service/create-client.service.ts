@@ -8,6 +8,8 @@ import { getCustomRepository } from 'typeorm';
 
 import SmsService from '@shared/utils/sms';
 
+import Client from '@core/client';
+import { ServiceResponse } from '@shared/utils/service-response';
 import { ClientActivationCodeRepository } from '../../../client-activation-code';
 
 import UserRepository from '../../client.repository';
@@ -17,7 +19,7 @@ import { CreateClientDto } from '../../dtos/create-client-dto';
 import createClientSchema from '../../validation/create-client.validation';
 
 class CreateClientService {
-  async execute(createClientDto: CreateClientDto): Promise<{ result: string; err: string | null }> {
+  async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<Client | null>> {
     try {
       const smsService = new SmsService();
 
@@ -35,11 +37,17 @@ class CreateClientService {
 
       if (!valid) throw new Error('Por favor reveja seus dados');
 
-      // Verificando se já existe um cliente com esse cpf ou email
+      // Verificando se já existe um cliente com esse cpf
 
-      const userExists = await userRepository.findOneByEmailOrCpf(createClientDto.email, createClientDto.cpf);
+      const userCpfExists = await userRepository.findByCpf(createClientDto.cpf);
 
-      if (userExists) throw new Error('Já existe um cliente cadastrado com esse email ou cpf');
+      if (userCpfExists) throw new Error('Já existe um cliente cadastrado com esse cpf');
+
+      // Verificando se já existe um cliente com esse email
+
+      const userEmailExists = await userRepository.findByEmail(createClientDto.email);
+
+      if (userEmailExists) throw new Error('Já existe um cliente cadastrado com esse email');
 
       // Criando a classe
       const user = userRepository.create(createClientDto);
@@ -59,9 +67,10 @@ class CreateClientService {
       // Salvando no db
       await clientActivationCodeRepository.save(clientActivationCode);
 
-      return { result: user.getId(), err: null };
+      return { result: user, err: null };
     } catch (err) {
-      return { result: '', err: err.message };
+      console.log(err);
+      return { result: err, err: err.message };
     }
   }
 }

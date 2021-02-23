@@ -1,5 +1,5 @@
 /**
- * @fileoverview Criação de tipagem exclusiva do Login de Estabelecimento
+ * @fileoverview Criação de tipagem exclusiva do Login do Client
  *
  * @author Jonatas Rosa Moura
  */

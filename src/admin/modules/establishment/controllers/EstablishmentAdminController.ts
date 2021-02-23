@@ -38,6 +38,8 @@ class EstablishmentController {
 
       if (!id) throw new Error('Estabelecimeto inválido.');
 
+      if (!establishment) throw new Error('Erro ao tentar achar o Estabelecimento.');
+
       return res.status(200).json(establishment);
     } catch (err) {
       return res.status(400).json({ err: err.message });

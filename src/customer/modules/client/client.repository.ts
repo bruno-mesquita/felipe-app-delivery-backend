@@ -4,8 +4,8 @@ import Client from '@core/client';
 
 @EntityRepository(Client)
 class ClientRepository extends Repository<Client> {
-  public async findOneByEmailOrCpf(email: string, cpf: string) {
-    return this.findOne({ where: [{ email }, { cpf }] });
+  public async findByCpf(cpf: string) {
+    return this.findOne({ where: { cpf } });
   }
 
   async findById(clientId: string) {
