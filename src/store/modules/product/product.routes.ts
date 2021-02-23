@@ -1,11 +1,7 @@
 /**
-
  * @fileoverview Controller do estabelecimento Admin
-
  *
-
  * @author Jonatas Rosa Moura
-
  */
 
 import { Router } from 'express';

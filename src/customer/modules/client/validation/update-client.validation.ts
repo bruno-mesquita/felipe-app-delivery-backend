@@ -1,9 +1,6 @@
 /**
-
  * @fileoverview Criação do schema de validação para atualização do cliente
-
  *
-
  * @author Bruno Mesquita
 
  */
