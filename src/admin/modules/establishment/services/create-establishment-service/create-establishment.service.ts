@@ -1,9 +1,6 @@
 /**
-
  * @fileoverview Casos de testes para a criação do estabelecimento
-
  *
-
  * @author Bruno Mesquita
 
  * @author Jonatas Rosa Moura
