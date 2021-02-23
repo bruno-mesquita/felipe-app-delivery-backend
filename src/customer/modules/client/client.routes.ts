@@ -1,19 +1,7 @@
 /**
-
-
-
  * @fileoverview cadastrando rotas do cliente
-
-
-
  *
-
-
-
  * @author Bruno Mesquita
-
-
-
  */
 
 import { Router } from 'express';
@@ -28,8 +16,8 @@ routes.post('/', clientController.create);
 
 routes.post('/activate', clientController.activate);
 
-routes.put('/', clientController.updateProfile);
+routes.put('/profile/:id', clientController.updateProfile);
 
-routes.put('/update-password', clientController.updatePassword);
+routes.put('/update-password/:id', clientController.updatePassword);
 
 export default routes;
