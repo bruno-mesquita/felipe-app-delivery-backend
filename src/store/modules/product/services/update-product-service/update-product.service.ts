@@ -31,6 +31,10 @@ export class UpdateProductService {
 
       if (!product) throw new Error('Produto não encontrado.');
 
+      const { name, price, description } = updateProductDto;
+
+      product.updateProduct(name, price, description);
+
       await productRepository.save(product);
 
       return { result: product, err: null };

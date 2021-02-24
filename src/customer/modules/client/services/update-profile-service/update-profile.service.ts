@@ -39,11 +39,11 @@ class UpdateProfileService {
 
       // Verificando se E-mail e Celular já existe no banco
 
-      const userEmailExists = clientRepository.findByEmail(updateClientDto.email);
+      const userEmailExists = await clientRepository.findByEmail(updateClientDto.email);
 
       if (userEmailExists) throw new Error('Este email já está sendo usado.');
 
-      const userCellphoneExists = clientRepository.findByCellphone(updateClientDto.cellphone);
+      const userCellphoneExists = await clientRepository.findByCellphone(updateClientDto.cellphone);
 
       if (userCellphoneExists) throw new Error('Este número de contato já está em uso');
 
@@ -51,9 +51,13 @@ class UpdateProfileService {
 
       const { cellphone, email, name } = updateClientDto;
 
+      console.log(user);
+
       user.updateProfile(name, email, cellphone);
 
       await clientRepository.save(user);
+
+      console.log(user);
 
       return { result: true, err: null };
     } catch (err) {

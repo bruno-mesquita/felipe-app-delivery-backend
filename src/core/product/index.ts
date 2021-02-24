@@ -28,6 +28,12 @@ class Product extends EntityBase {
 
   @ManyToOne(() => Menu, (menu) => menu.products)
   menu: Menu;
+
+  public updateProduct(name: string, price: number, description: string): void {
+    this.name = name;
+    this.price = price;
+    this.description = description;
+  }
 }
 
 export default Product;

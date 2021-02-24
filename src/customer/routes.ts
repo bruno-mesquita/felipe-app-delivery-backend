@@ -8,6 +8,6 @@ const routes = Router();
 
 routes.use('/auth', authRoutes);
 
-routes.use(clientRoutes);
+routes.use('/client', clientRoutes);
 
 export default routes;

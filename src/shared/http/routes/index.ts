@@ -6,7 +6,7 @@ import establishmentRoutes from '@store/routes';
 
 const routes = Router();
 
-routes.use('/client', clientRoutes);
+routes.use('/app', clientRoutes);
 routes.use('/admin', establishmentAdminRoutes);
 routes.use('/establishment', establishmentRoutes);
 
