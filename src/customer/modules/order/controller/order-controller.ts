@@ -6,15 +6,33 @@
 import { Request, Response } from 'express';
 import { CreateOrderService } from '../services/create-order-service/create-client.service';
 import { ListOrderSerive } from '../services/list-order-service/list-client.service';
+import { ShowOrderService } from '../services/show-order-service/show-order.service';
 
 export class OrderController {
   async list(req: Request, res: Response): Promise<Response> {
     try {
       const listOrderService = new ListOrderSerive();
 
-      if (!listOrderService) throw new Error('Pedido não encontrado.');
+      if (!listOrderService) throw new Error('Lista pedidos não encontrada.');
 
       const order = await listOrderService.execute();
+
+      return res.status(200).json(order);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async show(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params;
+      const showOrderService = new ShowOrderService();
+
+      if (!showOrderService) throw new Error('Pedido não encontrada.');
+
+      const order = await showOrderService.execute(id);
+
+      if (!order) throw new Error('Pedido inválido.');
 
       return res.status(200).json(order);
     } catch (err) {

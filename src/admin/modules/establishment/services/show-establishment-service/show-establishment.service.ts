@@ -1,19 +1,7 @@
 /**
-
-
-
  * @fileoverview serviço de exibição de um estabelecimento
-
-
-
  *
-
-
-
  * @author Jonatas Rosa Moura
-
-
-
  */
 
 import { getCustomRepository } from 'typeorm';

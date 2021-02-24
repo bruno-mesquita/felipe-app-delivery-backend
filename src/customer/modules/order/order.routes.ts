@@ -12,5 +12,6 @@ const orderController = new OrderController();
 
 orderRouter.post('/', orderController.create);
 orderRouter.get('/', orderController.list);
+orderRouter.get('/:id', orderController.show);
 
 export { orderRouter };
