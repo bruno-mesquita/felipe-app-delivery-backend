@@ -47,6 +47,10 @@ class Order extends EntityBase {
   @ManyToOne(() => Establishment, (store) => store.orders)
   @JoinColumn({ name: 'establishment_id' })
   establishment: Establishment;
+
+  public updateOrder(form_of_payment: FormOfPaymentType): void {
+    this.form_of_payment = form_of_payment;
+  }
 }
 
 export default Order;

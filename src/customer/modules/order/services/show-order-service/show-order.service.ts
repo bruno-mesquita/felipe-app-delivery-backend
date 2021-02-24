@@ -13,7 +13,7 @@ class ShowOrderService {
     try {
       const orderRepository = getCustomRepository(OrderRepository);
 
-      const order = await orderRepository.findById(id);
+      const order = await orderRepository.findOne(id);
 
       if (!order) throw new Error('Pedido não encontrado.');
 
