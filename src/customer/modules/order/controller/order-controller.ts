@@ -4,8 +4,8 @@
  */
 
 import { Request, Response } from 'express';
-import { CreateOrderService } from '../services/create-client-service/create-client.service';
-import { ListOrderSerive } from '../services/list-client-service/list-client.service';
+import { CreateOrderService } from '../services/create-order-service/create-client.service';
+import { ListOrderSerive } from '../services/list-order-service/list-client.service';
 
 export class OrderController {
   async list(req: Request, res: Response): Promise<Response> {
