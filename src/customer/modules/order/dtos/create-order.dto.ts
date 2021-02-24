@@ -6,7 +6,7 @@
 import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from '@core/order/order.types';
 
 export interface CreateOrderDto {
-  request_date: Date; // data do pedido
+  request_date: Date | undefined; // data do pedido
 
   form_of_payment: FormOfPaymentType; // forma de pagamento
 
