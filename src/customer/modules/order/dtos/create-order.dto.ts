@@ -3,20 +3,17 @@
  * @author Jonatas Rosa Moura
  */
 
-import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from '@core/order/order.types';
+export interface Item {
+  amount: number;
+  price: number;
+  itemId: string;
+  total: number;
+}
 
 export interface CreateOrderDto {
-  request_date: Date | undefined; // data do pedido
-
-  form_of_payment: FormOfPaymentType; // forma de pagamento
-
+  establishmentId: string;
+  items: Item[];
+  fee: number;
   total: number;
-
-  discount: number; // disconto
-
-  client_order_status: CustomerStatusType;
-
-  order_status: StatusOrderType;
-
-  freight_value: number; // valor do frete
+  payment: string;
 }

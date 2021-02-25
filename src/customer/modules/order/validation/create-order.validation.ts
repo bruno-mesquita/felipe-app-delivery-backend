@@ -3,24 +3,22 @@
  * @author Jonatas Rosa Moura
  */
 
-import { object, SchemaOf, date, number, mixed } from 'yup';
-import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from '@core/order/order.types';
+import { object, SchemaOf, number, string, array } from 'yup';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 
 const REQUIRED = 'Campo obrigátorio';
 
 export const schema: SchemaOf<CreateOrderDto> = object({
-  request_date: date().required(REQUIRED),
-
-  form_of_payment: mixed<FormOfPaymentType>().required(REQUIRED),
-
+  establishmentId: string().required(REQUIRED),
+  items: array()
+    .of<any>({
+      amount: number().required(REQUIRED),
+      price: number().required(REQUIRED),
+      itemId: string().required(REQUIRED),
+      total: number().required(REQUIRED),
+    })
+    .required(REQUIRED),
+  fee: number().required(REQUIRED),
   total: number().required(REQUIRED),
-
-  discount: number().required(REQUIRED),
-
-  client_order_status: mixed<CustomerStatusType>().required(REQUIRED),
-
-  order_status: mixed<StatusOrderType>().required(REQUIRED),
-
-  freight_value: number().required(REQUIRED),
+  payment: string().required(REQUIRED),
 });

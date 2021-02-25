@@ -3,7 +3,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { FormOfPaymentType } from '@core/order/order.types';
+import { FormOfPaymentType, CustomerStatusType } from '@core/order/order.types';
 
 export interface UpdateOrderDto {
   id: string;
@@ -16,7 +16,7 @@ export interface UpdateOrderDto {
 
   // discount: number; // disconto
 
-  // client_order_status: CustomerStatusType;
+  client_order_status: CustomerStatusType;
 
   // order_status: StatusOrderType;
 

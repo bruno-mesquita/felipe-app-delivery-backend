@@ -5,7 +5,7 @@ import { UpdateOrderDto } from '../../dtos/update-order.dto';
 import { OrderRepository } from '../../repository/order-repository';
 import { schema as updateOrderValidation } from '../../validation/update-order.validation';
 
-class UpdateOrderservice {
+class CancelOrderservice {
   async execute(updateOrderDto: UpdateOrderDto): Promise<ServiceResponse<Order | null>> {
     try {
       const orderRepository = getCustomRepository(OrderRepository);
@@ -22,9 +22,13 @@ class UpdateOrderservice {
 
       if (!order) throw new Error('Pedido não encontrado.');
 
-      const { form_of_payment } = updateOrderDto;
+      console.log(order);
 
-      order.updateOrder(form_of_payment);
+      // criando classe.
+
+      const { form_of_payment, client_order_status } = updateOrderDto;
+
+      order.updateOrder(form_of_payment, client_order_status);
 
       await orderRepository.save(order);
 
@@ -35,4 +39,4 @@ class UpdateOrderservice {
   }
 }
 
-export { UpdateOrderservice };
+export { CancelOrderservice };

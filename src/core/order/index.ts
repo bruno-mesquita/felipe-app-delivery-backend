@@ -48,8 +48,9 @@ class Order extends EntityBase {
   @JoinColumn({ name: 'establishment_id' })
   establishment: Establishment;
 
-  public updateOrder(form_of_payment: FormOfPaymentType): void {
+  public updateOrder(form_of_payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
     this.form_of_payment = form_of_payment;
+    this.client_order_status = client_order_status;
   }
 }
 

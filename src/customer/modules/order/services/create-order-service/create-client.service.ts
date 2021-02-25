@@ -3,6 +3,7 @@
  * @author Jonatas Rosa Moura
  */
 
+import { EstablishmentRepository } from '@admin/modules/establishment/repository';
 import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { getCustomRepository } from 'typeorm';
@@ -14,6 +15,7 @@ export class CreateOrderService {
   async execute(orderProps: CreateOrderDto): Promise<ServiceResponse<Order | null>> {
     try {
       const orderRepository = getCustomRepository(OrderRepository);
+      const establishment = getCustomRepository(EstablishmentRepository);
 
       // Fazendo validação DTO
 
