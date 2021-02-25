@@ -1,6 +1,5 @@
 /*
  * @fileoverview entidade de produtos
- *
  * @author Bruno Mesquita
  * @author Jonatas Rosa Moura
  */
@@ -8,7 +7,9 @@
 import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
+
 import Product from '@core/product';
+
 import Order from '@core/order';
 
 @Entity('item_order')

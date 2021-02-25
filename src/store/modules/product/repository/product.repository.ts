@@ -1,21 +1,9 @@
 /**
 
-
-
  * @fileoverview Criação do schema de validação para criação do produto
-
-
-
- *
-
-
-
  * @author Bruno Mesquita
 
  * @author Jonatas Rosa Moura
-
-
-
  */
 
 import { EntityRepository, Repository } from 'typeorm';

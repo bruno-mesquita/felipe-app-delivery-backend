@@ -6,7 +6,7 @@
 export interface Item {
   amount: number;
   price: number;
-  itemId: string;
+  itemId: string; // produto
   total: number;
 }
 
