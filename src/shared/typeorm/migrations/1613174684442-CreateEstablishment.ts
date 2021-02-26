@@ -38,6 +38,14 @@ export class CreateEstablishment1613174684442 implements MigrationInterface {
             type: 'boolean',
           },
           {
+            name: 'openingTime',
+            type: 'int',
+          },
+          {
+            name: 'closingTime',
+            type: 'int',
+          },
+          {
             name: 'created_at',
             type: 'timestamp',
             default: 'now()',
