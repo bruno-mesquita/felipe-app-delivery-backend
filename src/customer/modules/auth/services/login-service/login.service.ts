@@ -9,12 +9,12 @@ import { getCustomRepository } from 'typeorm';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import ClientRepository from '@customer/modules/client/client.repository';
-import { LoginDto } from '../../dtos/login.dto';
+import { LoginClientDto } from '../../dtos/login-client.dto';
 import loginValidation from '../../validation/login.validation';
-import { IClientSession } from '../../dtos/session-token-dto';
+import { IClientSession } from '../../dtos/login-token-dto';
 
 class LoginService {
-  async execute(loginDto: LoginDto): Promise<ServiceResponse<IClientSession | null>> {
+  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<IClientSession | null>> {
     try {
       if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
 
@@ -25,7 +25,9 @@ class LoginService {
 
       if (!client) throw new Error('Usuário não encontrado');
 
-      if (!client.comparePassword(loginDto.password)) throw new Error('Credenciais inválidas');
+      if (!client.comparePassword(loginDto.password)) {
+        throw new Error('Credenciais inválidas');
+      }
 
       const token = tokenManager.create(client.getId());
 

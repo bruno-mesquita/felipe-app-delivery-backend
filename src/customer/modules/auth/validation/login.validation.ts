@@ -1,8 +1,8 @@
 import { object, string, SchemaOf } from 'yup';
 
-import { LoginDto } from '../dtos/login.dto';
+import { LoginClientDto } from '../dtos/login-client.dto';
 
-const schema: SchemaOf<LoginDto> = object().shape({
+const schema: SchemaOf<LoginClientDto> = object().shape({
   email: string().email().required(),
   password: string().required(),
 });

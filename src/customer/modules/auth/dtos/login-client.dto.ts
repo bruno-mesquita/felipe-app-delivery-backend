@@ -4,7 +4,7 @@
  * @author Jonatas Rosa Moura
  */
 
-export interface LoginDto {
+export interface LoginClientDto {
   email: string;
   password: string;
 }
