@@ -10,7 +10,7 @@ import { Column, Entity, JoinColumn, ManyToOne } from 'typeorm';
 import EntityBase from '@shared/utils/entity';
 import State from '@core/address-state';
 
-@Entity('cities')
+@Entity('city_address')
 class City extends EntityBase {
   @Column()
   name: string;
