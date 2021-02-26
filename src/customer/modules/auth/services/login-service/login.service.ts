@@ -11,10 +11,10 @@ import TokenManager from '@shared/utils/token-manager';
 import ClientRepository from '@customer/modules/client/client.repository';
 import { LoginClientDto } from '../../dtos/login-client.dto';
 import loginValidation from '../../validation/login.validation';
-import { IClientSession } from '../../dtos/login-token-dto';
+import { IClientAuth } from '../../dtos/login-token-dto';
 
-class LoginService {
-  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<IClientSession | null>> {
+class LoginClientService {
+  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<IClientAuth | null>> {
     try {
       if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
 
@@ -38,4 +38,4 @@ class LoginService {
   }
 }
 
-export default LoginService;
+export { LoginClientService };

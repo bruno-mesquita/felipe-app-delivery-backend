@@ -1,11 +1,11 @@
 import { Request, Response } from 'express';
 
-import { LoginService } from './services';
+import { LoginClientService } from './services/login-service/login.service';
 
 class AuthController {
   async login(req: Request, res: Response): Promise<Response> {
     try {
-      const loginService = new LoginService();
+      const loginService = new LoginClientService();
 
       const result = await loginService.execute(req.body);
 

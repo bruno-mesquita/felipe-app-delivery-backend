@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 
 import Client from 'src/core/client';
-/* import ClientRepository from ''; */
+import ClientRepository from '@customer/modules/client/client.repository';
 
 class ListClientService {
   public async execute(): Promise<Client[]> {
