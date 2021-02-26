@@ -11,12 +11,14 @@ const REQUIRED = 'Campo obrigátorio';
 export const schema: SchemaOf<CreateOrderDto> = object({
   establishmentId: string().required(REQUIRED),
   items: array()
-    .of<any>({
-      amount: number().required(REQUIRED),
-      price: number().required(REQUIRED),
-      itemId: string().required(REQUIRED),
-      total: number().required(REQUIRED),
-    })
+    .of<any>(
+      object({
+        amount: number().required(REQUIRED),
+        price: number().required(REQUIRED),
+        itemId: string().required(REQUIRED),
+        total: number().required(REQUIRED),
+      })
+    )
     .required(REQUIRED),
   fee: number().required(REQUIRED),
   total: number().required(REQUIRED),
