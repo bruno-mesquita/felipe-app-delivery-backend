@@ -14,6 +14,8 @@ import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, Tree } f
 
 import { compareSync, hashSync } from 'bcryptjs';
 
+import { setHours, isPast } from 'date-fns';
+
 import EntityBase from '@shared/utils/entity';
 
 import Address from '@core/address';
@@ -42,6 +44,12 @@ class Establishment extends EntityBase {
 
   @Column()
   active: boolean;
+
+  @Column()
+  openingTime: number;
+
+  @Column()
+  closingTime: number;
 
   // Relacionamento de outras tabelas
 
@@ -94,6 +102,14 @@ class Establishment extends EntityBase {
 
   public setPassword(password: string): void {
     this.password = hashSync(password, 8);
+  }
+
+  public isOpen(): boolean {
+    const closedDate = setHours(new Date(), this.closingTime);
+
+    if (isPast(closedDate)) return false;
+
+    return true;
   }
 }
 

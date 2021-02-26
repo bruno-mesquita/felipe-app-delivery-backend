@@ -52,6 +52,21 @@ class Order extends EntityBase {
     this.form_of_payment = form_of_payment;
     this.client_order_status = client_order_status;
   }
+
+  public setTotal(total: number): void {
+    if (total > 0) {
+      this.total = total;
+    }
+  }
+
+  public open(): void {
+    this.order_status = 'Aberto';
+    this.client_order_status = 'Enviado';
+  }
+
+  public calcTotal(): number {
+    return this.total + this.freight_value - this.discount;
+  }
 }
 
 export default Order;

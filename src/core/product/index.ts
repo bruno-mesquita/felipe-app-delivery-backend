@@ -34,6 +34,10 @@ class Product extends EntityBase {
     this.price = price;
     this.description = description;
   }
+
+  public calcTotal(amount: number): number {
+    return this.price * amount;
+  }
 }
 
 export default Product;
