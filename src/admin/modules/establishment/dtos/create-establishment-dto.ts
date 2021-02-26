@@ -16,4 +16,8 @@ export interface CreateEstablishmentDto {
   confirmPassword: string;
 
   cellphone: string;
+
+  openingTime: number;
+
+  closingTime: number;
 }

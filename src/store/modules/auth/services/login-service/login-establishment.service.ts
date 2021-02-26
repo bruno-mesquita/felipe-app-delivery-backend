@@ -8,7 +8,7 @@ import { EstablishmentRepository } from '@admin/modules/establishment/repository
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import { getCustomRepository } from 'typeorm';
-import { compareSync, hashSync } from 'bcryptjs'; // Teste senha
+import { compareSync } from 'bcryptjs'; // Teste senha
 import { LoginEstablishmentDto } from '../../dtos/login-establishment';
 import { IEstablishmentAuth } from '../../dtos/login-token-dto';
 import loginValidation from '../../validation/login-establishment.validation';

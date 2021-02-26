@@ -17,7 +17,7 @@
 
  */
 
-import { object, SchemaOf, string } from 'yup';
+import { object, SchemaOf, string, number } from 'yup';
 
 import { CreateEstablishmentDto } from '../dtos/create-establishment-dto';
 
@@ -37,6 +37,10 @@ const schema: SchemaOf<CreateEstablishmentDto> = object({
   confirmPassword: string().required(REQUIRED),
 
   cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
+
+  openingTime: number().required(REQUIRED),
+
+  closingTime: number().required(REQUIRED),
 });
 
 export default schema;
