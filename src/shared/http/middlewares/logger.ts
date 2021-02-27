@@ -21,7 +21,7 @@ import JsonHandler from '../../utils/json-handler';
 const getNow = () => format(new Date(), 'dd/mm/yyyy HH:mm:MM');
 
 const getIp = (req: any) => {
-  return req.ip || req._remoteAddress || (req.connection && req.connection.remoteAddress) || undefined;
+  return req.ip || req.remoteAddress || (req.connection && req.connection.remoteAddress) || undefined;
 };
 
 const loggerMiddleware = () => {

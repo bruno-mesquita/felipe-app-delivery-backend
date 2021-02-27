@@ -23,11 +23,15 @@ class LoginClientService {
 
       const client = await clientRepository.findByEmail(loginDto.email);
 
-      if (!client) throw new Error('Usuário não encontrado');
+      if (!client) throw new Error('[erro]: E-mail ou senha incorreto');
+
+      // Comparar senha digitada do cliente com a que foi salva no banco
 
       if (!client.comparePassword(loginDto.password)) {
         throw new Error('Credenciais inválidas');
       }
+
+      // Criando token
 
       const token = tokenManager.create(client.getId());
 

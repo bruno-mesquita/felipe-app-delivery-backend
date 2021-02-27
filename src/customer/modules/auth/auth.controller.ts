@@ -11,7 +11,7 @@ class AuthController {
 
       if (result.err) throw new Error(result.err);
 
-      return res.json(result.result);
+      return res.status(201).json(result.result);
     } catch (err) {
       return res.status(401).json({ err: err.message });
     }
