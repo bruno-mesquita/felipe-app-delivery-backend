@@ -6,7 +6,7 @@
 import { Request, Response } from 'express';
 import { CreateCityService } from '../services/CreateCityService';
 
-class StateController {
+class CityController {
   async create(req: Request, res: Response): Promise<Response> {
     try {
       const cityService = new CreateCityService();
@@ -22,4 +22,4 @@ class StateController {
   }
 }
 
-export { StateController };
+export { CityController };
