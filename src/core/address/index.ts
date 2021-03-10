@@ -6,23 +6,23 @@
 
 */
 
-import { Entity, Column, OneToOne, JoinColumn } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, Tree } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import City from '@core/address-city';
 
 @Entity('address')
 class Address extends EntityBase {
-  @Column()
+  @Column({ default: null })
   street: string;
 
-  @Column()
+  @Column({ default: null })
   number: number;
 
-  @Column()
+  @Column({ default: null })
   neighborhood: string;
 
-  @Column()
+  @Column({ default: null })
   cep: string;
 
   @OneToOne(() => City)

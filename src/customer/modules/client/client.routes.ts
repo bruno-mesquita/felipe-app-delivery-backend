@@ -6,7 +6,7 @@
 
 import isAuthenticated from '@shared/http/middlewares/is-authenticated';
 import { Router } from 'express';
-import { stateRoutes } from '../address/state-city.routes';
+import { stateRoutes } from '../address/address-state-city.routes';
 
 import ClientController from './client.controller';
 

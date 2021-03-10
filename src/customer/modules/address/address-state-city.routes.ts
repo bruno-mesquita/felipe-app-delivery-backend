@@ -6,11 +6,13 @@
 
 import { Router } from 'express';
 
-import { CityController } from './controllers/CityController';
 import { StateController } from './controllers/StateController';
+import { CityController } from './controllers/CityController';
+import { AddressController } from './controllers/AddressController';
 
 const stateController = new StateController();
 const cityController = new CityController();
+const addressController = new AddressController();
 
 const stateRoutes = Router();
 
@@ -19,5 +21,8 @@ stateRoutes.post('/state', stateController.create);
 
 // Cidade
 stateRoutes.post('/city', cityController.create);
+
+// Endereço
+stateRoutes.post('/addressClient', addressController.create);
 
 export { stateRoutes };
