@@ -6,6 +6,7 @@
 
 import isAuthenticated from '@shared/http/middlewares/is-authenticated';
 import { Router } from 'express';
+import { stateRoutes } from '../address/state.routes';
 
 import ClientController from './client.controller';
 
@@ -22,5 +23,9 @@ routes.post('/activate', clientController.activate);
 routes.put('/profile/:id', isAuthenticated, clientController.updateProfile);
 
 routes.put('/update-password/:id', isAuthenticated, clientController.updatePassword);
+
+// Endereço
+
+routes.use('/address', stateRoutes);
 
 export default routes;

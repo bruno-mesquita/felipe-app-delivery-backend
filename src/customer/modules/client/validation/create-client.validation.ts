@@ -22,9 +22,9 @@ const schema: SchemaOf<CreateClientDto> = object({
 
   confirmPassword: string().required(REQUIRED),
 
-  cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
-
   cpf: string().length(11).required(REQUIRED),
+
+  cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
 });
 
 export default schema;
