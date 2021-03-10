@@ -7,7 +7,7 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { getCustomRepository } from 'typeorm';
 import { StateAddressDto } from '../dtos/create-state-dto';
 import { AddresStateRepository } from '../repository/StateRepository';
-import { schema } from '../validation/create-state.validation';
+import { schema } from '../validations/create-state.validation';
 
 class CreateStateService {
   async execute(createStateDto: StateAddressDto): Promise<ServiceResponse<State | null>> {

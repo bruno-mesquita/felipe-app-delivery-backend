@@ -1,4 +1,5 @@
-import { object, SchemaOf, string, number } from 'yup';
+import { object, SchemaOf, string } from 'yup';
+
 import { CityAddressDto } from '../dtos/create-city-dto';
 
 const REQUIRED = 'Campo obrigátorio';

@@ -1,4 +1,6 @@
 import Address from '@core/address';
+import City from '@core/address-city';
+import State from '@core/address-state';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { getCustomRepository } from 'typeorm';
 import { ClientAddressDto } from '../dtos/create-address-dto';
@@ -9,6 +11,8 @@ class CreateAddressService {
   async execute(createStateDto: ClientAddressDto): Promise<ServiceResponse<Address | null>> {
     try {
       const addressRepository = getCustomRepository(AddressRepository);
+      const stateRepository = getCustomRepository(State);
+      const cityRepository = getCustomRepository(City);
 
       // Fazendo validação DTO
 
