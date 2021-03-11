@@ -7,7 +7,7 @@ import { Request, Response } from 'express';
 import { CreateOrderService } from '../services/create-order-service/create-order.service';
 import { ListOrderSerive } from '../services/list-order-service/list-client.service';
 import { ShowOrderService } from '../services/show-order-service/show-order.service';
-import { UpdateOrderservice } from '../services/cancel-order-service/update-order.service';
+import { CancelOrderservice } from '../services/cancel-order-service/update-order.service';
 
 export class OrderController {
   async list(req: Request, res: Response): Promise<Response> {
@@ -58,7 +58,7 @@ export class OrderController {
   async update(req: Request, res: Response): Promise<Response> {
     try {
       const { id } = req.params;
-      const updateOrderService = new UpdateOrderservice();
+      const updateOrderService = new CancelOrderservice();
 
       const order = await updateOrderService.execute({ ...req.body, id });
 

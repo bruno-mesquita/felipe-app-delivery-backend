@@ -6,8 +6,6 @@
 
  */
 
-import ClientRepository from '@customer/modules/client/client.repository';
-
 import { ItemOrderRepository } from '@customer/modules/item-order/item-order.repository';
 
 import { ServiceResponse } from '@shared/utils/service-response';
@@ -30,8 +28,6 @@ export class CreateOrderService {
       const itemOrderRepository = getCustomRepository(ItemOrderRepository);
 
       const productRepository = getCustomRepository(ProductRepository);
-
-      const clientRepository = getCustomRepository(ClientRepository);
 
       // Fazendo validação DTO
 
