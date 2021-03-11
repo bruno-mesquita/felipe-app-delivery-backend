@@ -8,6 +8,7 @@ const schema: SchemaOf<ClientAddressDto> = object({
   number: number().required(REQUIRED),
   neighborhood: string().required(REQUIRED),
   cep: string().required(REQUIRED),
+  city_id: string().uuid().required(REQUIRED),
 });
 
 export { schema };

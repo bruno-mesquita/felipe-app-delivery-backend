@@ -3,4 +3,5 @@ export interface ClientAddressDto {
   number: number;
   neighborhood: string;
   cep: string;
+  city_id: string;
 }

@@ -2,6 +2,7 @@ import { getCustomRepository } from 'typeorm';
 
 import Address from '@core/address';
 import { ServiceResponse } from '@shared/utils/service-response';
+import { AddressCityRepository } from '@admin/modules/address/repository/CityRepository';
 import { ClientAddressDto } from '../dtos/create-address-dto';
 import { AddressRepository } from '../repository/AddressRepository';
 import { schema } from '../validation/create-address.validation';
@@ -10,6 +11,13 @@ class CreateAddressService {
   async execute(createAddressDto: ClientAddressDto): Promise<ServiceResponse<Address | null>> {
     try {
       const addressRepository = getCustomRepository(AddressRepository);
+      const cityRepository = getCustomRepository(AddressCityRepository);
+
+      // Verificando se a cidade existe no banco
+
+      const cityExists = cityRepository.findById(createAddressDto.city_id);
+
+      if (!cityExists) throw new Error('[ERRO: Endereço] Cidade selecionada não existe no sistema');
 
       // Fazendo validação DTO
 
@@ -22,6 +30,8 @@ class CreateAddressService {
       const address = addressRepository.create(createAddressDto);
 
       // Salvando no Banco de dados
+
+      console.log(address);
 
       await addressRepository.save(address);
 
