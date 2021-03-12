@@ -4,9 +4,18 @@
  */
 
 import { Request, Response } from 'express';
-import { CreateStateService } from '../services/CreateStateService';
+import { CreateStateService } from '../services/State/CreateStateService';
+import { ListStatesService } from '../services/State/ListStateService';
 
 class StateController {
+  async list(req: Request, res: Response): Promise<Response> {
+    const listStates = new ListStatesService();
+
+    const states = await listStates.execute();
+
+    return res.json(states);
+  }
+
   async create(req: Request, res: Response): Promise<Response> {
     try {
       const stateService = new CreateStateService();

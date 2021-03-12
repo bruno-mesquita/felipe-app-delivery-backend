@@ -4,9 +4,18 @@
  */
 
 import { Request, Response } from 'express';
-import { CreateCityService } from '../services/CreateCityService';
+import { CreateCityService } from '../services/City/CreateCityService';
+import { ListCitiesService } from '../services/City/ListStatesService';
 
 class CityController {
+  async list(req: Request, res: Response): Promise<Response> {
+    const listCyties = new ListCitiesService();
+
+    const cities = await listCyties.execute();
+
+    return res.json(cities);
+  }
+
   async create(req: Request, res: Response): Promise<Response> {
     try {
       const cityService = new CreateCityService();

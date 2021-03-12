@@ -15,8 +15,10 @@ const stateCityRoutes = Router();
 
 // Estado
 stateCityRoutes.post('/state', stateController.create);
+stateCityRoutes.get('/state', stateController.list);
 
 // Cidade
 stateCityRoutes.post('/city', cityController.create);
+stateCityRoutes.get('/cities', cityController.list);
 
 export { stateCityRoutes };
