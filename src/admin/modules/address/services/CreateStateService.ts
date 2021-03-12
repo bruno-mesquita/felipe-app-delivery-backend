@@ -20,9 +20,18 @@ class CreateStateService {
 
       if (!valid) throw new Error('[Erro: Estado] Por favor reveja seus dados');
 
+      // Verificando se o Estado já exite
+
+      const stateExists = await stateRepository.findByName(createStateDto.name);
+
+      if (stateExists) throw new Error('[ERRO]: Estado já existe no sistema!');
+
       // criando classe
 
-      const state = stateRepository.create(createStateDto);
+      const state = stateRepository.create({
+        ...createStateDto,
+        active: true,
+      });
 
       // Salvando no Banco de dados
 

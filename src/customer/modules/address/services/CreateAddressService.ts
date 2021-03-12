@@ -13,21 +13,24 @@ class CreateAddressService {
       const addressRepository = getCustomRepository(AddressRepository);
       const cityRepository = getCustomRepository(AddressCityRepository);
 
-      // Verificando se a cidade existe no banco
-
-      const cityExists = cityRepository.findById(createAddressDto.city_id);
-
-      if (!cityExists) throw new Error('[ERRO: Endereço] Cidade selecionada não existe no sistema');
-
       // Fazendo validação DTO
 
       const valid = schema.isValidSync(createAddressDto);
 
       if (!valid) throw new Error('[Erro: Endereço] Por favor reveja seus dados');
 
+      // Verificando se a cidade existe no banco
+
+      const cityExists = await cityRepository.findById(createAddressDto.city);
+
+      if (!cityExists) throw new Error('[ERRO: Endereço] Cidade selecionada não existe no sistema');
+
       // criando classe
 
-      const address = addressRepository.create(createAddressDto);
+      const address = addressRepository.create({
+        ...createAddressDto,
+        city: cityExists,
+      });
 
       // Salvando no Banco de dados
 
