@@ -34,8 +34,6 @@ class CreateAddressService {
 
       // Salvando no Banco de dados
 
-      console.log(address);
-
       await addressRepository.save(address);
 
       return { result: address, err: null };

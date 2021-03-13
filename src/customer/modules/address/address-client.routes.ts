@@ -10,9 +10,9 @@ import { AddressController } from './controllers/AddressController';
 
 const addressController = new AddressController();
 
-const clientAddressRoutes = Router();
+const addressRoutes = Router();
 
 // Endereço
-clientAddressRoutes.post('/addressClient', addressController.create);
+addressRoutes.post('/addressToClient', addressController.create);
 
-export { clientAddressRoutes };
+export { addressRoutes };
