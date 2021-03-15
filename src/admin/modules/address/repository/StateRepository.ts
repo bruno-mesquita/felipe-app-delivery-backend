@@ -11,6 +11,10 @@ class AddresStateRepository extends Repository<AddresState> {
   async findByName(name: string) {
     return this.findOne({ where: { name } });
   }
+
+  async findByCities(cities: string) {
+    return this.findOne({ where: { cities } });
+  }
 }
 
 export { AddresStateRepository };
