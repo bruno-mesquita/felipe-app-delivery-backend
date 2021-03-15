@@ -3,10 +3,17 @@ import State from '@core/address-state';
 import { AddresStateRepository } from '../../repository/StateRepository';
 
 class ListStatesService {
-  async execute(): Promise<State[]> {
+  async execute(state_id: string): Promise<State | undefined> {
     const statesRepository = getCustomRepository(AddresStateRepository);
 
-    const states = await statesRepository.find();
+    const states = await statesRepository.findOne({
+      where: {
+        id: state_id,
+      },
+      relations: ['cities'],
+    });
+
+    console.log(states);
 
     return states;
   }

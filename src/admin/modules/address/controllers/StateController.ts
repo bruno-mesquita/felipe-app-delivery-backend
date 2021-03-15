@@ -9,9 +9,11 @@ import { ListStatesService } from '../services/State/ListStateService';
 
 class StateController {
   async list(req: Request, res: Response): Promise<Response> {
+    const { state_id } = req.params;
+
     const listStates = new ListStatesService();
 
-    const states = await listStates.execute();
+    const states = await listStates.execute(state_id);
 
     return res.json(states);
   }
