@@ -4,20 +4,10 @@
  */
 
 import { Request, Response } from 'express';
-import { CreateStateService } from '../services/State/CreateStateService';
-import { ListStatesService } from '../services/State/ListStateService';
+import { CreateStateService } from '../services/CreateStateService';
+import { ListStatesService } from '../../../../customer/modules/address/services/ListCitiesByStateService';
 
 class StateController {
-  async list(req: Request, res: Response): Promise<Response> {
-    const { state_id } = req.params;
-
-    const listStates = new ListStatesService();
-
-    const states = await listStates.execute(state_id);
-
-    return res.json(states);
-  }
-
   async create(req: Request, res: Response): Promise<Response> {
     try {
       const stateService = new CreateStateService();

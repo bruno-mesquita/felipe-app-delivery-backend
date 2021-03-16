@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm';
 import City from '@core/address-city';
-import { AddressCityRepository } from '../../repository/CityRepository';
+import { AddressCityRepository } from '../../../../admin/modules/address/repository/CityRepository';
 
 class ListCitiesService {
   async execute(): Promise<City[]> {
