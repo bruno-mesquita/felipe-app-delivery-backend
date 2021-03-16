@@ -15,9 +15,9 @@ class AddressController {
 
     const listCitiesByState = new ListCitiesByStatesService();
 
-    const states = await listCitiesByState.execute(state_id);
+    const state = await listCitiesByState.execute(state_id);
 
-    return res.json(states);
+    return res.json(state);
   }
 
   async listCities(req: Request, res: Response): Promise<Response> {
