@@ -19,7 +19,7 @@ import { CreateClientDto } from '../../dtos/create-client-dto';
 import createClientSchema from '../../validation/create-client.validation';
 
 class CreateClientService {
-  async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<Client | null>> {
+  async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<string | null>> {
     try {
       const smsService = new SmsService();
 
@@ -67,7 +67,7 @@ class CreateClientService {
       // Salvando no db
       await clientActivationCodeRepository.save(clientActivationCode);
 
-      return { result: user, err: null };
+      return { result: user.id, err: null };
     } catch (err) {
       return { result: err, err: err.message };
     }
