@@ -12,6 +12,7 @@ import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
 
+import '@shared/typeorm';
 import routes from './routes';
 
 const app = express();
