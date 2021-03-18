@@ -10,10 +10,8 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import ClientRepository from '@customer/modules/client/client.repository';
 import { AddressClientRepository } from '@customer/modules/address-client/repository/AddressClientRepository';
-import { AvatarRepository } from '@customer/modules/avatar/avatar-repository';
 import { LoginClientDto } from '../dtos/login-client.dto';
 import loginValidation from '../validation/login.validation';
-import { IClientAuth } from '../dtos/login-token-dto';
 
 class LoginClientService {
   async execute(loginDto: LoginClientDto): Promise<ServiceResponse<any | null>> {
@@ -49,8 +47,6 @@ class LoginClientService {
       // Criando token
 
       const token = tokenManager.create(client.getId());
-
-      console.log({ token, client });
 
       return {
         result: {
