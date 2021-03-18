@@ -6,7 +6,11 @@ import Establishment from '@core/establishment';
 class EstablishmentRepository extends Repository<Establishment> {
   async findByCategory(categoryId: string) {
     try {
-      return this.find({ where: { category: categoryId }, relations: ['image'] });
+      return this.find({
+        where: { category: categoryId, active: true },
+        relations: ['image'],
+        select: ['name', 'image', 'openingTime', 'closingTime'],
+      });
     } catch (err) {
       return [];
     }
