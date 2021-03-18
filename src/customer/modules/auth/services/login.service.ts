@@ -10,6 +10,7 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import ClientRepository from '@customer/modules/client/client.repository';
 import { AddressClientRepository } from '@customer/modules/address-client/repository/AddressClientRepository';
+import { AvatarRepository } from '@customer/modules/avatar/avatar-repository';
 import { LoginClientDto } from '../dtos/login-client.dto';
 import loginValidation from '../validation/login.validation';
 import { IClientAuth } from '../dtos/login-token-dto';
@@ -20,10 +21,15 @@ class LoginClientService {
       if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
 
       const clientRepository = getCustomRepository(ClientRepository);
-      const clientAddresses = getCustomRepository(AddressClientRepository);
+      const clientAddressesRepository = getCustomRepository(AddressClientRepository);
       const tokenManager = new TokenManager();
 
-      const client = await clientRepository.findByEmail(loginDto.email);
+      // Procurar pelo e-mail e pegar o avatar desse cliente
+
+      const client = await clientRepository.findOne({
+        where: { email: loginDto.email },
+        relations: ['image'],
+      });
 
       if (!client) throw new Error('[erro]: E-mail ou senha incorreto');
 
@@ -33,7 +39,9 @@ class LoginClientService {
         throw new Error('Credenciais inválidas');
       }
 
-      const adresses = await clientAddresses.find({
+      // Todos os endereços do cliente
+
+      const adresses = await clientAddressesRepository.find({
         where: { client_id: client.id },
         relations: ['address_id'],
       });
@@ -49,8 +57,9 @@ class LoginClientService {
           token,
           client: {
             name: client.name,
+            avatar: client.image,
             cpf: client.cpf,
-            cellphone: client.cellphone,
+            phone: client.cellphone,
             email: client.email,
             adresses,
           },

@@ -8,7 +8,6 @@ import { getCustomRepository } from 'typeorm';
 
 import SmsService from '@shared/utils/sms';
 
-import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { ClientActivationCodeRepository } from '../../../client-activation-code';
 

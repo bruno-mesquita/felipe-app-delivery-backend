@@ -5,7 +5,7 @@ import Establishment from '@core/establishment';
 import EstablishmentRepository from '../../establishment.repository';
 import EstablishmentCategoryRepository from '../../../establishment-category/establishment-category.repository';
 
-class ListEstablishmentService {
+export class ListEstablishmentService {
   async execute(categoryId: string): Promise<ServiceResponse<Establishment[]>> {
     try {
       const establishmentRepository = getCustomRepository(EstablishmentRepository);
@@ -24,5 +24,3 @@ class ListEstablishmentService {
     }
   }
 }
-
-export default ListEstablishmentService;
