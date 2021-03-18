@@ -9,16 +9,18 @@ import { getCustomRepository } from 'typeorm';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import ClientRepository from '@customer/modules/client/client.repository';
-import { LoginClientDto } from '../../dtos/login-client.dto';
-import loginValidation from '../../validation/login.validation';
-import { IClientAuth } from '../../dtos/login-token-dto';
+import { AddressClientRepository } from '@customer/modules/address-client/repository/AddressClientRepository';
+import { LoginClientDto } from '../dtos/login-client.dto';
+import loginValidation from '../validation/login.validation';
+import { IClientAuth } from '../dtos/login-token-dto';
 
 class LoginClientService {
-  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<IClientAuth | null>> {
+  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<any | null>> {
     try {
       if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
 
       const clientRepository = getCustomRepository(ClientRepository);
+      const clientAddresses = getCustomRepository(AddressClientRepository);
       const tokenManager = new TokenManager();
 
       const client = await clientRepository.findByEmail(loginDto.email);
@@ -31,11 +33,30 @@ class LoginClientService {
         throw new Error('Credenciais inválidas');
       }
 
+      const adresses = await clientAddresses.find({
+        where: { client_id: client.id },
+        relations: ['address_id'],
+      });
+
       // Criando token
 
       const token = tokenManager.create(client.getId());
 
-      return { result: { token, client }, err: null };
+      console.log({ token, client });
+
+      return {
+        result: {
+          token,
+          client: {
+            name: client.name,
+            cpf: client.cpf,
+            cellphone: client.cellphone,
+            email: client.email,
+            adresses,
+          },
+        },
+        err: null,
+      };
     } catch (err) {
       return { result: null, err: 'Erro no login' };
     }
