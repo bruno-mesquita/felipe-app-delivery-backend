@@ -64,8 +64,33 @@ class Order extends EntityBase {
     this.client_order_status = 'Enviado';
   }
 
+  private getStatus(): CustomerStatusType[] {
+    return ['Enviado', 'Aceito', 'Em preparo', 'Saiu para entrega', 'Entregue', 'Cancelado'];
+  }
+
+  public nextStatus(): void {
+    if (this.client_order_status !== 'Entregue' && this.client_order_status !== 'Cancelado') {
+      const index = this.getStatus().findIndex((item) => item === this.client_order_status);
+
+      const status = this.getStatus()[index + 1];
+
+      if (status === 'Entregue') {
+        this.order_status = 'Finalizado';
+      } else {
+        this.order_status = 'Em andamento';
+      }
+
+      this.client_order_status = status;
+    }
+  }
+
   public calcTotal(): number {
     return this.total + this.freight_value - this.discount;
+  }
+
+  public cancel(): void {
+    this.client_order_status = 'Cancelado';
+    this.order_status = 'Cancelado';
   }
 }
 

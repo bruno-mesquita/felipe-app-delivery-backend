@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "tsnd -r tsconfig-paths/register --respawn --transpile-only --clear src/shared/http/server.ts",
+    "dev:api:client": "tsnd -r tsconfig-paths/register --respawn --transpile-only --clear src/customer/http/server.ts",
+    "dev:api:admin": "tsnd -r tsconfig-paths/register --respawn --transpile-only --clear src/admin/http/server.ts",
+    "dev:api:store": "tsnd -r tsconfig-paths/register --respawn --transpile-only --clear src/store/http/server.ts",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
     "start": "node dist/shared/http/server.js",
     "test": "jest",
