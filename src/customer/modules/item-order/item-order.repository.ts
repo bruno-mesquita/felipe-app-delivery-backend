@@ -10,14 +10,6 @@ class ItemOrderRepository extends Repository<ItemOrder> {
 
     return itemOrder;
   }
-
-  async findByAmount(amount: number): Promise<ItemOrder | undefined> {
-    const itemOrder = await this.findOne({
-      where: { quantity: amount },
-    });
-
-    return itemOrder;
-  }
 }
 
 export { ItemOrderRepository };

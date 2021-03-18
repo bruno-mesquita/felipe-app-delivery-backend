@@ -13,8 +13,6 @@ import compression from 'compression';
 import helmet from 'helmet';
 
 import routes from './routes';
-import '../typeorm';
-import logger from './middlewares/logger';
 
 const app = express();
 
@@ -23,10 +21,9 @@ app.use(cors());
 app.use(compression());
 app.use(helmet());
 app.disable('x-powered-by');
-app.use(logger());
 
-app.use(routes);
+app.use('/api', routes);
 
-app.listen(process.env.API_PORT, () => {
-  console.log(`Server started ON! ${process.env.API_PORT}`);
+app.listen(process.env.API_CLIENT_PORT, () => {
+  console.log(`Server started ON! ${process.env.API_CLIENT_PORT}`);
 });

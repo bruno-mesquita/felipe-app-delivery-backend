@@ -36,11 +36,11 @@ describe('Testes para o serviço de criação de usuário', () => {
 
     const result = await createUserService.execute({
       name: 'Bruno',
-      email: 'bruno@gmail.com',
-      cellphone: '12981315901',
+      email: 'bruno2@gmail.com',
+      cellphone: '12981415901',
       confirmPassword: 'senhaforte',
       password: 'senhaforte',
-      cpf: '00000000000',
+      cpf: '00000002000',
     });
 
     expect(result.err).toBe(null);
