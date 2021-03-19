@@ -9,4 +9,5 @@ export interface CreateClientDto {
   confirmPassword: string;
   cpf: string;
   cellphone: string;
+  city: string;
 }
