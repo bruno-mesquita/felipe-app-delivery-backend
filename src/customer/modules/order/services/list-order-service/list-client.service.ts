@@ -8,12 +8,12 @@ import { getCustomRepository } from 'typeorm';
 import { OrderRepository } from '../../repository/order-repository';
 
 class ListOrderSerive {
-  async execute(): Promise<Order[]> {
+  async execute(userId: string): Promise<Order[]> {
     const ordersRepository = getCustomRepository(OrderRepository);
 
-    const order = await ordersRepository.find();
+    const orders = await ordersRepository.findByUserId(userId);
 
-    return order;
+    return orders;
   }
 }
 

@@ -1,5 +1,9 @@
-export interface CreateAddressClient {
+export interface ClientAddressDto {
+  street: string;
+  number: number;
+  neighborhood: string;
+  cep: string;
+  city: string;
   nickname: string;
-  client_id: string;
-  address_id: string;
+  userId: string;
 }

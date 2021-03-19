@@ -18,13 +18,15 @@ export class OrderRepository extends Repository<Order> {
     return order;
   }
 
-  async findByEstablishmentId(establishment: string): Promise<Order | undefined> {
-    const order = await this.findOne({
-      where: {
-        establishmentId: establishment,
-      },
-    });
-
-    return order;
+  async findByUserId(userId: string): Promise<Order[]> {
+    try {
+      return this.find({
+        where: {
+          userId,
+        },
+      });
+    } catch (err) {
+      return [];
+    }
   }
 }

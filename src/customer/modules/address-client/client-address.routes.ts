@@ -1,11 +1,16 @@
 import { Router } from 'express';
 
-import { ClientAddressController } from './controllers/ClientAddressController';
+import isAuthenticated from '@shared/middlewares/is-authenticated';
+import { ClientAddressController } from './ClientAddressController';
 
 const clientAddressController = new ClientAddressController();
 
 const clientAddressRoutes = Router();
 
-clientAddressRoutes.post('/addressClient', clientAddressController.create);
+clientAddressRoutes.use(isAuthenticated);
+clientAddressRoutes.get('/adresses-client', clientAddressController.list);
+clientAddressRoutes.post('/adresses-client', clientAddressController.create);
+clientAddressRoutes.put('/adresses-client/:id', clientAddressController.update);
+clientAddressRoutes.delete('/adresses-client/:id', clientAddressController.delete);
 
 export { clientAddressRoutes };

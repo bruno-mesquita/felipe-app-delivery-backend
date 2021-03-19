@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { ListEstablishmentService } from './sevices';
+import { ListEstablishmentService } from './services';
 
 class EstablishmentController {
   async getAll(req: Request, res: Response): Promise<Response> {
@@ -13,7 +13,7 @@ class EstablishmentController {
 
       return res.json(response);
     } catch (err) {
-      return res.status(400).json({ err });
+      return res.status(400).json({ err: err.message });
     }
   }
 }
