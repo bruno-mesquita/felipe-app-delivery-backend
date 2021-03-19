@@ -2,8 +2,8 @@ import { getCustomRepository } from 'typeorm';
 
 import AddressClient from '@core/address-client';
 import { ServiceResponse } from '@shared/utils/service-response';
+import { AddressRepository } from '@customer/modules/state';
 import { AddressClientRepository } from '../../AddressClientRepository';
-import { AddressRepository } from '../../../address/AddressRepository';
 import ClientRepository from '../../../client/client.repository';
 import { ClientAddressDto } from '../../dtos/create-address-client';
 import { schema } from '../../validations/create-address-client';
