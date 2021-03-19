@@ -4,7 +4,7 @@ import Address from '@core/address';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { AddressCityRepository } from '@admin/modules/address/repository/CityRepository';
 import { ClientAddressDto } from '../dtos/create-address-dto';
-import { AddressRepository } from '../repository/AddressRepository';
+import { AddressRepository } from '../AddressRepository';
 import { schema } from '../validation/create-address.validation';
 
 class CreateAddressService {
