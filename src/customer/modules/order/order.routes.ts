@@ -4,15 +4,18 @@
  */
 
 import { Router } from 'express';
+
+import isAuthenticated from '@shared/middlewares/is-authenticated';
 import { OrderController } from './controller/order-controller';
 
 const orderRouter = Router();
 
 const orderController = new OrderController();
 
-orderRouter.post('/', orderController.create);
-orderRouter.get('/', orderController.list);
-orderRouter.get('/:id', orderController.show);
-orderRouter.put('/:id', orderController.update);
+orderRouter.use(isAuthenticated);
+orderRouter.post('/orders', orderController.create);
+orderRouter.get('/orders', orderController.list);
+orderRouter.get('/orders/:id', orderController.show);
+orderRouter.put('/orders/:id', orderController.update);
 
 export { orderRouter };
