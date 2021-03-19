@@ -5,44 +5,51 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { AddressClientRepository } from '../../AddressClientRepository';
 import { AddressRepository } from '../../../address/AddressRepository';
 import ClientRepository from '../../../client/client.repository';
-import { CreateAddressClient } from '../../dtos/create-address-client';
+import { ClientAddressDto } from '../../dtos/create-address-client';
 import { schema } from '../../validations/create-address-client';
+import { CityRepository } from '../../../city';
 
 export class CreateAddressClientService {
-  async execute(createAddressClientDto: CreateAddressClient): Promise<ServiceResponse<AddressClient | null>> {
+  async execute(createAddressDto: ClientAddressDto): Promise<ServiceResponse<AddressClient | null>> {
     try {
       const clientAddressRepository = getCustomRepository(AddressClientRepository);
       const clientRepository = getCustomRepository(ClientRepository);
       const addressRepository = getCustomRepository(AddressRepository);
+      const cityRepository = getCustomRepository(CityRepository);
 
-      // Fazendo validação DTO
+      const valid = schema.isValidSync(createAddressDto);
 
-      const valid = schema.isValidSync(createAddressClientDto);
+      if (!valid) throw new Error('[Erro: Endereço] Por favor reveja seus dados');
 
-      if (!valid) throw new Error('Por favor reveja seus dados.');
+      // Verificando se a cidade existe no banco
 
-      // Verificando se o cliente existe
+      const cityExists = await cityRepository.findById(createAddressDto.city);
 
-      const clientExists = await clientRepository.findById(createAddressClientDto.client_id);
+      if (!cityExists) throw new Error('[ERRO: Endereço] Cidade selecionada não existe no sistema');
 
-      if (!clientExists) throw new Error('[ERRO CLIENTE]: Cliente não existe no sistema!');
+      // criando classe
 
-      // // Verificando se o Endereço existe
-
-      const addressExists = await addressRepository.findById(createAddressClientDto.address_id);
-
-      if (!addressExists) throw new Error('[ERRO ENDEREÇO]: Endereço não existe no sistema!');
-
-      // Criando classe
-
-      const clientAddress = clientAddressRepository.create({
-        ...createAddressClientDto,
-        client_id: clientExists,
-        address_id: addressExists,
+      const address = addressRepository.create({
+        ...createAddressDto,
+        city: cityExists,
       });
 
       // Salvando no Banco de dados
+      await addressRepository.save(address);
 
+      // Verificando se o cliente existe
+      const clientExists = await clientRepository.findById(createAddressDto.userId);
+
+      if (!clientExists) throw new Error('[ERRO CLIENTE]: Cliente não existe no sistema!');
+
+      // Criando classe
+      const clientAddress = clientAddressRepository.create({
+        ...createAddressDto,
+        client_id: clientExists,
+        address_id: address,
+      });
+
+      // Salvando no Banco de dados
       await clientAddressRepository.save(clientAddress);
 
       return { result: clientAddress, err: null };

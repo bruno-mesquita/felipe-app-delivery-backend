@@ -23,6 +23,10 @@ class AddressClient extends EntityBase {
   @OneToOne(() => Address)
   @JoinColumn({ name: 'address_id' })
   address_id: Address;
+
+  public setNickname(nickname: string): void {
+    this.nickname = nickname;
+  }
 }
 
 export default AddressClient;

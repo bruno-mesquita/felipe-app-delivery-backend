@@ -1,0 +1,1 @@
+export { AddressRepository } from './AddressRepository';
