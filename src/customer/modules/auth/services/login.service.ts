@@ -9,7 +9,7 @@ import { getCustomRepository } from 'typeorm';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import ClientRepository from '@customer/modules/client/client.repository';
-import { AddressClientRepository } from '@customer/modules/address-client/AddressClientRepository';
+import { AddressClientRepository } from '@customer/modules/address-client';
 import { LoginClientDto } from '../dtos/login-client.dto';
 import loginValidation from '../validation/login.validation';
 

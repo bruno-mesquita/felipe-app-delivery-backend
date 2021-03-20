@@ -3,7 +3,6 @@
  * @author Jonatas Rosa Moura
  */
 
-import isAuthenticated from '@shared/middlewares/is-authenticated';
 import { Router } from 'express';
 
 import { OrderController } from './controller/order-controller';

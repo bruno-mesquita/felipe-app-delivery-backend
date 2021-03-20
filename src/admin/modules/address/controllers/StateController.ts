@@ -5,7 +5,6 @@
 
 import { Request, Response } from 'express';
 import { CreateStateService } from '../services/CreateStateService';
-import { ListStatesService } from '../../../../customer/modules/address/services/ListCitiesByStateService';
 
 class StateController {
   async create(req: Request, res: Response): Promise<Response> {

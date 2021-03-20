@@ -6,15 +6,15 @@ import { authRoutes } from '../modules/auth';
 import { establishmentCategoryRoutes } from '../modules/establishment-category';
 import { establishmentRoutes } from '../modules/establishment';
 import { clientAddressRoutes } from '../modules/address-client';
-import { stateRoutes } from '../modules/state';
+import { addressStateRoutes } from '../modules/address-state';
 import { orderRouter } from '../modules/order';
 
 const routes = Router();
 
 routes.use(authRoutes);
-routes.use(stateRoutes);
 routes.use(clientRoutes);
 routes.use(avatarRoutes);
+routes.use(addressStateRoutes);
 routes.use(establishmentCategoryRoutes);
 routes.use(establishmentRoutes);
 routes.use(clientAddressRoutes);
