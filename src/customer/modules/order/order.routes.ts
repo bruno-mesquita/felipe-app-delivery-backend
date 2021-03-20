@@ -5,7 +5,6 @@
 
 import { Router } from 'express';
 
-import isAuthenticated from '@shared/middlewares/is-authenticated';
 import { OrderController } from './controller/order-controller';
 
 const orderRouter = Router();

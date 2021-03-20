@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
+import { avatarRoutes } from '../modules/avatar';
 import { clientRoutes } from '../modules/client';
 import { authRoutes } from '../modules/auth';
 import { establishmentCategoryRoutes } from '../modules/establishment-category';
 import { establishmentRoutes } from '../modules/establishment';
-import { avatarRoutes } from '../modules/avatar';
 import { clientAddressRoutes } from '../modules/address-client';
 import { addressStateRoutes } from '../modules/address-state';
 import { orderRouter } from '../modules/order';
