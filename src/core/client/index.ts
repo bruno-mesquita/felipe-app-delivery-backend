@@ -58,6 +58,10 @@ class Client extends EntityBase {
   public setPassword(password: string): void {
     this.password = hashSync(password, 8);
   }
+
+  public setImage(image: Image) {
+    this.image = image;
+  }
 }
 
 export default Client;

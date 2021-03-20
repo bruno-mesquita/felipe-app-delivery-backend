@@ -1,8 +1,8 @@
 import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import { AddressClientRepository } from '../..';
-import { AddressRepository } from '../../../address';
+import { AddressRepository } from '@customer/modules/state';
+import { AddressClientRepository } from '../../AddressClientRepository';
 import { CityRepository } from '../../../city';
 import { UpdateClientAddressDto } from '../../dtos/update-address-client';
 
