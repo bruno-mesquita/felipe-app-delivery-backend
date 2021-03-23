@@ -5,7 +5,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Entity, OneToOne, JoinColumn, Column } from 'typeorm';
+import { Entity, OneToOne, JoinColumn, Column, ManyToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import Client from '@core/client';
@@ -16,12 +16,10 @@ class AddressClient extends EntityBase {
   @Column()
   nickname: string;
 
-  @OneToOne(() => Client)
-  @JoinColumn({ name: 'client_id' })
+  @ManyToOne(() => Client)
   client_id: Client;
 
-  @OneToOne(() => Address)
-  @JoinColumn({ name: 'address_id' })
+  @ManyToOne(() => Address)
   address_id: Address;
 
   public setNickname(nickname: string): void {

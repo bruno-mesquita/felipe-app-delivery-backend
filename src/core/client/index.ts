@@ -1,9 +1,10 @@
-import { Entity, Column, OneToOne, JoinColumn, BeforeInsert, OneToMany } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, BeforeInsert, OneToMany, ManyToOne } from 'typeorm';
 import { hashSync, compareSync } from 'bcryptjs';
 
 import EntityBase from '@shared/utils/entity';
 import Image from '@core/image';
 import Order from '@core/order';
+import AddressClient from '@core/address-client';
 
 @Entity('client')
 class Client extends EntityBase {
@@ -28,6 +29,9 @@ class Client extends EntityBase {
   @OneToOne(() => Image)
   @JoinColumn({ name: 'image_id' })
   image: Image;
+
+  @OneToMany(() => AddressClient, (adresses) => adresses.client_id)
+  adresses: AddressClient[];
 
   @OneToMany(() => Order, (order) => order.client_id)
   orders: Order[];

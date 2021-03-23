@@ -6,7 +6,7 @@
 
 */
 
-import { Entity, Column, OneToOne, JoinColumn, Tree } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, Tree, ManyToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import City from '@core/address-city';
@@ -25,7 +25,7 @@ class Address extends EntityBase {
   @Column({ default: null })
   cep: string;
 
-  @OneToOne(() => City)
+  @ManyToOne(() => City)
   @JoinColumn({ name: 'city_id' })
   city: City;
 
