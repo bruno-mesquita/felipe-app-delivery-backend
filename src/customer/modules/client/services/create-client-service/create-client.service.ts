@@ -80,7 +80,7 @@ class CreateClientService {
 
       return { result: user.id, err: null };
     } catch (err) {
-      return { result: err, err: err.message };
+      return { result: null, err: err.message };
     }
   }
 }

@@ -54,7 +54,7 @@ export class CreateAddressClientService {
 
       return { result: clientAddress, err: null };
     } catch (err) {
-      return { result: err, err: err.message };
+      return { result: null, err: err.message };
     }
   }
 }

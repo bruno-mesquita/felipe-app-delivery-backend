@@ -7,6 +7,7 @@ export class AddImageIdToClient1613502247682 implements MigrationInterface {
       new TableColumn({
         name: 'image_id',
         type: 'uuid',
+        default: null,
       })
     );
 

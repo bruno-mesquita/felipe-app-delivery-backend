@@ -25,6 +25,8 @@ const schema: SchemaOf<CreateClientDto> = object({
   cpf: string().length(11).required(REQUIRED),
 
   cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
+
+  city: string().uuid().required(REQUIRED),
 });
 
 export default schema;

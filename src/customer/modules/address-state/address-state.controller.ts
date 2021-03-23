@@ -4,8 +4,8 @@
  */
 
 import { Request, Response } from 'express';
-import { ListCitiesByStatesService } from './services/ListCitiesByStateService';
-import { ListStatesService } from './services/ListStateService';
+import { ListCitiesByStatesService } from './services/list-cities-by-state-service';
+import { ListStatesService } from './services/list-state-service';
 
 class AddressStateController {
   async listCitiesByState(req: Request, res: Response): Promise<Response> {
