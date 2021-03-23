@@ -11,6 +11,7 @@ class ListCitiesByStatesService {
         where: {
           id: state_id,
         },
+
         relations: ['cities'],
       });
 

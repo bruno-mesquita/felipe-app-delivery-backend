@@ -15,6 +15,10 @@ class ClientRepository extends Repository<Client> {
   async findByCpf(cpf: string) {
     return this.findOne({ where: { cpf } });
   }
+
+  async findByCellphone(cellphone: string) {
+    return this.findOne({ where: { cellphone } });
+  }
 }
 
 export default ClientRepository;
