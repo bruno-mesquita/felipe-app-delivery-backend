@@ -7,7 +7,7 @@ class ListStatesService {
     try {
       const statesRepository = getCustomRepository(AddressStateRepository);
 
-      const states = await statesRepository.find();
+      const states = await statesRepository.find({ where: { active: true }, select: ['name', 'id'] });
 
       return states;
     } catch (err) {

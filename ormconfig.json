@@ -5,7 +5,7 @@
    "username": "postgres",
    "password": "root",
    "database": "delivery-app",
-   "synchronize": false,
+   "synchronize": true,
    "logging": false,
 
    "entities": [

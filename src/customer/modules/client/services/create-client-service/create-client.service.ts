@@ -62,6 +62,7 @@ class CreateClientService {
       const addressClient = addressClientRepository.create({
         address_id: address,
         client_id: user,
+        nickname: '',
       });
 
       await addressClientRepository.save(addressClient);

@@ -1,9 +1,9 @@
 import { getCustomRepository } from 'typeorm';
-import AddressState from '@core/address-state';
+
 import { AddressStateRepository } from '../address-state.repository';
 
 class ListCitiesByStatesService {
-  async execute(state_id: string): Promise<AddressState | undefined> {
+  async execute(state_id: string): Promise<any[] | undefined> {
     try {
       const statesRepository = getCustomRepository(AddressStateRepository);
 
@@ -14,9 +14,9 @@ class ListCitiesByStatesService {
         relations: ['cities'],
       });
 
-      return states;
+      return states?.cities.map((city) => ({ id: city.getId(), name: city.name }));
     } catch (err) {
-      return undefined;
+      return [];
     }
   }
 }
