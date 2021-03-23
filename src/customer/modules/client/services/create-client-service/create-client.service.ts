@@ -28,7 +28,6 @@ class CreateClientService {
       const addressRepository = getCustomRepository(AddressRepository);
       const addressClientRepository = getCustomRepository(AddressClientRepository);
       const clientActivationCodeRepository = getCustomRepository(ClientActivationCodeRepository);
-      const avatarRepository = getCustomRepository(AvatarRepository);
 
       // Verificando se as senhas são iguais
       if (createClientDto.confirmPassword !== createClientDto.password) throw new Error('Senhas não são iguais');
@@ -53,14 +52,8 @@ class CreateClientService {
 
       if (userCellphoneExists) throw new Error('Já existe um usuário cadastrado com esse Número de Celular');
 
-      // Avatar
-      const userAvatar = await avatarRepository.findOne({
-        where: id,
-        relations: ['image_id'],
-      });
-
       // Criando a classe
-      const user = userRepository.create({ ...createClientDto, image: userAvatar });
+      const user = userRepository.create(createClientDto);
 
       // Salvando no db
       await userRepository.save(user);
