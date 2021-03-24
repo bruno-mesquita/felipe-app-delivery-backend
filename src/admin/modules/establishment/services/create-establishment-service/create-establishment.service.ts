@@ -27,6 +27,12 @@ class CreateEstablishmentService {
 
       const cellphoneExists = await establishmentRepository.findByCellphone(establishmentProps.cellphone);
 
+      // Fazendo Validação do DTO
+
+      const valid = createEstablishmentSchema.isValidSync(establishmentProps);
+
+      if (!valid) throw new Error('Por favor reveja seus dados.');
+
       // Verificar se o email já existe
 
       if (emailExists) {
@@ -44,12 +50,6 @@ class CreateEstablishmentService {
       if (establishmentProps.confirmPassword !== establishmentProps.password) {
         throw new Error('Senhas não são iguais.');
       }
-
-      // Fazendo Validação do DTO
-
-      const valid = createEstablishmentSchema.isValidSync(establishmentProps);
-
-      if (!valid) throw new Error('Por favor reveja seus dados.');
 
       const category = await establishmentCategoryRepository.findOne(establishmentProps.category);
 

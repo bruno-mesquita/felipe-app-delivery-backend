@@ -19,13 +19,13 @@ const schema: SchemaOf<CreateEstablishmentDto> = object({
   password: string().required(REQUIRED),
   confirmPassword: string().required(REQUIRED),
   cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
-  openingTime: number().required(REQUIRED),
+  openingTime: number().min(0).max(23).required(REQUIRED),
   closingTime: number().required(REQUIRED),
-  category: string().required(REQUIRED),
   image: object({
     name: string().required(REQUIRED),
     encoded: string().required(REQUIRED),
   }),
+  category: string().uuid().required(REQUIRED),
 });
 
 export default schema;
