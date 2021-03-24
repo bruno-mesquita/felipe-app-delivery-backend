@@ -6,18 +6,13 @@
 
  */
 
-import { ItemOrderRepository } from '@customer/modules/item-order/item-order.repository';
-
-import { ServiceResponse } from '@shared/utils/service-response';
-
-import { ProductRepository } from '@store/modules/product/repository/product.repository';
-
 import { getCustomRepository } from 'typeorm';
 
+import { ItemOrderRepository } from '@customer/modules/item-order/item-order.repository';
+import { ServiceResponse } from '@shared/utils/service-response';
+import { ProductRepository } from '@store/modules/product/repository/product.repository';
 import { CreateOrderDto } from '../../dtos/create-order.dto';
-
-import { OrderRepository } from '../../repository/order-repository';
-
+import { OrderRepository } from '../../order.repository';
 import { schema } from '../../validation/create-order.validation';
 
 export class CreateOrderService {

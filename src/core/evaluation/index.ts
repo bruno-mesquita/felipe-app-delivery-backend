@@ -12,7 +12,7 @@ import EntityBase from '@shared/utils/entity';
 @Entity('evaluation_order')
 class Evaluation extends EntityBase {
   @Column()
-  note: string;
+  value: number;
 
   @Column()
   message: string;

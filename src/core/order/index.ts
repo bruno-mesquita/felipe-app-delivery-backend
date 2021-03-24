@@ -38,15 +38,19 @@ class Order extends EntityBase {
 
   @ManyToOne(() => Client, (client) => client.orders)
   @JoinColumn({ name: 'client_id' })
-  client_id: Client;
+  client: Client;
 
   @OneToOne(() => Evaluation)
   @JoinColumn({ name: 'evaluation_id' })
-  evaluation_id: Evaluation;
+  evaluation: Evaluation;
 
   @ManyToOne(() => Establishment, (store) => store.orders)
   @JoinColumn({ name: 'establishment_id' })
   establishment: Establishment;
+
+  public setEvaluation(evaluation: Evaluation): void {
+    this.evaluation = evaluation;
+  }
 
   public updateOrder(form_of_payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
     this.form_of_payment = form_of_payment;
