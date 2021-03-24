@@ -16,10 +16,12 @@ class AddressClient extends EntityBase {
   @Column()
   nickname: string;
 
-  @ManyToOne(() => Client)
+  @ManyToOne(() => Client, (client) => client.adresses)
+  @JoinColumn({ name: 'client_id' })
   client_id: Client;
 
   @ManyToOne(() => Address)
+  @JoinColumn({ name: 'address_id' })
   address_id: Address;
 
   public setNickname(nickname: string): void {
