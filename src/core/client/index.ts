@@ -33,7 +33,7 @@ class Client extends EntityBase {
   @OneToMany(() => AddressClient, (adresses) => adresses.client_id)
   adresses: AddressClient[];
 
-  @OneToMany(() => Order, (order) => order.client_id)
+  @OneToMany(() => Order, (order) => order.client)
   orders: Order[];
 
   @BeforeInsert()

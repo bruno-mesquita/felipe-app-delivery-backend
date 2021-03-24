@@ -17,5 +17,6 @@ routes.post('/clients', clientController.create);
 routes.post('/clients/activate', clientController.activate);
 routes.put('/clients/profile/:id', isAuthenticated, clientController.updateProfile);
 routes.put('/clients/update-password/:id', isAuthenticated, clientController.updatePassword);
+routes.get('/clients/orders', isAuthenticated, clientController.listOrdersByClient);
 
 export default routes;

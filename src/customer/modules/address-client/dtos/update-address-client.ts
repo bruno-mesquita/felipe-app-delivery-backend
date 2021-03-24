@@ -5,5 +5,6 @@ export interface UpdateClientAddressDto {
   neighborhood: string;
   cep: string;
   city: string;
+  address: string;
   nickname: string;
 }

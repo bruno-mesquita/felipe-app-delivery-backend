@@ -11,6 +11,7 @@ import {
   CreateClientService,
   UpdateProfileService,
   UpdatePasswordClientService,
+  ListOrdersService,
 } from './services';
 
 class ClientController {
@@ -65,6 +66,20 @@ class ClientController {
       const updatePasswordClientService = new UpdatePasswordClientService();
 
       const result = await updatePasswordClientService.execute({ ...req.body, id });
+
+      if (result.err) throw new Error(result.err);
+
+      return res.status(200).json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async listOrdersByClient(req: Request, res: Response): Promise<Response> {
+    try {
+      const listOrdersService = new ListOrdersService();
+
+      const result = await listOrdersService.execute(req.client.id);
 
       if (result.err) throw new Error(result.err);
 

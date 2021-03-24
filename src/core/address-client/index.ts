@@ -16,7 +16,7 @@ class AddressClient extends EntityBase {
   @Column()
   nickname: string;
 
-  @ManyToOne(() => Client, (client) => client.adresses)
+  @ManyToOne(() => Client)
   @JoinColumn({ name: 'client_id' })
   client_id: Client;
 
