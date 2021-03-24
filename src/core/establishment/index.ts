@@ -61,9 +61,9 @@ class Establishment extends EntityBase {
   @JoinColumn({ name: 'image_id' })
   image: Image;
 
-  @OneToOne(() => StoreCategory)
+  @OneToMany(() => StoreCategory, (category) => category.establishment)
   @JoinColumn({ name: 'category_id' })
-  category: StoreCategory;
+  category: StoreCategory[];
 
   // Relacionamento para outras tabelas
 
