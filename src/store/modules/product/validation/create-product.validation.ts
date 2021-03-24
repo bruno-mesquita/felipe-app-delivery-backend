@@ -18,6 +18,7 @@ const schema: SchemaOf<CreateProductDto> = object({
   name: string().required(REQUIRED),
   price: number().required(REQUIRED),
   description: string().required(REQUIRED),
+  menu: string().uuid().required(REQUIRED),
 });
 
 export default schema;

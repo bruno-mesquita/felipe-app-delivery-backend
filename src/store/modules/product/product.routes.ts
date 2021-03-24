@@ -6,13 +6,17 @@
 
 import { Router } from 'express';
 import ProductController from './controllers/products-controller';
+import { ImagesController } from './controllers/image-product-controller';
 
-const productRouter = Router();
 const productController = new ProductController();
+const imageController = new ImagesController();
+const productsRoutes = Router();
 
-productRouter.post('/', productController.create);
-productRouter.get('/', productController.list);
-productRouter.get('/:id', productController.show);
-productRouter.put('/:id', productController.update);
+productsRoutes.post('/products', productController.create);
+productsRoutes.get('/products', productController.list);
+productsRoutes.get('/products/:id', productController.show);
+productsRoutes.put('/products/:id', productController.update);
 
-export default productRouter;
+productsRoutes.post('/products/images', imageController.create);
+
+export { productsRoutes };

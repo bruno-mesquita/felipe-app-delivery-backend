@@ -24,9 +24,10 @@ class Product extends EntityBase {
 
   @OneToOne(() => Image)
   @JoinColumn({ name: 'image_id' })
-  image_id: Image;
+  image: Image;
 
   @ManyToOne(() => Menu, (menu) => menu.products)
+  @JoinColumn({ name: 'menu_id' })
   menu: Menu;
 
   public updateProduct(name: string, price: number, description: string): void {
@@ -37,6 +38,10 @@ class Product extends EntityBase {
 
   public calcTotal(amount: number): number {
     return this.price * amount;
+  }
+
+  public setImage(image: Image) {
+    this.image = image;
   }
 }
 
