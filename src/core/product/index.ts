@@ -30,10 +30,11 @@ class Product extends EntityBase {
   @JoinColumn({ name: 'menu_id' })
   menu: Menu;
 
-  public updateProduct(name: string, price: number, description: string): void {
+  public updateProduct(name: string, price: number, description: string, menu: Menu): void {
     this.name = name;
     this.price = price;
     this.description = description;
+    this.menu = menu;
   }
 
   public calcTotal(amount: number): number {

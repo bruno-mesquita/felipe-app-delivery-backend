@@ -4,11 +4,11 @@ import { ServiceResponse } from '@shared/utils/service-response';
 
 import { ProductRepository } from '../../repository/product.repository';
 import { ImagesRepository } from '../../../images/images-repository';
-import { CreateAvatarDto } from '../../../images/create-image-dto';
+import { CreateImageDto } from '../../../images/create-image-dto';
 import { schema } from '../../../images/create-image-validation';
 
 class CreateImageProductService {
-  async execute(createImageDto: CreateAvatarDto): Promise<ServiceResponse<Image | null>> {
+  async execute(createImageDto: CreateImageDto): Promise<ServiceResponse<Image | null>> {
     try {
       const imageRepository = getCustomRepository(ImagesRepository);
       const productRepository = getCustomRepository(ProductRepository);

@@ -13,13 +13,15 @@ import { UpdateProductDto } from '../dtos/update-product-dto';
 // Tirar dúvia com Bruno, sobre essa parte
 
 const schema: SchemaOf<UpdateProductDto> = object({
-  id: string().required(),
+  id: string().uuid().required(),
 
   name: string().required(),
 
   price: number().required(),
 
   description: string().required(),
+
+  menu: string().uuid().required(),
 });
 
 export default schema;
