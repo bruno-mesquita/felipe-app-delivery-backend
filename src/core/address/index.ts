@@ -6,7 +6,7 @@
 
 */
 
-import { Entity, Column, OneToOne, JoinColumn, Tree, ManyToOne } from 'typeorm';
+import { Entity, Column, JoinColumn, ManyToOne } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import City from '@core/address-city';
@@ -47,6 +47,26 @@ class Address extends EntityBase {
 
   public setCity(city: City): void {
     this.city = city;
+  }
+
+  public getStreet(): string {
+    return this.street;
+  }
+
+  public getNumber(): number {
+    return this.number;
+  }
+
+  public getNeighborhood(): string {
+    return this.neighborhood;
+  }
+
+  public getCep(): string {
+    return this.cep;
+  }
+
+  public getCity(): City {
+    return this.city;
   }
 }
 

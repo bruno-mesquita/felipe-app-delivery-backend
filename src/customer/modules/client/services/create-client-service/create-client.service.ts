@@ -7,9 +7,7 @@
 import { getCustomRepository } from 'typeorm';
 
 import SmsService from '@shared/utils/sms';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import { id } from 'date-fns/locale';
 import { ClientActivationCodeRepository } from '../../../client-activation-code';
 import { AddressClientRepository } from '../../../address-client';
 import { AddressRepository } from '../../../address';
@@ -17,7 +15,6 @@ import { CityRepository } from '../../../city';
 import UserRepository from '../../client.repository';
 import { CreateClientDto } from '../../dtos/create-client-dto';
 import createClientSchema from '../../validation/create-client.validation';
-import { AvatarRepository } from '../../../avatar/avatar-repository';
 
 class CreateClientService {
   async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<string | null>> {

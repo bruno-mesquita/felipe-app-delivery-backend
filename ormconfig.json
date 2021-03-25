@@ -9,7 +9,7 @@
    "logging": false,
 
    "entities": [
-      "src/core/**/*.ts"
+      "./src/core/**/*.ts"
    ],
    "migrations": [
     "./src/shared/typeorm/migrations/*.ts"
@@ -19,7 +19,7 @@
    ],
    "cli": {
       "migrationsDir": "./src/shared/typeorm/migrations",
-      "entitiesDir": "src/core",
+      "entitiesDir": "./src/core",
       "subscribersDir": "src/subscriber"
    }
 }

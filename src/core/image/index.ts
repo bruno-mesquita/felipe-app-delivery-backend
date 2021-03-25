@@ -15,6 +15,22 @@ class Image extends EntityBase {
 
   @Column()
   encoded: string;
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public setEncoded(encoded: string): void {
+    this.encoded = encoded;
+  }
+
+  public getEncoded(): string {
+    return this.encoded;
+  }
 }
 
 export default Image;

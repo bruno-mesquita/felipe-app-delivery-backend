@@ -45,11 +45,9 @@ class ClientController {
 
   async updateProfile(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
-
       const updateProfileService = new UpdateProfileService();
 
-      const result = await updateProfileService.execute({ ...req.body, id });
+      const result = await updateProfileService.execute({ ...req.body, id: req.client.id });
 
       if (result.err) throw new Error(result.err);
 

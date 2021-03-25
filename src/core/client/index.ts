@@ -41,6 +41,14 @@ class Client extends EntityBase {
     this.password = hashSync(this.password, 8);
   }
 
+  public getEmail(): string {
+    return this.email;
+  }
+
+  public getCellphone(): string {
+    return this.cellphone;
+  }
+
   public isActive(): boolean {
     return this.active;
   }
@@ -65,6 +73,10 @@ class Client extends EntityBase {
 
   public setImage(image: Image) {
     this.image = image;
+  }
+
+  public getImage(): Image {
+    return this.image;
   }
 }
 

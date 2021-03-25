@@ -27,6 +27,26 @@ class AddressClient extends EntityBase {
   public setNickname(nickname: string): void {
     this.nickname = nickname;
   }
+
+  public getNickname(): string {
+    return this.nickname;
+  }
+
+  public setClient(client: Client): void {
+    this.client_id = client;
+  }
+
+  public getClient(): Client {
+    return this.client_id;
+  }
+
+  public setAddress(address: Address): void {
+    this.address_id = address;
+  }
+
+  public getAddress(): Address {
+    return this.address_id;
+  }
 }
 
 export default AddressClient;
