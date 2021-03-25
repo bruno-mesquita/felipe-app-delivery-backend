@@ -16,4 +16,5 @@ export interface CreateEstablishmentDto {
     encoded: string;
   };
   category: string;
+  city: string;
 }

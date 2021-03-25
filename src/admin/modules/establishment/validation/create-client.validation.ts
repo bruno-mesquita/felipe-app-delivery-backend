@@ -26,6 +26,7 @@ const schema: SchemaOf<CreateEstablishmentDto> = object({
     encoded: string().required(REQUIRED),
   }),
   category: string().uuid().required(REQUIRED),
+  city: string().uuid().required(REQUIRED),
 });
 
 export default schema;
