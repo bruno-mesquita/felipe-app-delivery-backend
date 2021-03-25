@@ -39,14 +39,28 @@ class LoginClientService {
 
       // Todos os endereços do cliente
 
-      const adresses = await clientAddressesRepository.find({
+      const clientAdresses = await clientAddressesRepository.find({
         where: { client_id: client.id },
-        relations: ['address_id'],
+        relations: ['address_id', 'address_id.city'],
       });
 
       // Criando token
-
       const token = tokenManager.create(client.getId());
+
+      const adresses = clientAdresses.map((addressClient) => {
+        const address = addressClient.getAddress();
+
+        return {
+          clientAddressId: addressClient.getId(),
+          addressId: address.getId(),
+          nickname: addressClient.getNickname(),
+          city: address.getCity().getId(),
+          street: address.getStreet(),
+          number: address.getNumber(),
+          neighborhood: address.getNeighborhood(),
+          cep: address.getCep(),
+        };
+      });
 
       return {
         result: {

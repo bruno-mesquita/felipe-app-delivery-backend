@@ -1,14 +1,13 @@
-import Image from '@core/image';
-import { ServiceResponse } from '@shared/utils/service-response';
 import { getCustomRepository } from 'typeorm';
-import { ClientRepository } from '../client';
 
+import { ServiceResponse } from '@shared/utils/service-response';
+import { ClientRepository } from '../client';
 import { AvatarRepository } from './avatar-repository';
 import { CreateAvatarDto } from './create-avatar-dto';
 import { schema } from './create-avatar-validation';
 
 class CreateAvatarClientService {
-  async execute(createAvatar: CreateAvatarDto): Promise<ServiceResponse<Image | null>> {
+  async execute(createAvatar: CreateAvatarDto): Promise<ServiceResponse<boolean | null>> {
     try {
       const avatarRepository = getCustomRepository(AvatarRepository);
       const clientRepository = getCustomRepository(ClientRepository);
@@ -21,27 +20,31 @@ class CreateAvatarClientService {
 
       // Verificando se o usuário existe
 
-      const client = await clientRepository.findById(createAvatar.client_id);
+      const client = await clientRepository.findOne({ where: { id: createAvatar.client_id }, relations: ['image'] });
 
       if (!client) throw new Error('[Avatar]: Usuário não econtrado.');
 
-      // Criando classe
+      if (client.getImage()) {
+        client.getImage().setEncoded(createAvatar.encoded);
+        client.getImage().setName(createAvatar.name);
 
-      const avatar = avatarRepository.create(createAvatar);
+        await clientRepository.save(client);
+      } else {
+        // Criando classe
+        const avatar = avatarRepository.create(createAvatar);
 
-      await avatarRepository.save(avatar);
+        await avatarRepository.save(avatar);
 
-      // Anexar Avatar ao Usuário
+        // Anexar Avatar ao Usuário
+        client.setImage(avatar);
 
-      client.setImage(avatar);
+        // Salvando no DB
+        await clientRepository.save(client);
+      }
 
-      // Salvando no DB
-
-      await clientRepository.save(client);
-
-      return { result: avatar, err: null };
+      return { result: true, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      return { result: false, err: err.message };
     }
   }
 }
