@@ -12,8 +12,9 @@ const REQUIRED = 'Campo obrigátorio';
 
 const schema: SchemaOf<UpdatePasswordClientDto> = object({
   id: string().required(REQUIRED),
-  password: string().required(REQUIRED),
+  currentPassword: string().required(REQUIRED),
   newPassword: string().required(REQUIRED),
+  confirmNewPassword: string().required(REQUIRED),
 });
 
 export default schema;

@@ -15,35 +15,35 @@ export class UpdateAddressClientService {
     neighborhood,
     id,
     city,
-    address,
   }: UpdateClientAddressDto): Promise<ServiceResponse<boolean>> {
     try {
       const addressClientRepository = getCustomRepository(AddressClientRepository);
       const addressRepository = getCustomRepository(AddressRepository);
       const cityRepository = getCustomRepository(CityRepository);
 
-      const addressClient = await addressClientRepository.findById(id);
+      const addressClient = await addressClientRepository.findOne({
+        where: { id },
+        relations: ['address_id'],
+      });
 
       if (!addressClient) throw new Error('Endereço não encontrado');
 
       addressClient.setNickname(nickname);
 
-      const addressEntity = await addressRepository.findById(address);
-
-      if (!addressEntity) throw new Error('Endereço não encontrado');
-
       const cityExists = await cityRepository.findById(city);
 
       if (!cityExists) throw new Error('Cidade não encontrada');
 
-      addressEntity.setCep(cep);
-      addressEntity.setCity(cityExists);
-      addressEntity.setNeighborhood(neighborhood);
-      addressEntity.setNumber(number);
-      addressEntity.setStreet(street);
+      const address = addressClient.getAddress();
+
+      address.setCep(cep);
+      address.setCity(cityExists);
+      address.setNeighborhood(neighborhood);
+      address.setNumber(number);
+      address.setStreet(street);
 
       await addressClientRepository.save(addressClient);
-      await addressRepository.save(addressEntity);
+      await addressRepository.save(address);
 
       return { err: null, result: true };
     } catch (err) {

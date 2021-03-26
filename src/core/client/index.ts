@@ -41,6 +41,14 @@ class Client extends EntityBase {
     this.password = hashSync(this.password, 8);
   }
 
+  public getCpf(): string {
+    return this.cpf;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
   public getEmail(): string {
     return this.email;
   }

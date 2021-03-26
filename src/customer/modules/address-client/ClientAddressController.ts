@@ -5,6 +5,7 @@ import {
   ListAddressClientService,
   DeleteAddressClientService,
   UpdateAddressClientService,
+  FindOneAddressClientService,
 } from './services';
 
 class ClientAddressController {
@@ -31,6 +32,20 @@ class ClientAddressController {
       if (clientAddress.err) throw new Error(clientAddress.err);
 
       return res.json(clientAddress);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async findOne(req: Request, res: Response): Promise<Response> {
+    try {
+      const findOneAddressClientService = new FindOneAddressClientService();
+
+      const result = await findOneAddressClientService.execute(req.params.id, req.client.id);
+
+      if (result.err) throw new Error(result.err);
+
+      return res.json(result);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

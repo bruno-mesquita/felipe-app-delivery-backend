@@ -66,11 +66,11 @@ class LoginClientService {
         result: {
           token,
           client: {
-            name: client.name,
-            avatar: client.image,
-            cpf: client.cpf,
-            phone: client.cellphone,
-            email: client.email,
+            name: client.getName(),
+            avatar: client.getImage().getEncoded(),
+            cpf: client.getCpf(),
+            phone: client.getCellphone(),
+            email: client.getEmail(),
             adresses,
           },
         },

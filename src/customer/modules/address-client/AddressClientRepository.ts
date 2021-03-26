@@ -10,7 +10,11 @@ class AddressClientRepository extends Repository<AddressClient> {
 
   async findByUserId(userId: string) {
     try {
-      return this.find({ where: { client_id: userId }, relations: ['address_id'] });
+      return this.find({
+        where: { client_id: userId },
+        relations: ['address_id', 'address_id.city', 'address_id.city.state'],
+        select: ['nickname', 'id', 'address_id'],
+      });
     } catch (err) {
       return [];
     }

@@ -21,6 +21,14 @@ class City extends EntityBase {
   @ManyToOne(() => State, (state) => state.cities)
   @JoinColumn({ name: 'state_id' })
   state: State;
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public getState(): State {
+    return this.state;
+  }
 }
 
 export default City;

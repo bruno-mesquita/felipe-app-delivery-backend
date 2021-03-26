@@ -25,7 +25,7 @@ class UpdatePasswordClientService {
       if (!user) throw new Error('Usuário não encontrado');
 
       // Verificando se a senha fornecida é igual salva
-      if (!user.comparePassword(updatePasswordClientDto.password)) throw new Error('Senha inválida');
+      if (!user.comparePassword(updatePasswordClientDto.currentPassword)) throw new Error('Senha inválida');
 
       user.setPassword(updatePasswordClientDto.newPassword);
 

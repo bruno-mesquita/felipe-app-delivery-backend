@@ -4,6 +4,7 @@
 
 export interface UpdatePasswordClientDto {
   id: string;
-  password: string;
+  currentPassword: string;
   newPassword: string;
+  confirmNewPassword: string;
 }
