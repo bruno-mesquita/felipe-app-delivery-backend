@@ -6,10 +6,11 @@
 
 */
 
-import { Entity, Column, JoinColumn, ManyToOne } from 'typeorm';
+import { Entity, Column, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
 import City from '@core/address-city';
+import Order from '@core/order';
 
 @Entity('address')
 class Address extends EntityBase {
@@ -28,6 +29,9 @@ class Address extends EntityBase {
   @ManyToOne(() => City)
   @JoinColumn({ name: 'city_id' })
   city: City;
+
+  @OneToMany(() => Order, (order) => order.address)
+  orders: Order[];
 
   public setStreet(street: string): void {
     this.street = street;

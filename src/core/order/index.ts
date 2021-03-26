@@ -10,6 +10,7 @@ import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from 'typeorm';
 import EntityBase from '@shared/utils/entity';
 import Evaluation from '@core/evaluation';
 import Client from '@core/client';
+import Address from '@core/address';
 import Establishment from '@core/establishment';
 import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from './order.types';
 
@@ -39,6 +40,10 @@ class Order extends EntityBase {
   @ManyToOne(() => Client, (client) => client.orders)
   @JoinColumn({ name: 'client_id' })
   client: Client;
+
+  @ManyToOne(() => Address, (address) => address.orders)
+  @JoinColumn({ name: 'address_id' })
+  address: Address;
 
   @OneToOne(() => Evaluation)
   @JoinColumn({ name: 'evaluation_id' })

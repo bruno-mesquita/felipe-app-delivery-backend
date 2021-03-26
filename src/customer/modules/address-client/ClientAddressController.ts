@@ -41,7 +41,7 @@ class ClientAddressController {
     try {
       const findOneAddressClientService = new FindOneAddressClientService();
 
-      const result = await findOneAddressClientService.execute(req.params.id, req.client.id);
+      const result = await findOneAddressClientService.execute(req.params.id);
 
       if (result.err) throw new Error(result.err);
 

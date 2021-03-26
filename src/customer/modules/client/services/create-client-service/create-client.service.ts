@@ -16,6 +16,8 @@ import UserRepository from '../../client.repository';
 import { CreateClientDto } from '../../dtos/create-client-dto';
 import createClientSchema from '../../validation/create-client.validation';
 
+const UNINFORMED = 'Não informado';
+
 class CreateClientService {
   async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<string | null>> {
     try {
@@ -59,14 +61,19 @@ class CreateClientService {
 
       if (!city) throw new Error('Cidade não encontrada');
 
-      const address = addressRepository.create({ city });
+      const address = addressRepository.create({
+        city,
+        neighborhood: UNINFORMED,
+        cep: UNINFORMED,
+        street: UNINFORMED,
+      });
 
       await addressRepository.save(address);
 
       const addressClient = addressClientRepository.create({
         address_id: address,
         client_id: user,
-        nickname: '',
+        nickname: 'Meu endereço',
       });
 
       await addressClientRepository.save(addressClient);

@@ -37,30 +37,8 @@ class LoginClientService {
         throw new Error('Credenciais inválidas');
       }
 
-      // Todos os endereços do cliente
-
-      const clientAdresses = await clientAddressesRepository.find({
-        where: { client_id: client.id },
-        relations: ['address_id', 'address_id.city'],
-      });
-
       // Criando token
       const token = tokenManager.create(client.getId());
-
-      const adresses = clientAdresses.map((addressClient) => {
-        const address = addressClient.getAddress();
-
-        return {
-          clientAddressId: addressClient.getId(),
-          addressId: address.getId(),
-          nickname: addressClient.getNickname(),
-          city: address.getCity().getId(),
-          street: address.getStreet(),
-          number: address.getNumber(),
-          neighborhood: address.getNeighborhood(),
-          cep: address.getCep(),
-        };
-      });
 
       return {
         result: {
@@ -71,7 +49,6 @@ class LoginClientService {
             cpf: client.getCpf(),
             phone: client.getCellphone(),
             email: client.getEmail(),
-            adresses,
           },
         },
         err: null,
