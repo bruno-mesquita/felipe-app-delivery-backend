@@ -1,2 +1,2 @@
 export * from './services/create-category-service';
-export { CategoryRepository } from './category-repository';
+export { CategoryRepository } from './repositories/category-repository';

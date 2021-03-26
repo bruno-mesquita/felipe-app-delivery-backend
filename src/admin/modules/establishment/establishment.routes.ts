@@ -12,7 +12,6 @@ const establishmentRouter = Router();
 const establishmentController = new EstablishmentController();
 
 establishmentRouter.post('/establishments', establishmentController.create);
-establishmentRouter.get('/establishments', establishmentController.list);
 establishmentRouter.get('/establishments/:id', establishmentController.show);
 establishmentRouter.put('/establishments/:id', establishmentController.updateProfile);
 

@@ -10,7 +10,7 @@ const menuController = new MenuController();
 const routes = Router();
 
 routes.use(isAuthenticated);
-routes.get('/establishments/:categoryId/category', establishmentController.getAll);
+routes.get('/establishments', establishmentController.list);
 routes.get('/establishments/:id/menu', menuController.listMenu);
 
 export default routes;
