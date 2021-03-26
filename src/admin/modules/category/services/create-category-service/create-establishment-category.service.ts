@@ -1,7 +1,7 @@
 import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import CategoryRepository from '../../category-repository';
+import { CategoryRepository } from '../../category-repository';
 import { CreateCategoryDtos } from '../../dtos/create-category.dtos';
 import { schema } from '../../validation/create-category.validation';
 

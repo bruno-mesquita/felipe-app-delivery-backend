@@ -10,72 +10,71 @@ import { getCustomRepository } from 'typeorm';
 import Establishment from 'src/core/establishment';
 
 import { ServiceResponse } from '@shared/utils/service-response';
+import { AddressCityRepository } from '@admin/modules/address/repository/city-repository';
 import { EstablishmentRepository } from '../../repository';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
 import createEstablishmentSchema from '../../validation/create-client.validation';
 import ImageRepository from '../../../image/image.repository';
-import { CategoryRepository } from '../../../establishment-category/establishment-category.repository';
+import { CategoryRepository } from '../../../category';
+import { EstablishmentCategoryRepository } from '../../../establishment-category';
 import { AddressRepository } from '../../../address/repository/address-repository';
 
-class CreateEstablishmentService {
+export class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
     try {
       const establishmentRepository = getCustomRepository(EstablishmentRepository);
       const imageRepository = getCustomRepository(ImageRepository);
       const categoryRepository = getCustomRepository(CategoryRepository);
+      const establishmentCategoryRepository = getCustomRepository(EstablishmentCategoryRepository);
       const addressRepository = getCustomRepository(AddressRepository);
+      const cityRepository = getCustomRepository(AddressCityRepository);
 
-      // Fazendo Validação do DTO
-
+      // validação
       const valid = createEstablishmentSchema.isValidSync(createEstablishmentDto);
 
-      if (!valid) throw new Error('Por favor reveja seus dados.');
+      if (!valid) throw new Error('Dados invalidos');
 
-      // Verificar se o email já existe
+      // Criar a imagem
+      const image = imageRepository.create(createEstablishmentDto.image);
 
-      const emailExists = await establishmentRepository.findByEmail(createEstablishmentDto.email);
+      await imageRepository.save(image);
 
-      if (emailExists) {
-        throw new Error('Email já cadastrado.');
-      }
+      // Criar o endereço
+      const city = await cityRepository.findById(createEstablishmentDto.address.city);
 
-      // Verificando se as senhas são iguais
+      if (!city) throw new Error('Cidade não encontrada');
 
-      if (createEstablishmentDto.confirmPassword !== createEstablishmentDto.password) {
-        throw new Error('Senhas não são iguais.');
-      }
-
-      // Verificar se o contato já existe
-
-      const cellphoneExists = await establishmentRepository.findByCellphone(createEstablishmentDto.cellphone);
-
-      if (cellphoneExists) {
-        throw new Error('Número de contato já cadastrado.');
-      }
-
-      // Verificando se a cidade existe
-
-      const cityAddress = await addressRepository.findById(createEstablishmentDto.address.city);
-
-      if (!cityAddress) throw new Error('Endereço/Cidade não encontrado.');
-
-      const image = await imageRepository.findOne(createEstablishmentDto.image);
-
-      // Verificando se a categoria existe
-
-      const category = await categoryRepository.findOne({
-        where: { id: createEstablishmentDto.category },
-        relations: ['category_id'],
+      const address = addressRepository.create({
+        ...createEstablishmentDto.address,
+        city,
       });
 
-      if (!category) throw new Error('Categoria não encontrada');
+      await addressRepository.save(address);
+
+      // Criar o estabelecimento
+      const { categories, ...establishmentDto } = createEstablishmentDto;
 
       const establishment = establishmentRepository.create({
-        ...createEstablishmentDto,
-        category, // só para não da erro, parei aqui
+        ...establishmentDto,
+        address,
         image,
-        address: cityAddress,
       });
+
+      await establishmentRepository.save(establishment);
+
+      // Criar categorias do estabelecimento
+      for await (const categoryId of categories) { // eslint-disable-line
+        const category = await categoryRepository.findOne({ where: { id: categoryId } });
+
+        if (!category) throw new Error('Categoria não encontrada');
+
+        const establishmentCategory = establishmentCategoryRepository.create({
+          category,
+          establishment,
+        });
+
+        await establishmentCategoryRepository.save(establishmentCategory);
+      }
 
       return { result: establishment, err: null };
     } catch (err) {
@@ -83,5 +82,3 @@ class CreateEstablishmentService {
     }
   }
 }
-
-export default CreateEstablishmentService;

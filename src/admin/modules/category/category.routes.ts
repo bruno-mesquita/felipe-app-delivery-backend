@@ -9,5 +9,6 @@ const categoryRoutes = Router();
 
 categoryRoutes.use(isAuthenticated);
 categoryRoutes.post('/categories', categoryController.create);
+categoryRoutes.get('/categories', categoryController.list);
 
 export { categoryRoutes };

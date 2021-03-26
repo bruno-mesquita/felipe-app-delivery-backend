@@ -6,7 +6,7 @@
 
 import { Request, Response } from 'express';
 
-import CreateEstablishmentService from '../services/create-establishment-service/create-establishment.service';
+import { CreateEstablishmentService } from '../services';
 import ListEstablishmentService from '../services/list-establishment-service/list-establishment.service';
 import ShowEstablishmentService from '../services/show-establishment-service/show-establishment.service';
 

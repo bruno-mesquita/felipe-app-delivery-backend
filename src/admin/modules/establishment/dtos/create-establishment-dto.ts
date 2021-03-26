@@ -15,7 +15,7 @@ export interface CreateEstablishmentDto {
     name: string;
     encoded: string;
   };
-  category: string;
+  categories: string[];
   address: {
     street: string;
     number: number;

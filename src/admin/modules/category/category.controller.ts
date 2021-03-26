@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { CreateCategoryService } from './services/create-category-service';
+import { CreateCategoryService, ListCategoriesService } from './services';
 
 class EstablishmentController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -12,6 +12,18 @@ class EstablishmentController {
       if (category.err) throw new Error(category.err);
 
       return res.status(201).json(category);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async list(req: Request, res: Response): Promise<Response> {
+    try {
+      const listCategoriesService = new ListCategoriesService();
+
+      const categories = await listCategoriesService.execute();
+
+      return res.json(categories);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

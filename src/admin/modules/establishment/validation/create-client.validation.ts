@@ -5,7 +5,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { object, SchemaOf, string, number } from 'yup';
+import { object, SchemaOf, string, number, array } from 'yup';
 
 import { CreateEstablishmentDto } from '../dtos/create-establishment-dto';
 
@@ -25,7 +25,7 @@ const schema: SchemaOf<CreateEstablishmentDto> = object({
     name: string().required(REQUIRED),
     encoded: string().required(REQUIRED),
   }),
-  category: string().uuid().required(REQUIRED),
+  categories: array().of(string().uuid().required(REQUIRED)),
   address: object({
     street: string().required(REQUIRED),
     number: number().required(REQUIRED),
