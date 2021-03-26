@@ -12,9 +12,9 @@ import { orderRouter } from '../modules/order';
 const routes = Router();
 
 routes.use(authRoutes);
+routes.use(addressStateRoutes);
 routes.use(clientRoutes);
 routes.use(avatarRoutes);
-routes.use(addressStateRoutes);
 routes.use(establishmentCategoryRoutes);
 routes.use(establishmentRoutes);
 routes.use(clientAddressRoutes);
