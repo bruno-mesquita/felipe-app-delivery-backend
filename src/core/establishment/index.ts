@@ -1,31 +1,19 @@
 /**
-
  * @fileoverview Criação da entidade Store
-
  *
-
  * @author Bruno Mesquita
-
  * @author Jonatas Rosa Moura
-
  */
 
-import { BeforeInsert, Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, Tree } from 'typeorm';
-
+import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 import { compareSync, hashSync } from 'bcryptjs';
-
 import { setHours, isPast } from 'date-fns';
 
 import EntityBase from '@shared/utils/entity';
-
 import Address from '@core/address';
-
 import Image from '@core/image';
-
 import EstablishmentCategory from '@core/establishment-category';
-
 import Menu from '@core/menu';
-
 import Order from '@core/order';
 
 @Entity('establishment')
@@ -51,7 +39,7 @@ class Establishment extends EntityBase {
   @Column()
   closingTime: number;
 
-  @Column()
+  @Column({ name: 'freight_value' })
   freightValue: number;
 
   // Relacionamento de outras tabelas
@@ -96,9 +84,7 @@ class Establishment extends EntityBase {
 
   public updateProfile(name: string, email: string, cellphone: string): void {
     this.name = name;
-
     this.email = email;
-
     this.cellphone = cellphone;
   }
 
