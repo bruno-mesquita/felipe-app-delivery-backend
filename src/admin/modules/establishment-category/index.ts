@@ -1,1 +1,1 @@
-export { default as establishmentCategoryRoutes } from './establishment-category.routes';
+export { default as establishmentCategoryRoutes } from '../category/category.routes';

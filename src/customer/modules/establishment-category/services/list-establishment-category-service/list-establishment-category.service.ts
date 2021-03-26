@@ -1,6 +1,6 @@
 import { getCustomRepository } from 'typeorm';
 
-import EstablishmentCategory from '@core/establishment-category';
+import EstablishmentCategory from '@core/category';
 import { ServiceResponse } from '@shared/utils/service-response';
 import EstablishmentRepository from '../../establishment-category.repository';
 

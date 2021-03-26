@@ -5,8 +5,8 @@
  */
 
 import { Router } from 'express';
-import { CityController } from './controllers/CityController';
-import { StateController } from './controllers/StateController';
+import { CityController } from './controllers/city-controller';
+import { StateController } from './controllers/state-controller';
 
 const stateController = new StateController();
 const cityController = new CityController();

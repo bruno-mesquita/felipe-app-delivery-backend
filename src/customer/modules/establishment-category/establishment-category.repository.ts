@@ -1,6 +1,6 @@
 import { EntityRepository, Repository } from 'typeorm';
 
-import EstablishmentCategory from '@core/establishment-category';
+import EstablishmentCategory from '@core/category';
 
 @EntityRepository(EstablishmentCategory)
 class establishmentCategoryRepository extends Repository<EstablishmentCategory> {

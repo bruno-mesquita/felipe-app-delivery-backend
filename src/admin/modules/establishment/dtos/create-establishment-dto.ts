@@ -16,5 +16,11 @@ export interface CreateEstablishmentDto {
     encoded: string;
   };
   category: string;
-  city: string;
+  address: {
+    street: string;
+    number: number;
+    neighborhood: string;
+    cep: string;
+    city: string;
+  };
 }

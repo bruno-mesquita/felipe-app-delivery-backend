@@ -10,7 +10,7 @@
 
  */
 
-import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne, Tree } from 'typeorm';
+import { BeforeInsert, Column, Entity, JoinColumn, ManyToMany, OneToMany, OneToOne, Tree } from 'typeorm';
 
 import { compareSync, hashSync } from 'bcryptjs';
 
@@ -22,7 +22,7 @@ import Address from '@core/address';
 
 import Image from '@core/image';
 
-import StoreCategory from '@core/establishment-category';
+import EstablishmentCategory from '@core/establishment-category';
 
 import Menu from '@core/menu';
 
@@ -61,9 +61,8 @@ class Establishment extends EntityBase {
   @JoinColumn({ name: 'image_id' })
   image: Image;
 
-  @OneToMany(() => StoreCategory, (category) => category.establishment)
-  @JoinColumn({ name: 'category_id' })
-  category: StoreCategory[];
+  @OneToMany(() => EstablishmentCategory, (categories) => categories.establishment)
+  categories: EstablishmentCategory[];
 
   // Relacionamento para outras tabelas
 
@@ -110,6 +109,10 @@ class Establishment extends EntityBase {
     if (isPast(closedDate)) return false;
 
     return true;
+  }
+
+  public setImage(image: Image) {
+    this.image = image;
   }
 }
 

@@ -4,7 +4,7 @@
  */
 
 import { Request, Response } from 'express';
-import { CreateCityService } from '../services/CreateCityService';
+import { CreateCityService } from '../services/create-city.service';
 
 class CityController {
   async create(req: Request, res: Response): Promise<Response> {

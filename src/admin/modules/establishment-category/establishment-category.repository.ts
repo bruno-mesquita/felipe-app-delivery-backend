@@ -3,6 +3,6 @@ import { EntityRepository, Repository } from 'typeorm';
 import EstablishmentCategory from '@core/establishment-category';
 
 @EntityRepository(EstablishmentCategory)
-class establishmentCategoryRepository extends Repository<EstablishmentCategory> {}
+class CategoryRepository extends Repository<EstablishmentCategory> {}
 
-export default establishmentCategoryRepository;
+export { CategoryRepository };

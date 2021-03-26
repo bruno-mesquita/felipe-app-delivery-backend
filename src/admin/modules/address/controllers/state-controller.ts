@@ -4,7 +4,7 @@
  */
 
 import { Request, Response } from 'express';
-import { CreateStateService } from '../services/CreateStateService';
+import { CreateStateService } from '../services/create-state.service';
 
 class StateController {
   async create(req: Request, res: Response): Promise<Response> {

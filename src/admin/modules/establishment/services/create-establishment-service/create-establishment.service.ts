@@ -14,16 +14,17 @@ import { EstablishmentRepository } from '../../repository';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
 import createEstablishmentSchema from '../../validation/create-client.validation';
 import ImageRepository from '../../../image/image.repository';
-import EstablishmentCategoryRepository from '../../../establishment-category/establishment-category.repository';
-import { AddressCityRepository } from '../../../address/repository/CityRepository';
+import CategoryRepository from '../../../establishment-category/establishment-category.repository';
+import { AddressRepository } from '../../../address/repository/address-repository';
+import { AddressCityRepository } from '../../../address/repository/city-repository';
 
 class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
     try {
       const establishmentRepository = getCustomRepository(EstablishmentRepository);
       const imageRepository = getCustomRepository(ImageRepository);
-      const establishmentCategoryRepository = getCustomRepository(EstablishmentCategoryRepository);
-      const addressCityRepository = getCustomRepository(AddressCityRepository);
+      const categoryRepository = getCustomRepository(CategoryRepository);
+      const addressRepository = getCustomRepository(AddressRepository);
 
       // Fazendo Validação do DTO
 
@@ -55,34 +56,26 @@ class CreateEstablishmentService {
 
       // Verificando se a cidade existe
 
-      const city = await addressCityRepository.findById(createEstablishmentDto.city);
+      // const city = await cityRepository.findById(createEstablishmentDto.address.city);
 
-      if (!city) throw new Error('Cidade não existe');
+      // if (!city) throw new Error('Cidade não existe');
+
+      const address = await addressRepository.findById(createEstablishmentDto.address.city);
+
+      const image = await imageRepository.findOne(createEstablishmentDto.image);
 
       // Verificando se a categoria existe
 
-      const category = await establishmentCategoryRepository.findOne(createEstablishmentDto.category);
+      const category = await categoryRepository.findById(createEstablishmentDto.category);
 
       if (!category) throw new Error('Categoria não encontrada');
 
-      // Image do Perfil do Estabelecimento
-
-      const image = imageRepository.create(createEstablishmentDto.image);
-
-      await imageRepository.save(image);
-
-      // Criando a classe
-
       const establishment = establishmentRepository.create({
         ...createEstablishmentDto,
-        address: city,
-        category,
+        category: [], // só para não da erro, parei aqui
         image,
+        address,
       });
-
-      // Salvando no db
-
-      await establishmentRepository.save(establishment);
 
       return { result: establishment, err: null };
     } catch (err) {
