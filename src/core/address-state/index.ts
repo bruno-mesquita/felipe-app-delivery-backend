@@ -22,6 +22,10 @@ class State extends EntityBase {
 
   @OneToMany(() => City, (city) => city.state)
   cities: City[];
+
+  public getName(): string {
+    return this.name;
+  }
 }
 
 export default State;

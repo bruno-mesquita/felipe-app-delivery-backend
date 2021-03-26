@@ -17,7 +17,9 @@ export class ListAddressClientService {
         const nickname = addressClient.getNickname();
 
         const street = nickname ? `${address.getStreet()}, ${address.getNumber()}` : 'Não informado';
-        const region = nickname ? `${address.getCity().getName()}` : 'Não informado';
+        const region = nickname
+          ? `${address.getCity().getName()}, ${address.getCity().getState().getName()}`
+          : 'Não informado';
 
         return {
           id: addressClient.getId(),
