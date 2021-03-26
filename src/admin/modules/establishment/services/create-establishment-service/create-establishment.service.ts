@@ -14,9 +14,8 @@ import { EstablishmentRepository } from '../../repository';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
 import createEstablishmentSchema from '../../validation/create-client.validation';
 import ImageRepository from '../../../image/image.repository';
-import CategoryRepository from '../../../establishment-category/establishment-category.repository';
+import { CategoryRepository } from '../../../establishment-category/establishment-category.repository';
 import { AddressRepository } from '../../../address/repository/address-repository';
-import { AddressCityRepository } from '../../../address/repository/city-repository';
 
 class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
@@ -56,25 +55,26 @@ class CreateEstablishmentService {
 
       // Verificando se a cidade existe
 
-      // const city = await cityRepository.findById(createEstablishmentDto.address.city);
+      const cityAddress = await addressRepository.findById(createEstablishmentDto.address.city);
 
-      // if (!city) throw new Error('Cidade não existe');
-
-      const address = await addressRepository.findById(createEstablishmentDto.address.city);
+      if (!cityAddress) throw new Error('Endereço/Cidade não encontrado.');
 
       const image = await imageRepository.findOne(createEstablishmentDto.image);
 
       // Verificando se a categoria existe
 
-      const category = await categoryRepository.findById(createEstablishmentDto.category);
+      const category = await categoryRepository.findOne({
+        where: { id: createEstablishmentDto.category },
+        relations: ['category_id'],
+      });
 
       if (!category) throw new Error('Categoria não encontrada');
 
       const establishment = establishmentRepository.create({
         ...createEstablishmentDto,
-        category: [], // só para não da erro, parei aqui
+        category, // só para não da erro, parei aqui
         image,
-        address,
+        address: cityAddress,
       });
 
       return { result: establishment, err: null };
