@@ -10,5 +10,6 @@ const routes = Router();
 routes.use(isAuthenticated);
 routes.get('/establishments/:categoryId/category', establishmentController.getAll);
 routes.get('/establishments/:id', establishmentController.findOne);
+routes.post('/establishments', establishmentController.searchByName);
 
 export default routes;

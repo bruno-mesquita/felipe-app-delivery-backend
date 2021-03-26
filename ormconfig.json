@@ -1,10 +1,10 @@
 {
    "type": "postgres",
-   "host": "localhost",
+   "host": "ec2-54-145-102-149.compute-1.amazonaws.com",
    "port": 5432,
-   "username": "postgres",
-   "password": "root",
-   "database": "delivery-app",
+   "username": "vnxgutsvqppjux",
+   "password": "b0ba3a7d94bbee436ca4c28d680bf58c09b2e4fa18baccfb23f30bb6d4ff7e16",
+   "database": "daq2mpftqbvsbo",
    "synchronize": true,
    "logging": false,
 

@@ -3,7 +3,7 @@ import { getCustomRepository } from 'typeorm';
 import { ServiceResponse } from '@shared/utils/service-response';
 import Establishment from '@core/establishment';
 import EstablishmentRepository from '../../establishment.repository';
-import EstablishmentCategoryRepository from '../../../establishment-category/establishment-category.repository';
+import CategoryRepository from '../../../category/category.repository';
 import { CityRepository } from '../../../city/city.repository';
 
 interface ListEstablishment {
@@ -15,7 +15,7 @@ export class ListEstablishmentService {
   async execute(list: ListEstablishment): Promise<ServiceResponse<Establishment[]>> {
     try {
       const establishmentRepository = getCustomRepository(EstablishmentRepository);
-      const establishmentCategoryRepository = getCustomRepository(EstablishmentCategoryRepository);
+      const categoryRepository = getCustomRepository(CategoryRepository);
       const cityRepository = getCustomRepository(CityRepository);
 
       // Verificando se existe a cidade
@@ -25,7 +25,7 @@ export class ListEstablishmentService {
       if (!city) throw new Error('Cidade não encontrada.');
 
       // Verificando se a category existe
-      const category = await establishmentCategoryRepository.findOne(list.categoryId);
+      const category = await categoryRepository.findOne({ where: { id: list.categoryId } });
 
       if (!category) throw new Error('Categoria não encontrada');
 

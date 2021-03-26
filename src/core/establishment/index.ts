@@ -119,6 +119,10 @@ class Establishment extends EntityBase {
   public getMenus(): Menu[] {
     return this.menus;
   }
+
+  public getAddress(): Address {
+    return this.address;
+  }
 }
 
 export default Establishment;
