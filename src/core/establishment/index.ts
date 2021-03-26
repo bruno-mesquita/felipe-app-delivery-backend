@@ -51,6 +51,9 @@ class Establishment extends EntityBase {
   @Column()
   closingTime: number;
 
+  @Column()
+  freightValue: number;
+
   // Relacionamento de outras tabelas
 
   @OneToOne(() => Address)

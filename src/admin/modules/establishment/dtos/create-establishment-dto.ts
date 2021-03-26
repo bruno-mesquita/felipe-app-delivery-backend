@@ -11,6 +11,7 @@ export interface CreateEstablishmentDto {
   cellphone: string;
   openingTime: number;
   closingTime: number;
+  freightValue: number;
   image: {
     name: string;
     encoded: string;
