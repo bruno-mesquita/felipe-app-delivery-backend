@@ -8,6 +8,7 @@ import { establishmentRoutes } from '../modules/establishment';
 import { clientAddressRoutes } from '../modules/address-client';
 import { addressStateRoutes } from '../modules/address-state';
 import { orderRouter } from '../modules/order';
+import { menuRoutes } from '../modules/menus';
 
 const routes = Router();
 
@@ -19,5 +20,6 @@ routes.use(establishmentCategoryRoutes);
 routes.use(establishmentRoutes);
 routes.use(clientAddressRoutes);
 routes.use(orderRouter);
+routes.use(menuRoutes);
 
 export default routes;

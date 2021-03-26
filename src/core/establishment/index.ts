@@ -65,6 +65,18 @@ class Establishment extends EntityBase {
 
   // funcionalidaddes
 
+  public getName(): string {
+    return this.name;
+  }
+
+  public getFreightValue(): number {
+    return this.freightValue;
+  }
+
+  public getImage(): Image {
+    return this.image;
+  }
+
   @BeforeInsert()
   hashPassword(): void {
     this.password = hashSync(this.password, 8);
@@ -102,6 +114,10 @@ class Establishment extends EntityBase {
 
   public setImage(image: Image) {
     this.image = image;
+  }
+
+  public getMenus(): Menu[] {
+    return this.menus;
   }
 }
 

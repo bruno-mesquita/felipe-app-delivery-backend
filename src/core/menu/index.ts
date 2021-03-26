@@ -22,6 +22,14 @@ class Menu extends EntityBase {
 
   @OneToMany(() => Product, (product) => product.menu)
   products: Product[];
+
+  getProducts(): Product[] {
+    return this.products;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
 }
 
 export default Menu;

@@ -30,6 +30,18 @@ class Product extends EntityBase {
   @JoinColumn({ name: 'menu_id' })
   menu: Menu;
 
+  public getName(): string {
+    return this.name;
+  }
+
+  public getPrice(): number {
+    return this.price;
+  }
+
+  public getDescription(): string {
+    return this.description;
+  }
+
   public updateProduct(name: string, price: number, description: string, menu: Menu): void {
     this.name = name;
     this.price = price;
@@ -43,6 +55,10 @@ class Product extends EntityBase {
 
   public setImage(image: Image) {
     this.image = image;
+  }
+
+  public getImage() {
+    return this.image;
   }
 }
 

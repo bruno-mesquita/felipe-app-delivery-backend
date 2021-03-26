@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import { ListEstablishmentService } from '../services';
+import { ListEstablishmentService, FindOneEstablishmentService } from '../services';
 
 class EstablishmentController {
   async getAll(req: Request, res: Response): Promise<Response> {
@@ -10,6 +10,20 @@ class EstablishmentController {
       const listEstablishmentService = new ListEstablishmentService();
 
       const response = await listEstablishmentService.execute(categoryId);
+
+      return res.json(response);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async findOne(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params;
+
+      const findOneEstablishmentService = new FindOneEstablishmentService();
+
+      const response = await findOneEstablishmentService.execute(id);
 
       return res.json(response);
     } catch (err) {
