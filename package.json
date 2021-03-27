@@ -11,7 +11,7 @@
     "api:admin": "cross-env NODE_ENV=prod node dist/admin/http/server.js",
     "api:store": "cross-env NODE_ENV=prod node dist/store/http/server.js",
     "build": "babel src --extensions \".js,.ts\" --out-dir dist --copy-files --no-copy-ignored",
-    "start": "cross-env NODE_ENV=prod node dist/customer/http/server.js",
+    "start": "cross-env NODE_ENV=prod yarn build && node dist/customer/http/server.js",
     "test": "jest",
     "typeorm": "tsnd -r tsconfig-paths/register ./node_modules/typeorm/cli.js"
   },
