@@ -32,7 +32,7 @@ export class CreateOrderService {
 
       // Buscando o estabelecimento do pedido
 
-      const establishmentId = await orderRepository.findByEstablishmentId(orderProps.establishmentId);
+      const establishmentId = await orderRepository.findOne({ where: { establishment: orderProps.establishmentId } });
 
       if (!establishmentId) throw new Error('[erro]: Estabelecimento não encontrado');
 

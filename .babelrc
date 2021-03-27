@@ -15,7 +15,7 @@
           "@core": "./src/core",
           "@shared": "./src/shared",
           "@dtos": "./src/dtos",
-          "@custumer": "src/custumer",
+          "@customer": "./src/customer",
           "@admin": "./src/admin",
           "@store": "./src/store"
         }
@@ -24,6 +24,7 @@
   ],
   "ignore": [
     "**/*.test.ts",
-    "**/*.spec.ts"
+    "**/*.spec.ts",
+    "**/@types/**"
   ]
 }

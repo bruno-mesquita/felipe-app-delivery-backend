@@ -8,8 +8,8 @@
     "outDir": "dist",
     "rootDir": "src",
     "removeComments": true,
-    "strict": true,
-    "noImplicitAny": true,
+    "strict": false,
+    "noImplicitAny": false,
     "strictPropertyInitialization": false,
     "moduleResolution": "node",
     "baseUrl": ".",
@@ -36,5 +36,5 @@
     "node_modules",
     "dist"
   ],
-  "include": ["src"]
+  "include": ["src", "ormconfig.js"]
 }

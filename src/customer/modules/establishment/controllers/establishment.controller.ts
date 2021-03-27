@@ -9,7 +9,7 @@ class EstablishmentController {
 
       const listEstablishmentService = new ListEstablishmentService();
 
-      const response = await listEstablishmentService.execute(categoryId);
+      const response = await listEstablishmentService.execute({ categoryId, cityId: '' });
 
       return res.json(response);
     } catch (err) {

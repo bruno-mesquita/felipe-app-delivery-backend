@@ -21,6 +21,7 @@ const schema: SchemaOf<CreateEstablishmentDto> = object({
   cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
   openingTime: number().min(0).max(23).required(REQUIRED),
   closingTime: number().required(REQUIRED),
+  freightValue: number().required(REQUIRED),
   image: object({
     name: string().required(REQUIRED),
     encoded: string().required(REQUIRED),
