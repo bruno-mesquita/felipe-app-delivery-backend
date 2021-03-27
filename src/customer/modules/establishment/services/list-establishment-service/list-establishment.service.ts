@@ -49,4 +49,4 @@ class ListEstablishmentService {
   }
 }
 
-export default ListEstablishmentService;
+export { ListEstablishmentService };
