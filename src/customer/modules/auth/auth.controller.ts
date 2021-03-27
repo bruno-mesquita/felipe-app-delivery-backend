@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 
 import { LoginClientService } from './services/login.service';
 
-class AuthController {
+export class AuthController {
   async login(req: Request, res: Response): Promise<Response> {
     try {
       const loginService = new LoginClientService();
@@ -17,5 +17,3 @@ class AuthController {
     }
   }
 }
-
-export default AuthController;

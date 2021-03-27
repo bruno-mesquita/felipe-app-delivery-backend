@@ -8,4 +8,5 @@ export interface CreateProductDto {
   price: number;
   description: string;
   menu: string;
+  image: string;
 }

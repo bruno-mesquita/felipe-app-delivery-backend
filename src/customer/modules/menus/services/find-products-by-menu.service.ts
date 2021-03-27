@@ -10,7 +10,6 @@ export class FindProductsByMenuService {
 
       const menu = await menuRepository.findOne({
         where: { id: menuId },
-        select: ['products'],
         relations: ['products', 'products.image'],
       });
 

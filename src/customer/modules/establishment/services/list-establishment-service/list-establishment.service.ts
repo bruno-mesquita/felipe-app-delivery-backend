@@ -8,6 +8,7 @@ import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
 import CategoryRepository from '../../../category/category.repository';
+import { EstablishmentCategoryRepository } from '../../../category-establishment';
 import { AddressClientRepository } from '../../../address-client/AddressClientRepository';
 
 class ListEstablishmentService {
@@ -15,11 +16,11 @@ class ListEstablishmentService {
     try {
       const categoryRepository = getCustomRepository(CategoryRepository);
       const cityAddressRepository = getCustomRepository(AddressClientRepository);
-      const categoryEstablishmentRepository = getCustomRepository(CategoryRepository);
+      const categoryEstablishmentRepository = getCustomRepository(EstablishmentCategoryRepository);
 
       // Encontrar uma cidade
 
-      const city = await cityAddressRepository.findById(city_id);
+      /*  const city = await cityAddressRepository.findById(city_id); */
 
       // Encontrar uma categoria
 
@@ -29,14 +30,27 @@ class ListEstablishmentService {
 
       const categoryEstablishment = await categoryEstablishmentRepository.find({
         where: { category },
-        relations: ['establishment', 'establishment.address', 'establishment.address.city'],
+        relations: ['establishment', 'establishment.image', 'establishment.address', 'establishment.address.city'],
       });
 
       // Filtrar os estabelecimentos que fazem parte das categorias de uma cidade
 
       // const cityAddress = categoryEstablishment.filter((item) => item.establishment.address.city.getId() === city_id);
 
-      return { result: categoryEstablishment, err: null };
+      const result = categoryEstablishment.map(({ establishment }) => {
+        return {
+          id: establishment.getId(),
+          name: establishment.getName(),
+          fee: establishment.getFreightValue(),
+          photo: establishment.getImage().getEncoded(),
+          time: {
+            open: establishment.openingTime,
+            close: establishment.closingTime,
+          },
+        };
+      });
+
+      return { result, err: null };
     } catch (err) {
       return { result: [], err: err.null };
     }

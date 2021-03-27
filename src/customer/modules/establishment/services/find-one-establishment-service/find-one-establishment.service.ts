@@ -10,7 +10,7 @@ export class FindOneEstablishmentService {
 
       const establishment = await establishmentRepository.findOne({
         where: { id, active: true },
-        select: ['menus', 'image', 'id', 'name', 'freightValue'],
+        select: ['image', 'id', 'name', 'freightValue'],
         relations: ['menus', 'image'],
       });
 

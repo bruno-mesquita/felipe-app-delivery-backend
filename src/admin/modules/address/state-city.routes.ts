@@ -19,4 +19,7 @@ stateCityRoutes.post('/state', stateController.create);
 // Cidade
 stateCityRoutes.post('/city', cityController.create);
 
+stateCityRoutes.get('/states', stateController.listState);
+stateCityRoutes.get('/state/:state_id', stateController.listCitiesByState);
+
 export { stateCityRoutes };

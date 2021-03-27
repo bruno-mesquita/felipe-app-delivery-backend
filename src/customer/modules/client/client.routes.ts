@@ -15,8 +15,9 @@ const routes = Router();
 
 routes.post('/clients', clientController.create);
 routes.post('/clients/activate', clientController.activate);
-routes.put('/clients', isAuthenticated, clientController.updateProfile);
-routes.put('/clients/update-password', isAuthenticated, clientController.updatePassword);
-routes.get('/clients/orders', isAuthenticated, clientController.listOrdersByClient);
+routes.use(isAuthenticated);
+routes.put('/clients', clientController.updateProfile);
+routes.put('/clients/update-password', clientController.updatePassword);
+routes.get('/clients/orders', clientController.listOrdersByClient);
 
 export default routes;

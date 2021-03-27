@@ -45,7 +45,7 @@ class LoginClientService {
           token,
           client: {
             name: client.getName(),
-            avatar: client.getImage().getEncoded(),
+            avatar: client.getImage() ? client.getImage().getEncoded() : null,
             cpf: client.getCpf(),
             phone: client.getCellphone(),
             email: client.getEmail(),
