@@ -1,39 +1,46 @@
+/**
+ * @fileoverview serviço de listagem dos estabelecimentos
+ *
+ * @author Jonatas Rosa Moura
+ */
+
 import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import Establishment from '@core/establishment';
-import EstablishmentRepository from '../../establishment.repository';
 import CategoryRepository from '../../../category/category.repository';
-import { CityRepository } from '../../../city/city.repository';
+import { AddressClientRepository } from '../../../address-client/AddressClientRepository';
 
-interface ListEstablishment {
-  categoryId: string;
-  cityId: string;
-}
-
-export class ListEstablishmentService {
-  async execute(list: ListEstablishment): Promise<ServiceResponse<Establishment[]>> {
+class ListEstablishmentService {
+  async execute(city_id: string, category_id: string): Promise<ServiceResponse<any[]>> {
     try {
-      const establishmentRepository = getCustomRepository(EstablishmentRepository);
       const categoryRepository = getCustomRepository(CategoryRepository);
-      const cityRepository = getCustomRepository(CityRepository);
+      const cityAddressRepository = getCustomRepository(AddressClientRepository);
+      const categoryEstablishmentRepository = getCustomRepository(CategoryRepository);
 
-      // Verificando se existe a cidade
+      // Encontrar uma cidade
 
-      const city = await cityRepository.findById(list.cityId);
+      const city = await cityAddressRepository.findById(city_id);
 
-      if (!city) throw new Error('Cidade não encontrada.');
+      // Encontrar uma categoria
 
-      // Verificando se a category existe
-      const category = await categoryRepository.findOne({ where: { id: list.categoryId } });
+      const category = await categoryRepository.findById(category_id);
 
-      if (!category) throw new Error('Categoria não encontrada');
+      // Encontrar os estabelecimentos
 
-      const stores = await establishmentRepository.findByCategory(list.categoryId);
+      const categoryEstablishment = await categoryEstablishmentRepository.find({
+        where: { category },
+        relations: ['establishment', 'establishment.address', 'establishment.address.city'],
+      });
 
-      return { err: null, result: stores };
+      // Filtrar os estabelecimentos que fazem parte das categorias de uma cidade
+
+      // const cityAddress = categoryEstablishment.filter((item) => item.establishment.address.city.getId() === city_id);
+
+      return { result: categoryEstablishment, err: null };
     } catch (err) {
-      return { err: err.message, result: [] };
+      return { result: [], err: err.null };
     }
   }
 }
+
+export { ListEstablishmentService };

@@ -11,8 +11,16 @@ import EntityBase from '@shared/utils/entity';
 
 @Entity('category')
 class Category extends EntityBase {
-  @Column()
+  @Column({ unique: true })
   name: string;
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
 }
 
 export default Category;

@@ -8,8 +8,8 @@ const establishmentController = new EstablishmentController();
 const routes = Router();
 
 routes.use(isAuthenticated);
-routes.get('/establishments/:categoryId/category', establishmentController.getAll);
 routes.get('/establishments/:id', establishmentController.findOne);
 routes.post('/establishments', establishmentController.searchByName);
+routes.get('/establishments', establishmentController.list);
 
 export default routes;

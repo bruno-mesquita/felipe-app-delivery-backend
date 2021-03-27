@@ -7,4 +7,8 @@ export class CategoryRepository extends Repository<Category> {
   async findById(id: string) {
     return this.findOne({ where: { id } });
   }
+
+  async findByName(name: string) {
+    return this.findOne({ where: { name } });
+  }
 }

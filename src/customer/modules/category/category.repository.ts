@@ -1,10 +1,10 @@
 import { EntityRepository, Repository } from 'typeorm';
 
-import EstablishmentCategory from '@core/category';
+import Category from '@core/category';
 
-@EntityRepository(EstablishmentCategory)
-class establishmentCategoryRepository extends Repository<EstablishmentCategory> {
-  async findById(id: string): Promise<EstablishmentCategory | undefined> {
+@EntityRepository(Category)
+class CategoryRepository extends Repository<Category> {
+  async findById(id: string): Promise<Category | undefined> {
     try {
       return this.findOne({ where: { id } });
     } catch (err) {
@@ -13,4 +13,4 @@ class establishmentCategoryRepository extends Repository<EstablishmentCategory> 
   }
 }
 
-export default establishmentCategoryRepository;
+export default CategoryRepository;
