@@ -9,24 +9,22 @@ import { getCustomRepository } from 'typeorm';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import ClientRepository from '@customer/modules/client/client.repository';
-import { AddressClientRepository } from '@customer/modules/address-client';
 import { LoginClientDto } from '../dtos/login-client.dto';
 import loginValidation from '../validation/login.validation';
 
 class LoginClientService {
-  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<any | null>> {
+  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<{ token: string } | null>> {
     try {
       if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
 
       const clientRepository = getCustomRepository(ClientRepository);
-      const clientAddressesRepository = getCustomRepository(AddressClientRepository);
       const tokenManager = new TokenManager();
 
       // Procurar pelo e-mail e pegar o avatar desse cliente
 
       const client = await clientRepository.findOne({
         where: { email: loginDto.email },
-        relations: ['image'],
+        select: ['id', 'password'],
       });
 
       if (!client) throw new Error('[erro]: E-mail ou senha incorreto');
