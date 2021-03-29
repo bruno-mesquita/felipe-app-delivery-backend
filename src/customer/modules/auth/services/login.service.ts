@@ -43,13 +43,6 @@ class LoginClientService {
       return {
         result: {
           token,
-          client: {
-            name: client.getName(),
-            avatar: client.getImage() ? client.getImage().getEncoded() : null,
-            cpf: client.getCpf(),
-            phone: client.getCellphone(),
-            email: client.getEmail(),
-          },
         },
         err: null,
       };
