@@ -9,6 +9,7 @@ import { BeforeInsert, Column, Entity, JoinColumn, OneToMany, OneToOne } from 't
 import { compareSync, hashSync } from 'bcryptjs';
 import { setHours, isPast } from 'date-fns';
 
+import encrypted from '@shared/typeorm/encrypted';
 import EntityBase from '@shared/utils/entity';
 import Address from '@core/address';
 import Image from '@core/image';
@@ -18,16 +19,16 @@ import Order from '@core/order';
 
 @Entity('establishment')
 class Establishment extends EntityBase {
-  @Column()
+  @Column({ transformer: encrypted() })
   name: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, transformer: encrypted() })
   cellphone: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, transformer: encrypted() })
   email: string;
 
-  @Column()
+  @Column({ transformer: encrypted() })
   password: string;
 
   @Column()

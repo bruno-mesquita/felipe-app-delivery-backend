@@ -8,22 +8,23 @@
 
 import { Entity, Column, JoinColumn, ManyToOne, OneToMany } from 'typeorm';
 
+import encrypted from '@shared/typeorm/encrypted';
 import EntityBase from '@shared/utils/entity';
 import City from '@core/address-city';
 import Order from '@core/order';
 
 @Entity('address')
 class Address extends EntityBase {
-  @Column({ default: null })
+  @Column({ default: 'Não informado', transformer: encrypted() })
   street: string;
 
-  @Column({ default: null })
-  number: number;
+  @Column({ default: 'Não informado', transformer: encrypted() })
+  number: string;
 
-  @Column({ default: null })
+  @Column({ default: 'Não informado', transformer: encrypted() })
   neighborhood: string;
 
-  @Column({ default: null })
+  @Column({ default: 'Não informado', transformer: encrypted() })
   cep: string;
 
   @ManyToOne(() => City)
@@ -37,7 +38,7 @@ class Address extends EntityBase {
     this.street = street;
   }
 
-  public setNumber(number: number): void {
+  public setNumber(number: string): void {
     this.number = number;
   }
 
@@ -57,7 +58,7 @@ class Address extends EntityBase {
     return this.street;
   }
 
-  public getNumber(): number {
+  public getNumber(): string {
     return this.number;
   }
 

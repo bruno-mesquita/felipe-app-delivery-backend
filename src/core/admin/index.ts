@@ -1,31 +1,27 @@
 /**
-
  * @fileoverview Entidade Admin
-
  *
-
  * @author Bruno Mesquita
-
  */
 
 import { Entity, Column, BeforeInsert } from 'typeorm';
-
 import { hashSync, compareSync } from 'bcryptjs';
 
+import encrypted from '@shared/typeorm/encrypted';
 import BaseEntity from '@shared/utils/entity';
 
 @Entity('admin')
 class Admin extends BaseEntity {
-  @Column()
+  @Column({ transformer: encrypted() })
   name: string;
 
-  @Column()
+  @Column({ transformer: encrypted() })
   email: string;
 
-  @Column()
+  @Column({ transformer: encrypted() })
   password: string;
 
-  @Column()
+  @Column({ transformer: encrypted() })
   phone: string;
 
   @BeforeInsert()

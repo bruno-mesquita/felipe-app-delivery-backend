@@ -1,26 +1,27 @@
-import { Entity, Column, OneToOne, JoinColumn, BeforeInsert, OneToMany, ManyToOne } from 'typeorm';
+import { Entity, Column, OneToOne, JoinColumn, BeforeInsert, OneToMany } from 'typeorm';
 import { hashSync, compareSync } from 'bcryptjs';
 
 import EntityBase from '@shared/utils/entity';
+import encrypted from '@shared/typeorm/encrypted';
 import Image from '@core/image';
 import Order from '@core/order';
 import AddressClient from '@core/address-client';
 
 @Entity('client')
 class Client extends EntityBase {
-  @Column()
+  @Column({ transformer: encrypted() })
   name: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, transformer: encrypted() })
   email: string;
 
-  @Column()
+  @Column({ transformer: encrypted() })
   password: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, transformer: encrypted() })
   cellphone: string;
 
-  @Column({ unique: true })
+  @Column({ unique: true, transformer: encrypted() })
   cpf: string;
 
   @Column({ default: false })
