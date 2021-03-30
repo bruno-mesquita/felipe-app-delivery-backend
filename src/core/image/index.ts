@@ -7,13 +7,14 @@
 import { Column, Entity } from 'typeorm';
 
 import EntityBase from '@shared/utils/entity';
+import encrypted from '@shared/typeorm/encrypted';
 
 @Entity('image')
 class Image extends EntityBase {
-  @Column()
+  @Column({ transformer: encrypted() })
   name: string;
 
-  @Column()
+  @Column({ transformer: encrypted() })
   encoded: string;
 
   public setName(name: string): void {
