@@ -70,5 +70,7 @@ routes.get('/menus/:id/products', menuController.findProductsByMenu);
 routes.use(isAuthenticated);
 routes.post('/orders', orderController.create);
 routes.get('/orders/:id', orderController.show);
+routes.get('/orders/:id/verify', orderController.verify);
+routes.post('/orders/:id/rate', orderController.rateOrder);
 
 export default routes;
