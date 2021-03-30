@@ -47,6 +47,7 @@ routes.get('/clients/orders', clientController.listOrdersByClient);
 
 // Avatar
 routes.post('/avatar', avatarController.create);
+routes.get('/avatar', avatarController.findOneAvatarByUserId);
 
 // Endereços do cliente
 routes.get('/adresses-client', clientAddressController.list);
