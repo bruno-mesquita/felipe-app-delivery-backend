@@ -44,6 +44,7 @@ routes.use(isAuthenticated);
 routes.put('/clients', clientController.updateProfile);
 routes.put('/clients/update-password', clientController.updatePassword);
 routes.get('/clients/orders', clientController.listOrdersByClient);
+routes.get('/clients/:id/me', clientController.profile);
 
 // Avatar
 routes.post('/avatar', avatarController.create);

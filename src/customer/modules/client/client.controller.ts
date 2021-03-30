@@ -11,6 +11,7 @@ import {
   CreateClientService,
   UpdateProfileService,
   UpdatePasswordClientService,
+  ProfileClientService,
   ListOrdersService,
 } from './services';
 
@@ -66,6 +67,22 @@ class ClientController {
       if (result.err) throw new Error(result.err);
 
       return res.status(200).json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async profile(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id } = req.params;
+
+      const profileClientService = new ProfileClientService();
+
+      const profile = await profileClientService.execute(id);
+
+      if (profile.err) throw new Error(profile.err);
+
+      return res.status(200).json(profile);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

@@ -34,7 +34,7 @@
   },
   "exclude": [
     "node_modules",
-    "dist"
+    "dist",
   ],
   "include": ["src", "ormconfig.js"]
 }

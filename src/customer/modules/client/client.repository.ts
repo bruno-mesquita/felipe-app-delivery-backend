@@ -19,6 +19,18 @@ class ClientRepository extends Repository<Client> {
   async findByCellphone(cellphone: string) {
     return this.findOne({ where: { cellphone } });
   }
+
+  async findByUserId(id: string) {
+    try {
+      return this.find({
+        where: { id },
+        relations: ['image'],
+        select: ['name', 'email', 'cpf', 'cellphone', 'image'],
+      });
+    } catch (err) {
+      return [];
+    }
+  }
 }
 
 export default ClientRepository;

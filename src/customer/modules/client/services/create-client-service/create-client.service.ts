@@ -28,9 +28,6 @@ class CreateClientService {
       const addressClientRepository = getCustomRepository(AddressClientRepository);
       const clientActivationCodeRepository = getCustomRepository(ClientActivationCodeRepository);
 
-      // Verificando se as senhas são iguais
-      if (createClientDto.confirmPassword !== createClientDto.password) throw new Error('Senhas não são iguais');
-
       // Fazendo Validação do DTO
       const valid = createClientSchema.isValidSync(createClientDto);
 
@@ -45,6 +42,9 @@ class CreateClientService {
       const userEmailExists = await userRepository.findByEmail(createClientDto.email);
 
       if (userEmailExists) throw new Error('Já existe um usuário cadastrado com esse email');
+
+      // Verificando se as senhas são iguais
+      if (createClientDto.confirmPassword !== createClientDto.password) throw new Error('Senhas não são iguais');
 
       // Verificando se já existe um cliente com esse numero
       const userCellphoneExists = await userRepository.findByCellphone(createClientDto.cellphone);
