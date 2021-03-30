@@ -53,6 +53,10 @@ class Order extends EntityBase {
   @JoinColumn({ name: 'establishment_id' })
   establishment: Establishment;
 
+  public getClientOrderStatus(): CustomerStatusType {
+    return this.client_order_status;
+  }
+
   public setEvaluation(evaluation: Evaluation): void {
     this.evaluation = evaluation;
   }

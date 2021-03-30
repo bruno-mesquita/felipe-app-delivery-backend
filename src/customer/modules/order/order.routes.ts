@@ -15,5 +15,6 @@ const orderController = new OrderController();
 orderRouter.use(isAuthenticated);
 orderRouter.post('/orders', orderController.create);
 orderRouter.get('/orders/:id', orderController.show);
+orderRouter.get('/orders/:id/verify', orderController.verify);
 
 export { orderRouter };
