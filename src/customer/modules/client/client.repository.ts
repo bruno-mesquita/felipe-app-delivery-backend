@@ -20,15 +20,14 @@ class ClientRepository extends Repository<Client> {
     return this.findOne({ where: { cellphone } });
   }
 
-  async findByUserId(id: string) {
+  async findByProfile(id: string) {
     try {
-      return this.find({
+      return this.findOne({
         where: { id },
         relations: ['image'],
-        select: ['name', 'email', 'cpf', 'cellphone', 'image'],
       });
     } catch (err) {
-      return [];
+      return null;
     }
   }
 }

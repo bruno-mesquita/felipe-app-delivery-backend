@@ -7,32 +7,20 @@ export default class ProfileClientService {
     try {
       const clientRepository = getCustomRepository(ClientRepository);
 
-      const clientExists = await clientRepository.findByUserId(id);
+      // Trasendo dados do Perfil do cliente
 
-      if (!clientExists) throw new Error('Perfil do usuário não encontrado');
+      const client = await clientRepository.findByProfile(id);
 
-      const client = clientExists.map((clientProfile) => {
-        const name = clientProfile.getName();
-
-        const email = clientProfile.getEmail();
-
-        const cpf = clientProfile.getCpf();
-
-        const cellphone = clientProfile.getCellphone();
-
-        const image = clientProfile.getImage() ? `${clientProfile.getImage().getId()}` : ``;
-
-        return {
-          id: clientProfile.getId(),
-          name,
-          email,
-          cpf,
-          cellphone,
-          image,
-        };
-      });
-
-      return { result: client, err: null };
+      return {
+        result: {
+          avatar: client.image ? `${client.image.getEncoded()}` : null,
+          name: client.name,
+          email: client.email,
+          cpf: client.cpf,
+          cellphone: client.cellphone,
+        },
+        err: null,
+      };
     } catch (err) {
       return { result: null, err: err.message };
     }
