@@ -1,24 +1,34 @@
-const { DB_DATABASE, DB_HOST, DB_PASS, DB_PORT, DB_TYPE, DB_USER, NODE_ENV } = process.env;
+const path = require('path');
 
-const ROOT_DIR = NODE_ENV !== 'prod' ? 'src' : 'dist';
-const EXT = NODE_ENV !== 'prod' ? 'ts' : 'js';
+const {
+  TYPEORM_DATABASE,
+  TYPEORM_HOST,
+  TYPEORM_PASSWORD,
+  TYPEORM_PORT,
+  TYPEORM_CONNECTION,
+  TYPEORM_USERNAME,
+} = process.env;
+const isCompiled = path.extname(__filename).includes('js');
+
+const root = isCompiled ? 'src' : 'dist';
+const ext = isCompiled ? 'js' : 'ts';
 
 module.exports = {
-  type: DB_TYPE,
-  host: DB_HOST,
-  port: DB_PORT,
-  username: DB_USER,
-  password: DB_PASS,
-  database: DB_DATABASE,
+  type: TYPEORM_CONNECTION,
+  host: TYPEORM_HOST,
+  port: TYPEORM_PORT,
+  username: TYPEORM_USERNAME,
+  password: TYPEORM_PASSWORD,
+  database: TYPEORM_DATABASE,
   synchronize: true,
   logging: false,
 
-  entities: [`./${ROOT_DIR}/core/**/*.${EXT}`],
-  migrations: [`./${ROOT_DIR}/shared/typeorm/migrations/*.${EXT}`],
-  subscribers: [`${ROOT_DIR}/subscriber/**/*.${EXT}`],
+  entities: [`./${root}/core/**/*.${ext}`],
+  migrations: [`./${root}/shared/typeorm/migrations.${ext}`],
+  subscribers: [`./${root}/subscriber/**/*.${ext}`],
   cli: {
-    migrationsDir: `./${ROOT_DIR}/shared/typeorm/migrations`,
-    entitiesDir: `./${ROOT_DIR}/core`,
-    subscribersDir: `${ROOT_DIR}/subscriber`,
+    migrationsDir: `${root}/shared/typeorm/migrations`,
+    entitiesDir: `${root}/core`,
+    subscribersDir: `${root}/subscriber`,
   },
 };

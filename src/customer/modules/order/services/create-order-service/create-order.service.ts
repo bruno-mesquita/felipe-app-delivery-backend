@@ -43,7 +43,10 @@ export class CreateOrderService {
 
       // console.log({ ...createOrderDto, freight_value: establishmentExists.freightValue });
 
-      const order = orderRepository.create({ ...createOrderDto, freight_value: establishmentExists.freightValue });
+      const order = orderRepository.create({
+        ...createOrderDto,
+        freight_value: establishmentExists.freightValue,
+      });
 
       order.open();
 
