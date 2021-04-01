@@ -3,6 +3,8 @@
  * @author Jonatas Rosa Moura
  */
 
+import { FormOfPaymentType } from '@core/order/order.types';
+
 export interface Item {
   amount: number;
   price: number;
@@ -13,7 +15,6 @@ export interface Item {
 export interface CreateOrderDto {
   establishmentId: string;
   items: Item[];
-  fee: number;
   total: number;
-  payment: string;
+  payment: FormOfPaymentType;
 }

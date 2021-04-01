@@ -16,11 +16,8 @@ import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from './order.
 
 @Entity('order')
 class Order extends EntityBase {
-  @Column()
-  request_date: Date;
-
   @Column({ type: 'varchar' })
-  form_of_payment: FormOfPaymentType;
+  payment: FormOfPaymentType;
 
   @Column('decimal')
   total: number;
@@ -57,8 +54,8 @@ class Order extends EntityBase {
     this.evaluation = evaluation;
   }
 
-  public updateOrder(form_of_payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
-    this.form_of_payment = form_of_payment;
+  public updateOrder(payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
+    this.payment = payment;
     this.client_order_status = client_order_status;
   }
 

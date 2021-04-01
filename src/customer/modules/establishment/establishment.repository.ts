@@ -15,6 +15,16 @@ class EstablishmentRepository extends Repository<Establishment> {
       return [];
     }
   }
+
+  async findById(id: string) {
+    try {
+      return this.findOne({
+        where: { id },
+      });
+    } catch (err) {
+      return null;
+    }
+  }
 }
 
 export default EstablishmentRepository;

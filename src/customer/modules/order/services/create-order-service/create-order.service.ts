@@ -12,11 +12,12 @@ import { ItemOrderRepository } from '@customer/modules/item-order/item-order.rep
 import { ServiceResponse } from '@shared/utils/service-response';
 import { ProductRepository } from '@store/modules/product/repository/product.repository';
 import { CreateOrderDto } from '../../dtos/create-order.dto';
+import EstablishmentRepository from '../../../establishment/establishment.repository';
 import { OrderRepository } from '../../order.repository';
 import { schema } from '../../validation/create-order.validation';
 
 export class CreateOrderService {
-  async execute(orderProps: CreateOrderDto): Promise<ServiceResponse<any>> {
+  async execute(createOrderDto: CreateOrderDto): Promise<ServiceResponse<any>> {
     try {
       const orderRepository = getCustomRepository(OrderRepository);
 
@@ -24,19 +25,25 @@ export class CreateOrderService {
 
       const productRepository = getCustomRepository(ProductRepository);
 
+      const establishmentRepository = getCustomRepository(EstablishmentRepository);
+
       // Fazendo validação DTO
 
-      const valid = schema.isValidSync(orderProps);
+      const valid = schema.isValidSync(createOrderDto);
 
-      if (!valid) throw new Error('[erro]: Por favor reveja os parâmetros que você digitou');
+      if (!valid) throw new Error('Campos inválidos');
 
       // Buscando o estabelecimento do pedido
 
-      const establishmentId = await orderRepository.findOne({ where: { establishment: orderProps.establishmentId } });
+      const establishmentExists = await establishmentRepository.findById(createOrderDto.establishmentId);
 
-      if (!establishmentId) throw new Error('[erro]: Estabelecimento não encontrado');
+      if (!establishmentExists) throw new Error('Estabelecimento não encontrado');
 
-      const order = orderRepository.create(orderProps);
+      // pedido
+
+      // console.log({ ...createOrderDto, freight_value: establishmentExists.freightValue });
+
+      const order = orderRepository.create({ ...createOrderDto, freight_value: establishmentExists.freightValue });
 
       order.open();
 
@@ -48,7 +55,7 @@ export class CreateOrderService {
 
       // Verificar os produtos
 
-      orderProps.items.map(async (item) => {
+      createOrderDto.items.map(async (item) => {
         const product = await productRepository.findById(item.itemId);
 
         if (product) {
@@ -74,7 +81,7 @@ export class CreateOrderService {
 
       const totalOrder = order.calcTotal();
 
-      // Salvando no db
+      // Salvando produto no db
 
       await orderRepository.save(order);
 
