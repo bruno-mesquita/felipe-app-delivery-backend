@@ -11,7 +11,9 @@ export class RateOrderService {
       const orderRepository = getCustomRepository(OrderRepository);
       const evaluationRepository = getCustomRepository(EvaluationRepository);
 
-      const order = await orderRepository.findOne({ where: [{ id: orderId }, { client: userId }] });
+      const order = await orderRepository.findOne({
+        where: [{ id: orderId }, { client: userId }],
+      });
 
       if (!order) throw new Error('Pedido não encontrado');
 

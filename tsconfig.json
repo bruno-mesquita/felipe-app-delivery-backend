@@ -36,5 +36,5 @@
     "node_modules",
     "dist",
   ],
-  "include": ["src", "ormconfig.js"]
+  "include": ["./src/**/*"]
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreateAvatarClientService } from './create-avatar-client-service';
+import { CreateAvatarClientService, FindOneAvatarClientClientService } from './services';
 
 class AvatarController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -11,6 +11,20 @@ class AvatarController {
       if (avatar.err) throw new Error(avatar.err);
 
       return res.status(201).json(avatar);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async findOneAvatarByUserId(req: Request, res: Response): Promise<Response> {
+    try {
+      const findOneAvatarClientClientService = new FindOneAvatarClientClientService();
+
+      const avatar = await findOneAvatarClientClientService.execute(req.client.id);
+
+      if (avatar.err) throw new Error(avatar.err);
+
+      return res.status(200).json(avatar);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
