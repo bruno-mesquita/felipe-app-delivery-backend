@@ -5,7 +5,6 @@
  */
 
 import 'dotenv/config';
-import 'reflect-metadata';
 import express, { Router } from 'express';
 import cors from 'cors';
 import compression from 'compression';
