@@ -15,7 +15,7 @@ export interface AddressAttributes {
   city: string;
 }
 
-class Address extends Model<AddressAttributes> {
+class Address extends Model {
   static start(sequelize: Sequelize) {
     this.init({
       street: DataTypes.STRING,
