@@ -5,21 +5,12 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity } from 'typeorm';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
 
-@Entity('category')
-class Category extends EntityBase {
-  @Column({ unique: true })
-  name: string;
-
-  public getName(): string {
-    return this.name;
-  }
-
-  public setName(name: string): void {
-    this.name = name;
+class Category extends Model {
+  static start(sequelize: Sequelize): void {
+    this.init({ name: DataTypes.STRING }, { sequelize });
   }
 }
 

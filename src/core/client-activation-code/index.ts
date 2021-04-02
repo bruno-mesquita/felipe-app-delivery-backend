@@ -1,36 +1,23 @@
 /**
-
  * @fileoverview Criação da entidade ClientActivateCode, representa o codigo de ativação da conta do usuário
-
  *
-
  * @author Bruno Mesquita
-
  * @author Jonatas Rosa Moura
-
  */
 
-import { Entity, Column, JoinColumn, OneToOne } from 'typeorm';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
+class ClientActivationCode extends Model {
+  static start(sequelize: Sequelize): void {
+    this.init({
+      attempts: DataTypes.NUMBER,
+      code: DataTypes.STRING,
+      client: DataTypes.UUIDV4,
+    }, { sequelize });
+  }
 
-import Client from '@core/client';
 
-@Entity('client_code_activation')
-class ClientActivationCode extends EntityBase {
-  @Column()
-  attempts: number;
-
-  @Column()
-  code: string;
-
-  @OneToOne(() => Client)
-  @JoinColumn({ name: 'client_id' })
-  client: Client;
-
-  // Implementar
-
-  public generateCode(): string {
+  /* public generateCode(): string {
     this.attempts += 1;
 
     const code = `code${this.attempts}`;
@@ -46,7 +33,7 @@ class ClientActivationCode extends EntityBase {
 
   public compareCode(code: string): boolean {
     return this.code === code;
-  }
+  } */
 }
 
 export default ClientActivationCode;

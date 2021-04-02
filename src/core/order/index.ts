@@ -5,58 +5,44 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, JoinColumn, OneToOne, ManyToOne } from 'typeorm';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
-import Evaluation from '@core/evaluation';
-import Client from '@core/client';
-import Address from '@core/address';
-import Establishment from '@core/establishment';
 import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from './order.types';
 
-@Entity('order')
-class Order extends EntityBase {
-  @Column({ type: 'varchar' })
+class Order extends Model {
   payment: FormOfPaymentType;
-
-  @Column('decimal')
   total: number;
-
-  @Column('decimal')
   discount: number;
-
-  @Column({ type: 'varchar' })
   client_order_status: CustomerStatusType;
-
-  @Column({ type: 'varchar' })
   order_status: StatusOrderType;
-
-  @Column('decimal')
   freight_value: number;
-
-  @ManyToOne(() => Client, (client) => client.orders)
-  @JoinColumn({ name: 'client_id' })
-  client: Client;
-
-  @ManyToOne(() => Address, (address) => address.orders)
-  @JoinColumn({ name: 'address_id' })
+/*   client: Client;
   address: Address;
-
-  @OneToOne(() => Evaluation)
-  @JoinColumn({ name: 'evaluation_id' })
   evaluation: Evaluation;
+  establishment: Establishment; */
 
-  @ManyToOne(() => Establishment, (store) => store.orders)
-  @JoinColumn({ name: 'establishment_id' })
-  establishment: Establishment;
+  static start(sequelize: Sequelize): void {
+    this.init({
+      payment: DataTypes.STRING,
+      total: DataTypes.NUMBER,
+      discount: DataTypes.NUMBER,
+      client_order_status: DataTypes.STRING,
+      order_status: DataTypes.STRING,
+      freight_value: DataTypes.NUMBER,
+      client: DataTypes.UUIDV4,
+      address: DataTypes.UUIDV4,
+      evaluation: DataTypes.UUIDV4,
+      establishment: DataTypes.UUIDV4,
+    }, { sequelize });
+  }
 
   public getClientOrderStatus(): CustomerStatusType {
     return this.client_order_status;
   }
 
-  public setEvaluation(evaluation: Evaluation): void {
+/*   public setEvaluation(evaluation: Evaluation): void {
     this.evaluation = evaluation;
-  }
+  } */
 
   public updateOrder(payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
     this.payment = payment;

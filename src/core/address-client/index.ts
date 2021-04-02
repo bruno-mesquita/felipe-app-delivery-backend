@@ -5,47 +5,15 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Entity, OneToOne, JoinColumn, Column, ManyToOne } from 'typeorm';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
-import Client from '@core/client';
-import Address from '@core/address';
-
-@Entity('client_address')
-class AddressClient extends EntityBase {
-  @Column()
-  nickname: string;
-
-  @ManyToOne(() => Client)
-  @JoinColumn({ name: 'client_id' })
-  client_id: Client;
-
-  @ManyToOne(() => Address)
-  @JoinColumn({ name: 'address_id' })
-  address_id: Address;
-
-  public setNickname(nickname: string): void {
-    this.nickname = nickname;
-  }
-
-  public getNickname(): string {
-    return this.nickname;
-  }
-
-  public setClient(client: Client): void {
-    this.client_id = client;
-  }
-
-  public getClient(): Client {
-    return this.client_id;
-  }
-
-  public setAddress(address: Address): void {
-    this.address_id = address;
-  }
-
-  public getAddress(): Address {
-    return this.address_id;
+class AddressClient extends Model {
+  static start(sequelize: Sequelize) {
+    this.init({
+      nickname: DataTypes.STRING,
+      client_id: DataTypes.UUIDV4,
+      address_id: DataTypes.UUIDV4,
+    }, { sequelize });
   }
 }
 

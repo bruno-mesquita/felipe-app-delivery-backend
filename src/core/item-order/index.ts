@@ -4,29 +4,20 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, OneToOne, JoinColumn } from 'typeorm';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
-
-import Product from '@core/product';
-
-import Order from '@core/order';
-
-@Entity('item_order')
-class ItemOrder extends EntityBase {
-  @Column()
+class ItemOrder extends Model {
   quantity: number;
-
-  @Column('decimal')
   total: number;
 
-  @OneToOne(() => Product)
-  @JoinColumn({ name: 'product_id' })
-  product_id: Product;
-
-  @OneToOne(() => Order)
-  @JoinColumn({ name: 'order_id' })
-  order_id: Order;
+  static start(sequelize: Sequelize): void {
+    this.init({
+      quantity: DataTypes.NUMBER,
+      total: DataTypes.NUMBER,
+      productId: DataTypes.UUIDV4,
+      orderId: DataTypes.UUIDV4,
+    }, { sequelize });
+  }
 }
 
 export default ItemOrder;

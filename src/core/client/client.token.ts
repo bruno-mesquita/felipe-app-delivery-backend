@@ -3,17 +3,15 @@
  * @author Jonatas Rosa Moura
  */
 
-import EntityBase from '@shared/utils/entity';
-import { Column, Entity, Generated } from 'typeorm';
+ import { Model, DataTypes, Sequelize } from 'sequelize';
 
-@Entity('client_tokens')
-class ClientToken extends EntityBase {
-  @Column()
-  @Generated('uuid')
-  token: string;
-
-  @Column()
-  client_id: string;
+class ClientToken extends Model {
+  static start(sequelize: Sequelize): void {
+    this.init({
+      token: DataTypes.STRING,
+      clientId: DataTypes.UUIDV4,
+    }, { sequelize });
+  }
 }
 
 export { ClientToken };

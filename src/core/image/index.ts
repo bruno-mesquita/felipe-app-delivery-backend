@@ -4,18 +4,18 @@
  * @author Bruno Mesquita
  */
 
-import { Column, Entity } from 'typeorm';
+ import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
-import encrypted from '@shared/typeorm/encrypted';
-
-@Entity('image')
-class Image extends EntityBase {
-  @Column({ transformer: encrypted() })
+class Image extends Model {
   name: string;
-
-  @Column({ transformer: encrypted() })
   encoded: string;
+
+  static start(sequelize: Sequelize): void {
+    this.init({
+      name: DataTypes.STRING,
+      encoded: DataTypes.STRING,
+    }, { sequelize });
+  }
 
   public setName(name: string): void {
     this.name = name;

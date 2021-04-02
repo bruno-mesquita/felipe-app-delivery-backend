@@ -5,26 +5,16 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
-
-import Establishment from '@core/establishment';
-import Product from '@core/product';
-
-@Entity('menu')
-class Menu extends EntityBase {
-  @Column()
+class Menu extends Model {
   name: string;
 
-  @ManyToOne(() => Establishment, (stablishment) => stablishment.menus)
-  establishment: Establishment;
-
-  @OneToMany(() => Product, (product) => product.menu)
-  products: Product[];
-
-  getProducts(): Product[] {
-    return this.products;
+  static start(sequelize: Sequelize): void {
+    this.init({
+      name: DataTypes.NUMBER,
+      establishment: DataTypes.UUIDV4,
+    }, { sequelize });
   }
 
   public getName(): string {

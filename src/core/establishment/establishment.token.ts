@@ -4,16 +4,13 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity, Generated } from 'typeorm';
+ import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
-
-@Entity('establishment_tokens')
-export class EstablishmentToken extends EntityBase {
-  @Column()
-  @Generated('uuid')
-  token: string;
-
-  @Column()
-  establishment_id: string;
+export class EstablishmentToken extends Model {
+  static start(sequelize: Sequelize): void {
+    this.init({
+      token: DataTypes.STRING,
+      establishmentId: DataTypes.UUIDV4,
+    }, { sequelize })
+  }
 }

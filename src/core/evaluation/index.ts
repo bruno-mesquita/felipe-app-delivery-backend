@@ -5,18 +5,18 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Column, Entity } from 'typeorm';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
-import EntityBase from '@shared/utils/entity';
-import encrypted from '@shared/typeorm/encrypted';
-
-@Entity('evaluation_order')
-class Evaluation extends EntityBase {
-  @Column()
+class Evaluation extends Model {
   value: number;
-
-  @Column({ transformer: encrypted() })
   message: string;
+
+  static start(sequelize: Sequelize): void {
+    this.init({
+      value: DataTypes.NUMBER,
+      message: DataTypes.STRING,
+    }, { sequelize });
+  }
 }
 
 export default Evaluation;
