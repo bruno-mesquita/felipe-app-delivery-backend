@@ -36,6 +36,7 @@ class ActiveClientService {
       user.activate();
 
       await userRepository.save(user);
+      await clientActivationCodeRepository.delete(clientActivationCode);
 
       return { result: true, err: null };
     } catch (err) {
