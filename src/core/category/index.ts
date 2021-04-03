@@ -10,7 +10,7 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 
 class Category extends Model {
   static start(sequelize: Sequelize): void {
-    this.init({ name: DataTypes.STRING }, { sequelize });
+    this.init({ name: DataTypes.STRING }, { sequelize, tableName: 'categories' });
   }
 }
 

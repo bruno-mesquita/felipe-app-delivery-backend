@@ -23,7 +23,7 @@ class Address extends Model {
       neighborhood: DataTypes.STRING,
       cep: DataTypes.STRING,
       city: DataTypes.UUIDV4,
-    }, { sequelize });
+    }, { sequelize, tableName: 'adresses' });
   }
 }
 

@@ -9,7 +9,7 @@ class ClientActivationCode extends Model {
       attempts: DataTypes.NUMBER,
       code: DataTypes.STRING,
       client: DataTypes.UUIDV4,
-    }, { sequelize });
+    }, { sequelize, tableName: 'client_code' });
   }
 
 

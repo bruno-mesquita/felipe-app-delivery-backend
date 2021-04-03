@@ -14,7 +14,7 @@ class Image extends Model {
     this.init({
       name: DataTypes.STRING,
       encoded: DataTypes.STRING,
-    }, { sequelize });
+    }, { sequelize, tableName: 'images' });
   }
 
   public setName(name: string): void {

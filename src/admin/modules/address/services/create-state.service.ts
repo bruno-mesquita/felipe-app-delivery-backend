@@ -2,7 +2,7 @@
  * @fileoverview Criação de serviço de address de user customer
  */
 
-import State from '@core/address-state';
+import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { StateAddressDto } from '../dtos/create-state-dto';
 import { schema } from '../validations/create-state.validation';

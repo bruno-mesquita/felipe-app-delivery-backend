@@ -15,7 +15,7 @@ class Evaluation extends Model {
     this.init({
       value: DataTypes.NUMBER,
       message: DataTypes.STRING,
-    }, { sequelize });
+    }, { sequelize, tableName: 'evaluations' });
   }
 }
 

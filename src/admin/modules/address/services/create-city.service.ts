@@ -3,8 +3,8 @@
  */
 
 
-import City from '@core/address-city';
-import State from '@core/address-state';
+import City from '@core/city';
+import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CityAddressDto } from '../dtos/create-city-dto';
 import { schema } from '../validations/create-city.validation';

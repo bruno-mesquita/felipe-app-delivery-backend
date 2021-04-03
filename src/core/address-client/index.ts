@@ -13,7 +13,7 @@ class AddressClient extends Model {
       nickname: DataTypes.STRING,
       client_id: DataTypes.UUIDV4,
       address_id: DataTypes.UUIDV4,
-    }, { sequelize });
+    }, { sequelize, tableName: 'address_client' });
   }
 }
 

@@ -1,4 +1,4 @@
-import State from '@core/address-state';
+import State from '@core/state';
 
 class ListStatesService {
   async execute(): Promise<State[]> {

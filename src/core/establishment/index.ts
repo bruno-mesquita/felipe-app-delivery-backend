@@ -37,7 +37,7 @@ class Establishment extends Model {
       openingTime: DataTypes.NUMBER,
       closingTime: DataTypes.NUMBER,
       freightValue: DataTypes.NUMBER,
-    }, { sequelize });
+    }, { sequelize, tableName: 'establismnts' });
   }
 
   public getName(): string {

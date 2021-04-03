@@ -33,7 +33,7 @@ class Order extends Model {
       address: DataTypes.UUIDV4,
       evaluation: DataTypes.UUIDV4,
       establishment: DataTypes.UUIDV4,
-    }, { sequelize });
+    }, { sequelize, tableName: 'orders' });
   }
 
   public getClientOrderStatus(): CustomerStatusType {

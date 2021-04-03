@@ -1,4 +1,4 @@
-import State from '@core/address-state';
+import State from '@core/state';
 import { AddresStateRepository } from '../repository/state-repository';
 
 class ListStatesService {

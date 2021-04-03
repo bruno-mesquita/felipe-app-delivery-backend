@@ -16,7 +16,7 @@ class ItemOrder extends Model {
       total: DataTypes.NUMBER,
       productId: DataTypes.UUIDV4,
       orderId: DataTypes.UUIDV4,
-    }, { sequelize });
+    }, { sequelize, tableName: 'item_order' });
   }
 }
 

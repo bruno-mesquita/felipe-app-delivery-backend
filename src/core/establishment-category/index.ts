@@ -11,7 +11,7 @@ class EstablishmentCategory extends Model {
     this.init({
       category: DataTypes.UUIDV4,
       establishment: DataTypes.UUIDV4,
-    }, { sequelize });
+    }, { sequelize, tableName: 'establismnt_category' });
   }
 }
 

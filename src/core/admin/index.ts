@@ -1,10 +1,4 @@
-/**
- * @fileoverview Entidade Admin
- *
- * @author Bruno Mesquita
- */
-
- import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
 class Admin extends Model {
   static start(sequelize: Sequelize): void {
@@ -13,7 +7,7 @@ class Admin extends Model {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       phone: DataTypes.STRING,
-    }, { sequelize });
+    }, { sequelize, tableName: 'admins' });
   }
 }
 

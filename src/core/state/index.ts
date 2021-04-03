@@ -14,7 +14,7 @@ class State extends Model {
     this.init({
       name: DataTypes.STRING,
       active:  DataTypes.BOOLEAN,
-    }, { sequelize });
+    }, { sequelize, tableName: 'states' });
   }
 }
 

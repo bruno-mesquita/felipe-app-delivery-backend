@@ -22,7 +22,7 @@ class Product extends Model {
       description: DataTypes.STRING,
       image: DataTypes.UUIDV4,
       menu: DataTypes.UUIDV4,
-    }, { sequelize });
+    }, { sequelize, tableName: 'products' });
   }
 
   public getName(): string {

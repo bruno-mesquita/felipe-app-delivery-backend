@@ -14,7 +14,7 @@ class Menu extends Model {
     this.init({
       name: DataTypes.NUMBER,
       establishment: DataTypes.UUIDV4,
-    }, { sequelize });
+    }, { sequelize, tableName: 'menus' });
   }
 
   public getName(): string {
