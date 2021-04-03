@@ -10,5 +10,6 @@ export const databaseConfig: Options = {
   port: process.env.DB_PORT,
   define: {
     timestamps: true,
+    underscored: true,
   },
 };

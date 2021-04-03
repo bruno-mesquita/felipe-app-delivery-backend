@@ -1,6 +1,9 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
 class ClientActivationCode extends Model {
+  attempts: number;
+  code: string;
+
   static start(sequelize: Sequelize): void {
     this.init({
       attempts: DataTypes.NUMBER,
@@ -10,7 +13,7 @@ class ClientActivationCode extends Model {
   }
 
 
-  /* public generateCode(): string {
+  public generateCode(): string {
     this.attempts += 1;
 
     const code = `code${this.attempts}`;
@@ -26,7 +29,7 @@ class ClientActivationCode extends Model {
 
   public compareCode(code: string): boolean {
     return this.code === code;
-  } */
+  }
 }
 
 export default ClientActivationCode;

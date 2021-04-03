@@ -7,13 +7,11 @@ export class RecoverPasswordService {
     try {
       const smsService = new SmsService();
 
-      const user = await userRepository.findOne({ where: { email }, select: ['id', 'name', 'cellphone'] });
+      const user = await Client.findOne({ where: { email }, attributes: ['id', 'name', 'cellphone'] });
 
       if (!user) throw new Error('Usuário não encontrado');
 
-      const clientCode = clientActivationCodeRepository.create({ client: user, attempts: 0 });
-
-      await clientActivationCodeRepository.save(clientCode);
+      const clientCode = await ClientActivationCode.create({ client: user, attempts: 0 });
 
       await smsService.send(user.getCellphone(), clientCode.getCode());
 

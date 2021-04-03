@@ -1,3 +1,5 @@
+import Client from '@core/client';
+import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateAvatarDto } from '../create-avatar-dto';
 import { schema } from '../create-avatar-validation';
@@ -5,18 +7,14 @@ import { schema } from '../create-avatar-validation';
 class CreateAvatarClientService {
   async execute(createAvatar: CreateAvatarDto): Promise<ServiceResponse<boolean | null>> {
     try {
-      const avatarRepository = getCustomRepository(AvatarRepository);
-      const clientRepository = getCustomRepository(ClientRepository);
-
       // Validar dados
-
       const valid = schema.isValidSync(createAvatar);
 
       if (!valid) throw new Error('[Avatar]: Parâmetros incompletos, verifique-os');
 
       // Verificando se o usuário existe
 
-      const client = await clientRepository.findOne({ where: { id: createAvatar.client_id }, relations: ['image'] });
+      const client = await Client.findOne({ where: { id: createAvatar.client_id }, include: [{ model: Image }] });
 
       if (!client) throw new Error('[Avatar]: Usuário não econtrado.');
 
@@ -24,18 +22,16 @@ class CreateAvatarClientService {
         client.getImage().setEncoded(createAvatar.encoded);
         client.getImage().setName(createAvatar.name);
 
-        await clientRepository.save(client);
+
       } else {
         // Criando classe
-        const avatar = avatarRepository.create(createAvatar);
-
-        await avatarRepository.save(avatar);
+        const avatar = await Image.create(createAvatar);
 
         // Anexar Avatar ao Usuário
-        client.setImage(avatar);
+        client.image = avatar;
 
         // Salvando no DB
-        await clientRepository.save(client);
+        await Client.update(client, { where: { id: client.id } });
       }
 
       return { result: true, err: null };

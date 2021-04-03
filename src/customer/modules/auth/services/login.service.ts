@@ -4,7 +4,7 @@
  * @author Bruno Mesquita
  */
 
-
+import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import { LoginClientDto } from '../dtos/login-client.dto';
@@ -19,9 +19,9 @@ class LoginClientService {
 
       // Procurar pelo e-mail e pegar o avatar desse cliente
 
-      const client = await clientRepository.findOne({
+      const client = await Client.findOne({
         where: { email: loginDto.email },
-        select: ['id', 'password'],
+        attributes: ['id', 'password']
       });
 
       if (!client) throw new Error('[erro]: E-mail ou senha incorreto');
@@ -33,7 +33,7 @@ class LoginClientService {
       }
 
       // Criando token
-      const token = tokenManager.create(client.getId());
+      const token = tokenManager.create(client.id);
 
       return {
         result: {
