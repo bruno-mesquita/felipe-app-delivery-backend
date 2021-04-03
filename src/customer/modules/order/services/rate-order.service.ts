@@ -1,8 +1,4 @@
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import { EvaluationRepository } from '@customer/modules/evaluation';
-import { OrderRepository } from '../order.repository';
 import { RateOrderDto } from '../dtos/rate-order.dto';
 
 export class RateOrderService {

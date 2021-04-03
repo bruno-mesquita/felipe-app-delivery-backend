@@ -4,12 +4,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import CategoryRepository from '../../../category/category.repository';
-import { EstablishmentCategoryRepository } from '../../../category-establishment';
-import { AddressClientRepository } from '../../../address-client/AddressClientRepository';
 
 class ListEstablishmentService {
   async execute(city_id: string, category_id: string): Promise<ServiceResponse<any[]>> {

@@ -5,15 +5,8 @@
  * @author Jonatas Rosa Moura
 
  */
-
-import { getCustomRepository } from 'typeorm';
-
-import { ItemOrderRepository } from '@customer/modules/item-order/item-order.repository';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { ProductRepository } from '@store/modules/product/repository/product.repository';
 import { CreateOrderDto } from '../../dtos/create-order.dto';
-import EstablishmentRepository from '../../../establishment/establishment.repository';
-import { OrderRepository } from '../../order.repository';
 import { schema } from '../../validation/create-order.validation';
 
 export class CreateOrderService {

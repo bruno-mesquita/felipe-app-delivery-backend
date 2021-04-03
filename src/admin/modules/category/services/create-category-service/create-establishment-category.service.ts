@@ -1,4 +1,3 @@
-
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateCategoryDtos } from '../../dtos/create-category.dtos';
 import { schema } from '../../validation/create-category.validation';

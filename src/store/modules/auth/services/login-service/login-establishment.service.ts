@@ -3,11 +3,8 @@
  *
  * @author Jonatas Rosa Moura
  */
-
-import { EstablishmentRepository } from '@admin/modules/establishment/repository';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
-import { getCustomRepository } from 'typeorm';
 import { compareSync } from 'bcryptjs'; // Teste senha
 import { LoginEstablishmentDto } from '../../dtos/login-establishment';
 import { IEstablishmentAuth } from '../../dtos/login-token-dto';

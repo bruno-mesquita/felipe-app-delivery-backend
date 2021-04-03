@@ -10,6 +10,7 @@ import Establishment from 'src/core/establishment';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
 import createEstablishmentSchema from '../../validation/create-client.validation';
+import { CategoryRepository } from '../../../category';
 
 export class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {

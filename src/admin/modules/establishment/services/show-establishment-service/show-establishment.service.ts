@@ -3,7 +3,6 @@
  *
  * @author Jonatas Rosa Moura
  */
-
 import Establishment from '@core/establishment';
 
 import { ServiceResponse } from '@shared/utils/service-response';

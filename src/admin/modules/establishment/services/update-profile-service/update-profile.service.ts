@@ -3,7 +3,6 @@
  *
  * @author Jonatas Rosa Moura
  */
-
 import { ServiceResponse } from '@shared/utils/service-response';
 import Establishment from '@core/establishment';
 import { UpdateEstablishmentDto } from '../../dtos/update-establishment-dto';

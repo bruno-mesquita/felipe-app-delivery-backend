@@ -1,9 +1,6 @@
-import { getCustomRepository } from 'typeorm';
 import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 
-import { ProductRepository } from '../../repository/product.repository';
-import { ImagesRepository } from '../../../images/images-repository';
 import { CreateImageDto } from '../../../images/create-image-dto';
 import { schema } from '../../../images/create-image-validation';
 

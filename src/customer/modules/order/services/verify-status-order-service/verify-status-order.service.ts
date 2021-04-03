@@ -4,8 +4,6 @@
  */
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import { getCustomRepository } from 'typeorm';
-import { OrderRepository } from '../../order.repository';
 
 class VerifyStatusOrderService {
   async execute(id: string): Promise<ServiceResponse<string>> {

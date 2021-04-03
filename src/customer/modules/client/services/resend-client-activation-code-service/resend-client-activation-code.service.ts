@@ -7,16 +7,10 @@
  * @author Bruno Mesquita
 
  */
-
-import { getCustomRepository } from 'typeorm';
-
 import { validate } from 'uuid';
 
 import { ServiceResponse } from '@shared/utils/service-response';
 import SmsService from '@shared/utils/sms';
-
-import ClientRepository from '../../client.repository';
-import { ClientActivationCodeRepository } from '../../../client-activation-code';
 
 class ResendClientActivationCodeService {
   async execute(clientId: string): Promise<ServiceResponse<boolean>> {

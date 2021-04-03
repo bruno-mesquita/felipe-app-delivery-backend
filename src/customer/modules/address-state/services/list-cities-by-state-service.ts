@@ -1,12 +1,8 @@
 import { ServiceResponse } from '@shared/utils/service-response';
 
-import { AddressStateRepository } from '../address-state.repository';
-
 class ListCitiesByStatesService {
   async execute(state_id: string): Promise<ServiceResponse<any[]>> {
     try {
-      const statesRepository = getCustomRepository(AddressStateRepository);
-
       const states = await statesRepository.findOne({
         where: {
           id: state_id,

@@ -1,5 +1,3 @@
-import { getConnection } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
 import Client from '@core/client';
 

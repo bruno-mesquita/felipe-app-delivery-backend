@@ -4,14 +4,8 @@
  * @author Bruno Mesquita
  * @author Jonatas Rosa Moura
  */
-
-import { getCustomRepository } from 'typeorm';
-
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { MenuRepository } from '@store/modules/menus/menu-repository';
-import { ImagesRepository } from '@store/modules/images/images-repository';
-import { ProductRepository } from '../../repository/product.repository';
 import { CreateProductDto } from '../../dtos/create-product-dto';
 import createProductSchema from '../../validation/create-product.validation';
 
