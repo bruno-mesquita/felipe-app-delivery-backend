@@ -5,11 +5,12 @@
  */
 
 import 'dotenv/config';
-import express, { Router } from 'express';
+import express, { Router, json } from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
-import '@shared/typeorm';
+
+import '@shared/database';
 
 // routas
 import adminRoutes from '@admin/http/routes';
@@ -23,13 +24,13 @@ routes.use('/admin', adminRoutes);
 routes.use('/app-store', storeRoutes);
 
 const app = express();
-app.use(express.json());
+app.use(json());
 app.use(cors());
 app.use(compression());
 app.use(helmet());
 app.disable('x-powered-by');
 app.use('/api', routes);
 
-app.listen(3030, () => {
-  console.log(`Server started ON! ${3030}`);
+app.listen(process.env.API_PORT, () => {
+  console.log(`Server started ON! ${process.env.API_PORT}`);
 });

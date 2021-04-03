@@ -1,13 +1,8 @@
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import { AddressClientRepository } from '../../AddressClientRepository';
 
 export class FindOneAddressClientService {
   async execute(id: string): Promise<ServiceResponse<any>> {
     try {
-      const addressClientRepository = getCustomRepository(AddressClientRepository);
-
       const adressesClient = await addressClientRepository.findOne({
         where: { id },
         relations: ['address_id', 'address_id.city', 'address_id.city.state'],

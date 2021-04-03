@@ -4,16 +4,12 @@
 
 import State from '@core/address-state';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { getCustomRepository } from 'typeorm';
 import { StateAddressDto } from '../dtos/create-state-dto';
-import { AddresStateRepository } from '../repository/state-repository';
 import { schema } from '../validations/create-state.validation';
 
 class CreateStateService {
   async execute(createStateDto: StateAddressDto): Promise<ServiceResponse<State | null>> {
     try {
-      const stateRepository = getCustomRepository(AddresStateRepository);
-
       // Fazendo validação DTO
 
       const valid = schema.isValidSync(createStateDto);

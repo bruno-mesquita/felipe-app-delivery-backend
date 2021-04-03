@@ -1,14 +1,10 @@
 import { ServiceResponse } from '@shared/utils/service-response';
-import { getCustomRepository } from 'typeorm';
-import { CategoryRepository } from '../../repositories/category-repository';
 import { UpdateCategoryDtos } from '../../dtos/update-category.dtos';
 import { schema } from '../../validation/update-category.validation';
 
 export class UpdateCategoryService {
   async execute(updateCategoryDto: UpdateCategoryDtos): Promise<ServiceResponse<boolean>> {
     try {
-      const categoryRepository = getCustomRepository(CategoryRepository);
-
       // validando dto
 
       const valid = schema.isValidSync(updateCategoryDto);

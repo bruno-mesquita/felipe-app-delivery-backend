@@ -1,43 +1,28 @@
-import { Entity, Column, OneToOne, JoinColumn, BeforeInsert, OneToMany } from 'typeorm';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 import { hashSync, compareSync } from 'bcryptjs';
 
-import EntityBase from '@shared/utils/entity';
-import encrypted from '@shared/typeorm/encrypted';
-import Image from '@core/image';
-import Order from '@core/order';
-import AddressClient from '@core/address-client';
-
-@Entity('client')
-class Client extends EntityBase {
-  @Column({ transformer: encrypted() })
+class Client extends Model {
   name: string;
-
-  @Column({ unique: true, transformer: encrypted() })
   email: string;
-
-  @Column({ transformer: encrypted() })
   password: string;
-
-  @Column({ unique: true, transformer: encrypted() })
   cellphone: string;
-
-  @Column({ unique: true, transformer: encrypted() })
   cpf: string;
-
-  @Column({ default: false })
   active: boolean;
-
-  @OneToOne(() => Image)
-  @JoinColumn({ name: 'image_id' })
-  image: Image;
-
-  @OneToMany(() => AddressClient, (adresses) => adresses.client_id)
+/*   image: Image;
   adresses: AddressClient[];
+  orders: Order[]; */
 
-  @OneToMany(() => Order, (order) => order.client)
-  orders: Order[];
+  static start(sequelize: Sequelize): void {
+    this.init({
+      name: DataTypes.STRING,
+      email: DataTypes.STRING,
+      password: DataTypes.STRING,
+      cellphone: DataTypes.STRING,
+      cpf: DataTypes.STRING,
+      active: DataTypes.BOOLEAN,
+    }, { sequelize });
+  }
 
-  @BeforeInsert()
   hashPassword(): void {
     this.password = hashSync(this.password, 8);
   }
@@ -80,13 +65,13 @@ class Client extends EntityBase {
     this.password = hashSync(password, 8);
   }
 
-  public setImage(image: Image) {
+ /*  public setImage(image: Image) {
     this.image = image;
   }
 
   public getImage(): Image {
     return this.image;
-  }
+  } */
 }
 
 export default Client;

@@ -1,10 +1,3 @@
-/**
- * @fileoverview Criação da entidade ClientActivateCode, representa o codigo de ativação da conta do usuário
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
- */
-
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
 class ClientActivationCode extends Model {

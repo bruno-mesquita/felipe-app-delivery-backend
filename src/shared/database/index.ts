@@ -1,19 +1,30 @@
-import Sequelize from 'sequelize';
+import { Sequelize } from 'sequelize';
 
 import { databaseConfig } from './config';
+import models from './models';
 
 class Database {
-  public connection: Sequelize.Sequelize;
+  public connection: Sequelize;
 
   constructor() {
     this.init();
+    this.initModels();
   }
 
-  init(): void {
-    this.connection = new Sequelize.Sequelize(databaseConfig);
+  private async init(): Promise<void> {
+    this.connection = new Sequelize(databaseConfig);
+
+    try {
+      await this.connection.authenticate();
+      console.log('Database conectado!');
+    } catch (err) {
+      console.log('Erro ao se conectar ao database');
+    }
+  }
+
+  private initModels(): void {
+    models.map((Model: any) => Model.start(this.connection))
   }
 }
 
-const database: Database = new Database();
-
-export default database;
+export default new Database();

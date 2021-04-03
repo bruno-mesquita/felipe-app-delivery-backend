@@ -4,12 +4,9 @@
  * @author Jonatas Rosa Moura
  */
 
-import { getCustomRepository } from 'typeorm';
-
 import Establishment from '@core/establishment';
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import { EstablishmentRepository } from '../../repository';
 
 interface IRequest {
   id: string;
@@ -18,8 +15,6 @@ interface IRequest {
 class ShowEstablishmentService {
   async execute({ id }: IRequest): Promise<ServiceResponse<Establishment | null>> {
     try {
-      const establishmentRepository = getCustomRepository(EstablishmentRepository);
-
       const establishment = await establishmentRepository.findById(id);
 
       if (!establishment) {

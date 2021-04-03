@@ -1,13 +1,8 @@
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import { AddressClientRepository } from '../../AddressClientRepository';
 
 export class ListAddressClientService {
   async execute(userId: string): Promise<ServiceResponse<any[]>> {
     try {
-      const addressClientRepository = getCustomRepository(AddressClientRepository);
-
       const adressesClient = await addressClientRepository.findByUserId(userId);
 
       const adresses = adressesClient.map((addressClient) => {

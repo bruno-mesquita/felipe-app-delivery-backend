@@ -1,13 +1,10 @@
 import { ServiceResponse } from '@shared/utils/service-response';
-import { getCustomRepository } from 'typeorm';
 
 import { AddresStateRepository } from '../repository/state-repository';
 
 class ListCitiesByStatesService {
   async execute(state_id: string): Promise<ServiceResponse<any[]>> {
     try {
-      const statesRepository = getCustomRepository(AddresStateRepository);
-
       const states = await statesRepository.findOne({
         where: {
           id: state_id,

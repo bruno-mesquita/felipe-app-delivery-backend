@@ -1,9 +1,4 @@
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import { AddressRepository } from '@customer/modules/address';
-import { AddressClientRepository } from '../../AddressClientRepository';
-import { CityRepository } from '../../../city';
 import { UpdateClientAddressDto } from '../../dtos/update-address-client';
 
 export class UpdateAddressClientService {
@@ -17,9 +12,6 @@ export class UpdateAddressClientService {
     city,
   }: UpdateClientAddressDto): Promise<ServiceResponse<boolean>> {
     try {
-      const addressClientRepository = getCustomRepository(AddressClientRepository);
-      const addressRepository = getCustomRepository(AddressRepository);
-      const cityRepository = getCustomRepository(CityRepository);
 
       const addressClient = await addressClientRepository.findOne({
         where: { id },

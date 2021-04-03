@@ -2,7 +2,7 @@ import 'dotenv/config';
 import { Options } from 'sequelize';
 
 export const databaseConfig: Options = {
-  dialect: process.env.DB_TYPE as any,
+  dialect: process.env.DB_TYPE,
   host: process.env.DB_HOST,
   username: process.env.DB_USER,
   password: process.env.DB_PASS,

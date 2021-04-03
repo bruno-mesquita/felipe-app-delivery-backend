@@ -1,19 +1,12 @@
 /**
-
  * @fileoverview Middleware para armazenar os logs
-
  *
-
  * @author Bruno Mesquita
-
  */
 
 import morgan from 'morgan';
-
 import { resolve } from 'path';
-
 import { existsSync, mkdirSync } from 'fs';
-
 import { format } from 'date-fns';
 
 import JsonHandler from '../utils/json-handler';
@@ -34,17 +27,11 @@ const loggerMiddleware = () => {
 
     const result = {
       ip: getIp(req),
-
       method: tokens.method(req, res),
-
       url: tokens.url(req, res),
-
       status: tokens.status(req, res),
-
       contentLength: tokens.res(req, res, 'content-length'),
-
       responseTime: `${tokens['response-time'](req, res)} ms`,
-
       date: getNow(),
     };
 

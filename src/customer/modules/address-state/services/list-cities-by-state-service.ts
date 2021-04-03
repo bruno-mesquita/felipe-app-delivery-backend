@@ -1,5 +1,4 @@
 import { ServiceResponse } from '@shared/utils/service-response';
-import { getCustomRepository } from 'typeorm';
 
 import { AddressStateRepository } from '../address-state.repository';
 
