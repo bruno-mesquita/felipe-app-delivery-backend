@@ -6,9 +6,6 @@ import { schema } from '../../images/create-image-validation';
 export class CreateImageService {
   async execute(createImageDto: CreateImageDto): Promise<ServiceResponse<Image | null>> {
     try {
-      const imageRepository = getCustomRepository(ImagesRepository);
-      const establishmentRepository = getCustomRepository(EstablishmentRepository);
-
       // Validando
 
       const valid = schema.isValidSync(createImageDto);

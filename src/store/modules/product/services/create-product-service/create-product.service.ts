@@ -12,10 +12,6 @@ import createProductSchema from '../../validation/create-product.validation';
 class CreateProductService {
   public async execute(createProductDto: CreateProductDto): Promise<ServiceResponse<boolean>> {
     try {
-      const productRepository = getCustomRepository(ProductRepository);
-      const menuRepository = getCustomRepository(MenuRepository);
-      const imageRepository = getCustomRepository(ImagesRepository);
-
       const valid = createProductSchema.isValidSync(createProductDto);
 
       if (!valid) throw new Error('Por favor reveja seus dados.');

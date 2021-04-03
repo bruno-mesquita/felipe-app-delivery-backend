@@ -11,8 +11,6 @@ import { ServiceResponse } from '@shared/utils/service-response';
 export class ListProductsService {
   async execute(): Promise<ServiceResponse<Product[] | null>> {
     try {
-      const productsRepository = getCustomRepository(ProductRepository);
-
       const products = await productsRepository.find();
 
       return { result: products, err: null };

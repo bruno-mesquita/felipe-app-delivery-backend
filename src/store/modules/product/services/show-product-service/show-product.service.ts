@@ -14,8 +14,6 @@ import { ServiceResponse } from '@shared/utils/service-response';
 export class ShowProductService {
   async execute(id: string): Promise<ServiceResponse<Product | null>> {
     try {
-      const productRepository = getCustomRepository(ProductRepository);
-
       const product = await productRepository.findById(id);
 
       if (!product) {

@@ -14,9 +14,6 @@ import updateProductValidation from '../../validation/update-product.validation'
 export class UpdateProductService {
   async execute(updateProductDto: UpdateProductDto): Promise<ServiceResponse<Product | null>> {
     try {
-      const productRepository = getCustomRepository(ProductRepository);
-      const menuRepository = getCustomRepository(MenuRepository);
-
       // validando dto
 
       const valid = updateProductValidation.isValidSync(updateProductDto);
