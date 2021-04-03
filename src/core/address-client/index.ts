@@ -1,21 +1,36 @@
-/**
- * @fileoverview Casos de testes para a criação do cliente
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
- */
-
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
+export interface AddressAttributes {
+  nickname: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  cep: string;
+  /* city: string; */
+}
+
 class AddressClient extends Model {
+  nickname: string;
+  street: string;
+  number: string;
+  neighborhood: string;
+  cep: string;
+
   static start(sequelize: Sequelize) {
     this.init({
       nickname: DataTypes.STRING,
-      client_id: DataTypes.UUIDV4,
-      address_id: DataTypes.UUIDV4,
+      street: DataTypes.STRING,
+      number: DataTypes.STRING,
+      neighborhood: DataTypes.STRING,
+      cep: DataTypes.STRING,
     }, { sequelize, tableName: 'address_client' });
 
     return this;
+  }
+
+  static associate({ Client, City }) {
+    this.belongsTo(Client, { foreignKey: 'client_id' });
+    this.belongsTo(City, { foreignKey: 'city_id' });
   }
 }
 

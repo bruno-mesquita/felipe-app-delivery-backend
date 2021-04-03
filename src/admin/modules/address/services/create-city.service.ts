@@ -10,13 +10,12 @@ import { CityAddressDto } from '../dtos/create-city-dto';
 import { schema } from '../validations/create-city.validation';
 
 class CreateCityService {
-  async execute(createCityDto: CityAddressDto): Promise<ServiceResponse<City | null>> {
+  async execute(createCityDto: CityAddressDto): Promise<ServiceResponse<boolean>> {
     try {
       // Fazendo validação DTO
-
       const valid = schema.isValidSync(createCityDto);
 
-      if (!valid) throw new Error('[Erro]: Cidade Por favor reveja seus dados');
+      if (!valid) throw new Error('[Erro]: Por favor reveja seus dados');
 
       // Verificando se a Cidade existe no banco de dados
       const cityExists = await City.findOne({
@@ -28,22 +27,21 @@ class CreateCityService {
       // Verificando se o Estado existe no sistema ou se está selecionado
 
       const stateExists = await State.findOne({
-        where: { name: createCityDto.state }, attributes: ['name'],
+        where: { id: createCityDto.state }, attributes: ['name', 'id'],
       });
 
       if (!stateExists && !createCityDto.state) throw new Error('[ERRO]: Estado não encontrado/selecionado.');
 
       // criando classe
-
-      const city = await City.create({
-        ...createCityDto,
-        state: stateExists,
+      await City.create({
+        name: createCityDto.name,
+        state_id: stateExists.id,
         active: true,
       });
 
-      return { result: city, err: null };
+      return { result: true, err: null };
     } catch (err) {
-      return { result: err, err: err.message };
+      return { result: false, err: err.message };
     }
   }
 }

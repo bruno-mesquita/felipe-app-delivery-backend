@@ -3,36 +3,28 @@
  *
  * @author Bruno Mesquita
  */
-import { validate } from 'uuid';
-
+import Client from '@core/client';
+import ClientActivationCode from '@core/client-activation-code';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class ActiveClientService {
   async execute(code: string, clientId: string): Promise<ServiceResponse<boolean>> {
     try {
-      const userRepository = getCustomRepository(UserRepository);
-      const clientActivationCodeRepository = getCustomRepository(ClientActivationCodeRepository);
-
-      // Verificar se o id é valido
-      if (!validate(clientId)) throw new Error('id do usuário inválido');
-
       // verificar se o usuário existe
-      const user = await userRepository.findById(clientId);
+      const user = await Client.findByPk(clientId);
 
       if (!user) throw new Error('Cliente não encontrado');
 
-      if (user.isActive()) throw new Error('Esse usuário já se encontra ativo');
+      if (user.active) throw new Error('Esse usuário já se encontra ativo');
 
-      const clientActivationCode = await clientActivationCodeRepository.findByClientId(user.getId());
+      const clientActivationCode = await ClientActivationCode.findOne({ where: { client_id: clientId } });
 
       if (!clientActivationCode) throw new Error('Erro ao pegar codigo de ativação');
 
       if (!clientActivationCode.compareCode(code)) throw new Error('Codigo inválido');
 
-      user.activate();
-
-      await userRepository.save(user);
-      await clientActivationCodeRepository.delete(clientActivationCode);
+      await Client.update({ ...user, active: true }, { where: {  id: user.id } });
+      await ClientActivationCode.destroy({ where: { id: clientActivationCode.id } });
 
       return { result: true, err: null };
     } catch (err) {

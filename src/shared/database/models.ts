@@ -1,4 +1,4 @@
-import Address from '@core/address';
+/* import Address from '@core/address'; */
 import City from '@core/city';
 import AddressClient from '@core/address-client';
 import State from '@core/state';
@@ -16,7 +16,6 @@ import Order from '@core/order';
 import Product from '@core/product';
 
 const models = [
-  Address,
   City,
   AddressClient,
   State,

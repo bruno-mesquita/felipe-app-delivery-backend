@@ -8,7 +8,7 @@ import { StateAddressDto } from '../dtos/create-state-dto';
 import { schema } from '../validations/create-state.validation';
 
 class CreateStateService {
-  async execute(createStateDto: StateAddressDto): Promise<ServiceResponse<State | null>> {
+  async execute(createStateDto: StateAddressDto): Promise<ServiceResponse<boolean>> {
     try {
       // Fazendo validação DTO
 
@@ -28,12 +28,11 @@ class CreateStateService {
 
       const state = await State.create({
         ...createStateDto,
-        active: true,
       });
 
-      return { result: state, err: null };
+      return { result: true, err: null };
     } catch (err) {
-      return { result: err, err: err.message };
+      return { result: false, err: err.message };
     }
   }
 }

@@ -5,7 +5,7 @@
 
  */
 
-import { object, SchemaOf, string } from 'yup';
+import { object, SchemaOf, string, number } from 'yup';
 
 import { CreateClientDto } from '../dtos/create-client-dto';
 
@@ -26,7 +26,7 @@ const schema: SchemaOf<CreateClientDto> = object({
 
   cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
 
-  city: string().uuid().required(REQUIRED),
+  city: number().integer().min(1).required(REQUIRED),
 });
 
 export default schema;

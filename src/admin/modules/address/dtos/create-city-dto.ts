@@ -1,5 +1,5 @@
 export interface CityAddressDto {
   name: string;
-  state: string;
+  state: number;
   active: boolean;
 }

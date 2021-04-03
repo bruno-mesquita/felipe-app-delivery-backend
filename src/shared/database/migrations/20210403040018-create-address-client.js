@@ -2,37 +2,44 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('clients', {
+    await queryInterface.createTable('address_client', {
       id: {
         type: Sequelize.INTEGER,
-        primaryKey: true,
+        allowNull: false,
         autoIncrement: true,
-        allowNull: false,
+        primaryKey: true,
       },
-      name: {
-        type: Sequelize.STRING(60),
+      client_id: {
+        type: Sequelize.INTEGER,
         allowNull: false,
+        references: { model: 'clients', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       },
-      email: {
-        type: Sequelize.STRING(50),
-        allowNull: false,
-      },
-      password: {
+      nickname: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      cellphone: {
-        type: Sequelize.STRING(15),
+      street: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      cpf: {
-        type: Sequelize.STRING(11),
+      number: {
+        type: Sequelize.STRING,
         allowNull: false,
       },
-      active: {
-        type: Sequelize.BOOLEAN,
-        defaultValue: false,
+      neighborhood: {
+        type: Sequelize.STRING,
         allowNull: false,
+      },
+      cep: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      city_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'cities', key: 'id' },
       },
       created_at: {
         type: Sequelize.DATE,
@@ -46,6 +53,6 @@ module.exports = {
   },
 
   down: async (queryInterface) => {
-    await queryInterface.dropTable('clients');
+    await queryInterface.dropTable('address_client');
   }
 };

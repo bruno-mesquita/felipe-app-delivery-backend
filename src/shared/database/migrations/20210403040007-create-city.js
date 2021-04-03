@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('images', {
+    await queryInterface.createTable('cities', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -10,12 +10,19 @@ module.exports = {
         primaryKey: true,
       },
       name: {
-        type: Sequelize.STRING(50),
-        allowNull: true,
-      },
-      encoded: {
         type: Sequelize.STRING,
         allowNull: false,
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        allowNull: false,
+      },
+      state_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'states', key: 'id' },
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE'
       },
       created_at: {
         type: Sequelize.DATE,
@@ -28,8 +35,7 @@ module.exports = {
     });
   },
 
-  down: async (queryInterface) => {
-    await queryInterface.dropTable('images');
-
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('cities');
   }
 };

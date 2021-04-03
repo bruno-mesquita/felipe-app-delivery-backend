@@ -1,6 +1,7 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
 class ClientActivationCode extends Model {
+  id: string;
   attempts: number;
   code: string;
 
@@ -8,14 +9,17 @@ class ClientActivationCode extends Model {
     this.init({
       attempts: DataTypes.NUMBER,
       code: DataTypes.STRING,
-      client: DataTypes.UUIDV4,
-    }, { sequelize, tableName: 'client_code' });
+    }, { sequelize, tableName: 'client_activation_code' });
 
     return this;
   }
 
+  static associate({ Client }) {
+    this.belongsTo(Client, { foreignKey: 'client_id' });
+  }
 
   public generateCode(): string {
+    console.log(this.attempts);
     this.attempts += 1;
 
     const code = `code${this.attempts}`;

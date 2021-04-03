@@ -1,6 +1,7 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 
 class State extends Model {
+  id: number;
   name: string;
   active: boolean;
 

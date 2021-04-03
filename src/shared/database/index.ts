@@ -1,14 +1,15 @@
 import { Sequelize } from 'sequelize';
 
-import { databaseConfig } from './config';
+import databaseConfig from './config';
 import models from './models';
 
 class Database {
   public connection: Sequelize;
 
   constructor() {
-    this.init();
-    this.initModels();
+    this.init().then(() => {
+      this.initModels();
+    });
   }
 
   private async init(): Promise<void> {
@@ -23,7 +24,7 @@ class Database {
   }
 
   private initModels(): void {
-    models.map((Model: any) => Model.start(this.connection))
+    models.map((model: any) => model.start(this.connection)).map(model => model.associate && model.associate(this.connection.models))
   }
 }
 

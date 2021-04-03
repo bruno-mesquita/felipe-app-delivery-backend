@@ -1,11 +1,4 @@
-/**
- * @fileoverview Criação da entidade City
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
-*/
-
-import { Model, DataTypes, Sequelize } from 'sequelize';
+/* import { Model, DataTypes, Sequelize } from 'sequelize';
 
 export interface AddressAttributes {
   street: string;
@@ -15,14 +8,13 @@ export interface AddressAttributes {
   city: string;
 }
 
-class Address extends Model {
+class Address extends Model<AddressAttributes, Partial<AddressAttributes>> {
   static start(sequelize: Sequelize) {
     this.init({
       street: DataTypes.STRING,
       number: DataTypes.STRING,
       neighborhood: DataTypes.STRING,
       cep: DataTypes.STRING,
-      city: DataTypes.UUIDV4,
     }, { sequelize, tableName: 'adresses' });
 
     return this;
@@ -30,3 +22,4 @@ class Address extends Model {
 }
 
 export default Address;
+ */
