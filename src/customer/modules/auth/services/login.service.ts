@@ -4,11 +4,9 @@
  * @author Bruno Mesquita
  */
 
-import { getCustomRepository } from 'typeorm';
 
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
-import ClientRepository from '@customer/modules/client/client.repository';
 import { LoginClientDto } from '../dtos/login-client.dto';
 import loginValidation from '../validation/login.validation';
 
@@ -17,7 +15,6 @@ class LoginClientService {
     try {
       if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
 
-      const clientRepository = getCustomRepository(ClientRepository);
       const tokenManager = new TokenManager();
 
       // Procurar pelo e-mail e pegar o avatar desse cliente
