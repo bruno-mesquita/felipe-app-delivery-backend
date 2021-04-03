@@ -1,14 +1,17 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { hashSync, compareSync } from 'bcryptjs';
+import Image from '@core/image';
 
 class Client extends Model {
+  id: string;
   name: string;
   email: string;
   password: string;
   cellphone: string;
   cpf: string;
   active: boolean;
-/*   image: Image;
+  image: Image;
+/*
   adresses: AddressClient[];
   orders: Order[]; */
 
@@ -65,13 +68,9 @@ class Client extends Model {
     this.password = hashSync(password, 8);
   }
 
- /*  public setImage(image: Image) {
-    this.image = image;
-  }
-
   public getImage(): Image {
     return this.image;
-  } */
+  }
 }
 
 export default Client;
