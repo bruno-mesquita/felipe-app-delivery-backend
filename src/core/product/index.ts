@@ -15,7 +15,7 @@ class Product extends Model {
 /*   image: Image;
   menu: Menu; */
 
-  static start(sequelize: Sequelize): void {
+  static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,
       price: DataTypes.NUMBER,
@@ -23,6 +23,8 @@ class Product extends Model {
       image: DataTypes.UUIDV4,
       menu: DataTypes.UUIDV4,
     }, { sequelize, tableName: 'products' });
+
+    return this;
   }
 
   public getName(): string {

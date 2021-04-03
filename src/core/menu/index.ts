@@ -10,15 +10,13 @@ import { Model, DataTypes, Sequelize } from 'sequelize';
 class Menu extends Model {
   name: string;
 
-  static start(sequelize: Sequelize): void {
+  static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.NUMBER,
       establishment: DataTypes.UUIDV4,
     }, { sequelize, tableName: 'menus' });
-  }
 
-  public getName(): string {
-    return this.name;
+    return this;
   }
 }
 

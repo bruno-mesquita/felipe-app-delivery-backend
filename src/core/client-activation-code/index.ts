@@ -4,12 +4,14 @@ class ClientActivationCode extends Model {
   attempts: number;
   code: string;
 
-  static start(sequelize: Sequelize): void {
+  static start(sequelize: Sequelize) {
     this.init({
       attempts: DataTypes.NUMBER,
       code: DataTypes.STRING,
       client: DataTypes.UUIDV4,
     }, { sequelize, tableName: 'client_code' });
+
+    return this;
   }
 
 

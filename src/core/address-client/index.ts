@@ -14,6 +14,8 @@ class AddressClient extends Model {
       client_id: DataTypes.UUIDV4,
       address_id: DataTypes.UUIDV4,
     }, { sequelize, tableName: 'address_client' });
+
+    return this;
   }
 }
 

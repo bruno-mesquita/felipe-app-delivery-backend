@@ -9,6 +9,8 @@ class State extends Model {
       name: DataTypes.STRING,
       active:  DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'states' });
+
+    return this;
   }
 }
 

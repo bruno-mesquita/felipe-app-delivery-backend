@@ -24,6 +24,8 @@ class Address extends Model {
       cep: DataTypes.STRING,
       city: DataTypes.UUIDV4,
     }, { sequelize, tableName: 'adresses' });
+
+    return this;
   }
 }
 

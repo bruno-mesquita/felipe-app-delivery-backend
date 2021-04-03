@@ -1,6 +1,7 @@
 const path = require('path');
 
 module.exports = {
-  config: path.resolve(__dirname, 'src', 'shared', 'database', 'config,ts'),
+  config: path.resolve(__dirname, 'src', 'shared', 'database', 'config.js'),
   'migrations-path': path.resolve(__dirname, 'src', 'shared', 'database', 'migrations'),
+  'seeders-path': path.resolve(__dirname, 'src', 'shared', 'database', 'seeds'),
 }

@@ -27,7 +27,7 @@ class Establishment extends Model {
   menus: Menu[];
   orders: Order[];
 
-  static start(sequelize: Sequelize): void {
+  static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,
       cellphone: DataTypes.STRING,
@@ -38,6 +38,8 @@ class Establishment extends Model {
       closingTime: DataTypes.NUMBER,
       freightValue: DataTypes.NUMBER,
     }, { sequelize, tableName: 'establismnts' });
+
+    return this;
   }
 
   public getName(): string {

@@ -7,6 +7,8 @@ class City extends Model {
       active: DataTypes.BOOLEAN,
       state: DataTypes.UUIDV4,
     }, { sequelize, tableName: 'cities' });
+
+    return this;
   }
 }
 

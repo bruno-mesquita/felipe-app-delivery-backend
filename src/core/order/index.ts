@@ -21,7 +21,7 @@ class Order extends Model {
   evaluation: Evaluation;
   establishment: Establishment; */
 
-  static start(sequelize: Sequelize): void {
+  static start(sequelize: Sequelize) {
     this.init({
       payment: DataTypes.STRING,
       total: DataTypes.NUMBER,
@@ -34,6 +34,8 @@ class Order extends Model {
       evaluation: DataTypes.UUIDV4,
       establishment: DataTypes.UUIDV4,
     }, { sequelize, tableName: 'orders' });
+
+    return this;
   }
 
   public getClientOrderStatus(): CustomerStatusType {

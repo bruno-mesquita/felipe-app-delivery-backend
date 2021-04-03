@@ -10,12 +10,12 @@ class Client extends Model {
   cellphone: string;
   cpf: string;
   active: boolean;
-  image: Image;
+  avatar: Image;
 /*
   adresses: AddressClient[];
   orders: Order[]; */
 
-  static start(sequelize: Sequelize): void {
+  static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,
       email: DataTypes.STRING,
@@ -23,53 +23,24 @@ class Client extends Model {
       cellphone: DataTypes.STRING,
       cpf: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-    }, { sequelize });
+    }, { sequelize, tableName: 'clients' });
+
+    this.addHook('beforeSave', (user: Client) => {
+      if (user.password) {
+        user.password = hashSync(user.password, 8);
+      }
+    });
+
+    return this;
   }
 
-  hashPassword(): void {
-    this.password = hashSync(this.password, 8);
+  static associate({ Image }) {
+    this.belongsTo(Image, { foreignKey: 'avatar_id', as: 'avatar' });
   }
 
-  public getCpf(): string {
-    return this.cpf;
-  }
-
-  public getName(): string {
-    return this.name;
-  }
-
-  public getEmail(): string {
-    return this.email;
-  }
-
-  public getCellphone(): string {
-    return this.cellphone;
-  }
-
-  public isActive(): boolean {
-    return this.active;
-  }
 
   public comparePassword(comparePassword: string): boolean {
     return compareSync(comparePassword, this.password);
-  }
-
-  public activate(): void {
-    this.active = true;
-  }
-
-  public updateProfile(name: string, email: string, phone: string): void {
-    this.name = name;
-    this.email = email;
-    this.cellphone = phone;
-  }
-
-  public setPassword(password: string): void {
-    this.password = hashSync(password, 8);
-  }
-
-  public getImage(): Image {
-    return this.image;
   }
 }
 

@@ -10,13 +10,15 @@ class ItemOrder extends Model {
   quantity: number;
   total: number;
 
-  static start(sequelize: Sequelize): void {
+  static start(sequelize: Sequelize) {
     this.init({
       quantity: DataTypes.NUMBER,
       total: DataTypes.NUMBER,
-      productId: DataTypes.UUIDV4,
-      orderId: DataTypes.UUIDV4,
+      productId: DataTypes.STRING,
+      orderId: DataTypes.STRING,
     }, { sequelize, tableName: 'item_order' });
+
+    return this;
   }
 }
 

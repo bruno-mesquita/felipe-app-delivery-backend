@@ -10,27 +10,13 @@ class Image extends Model {
   name: string;
   encoded: string;
 
-  static start(sequelize: Sequelize): void {
+  static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,
       encoded: DataTypes.STRING,
     }, { sequelize, tableName: 'images' });
-  }
 
-  public setName(name: string): void {
-    this.name = name;
-  }
-
-  public getName(): string {
-    return this.name;
-  }
-
-  public setEncoded(encoded: string): void {
-    this.encoded = encoded;
-  }
-
-  public getEncoded(): string {
-    return this.encoded;
+    return this;
   }
 }
 
