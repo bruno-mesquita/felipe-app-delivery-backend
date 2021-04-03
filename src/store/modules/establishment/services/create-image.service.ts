@@ -1,10 +1,7 @@
-import { getCustomRepository } from 'typeorm';
 import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateImageDto } from '../../images/create-image-dto';
 import { schema } from '../../images/create-image-validation';
-import { ImagesRepository } from '../../images/images-repository';
-import { EstablishmentRepository } from '../establishment-repository';
 
 export class CreateImageService {
   async execute(createImageDto: CreateImageDto): Promise<ServiceResponse<Image | null>> {

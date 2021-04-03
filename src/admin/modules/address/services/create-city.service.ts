@@ -4,10 +4,7 @@
 
 import City from '@core/address-city';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { getCustomRepository } from 'typeorm';
 import { CityAddressDto } from '../dtos/create-city-dto';
-import { AddressCityRepository } from '../repository/city-repository';
-import { AddresStateRepository } from '../repository/state-repository';
 import { schema } from '../validations/create-city.validation';
 
 class CreateCityService {

@@ -3,13 +3,9 @@
  *
  * @author Jonatas Rosa Moura
  */
-
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
 
 import Establishment from '@core/establishment';
-import { EstablishmentRepository } from '../../repository';
 
 import { UpdateEstablishmentDto } from '../../dtos/update-establishment-dto';
 

@@ -1,6 +1,3 @@
-import { getRepository } from 'typeorm';
-
-import Client from '@core/client';
 import ClientActivationCode from '@core/client-activation-code';
 
 export class ConfirmCodeService {

@@ -5,19 +5,12 @@
  * @author Jonatas Rosa Moura
  */
 
-import { getCustomRepository } from 'typeorm';
-
 import Establishment from 'src/core/establishment';
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import { AddressCityRepository } from '@admin/modules/address/repository/city-repository';
-import { EstablishmentRepository } from '../../repository';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
 import createEstablishmentSchema from '../../validation/create-client.validation';
-import ImageRepository from '../../../image/image.repository';
 import { CategoryRepository } from '../../../category';
-import { EstablishmentCategoryRepository } from '../../../establishment-category';
-import { AddressRepository } from '../../../address/repository/address-repository';
 
 export class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {

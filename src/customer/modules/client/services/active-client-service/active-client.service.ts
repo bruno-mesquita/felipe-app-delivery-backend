@@ -3,13 +3,9 @@
  *
  * @author Bruno Mesquita
  */
-
-import { getCustomRepository } from 'typeorm';
 import { validate } from 'uuid';
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import { ClientActivationCodeRepository } from '../../../client-activation-code';
-import UserRepository from '../../client.repository';
 
 class ActiveClientService {
   async execute(code: string, clientId: string): Promise<ServiceResponse<boolean>> {

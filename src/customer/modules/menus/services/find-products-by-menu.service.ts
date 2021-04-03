@@ -1,7 +1,4 @@
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import { MenuRepository } from '../menu-repository';
 
 export class FindProductsByMenuService {
   async execute(menuId: string): Promise<ServiceResponse<any[]>> {

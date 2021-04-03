@@ -9,7 +9,7 @@ import express, { Router } from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
-import '@shared/typeorm';
+import '@shared/database';
 
 // routas
 import adminRoutes from '@admin/http/routes';

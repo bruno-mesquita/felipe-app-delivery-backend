@@ -3,11 +3,7 @@
  *
  * @author Bruno Mesquita
  */
-
-import { getCustomRepository, In, Not } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import ClientRepository from '../../client.repository';
 import { UpdateClientDto } from '../../dtos/update-client-dto';
 import updateClientValidation from '../../validation/update-client.validation';
 

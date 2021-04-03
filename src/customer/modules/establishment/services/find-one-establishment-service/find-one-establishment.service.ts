@@ -1,7 +1,4 @@
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import EstablishmentRepository from '../../establishment.repository';
 
 export class FindOneEstablishmentService {
   async execute(id: string): Promise<ServiceResponse<any>> {

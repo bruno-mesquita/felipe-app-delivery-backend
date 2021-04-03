@@ -4,15 +4,8 @@
  * @author Bruno Mesquita
  */
 
-import { getCustomRepository } from 'typeorm';
-
 import SmsService from '@shared/utils/sms';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { ClientActivationCodeRepository } from '../../../client-activation-code';
-import { AddressClientRepository } from '../../../address-client';
-import { AddressRepository } from '../../../address';
-import { CityRepository } from '../../../city';
-import UserRepository from '../../client.repository';
 import { CreateClientDto } from '../../dtos/create-client-dto';
 import createClientSchema from '../../validation/create-client.validation';
 
@@ -22,11 +15,6 @@ class CreateClientService {
   async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<string | null>> {
     try {
       const smsService = new SmsService();
-      const cityRepository = getCustomRepository(CityRepository);
-      const userRepository = getCustomRepository(UserRepository);
-      const addressRepository = getCustomRepository(AddressRepository);
-      const addressClientRepository = getCustomRepository(AddressClientRepository);
-      const clientActivationCodeRepository = getCustomRepository(ClientActivationCodeRepository);
 
       // Fazendo Validação do DTO
       const valid = createClientSchema.isValidSync(createClientDto);

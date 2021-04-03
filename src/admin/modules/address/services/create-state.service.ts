@@ -4,9 +4,7 @@
 
 import State from '@core/address-state';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { getCustomRepository } from 'typeorm';
 import { StateAddressDto } from '../dtos/create-state-dto';
-import { AddresStateRepository } from '../repository/state-repository';
 import { schema } from '../validations/create-state.validation';
 
 class CreateStateService {

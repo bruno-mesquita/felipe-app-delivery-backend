@@ -3,13 +3,9 @@
  *
  * @author Jonatas Rosa Moura
  */
-
-import { getCustomRepository } from 'typeorm';
-
 import Establishment from '@core/establishment';
 
 import { ServiceResponse } from '@shared/utils/service-response';
-import { EstablishmentRepository } from '../../repository';
 
 interface IRequest {
   id: string;

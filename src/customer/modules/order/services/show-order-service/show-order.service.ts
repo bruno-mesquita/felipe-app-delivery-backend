@@ -5,8 +5,6 @@
 
 import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { getCustomRepository } from 'typeorm';
-import { OrderRepository } from '../../order.repository';
 
 class ShowOrderService {
   async execute(id: string): Promise<ServiceResponse<Order | null>> {

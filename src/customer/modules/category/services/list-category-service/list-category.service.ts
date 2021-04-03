@@ -1,8 +1,5 @@
-import { getCustomRepository } from 'typeorm';
-
 import Category from '@core/category';
 import { ServiceResponse } from '@shared/utils/service-response';
-import CategoryRepository from '../../category.repository';
 
 export class ListCategoryService {
   async execute(): Promise<ServiceResponse<Category[]>> {

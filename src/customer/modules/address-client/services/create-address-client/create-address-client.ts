@@ -1,13 +1,7 @@
-import { getCustomRepository } from 'typeorm';
-
 import AddressClient from '@core/address-client';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { AddressRepository } from '@customer/modules/address';
-import { AddressClientRepository } from '../../AddressClientRepository';
-import ClientRepository from '../../../client/client.repository';
 import { ClientAddressDto } from '../../dtos/create-address-client';
 import { schema } from '../../validations/create-address-client';
-import { CityRepository } from '../../../city';
 
 export class CreateAddressClientService {
   async execute(createAddressDto: ClientAddressDto): Promise<ServiceResponse<AddressClient | null>> {

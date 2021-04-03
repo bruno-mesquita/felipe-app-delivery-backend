@@ -1,6 +1,4 @@
-import { getCustomRepository } from 'typeorm';
 import { ServiceResponse } from '@shared/utils/service-response';
-import ClientRepository from '../../client.repository';
 
 export default class ProfileClientService {
   async execute(id: string): Promise<ServiceResponse<any>> {

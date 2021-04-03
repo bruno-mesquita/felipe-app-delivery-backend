@@ -1,7 +1,4 @@
-import { getCustomRepository } from 'typeorm';
-
 import { ServiceResponse } from '@shared/utils/service-response';
-import { AddressClientRepository } from '../../AddressClientRepository';
 
 export class ListAddressClientService {
   async execute(userId: string): Promise<ServiceResponse<any[]>> {
