@@ -1,15 +1,9 @@
-/**
-
- * @fileoverview Criação da entidade State
-
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
- */
-
- import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize } from 'sequelize';
 
 class State extends Model {
+  name: string;
+  active: boolean;
+
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,

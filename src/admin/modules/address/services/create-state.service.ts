@@ -18,20 +18,18 @@ class CreateStateService {
 
       // Verificando se o Estado já exite
 
-      const stateExists = await stateRepository.findByName(createStateDto.name);
+      const stateExists = await State.findOne({
+        where: { name: createStateDto.name },
+      });
 
       if (stateExists) throw new Error('[ERRO]: Estado já existe no sistema!');
 
       // criando classe
 
-      const state = stateRepository.create({
+      const state = await State.create({
         ...createStateDto,
         active: true,
       });
-
-      // Salvando no Banco de dados
-
-      await stateRepository.save(state);
 
       return { result: state, err: null };
     } catch (err) {
