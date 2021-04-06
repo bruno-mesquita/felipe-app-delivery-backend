@@ -1,12 +1,14 @@
-import Category from '@core/category';
 import { ServiceResponse } from '@shared/utils/service-response';
+import Category from '@core/category';
 
 export class ListCategoriesService {
   async execute(): Promise<ServiceResponse<Category[] | null>> {
     try {
-      const result = await categoryRepository.find({ select: ['id', 'name'] });
+      const categories = await Category.findAll({
+        attributes: ['id', 'name'],
+      });
 
-      return { result, err: null };
+      return { result: categories, err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }

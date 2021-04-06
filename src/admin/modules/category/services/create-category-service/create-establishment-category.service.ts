@@ -1,21 +1,30 @@
+import Category from '@core/category';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateCategoryDtos } from '../../dtos/create-category.dtos';
 import { schema } from '../../validation/create-category.validation';
 
 export class CreateCategoryService {
-  async execute(createCategoryDto: CreateCategoryDtos): Promise<ServiceResponse<string | null>> {
+  async execute(createCategoryDto: CreateCategoryDtos): Promise<ServiceResponse<Category | null>> {
     try {
+      console.log(createCategoryDto);
       // Validação
-
       const valid = schema.isValidSync(createCategoryDto);
 
       if (!valid) throw new Error('Dados inválidos.');
 
-      const category = categoryRepository.create(createCategoryDto);
+      // Verificando se já existe esse nome
 
-      await categoryRepository.save(category);
+      const categoryExists = await Category.findOne({
+        where: { name: createCategoryDto.name }
+      });
 
-      return { result: category.id, err: null };
+      if (categoryExists) throw new Error('Categoria já cadastrada');
+
+      // Criando Classe e Salvando
+
+      const category = await Category.create(createCategoryDto);
+
+      return { result: category, err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }
