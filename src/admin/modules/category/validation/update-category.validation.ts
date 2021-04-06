@@ -1,11 +1,11 @@
-import { object, SchemaOf, string } from 'yup';
+import { object, SchemaOf, number, string } from 'yup';
 
 import { UpdateCategoryDtos } from '../dtos/update-category.dtos';
 
 const REQUIRED = 'Campo obrigátorio';
 
 const schema: SchemaOf<UpdateCategoryDtos> = object({
-  id: string().uuid().required(REQUIRED),
+  id: number().required(REQUIRED),
   name: string().required(REQUIRED),
 });
 
