@@ -1,9 +1,9 @@
 export interface UpdateClientAddressDto {
   id: string;
   street: string;
-  number: number;
+  number: string;
   neighborhood: string;
   cep: string;
-  city: string;
+  city: number;
   nickname: string;
 }

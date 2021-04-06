@@ -1,26 +1,29 @@
 import { ServiceResponse } from '@shared/utils/service-response';
+import Client from '@core/client';
+import City from '@core/city';
+import State from '@core/state';
 
 export class ListAddressClientService {
-  async execute(userId: string): Promise<ServiceResponse<any[]>> {
+  async execute(userId: string): Promise<ServiceResponse<any>> {
     try {
-      const adressesClient = await addressClientRepository.findByUserId(userId);
+      const client = await Client.findByPk(userId);
 
-      const adresses = adressesClient.map((addressClient) => {
-        const address = addressClient.getAddress();
+      if(!client) throw new Error('Cliente não encontrado');
 
-        const nickname = addressClient.getNickname();
-
-        const street = nickname ? `${address.getStreet()}, ${address.getNumber()}` : 'Não informado';
-        const region = nickname
-          ? `${address.getCity().getName()}, ${address.getCity().getState().getName()}`
-          : 'Não informado';
-
-        return {
-          id: addressClient.getId(),
-          nickname: nickname || 'Meu endereço',
-          street,
-          region,
-        };
+      const adresses = await client.getAdresses({
+        attributes: ['id', 'nickname', 'street', 'number', 'neighborhood', 'cep'],
+        include: [
+          {
+            model: City,
+            attributes: ['id', 'name'],
+            include: [
+              {
+                model: State,
+                attributes: ['id', 'name']
+              }
+            ]
+          }
+        ]
       });
 
       return { err: null, result: adresses };

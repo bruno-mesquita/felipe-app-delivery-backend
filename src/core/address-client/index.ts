@@ -21,6 +21,14 @@ class AddressClient extends AddressModel {
     this.belongsTo(Client, { foreignKey: 'client_id' });
     this.belongsTo(City, { foreignKey: 'city_id' });
   }
+
+  public getNickname(): string {
+    return this.nickname;
+  }
+
+  public setNickname(nickname: string): void {
+    this.nickname = nickname;
+  }
 }
 
 export default AddressClient;

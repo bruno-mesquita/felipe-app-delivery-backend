@@ -1,27 +1,41 @@
+import AddressClient from '@core/address-client';
+import City from '@core/city';
+import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class FindOneAddressClientService {
-  async execute(id: string): Promise<ServiceResponse<any>> {
+  async execute(id: number): Promise<ServiceResponse<any>> {
     try {
-      const adressesClient = await addressClientRepository.findOne({
+      const address = await AddressClient.findOne({
         where: { id },
-        relations: ['address_id', 'address_id.city', 'address_id.city.state'],
+        attributes: { exclude: ['createdAt', 'updatedAt', 'client_id'] },
+        include: [
+          {
+            model: City,
+            attributes: ['id'],
+            include: [{
+              model: State,
+              attributes: ['id'],
+            }]
+          }
+        ]
       });
 
-      if (!adressesClient) throw new Error('Endereço não encontrado');
+      if(!address) throw new Error('Endereço não encontrado')
 
-      const address = adressesClient.getAddress();
 
-      const result = {
-        id: adressesClient.getId(),
-        nickname: adressesClient.getNickname(),
-        cep: address.getCep(),
-        street: address.getStreet(),
-        neighborhood: address.getNeighborhood(),
-        number: address.getNumber(),
-        city: address.getCity().getId(),
-        state: address.getCity().getState().getId(),
-      };
+      const result: any = {};
+
+      Object.entries(address.toJSON()).map(e => {
+        if(e[0] !== 'city_id') {
+          if(e[0] === 'City') {
+            result['city'] = e[1].id;
+            result['state'] = e[1].State.id
+          } else {
+            result[e[0]] = e[1];
+          }
+        }
+      });
 
       return { err: null, result };
     } catch (err) {

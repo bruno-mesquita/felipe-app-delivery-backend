@@ -1,8 +1,15 @@
-import { DataTypes, Sequelize, BelongsToGetAssociationMixin } from 'sequelize';
+import {
+  DataTypes,
+  Sequelize,
+  HasManyGetAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  BelongsToGetAssociationMixin,
+} from 'sequelize';
 import { hashSync, compareSync } from 'bcryptjs';
 
 import UserBase from '../_Bases/user';
 import Image from '@core/image';
+import AddressClient from '@core/address-client';
 
 class Client extends UserBase {
   cpf: string;
@@ -10,10 +17,13 @@ class Client extends UserBase {
 /*
   adresses: AddressClient[];
   orders: Order[]; */
+  public readonly avatar?: Image
+  public readonly adresses?: AddressClient[];
 
-  public getAvatar: BelongsToGetAssociationMixin<Image>
+  public createAdress!: HasManyCreateAssociationMixin<AddressClient>;
+  public getAdresses!: HasManyGetAssociationsMixin<AddressClient>;
 
-  public readonly avatar?: Image;
+  public getAvatar!: BelongsToGetAssociationMixin<Image>;
 
   static start(sequelize: Sequelize) {
     this.init({
@@ -34,8 +44,9 @@ class Client extends UserBase {
     return this;
   }
 
-  static associate({ Image }) {
+  static associate({ Image, AddressClient }) {
     this.belongsTo(Image, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.hasMany(AddressClient, { foreignKey: 'client_id', as: 'adresses', sourceKey: 'id' })
   }
 
   public setAvatar(avatarId: number): void {
