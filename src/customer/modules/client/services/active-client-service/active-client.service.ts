@@ -23,7 +23,9 @@ class ActiveClientService {
 
       if (!clientActivationCode.compareCode(code)) throw new Error('Codigo inválido');
 
-      await Client.update({ ...user, active: true }, { where: {  id: user.id } });
+      user.activate();
+
+      await Client.update(user, { where: {  id: user.id } });
       await ClientActivationCode.destroy({ where: { id: clientActivationCode.id } });
 
       return { result: true, err: null };

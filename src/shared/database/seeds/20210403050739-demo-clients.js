@@ -12,6 +12,7 @@ module.exports = {
 	      cellphone: "12981315531",
 	      password: hashSync('senhaforte', 8),
 	      cpf: "00300730420",
+        avatar_id: 1,
         active: true,
         created_at: new Date(),
         updated_at: new Date()
@@ -23,6 +24,7 @@ module.exports = {
 	      cellphone: "12981315531",
 	      password: hashSync('senhaforte', 8),
 	      cpf: "00300730420",
+        avatar_id: 1,
         active: true,
         created_at: new Date(),
         updated_at: new Date()

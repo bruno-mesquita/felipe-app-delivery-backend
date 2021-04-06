@@ -1,5 +1,5 @@
 export interface CreateAvatarDto {
   name: string;
   encoded: string;
-  client_id: string;
+  client_id: number;
 }

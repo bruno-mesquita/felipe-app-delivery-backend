@@ -1,4 +1,5 @@
 import { Request, Response } from 'express';
+
 import { CreateAvatarClientService, FindOneAvatarClientClientService } from './services';
 
 class AvatarController {

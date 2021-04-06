@@ -14,24 +14,26 @@ class CreateAvatarClientService {
 
       // Verificando se o usuário existe
 
-      const client = await Client.findOne({ where: { id: createAvatar.client_id }, include: [{ model: Image }] });
+      const client = await Client.findOne({ where: { id: createAvatar.client_id } });
 
       if (!client) throw new Error('[Avatar]: Usuário não econtrado.');
 
-      if (client.getImage()) {
-        client.getImage().setEncoded(createAvatar.encoded);
-        client.getImage().setName(createAvatar.name);
+      if (client.avatar_id) {
+        const clientAvatar = await client.getAvatar({ attributes: ['name', 'encoded', 'id'] });
 
+        clientAvatar.setEncoded(createAvatar.encoded);
+        clientAvatar.setName(createAvatar.name);
 
+        await clientAvatar.save();
       } else {
         // Criando classe
         const avatar = await Image.create(createAvatar);
 
         // Anexar Avatar ao Usuário
-        client.image = avatar;
+        client.setAvatar(avatar.id);
 
         // Salvando no DB
-        await Client.update(client, { where: { id: client.id } });
+        client.save();
       }
 
       return { result: true, err: null };

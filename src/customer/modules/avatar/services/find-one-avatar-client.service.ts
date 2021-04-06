@@ -7,17 +7,17 @@ class FindOneAvatarClientClientService {
     try {
       const client = await Client.findOne({
         where: { id: userId },
-        attributes: ['image'],
+        attributes: ['avatar_id'],
         include: [
           {
             model: Image,
-            as: 'image',
+            as: 'avatar',
             attributes: ['encoded'],
           }
         ]
       })
 
-      return { result: client.getImage().getEncoded(), err: null };
+      return { result: client.avatar.getEncoded(), err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }
