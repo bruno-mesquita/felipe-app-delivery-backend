@@ -1,5 +1,6 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
+import Model from '../_Bases/model';
 class ClientActivationCode extends Model {
   id: string;
   attempts: number;
@@ -19,7 +20,6 @@ class ClientActivationCode extends Model {
   }
 
   public generateCode(): string {
-    console.log(this.attempts);
     this.attempts += 1;
 
     const code = `code${this.attempts}`;

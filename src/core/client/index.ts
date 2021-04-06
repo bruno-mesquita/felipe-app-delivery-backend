@@ -1,16 +1,10 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
 import { hashSync, compareSync } from 'bcryptjs';
-import Image from '@core/image';
 
-class Client extends Model {
-  id: string;
-  name: string;
-  email: string;
-  password: string;
-  cellphone: string;
+import UserBase from '../_Bases/user';
+
+class Client extends UserBase {
   cpf: string;
-  active: boolean;
-  avatar: Image;
 /*
   adresses: AddressClient[];
   orders: Order[]; */

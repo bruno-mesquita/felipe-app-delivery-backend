@@ -1,13 +1,10 @@
 /**
  * @fileoverview entidade de produtos
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
  */
-
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
 import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from './order.types';
+import Model from '../_Bases/model';
 
 class Order extends Model {
   payment: FormOfPaymentType;
@@ -29,10 +26,10 @@ class Order extends Model {
       client_order_status: DataTypes.STRING,
       order_status: DataTypes.STRING,
       freight_value: DataTypes.NUMBER,
-      client: DataTypes.UUIDV4,
+     /*  client: DataTypes.UUIDV4,
       address: DataTypes.UUIDV4,
       evaluation: DataTypes.UUIDV4,
-      establishment: DataTypes.UUIDV4,
+      establishment: DataTypes.UUIDV4, */
     }, { sequelize, tableName: 'orders' });
 
     return this;

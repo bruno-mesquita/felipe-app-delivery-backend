@@ -1,7 +1,5 @@
 'use strict';
 
-const { hashSync } = require('bcryptjs');
-
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.bulkInsert('address_client', [

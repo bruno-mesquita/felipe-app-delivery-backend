@@ -4,7 +4,9 @@
  * @author Bruno Mesquita
  */
 
- import { Model, DataTypes, Sequelize } from 'sequelize';
+ import { DataTypes, Sequelize } from 'sequelize';
+
+import Model from '../_Bases/model';
 
 class Image extends Model {
   name: string;

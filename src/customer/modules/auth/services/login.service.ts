@@ -18,10 +18,9 @@ class LoginClientService {
       const tokenManager = new TokenManager();
 
       // Procurar pelo e-mail e pegar o avatar desse cliente
-
       const client = await Client.findOne({
         where: { email: loginDto.email },
-        attributes: ['id', 'password']
+        attributes: ['id', 'password', 'email']
       });
 
       if (!client) throw new Error('[erro]: E-mail ou senha incorreto');
@@ -42,7 +41,7 @@ class LoginClientService {
         err: null,
       };
     } catch (err) {
-      return { result: null, err: 'Erro no login' };
+      return { result: null, err: err.message };
     }
   }
 }

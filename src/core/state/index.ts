@@ -1,14 +1,14 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
+import Model from '../_Bases/model';
 class State extends Model {
-  id: number;
   name: string;
   active: boolean;
 
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,
-      active:  DataTypes.BOOLEAN,
+      active: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'states' });
 
     return this;

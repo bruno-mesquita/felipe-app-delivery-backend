@@ -74,11 +74,9 @@ class ClientController {
 
   async profile(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
-
       const profileClientService = new ProfileClientService();
 
-      const profile = await profileClientService.execute(id);
+      const profile = await profileClientService.execute(req.client.id);
 
       if (profile.err) throw new Error(profile.err);
 

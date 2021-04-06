@@ -1,10 +1,6 @@
-/*
- * @fileoverview entidade de produtos
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
- */
+import {  DataTypes, Sequelize } from 'sequelize';
 
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import Model from '../_Bases/model';
 
 class ItemOrder extends Model {
   quantity: number;

@@ -1,22 +1,18 @@
 import { ServiceResponse } from '@shared/utils/service-response';
+import Client from '@core/client';
 
 export default class ProfileClientService {
   async execute(id: string): Promise<ServiceResponse<any>> {
     try {
-      const clientRepository = getCustomRepository(ClientRepository);
+      const client = await Client.findOne({
+        where: { id },
+        attributes: ['id','name', 'email', 'cpf', 'cellphone'],
+      })
 
-      // Trasendo dados do Perfil do cliente
-
-      const client = await clientRepository.findByProfile(id);
+      if(!client) throw new Error('Cliente não encontrado');
 
       return {
-        result: {
-          avatar: client.image ? `${client.image.getEncoded()}` : null,
-          name: client.name,
-          email: client.email,
-          cpf: client.cpf,
-          cellphone: client.cellphone,
-        },
+        result: client,
         err: null,
       };
     } catch (err) {

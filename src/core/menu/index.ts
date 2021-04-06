@@ -1,11 +1,10 @@
 /**
  * @fileoverview entidade de produtos
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
  */
 
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
+
+import Model from '../_Bases/model';
 
 class Menu extends Model {
   name: string;
@@ -13,7 +12,7 @@ class Menu extends Model {
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.NUMBER,
-      establishment: DataTypes.UUIDV4,
+/*       establishment: DataTypes.UUIDV4, */
     }, { sequelize, tableName: 'menus' });
 
     return this;

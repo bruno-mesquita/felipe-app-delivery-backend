@@ -1,7 +1,7 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
+import Model from '../_Bases/model';
 class City extends Model {
-  id: string;
   name: string;
   active: boolean;
 

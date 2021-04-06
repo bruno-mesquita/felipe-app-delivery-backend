@@ -5,8 +5,9 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
+import Model from '../_Bases/model';
 
 class Category extends Model {
   static start(sequelize: Sequelize) {

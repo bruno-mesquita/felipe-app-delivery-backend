@@ -1,20 +1,9 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
-export interface AddressAttributes {
-  nickname: string;
-  street: string;
-  number: string;
-  neighborhood: string;
-  cep: string;
-  /* city: string; */
-}
+import AddressModel from '../_Bases/address';
 
-class AddressClient extends Model {
+class AddressClient extends AddressModel {
   nickname: string;
-  street: string;
-  number: string;
-  neighborhood: string;
-  cep: string;
 
   static start(sequelize: Sequelize) {
     this.init({

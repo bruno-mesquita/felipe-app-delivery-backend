@@ -1,11 +1,10 @@
 /**
  * @fileoverview entidade de Avaliação
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
  */
 
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
+
+import Model from '../_Bases/model';
 
 class Evaluation extends Model {
   value: number;

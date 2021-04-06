@@ -1,12 +1,8 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 import { compareSync, hashSync } from 'bcryptjs';
 import { setHours, isPast } from 'date-fns';
 
-import Address from '@core/address';
-import Image from '@core/image';
-import EstablishmentCategory from '@core/establishment-category';
-import Menu from '@core/menu';
-import Order from '@core/order';
+import Model from '../_Bases/model';
 
 class Establishment extends Model {
   name: string;
@@ -19,13 +15,13 @@ class Establishment extends Model {
   freightValue: number;
 
   // Relacionamento de outras tabelas
-  address: Address;
+  /* address: Address;
   image: Image;
-  categories: EstablishmentCategory[];
+  categories: EstablishmentCategory[]; */
 
   // Relacionamento para outras tabelas
-  menus: Menu[];
-  orders: Order[];
+  /* menus: Menu[];
+  orders: Order[]; */
 
   static start(sequelize: Sequelize) {
     this.init({
@@ -50,9 +46,6 @@ class Establishment extends Model {
     return this.freightValue;
   }
 
-  public getImage(): Image {
-    return this.image;
-  }
 
   hashPassword(): void {
     this.password = hashSync(this.password, 8);
@@ -86,18 +79,6 @@ class Establishment extends Model {
     if (isPast(closedDate)) return false;
 
     return true;
-  }
-
-  public setImage(image: Image) {
-    this.image = image;
-  }
-
-  public getMenus(): Menu[] {
-    return this.menus;
-  }
-
-  public getAddress(): Address {
-    return this.address;
   }
 }
 

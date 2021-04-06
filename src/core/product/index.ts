@@ -1,12 +1,10 @@
 /**
  * @fileoverview Criação da entidade Produto
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
  */
 
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 
+import Model from '../_Bases/model';
 
 class Product extends Model {
   name: string;
@@ -20,8 +18,8 @@ class Product extends Model {
       name: DataTypes.STRING,
       price: DataTypes.NUMBER,
       description: DataTypes.STRING,
-      image: DataTypes.UUIDV4,
-      menu: DataTypes.UUIDV4,
+     /*  image: DataTypes.UUIDV4,
+      menu: DataTypes.UUIDV4, */
     }, { sequelize, tableName: 'products' });
 
     return this;
