@@ -4,6 +4,7 @@ import AddressModel from '../_Bases/address';
 
 class AddressClient extends AddressModel {
   nickname: string;
+  client_id: number;
 
   static start(sequelize: Sequelize) {
     this.init({
@@ -18,7 +19,6 @@ class AddressClient extends AddressModel {
   }
 
   static associate({ Client, City }) {
-    this.belongsTo(Client, { foreignKey: 'client_id' });
     this.belongsTo(City, { foreignKey: 'city_id' });
   }
 
