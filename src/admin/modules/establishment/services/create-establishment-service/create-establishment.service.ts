@@ -10,7 +10,10 @@ import Establishment from 'src/core/establishment';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
 import createEstablishmentSchema from '../../validation/create-client.validation';
-import { CategoryRepository } from '../../../category';
+import Image from '@core/image';
+import City from '@core/city';
+import { AddressEstablishment } from '@core/address-establishment';
+import Category from '@core/category';
 
 export class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
@@ -21,45 +24,38 @@ export class CreateEstablishmentService {
       if (!valid) throw new Error('Dados invalidos');
 
       // Criar a imagem
-      const image = imageRepository.create(createEstablishmentDto.image);
-
-      await imageRepository.save(image);
+      const image = await Image.create(createEstablishmentDto.image);
 
       // Criar o endereço
-      const city = await cityRepository.findById(createEstablishmentDto.address.city);
+      const city = await City.findByPk(createEstablishmentDto.address.city);
 
       if (!city) throw new Error('Cidade não encontrada');
 
-      const address = addressRepository.create({
+      const address = await AddressEstablishment.create({
         ...createEstablishmentDto.address,
         city,
       });
 
-      await addressRepository.save(address);
-
       // Criar o estabelecimento
       const { categories, ...establishmentDto } = createEstablishmentDto;
 
-      const establishment = establishmentRepository.create({
+      const establishment = await Establishment.create({
         ...establishmentDto,
         address,
         image,
       });
 
-      await establishmentRepository.save(establishment);
-
       // Criar categorias do estabelecimento
+
       for await (const categoryId of categories) { // eslint-disable-line
-        const category = await categoryRepository.findOne({ where: { id: categoryId } });
+        const category = await Category.findOne({ where: { id: categoryId } });
 
         if (!category) throw new Error('Categoria não encontrada');
 
-        const establishmentCategory = establishmentCategoryRepository.create({
+        await Category.create({
           category,
           establishment,
         });
-
-        await establishmentCategoryRepository.save(establishmentCategory);
       }
 
       return { result: establishment, err: null };
