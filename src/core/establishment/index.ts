@@ -3,6 +3,7 @@ import { compareSync, hashSync } from 'bcryptjs';
 import { setHours, isPast } from 'date-fns';
 
 import Model from '../_Bases/model';
+import Category from '../category';
 
 class Establishment extends Model {
   name: string;
@@ -36,6 +37,10 @@ class Establishment extends Model {
     }, { sequelize, tableName: 'establismnts' });
 
     return this;
+  }
+
+  static associate(models) {
+    this.hasMany(models.Category, { foreignKey: 'establishment_id', as: 'categories' });
   }
 
   public getName(): string {
