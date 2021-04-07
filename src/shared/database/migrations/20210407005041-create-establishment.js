@@ -2,27 +2,12 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('establishment', {
+    await queryInterface.createTable('establishments', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
         allowNull: false,
-      },
-      image_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'images', key: 'id' },
-      },
-      category_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'categories', key: 'id' },
-      },
-      address_id: {
-        type: Sequelize.INTEGER,
-        allowNull: false,
-        references: { model: 'address_establishment', key: 'id' },
       },
       name: {
         type: Sequelize.STRING,
@@ -42,15 +27,15 @@ module.exports = {
         allowNull: false,
         unique: true,
       },
-      openingTime: {
+      opening_time: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      closingTime: {
+      closing_time: {
         type: Sequelize.INTEGER,
         allowNull: false,
       },
-      freightValue: {
+      freight_value: {
         type: Sequelize.DECIMAL,
         precision: 10,
         scale: 2,
@@ -59,6 +44,16 @@ module.exports = {
       active: {
         type: Sequelize.BOOLEAN,
         allowNull: false,
+      },
+      image_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'images', key: 'id' },
+      },
+      address_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: { model: 'address_establishment', key: 'id' },
       },
       created_at: {
         type: Sequelize.DATE,
@@ -72,6 +67,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('establishment');
+    await queryInterface.dropTable('establishments');
   }
 };

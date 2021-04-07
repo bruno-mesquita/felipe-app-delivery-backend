@@ -13,7 +13,7 @@ class Order extends Model {
   client_order_status: CustomerStatusType;
   order_status: StatusOrderType;
   freight_value: number;
-/*   client: Client;
+/*
   address: Address;
   evaluation: Evaluation;
   establishment: Establishment; */
@@ -26,7 +26,7 @@ class Order extends Model {
       client_order_status: DataTypes.STRING,
       order_status: DataTypes.STRING,
       freight_value: DataTypes.NUMBER,
-     /*  client: DataTypes.UUIDV4,
+     /*
       address: DataTypes.UUIDV4,
       evaluation: DataTypes.UUIDV4,
       establishment: DataTypes.UUIDV4, */
