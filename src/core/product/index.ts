@@ -2,27 +2,34 @@
  * @fileoverview Criação da entidade Produto
  */
 
-import { DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize, BelongsToGetAssociationMixin } from 'sequelize';
 
+import Image from '@core/image';
 import Model from '../_Bases/model';
 
 class Product extends Model {
   name: string;
   price: number;
   description: string;
-/*   image: Image;
-  menu: Menu; */
+  menu_id!: string;
+  image_id!: string;
+
+  public readonly avatar?: Image;
+
+  public getAvatar!: BelongsToGetAssociationMixin<Image>;
 
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,
       price: DataTypes.NUMBER,
       description: DataTypes.STRING,
-     /*  image: DataTypes.UUIDV4,
-      menu: DataTypes.UUIDV4, */
     }, { sequelize, tableName: 'products' });
 
     return this;
+  }
+
+  static associate({ Image }): void {
+    this.belongsTo(Image, { foreignKey: 'image_id', as: 'photo' })
   }
 
   public getName(): string {
