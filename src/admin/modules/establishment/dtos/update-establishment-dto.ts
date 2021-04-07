@@ -7,7 +7,7 @@
  */
 
 export interface UpdateEstablishmentDto {
-  id: string;
+  id: number;
 
   name: string;
 
