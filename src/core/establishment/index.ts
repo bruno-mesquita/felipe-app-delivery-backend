@@ -43,7 +43,7 @@ class Establishment extends UserModel {
     return this;
   }
 
-  static associate({ Image, AddressEstablishment }) {
+  static associate({ Image, AddressEstablishment, EstablishmentCategory }) {
     this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
     this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address_establishment' });
   }
