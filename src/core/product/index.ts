@@ -11,8 +11,8 @@ class Product extends Model {
   name: string;
   price: number;
   description: string;
-  menu_id!: string;
-  image_id!: string;
+  menu_id!: number;
+  image_id!: number;
 
   public readonly avatar?: Image;
 

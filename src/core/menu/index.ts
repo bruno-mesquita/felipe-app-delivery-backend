@@ -15,7 +15,7 @@ import Model from '../_Bases/model';
 
 class Menu extends Model {
   name: string;
-  establishment_id!: string;
+  establishment_id!: number;
 
   public readonly products?: Product[];
 

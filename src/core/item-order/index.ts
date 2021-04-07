@@ -1,12 +1,19 @@
-import {  DataTypes, Sequelize } from 'sequelize';
+import {  DataTypes, Sequelize, BelongsToGetAssociationMixin } from 'sequelize';
 
+import Order from '@core/order';
+import Product from '@core/product';
 import Model from '../_Bases/model';
 
 class ItemOrder extends Model {
   quantity: number;
   total: number;
-  product_id: string;
-  order_id: string;
+  product_id!: number;
+  order_id!: number;
+
+  public readonly product?: Product;
+  public readonly order?: Order;
+
+  public getProduct!: BelongsToGetAssociationMixin<Product>;
 
   static start(sequelize: Sequelize) {
     this.init({
