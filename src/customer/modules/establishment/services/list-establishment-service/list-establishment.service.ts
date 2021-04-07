@@ -1,51 +1,52 @@
 /**
  * @fileoverview serviço de listagem dos estabelecimentos
- *
- * @author Jonatas Rosa Moura
  */
 
+import AddressClient from '@core/address-client';
+import { AddressEstablishment } from '@core/address-establishment';
+import Category from '@core/category';
+import City from '@core/city';
+import Establishment from '@core/establishment';
+import EstablishmentCategory from '@core/establishment-category';
+import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class ListEstablishmentService {
-  async execute(city_id: string, category_id: string): Promise<ServiceResponse<any[]>> {
+  async execute(categoryId: string, addressId: string): Promise<ServiceResponse<any[]>> {
     try {
-      const categoryRepository = getCustomRepository(CategoryRepository);
-      const cityAddressRepository = getCustomRepository(AddressClientRepository);
-      const categoryEstablishmentRepository = getCustomRepository(EstablishmentCategoryRepository);
+      const category = await Category.findByPk(categoryId);
 
-      // Encontrar uma cidade
+      if(!category) throw new Error('Categoria não encontrada');
 
-      /*  const city = await cityAddressRepository.findById(city_id); */
-
-      // Encontrar uma categoria
-
-      const category = await categoryRepository.findById(category_id);
-
-      // Encontrar os estabelecimentos
-
-      const categoryEstablishment = await categoryEstablishmentRepository.find({
-        where: { category },
-        relations: ['establishment', 'establishment.image', 'establishment.address', 'establishment.address.city'],
+      const addressClient = await AddressClient.findOne({
+        where: { id: addressId },
+        attributes: ['id', 'city_id'],
       });
 
-      // Filtrar os estabelecimentos que fazem parte das categorias de uma cidade
+      if(!addressClient) throw new Error('Endereço não encontrado');
 
-      // const cityAddress = categoryEstablishment.filter((item) => item.establishment.address.city.getId() === city_id);
+      const establishments = await EstablishmentCategory.findAll({
+        where: { category_id: categoryId },
+        attributes: ['id'],
+        include: [
+          {
+            model: Establishment,
+            attributes: ['name', 'freightValue', 'openingTime', 'closingTime'],
+            include: [
+              {
+                model: AddressEstablishment,
+                where: { city_id: addressClient.city_id }
+              },
+              {
+                model: Image,
+                attributes: ['encoded']
+              }
+            ]
+          }
+        ]
+      })
 
-      const result = categoryEstablishment.map(({ establishment }) => {
-        return {
-          id: establishment.getId(),
-          name: establishment.getName(),
-          fee: establishment.getFreightValue(),
-          photo: establishment.getImage().getEncoded(),
-          time: {
-            open: establishment.openingTime,
-            close: establishment.closingTime,
-          },
-        };
-      });
-
-      return { result, err: null };
+      return { result: establishments, err: null };
     } catch (err) {
       return { result: [], err: err.null };
     }
