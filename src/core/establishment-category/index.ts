@@ -7,11 +7,11 @@ import { DataTypes, Sequelize } from 'sequelize';
 import Model from '../_Bases/model';
 
 class EstablishmentCategory extends Model {
+  category_id: string;
+  establishment_id: string;
+
   static start(sequelize: Sequelize) {
-    this.init({
-      category: DataTypes.UUIDV4,
-      establishment: DataTypes.UUIDV4,
-    }, { sequelize, tableName: 'establismnt_category' });
+    this.init({}, { sequelize, tableName: 'establismnt_category' });
 
     return this;
   }
