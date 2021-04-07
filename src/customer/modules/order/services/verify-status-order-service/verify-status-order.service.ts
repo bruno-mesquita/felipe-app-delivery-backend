@@ -3,14 +3,13 @@
  * @author Jonatas Rosa Moura
  */
 
+import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class VerifyStatusOrderService {
   async execute(id: string): Promise<ServiceResponse<string>> {
     try {
-      const orderRepository = getCustomRepository(OrderRepository);
-
-      const order = await orderRepository.findOne({ where: { id }, select: ['client_order_status'] });
+      const order = await Order.findOne({ where: { id }, attributes: ['client_order_status'] });
 
       if (!order) throw new Error('Pedido não encontrado.');
 
