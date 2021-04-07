@@ -47,8 +47,7 @@ class Establishment extends Model {
     return this;
   }
 
-  static associate({ Category, Image, AddressEstablishment }) {
-    this.hasMany(Category, { foreignKey: 'establishment_id', as: 'categories' });
+  static associate({ Image, AddressEstablishment, EstablishmentCategory }) {
     this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
     this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address_establishment' });
   }
