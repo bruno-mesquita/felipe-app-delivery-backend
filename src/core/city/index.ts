@@ -4,6 +4,7 @@ import Model from '../_Bases/model';
 class City extends Model {
   name: string;
   active: boolean;
+  state_id!: number;
 
   static start(sequelize: Sequelize) {
     this.init({

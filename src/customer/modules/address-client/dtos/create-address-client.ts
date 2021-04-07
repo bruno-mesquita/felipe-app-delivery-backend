@@ -1,9 +1,9 @@
 export interface ClientAddressDto {
   street: string;
-  number: number;
+  number: string;
   neighborhood: string;
   cep: string;
   city: string;
   nickname: string;
-  userId: string;
+  userId: number;
 }

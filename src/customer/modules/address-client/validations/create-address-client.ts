@@ -7,10 +7,10 @@ const schema: SchemaOf<ClientAddressDto> = object({
   nickname: string().required(REQUIRED),
   cep: string().required(REQUIRED),
   street: string().required(REQUIRED),
-  number: number().required(REQUIRED),
+  number: string().required(REQUIRED),
   neighborhood: string().required(REQUIRED),
-  city: string().uuid().required(REQUIRED),
-  userId: string().uuid().required(REQUIRED),
+  city: number().required(REQUIRED),
+  userId: number().required(REQUIRED),
 });
 
 export { schema };

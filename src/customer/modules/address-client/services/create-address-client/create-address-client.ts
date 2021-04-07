@@ -1,10 +1,11 @@
-import AddressClient from '@core/address-client';
+import City from '@core/city';
+import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { ClientAddressDto } from '../../dtos/create-address-client';
 import { schema } from '../../validations/create-address-client';
 
 export class CreateAddressClientService {
-  async execute(createAddressDto: ClientAddressDto): Promise<ServiceResponse<AddressClient | null>> {
+  async execute(createAddressDto: ClientAddressDto): Promise<ServiceResponse<any>> {
     try {
       const valid = schema.isValidSync(createAddressDto);
 
@@ -12,36 +13,29 @@ export class CreateAddressClientService {
 
       // Verificando se a cidade existe no banco
 
-      const cityExists = await cityRepository.findById(createAddressDto.city);
+      const city = await City.findByPk(createAddressDto.city);
 
-      if (!cityExists) throw new Error('[ERRO: Endereço] Cidade selecionada não existe no sistema');
+      if (!city) throw new Error('[ERRO: Endereço] Cidade selecionada não existe no sistema');
 
-      // criando classe
-
-      const address = addressRepository.create({
-        ...createAddressDto,
-        city: cityExists,
+      const client = await Client.findOne({
+        where: { id: createAddressDto.userId },
+        attributes: ['id', 'name'],
       });
 
-      // Salvando no Banco de dados
-      await addressRepository.save(address);
+      if(!client) throw new Error('Cliente não encontrado');
 
-      // Verificando se o cliente existe
-      const clientExists = await clientRepository.findById(createAddressDto.userId);
+      const { cep, neighborhood, nickname, number, street } = createAddressDto;
 
-      if (!clientExists) throw new Error('[ERRO CLIENTE]: Cliente não existe no sistema!');
-
-      // Criando classe
-      const clientAddress = clientAddressRepository.create({
-        ...createAddressDto,
-        client_id: clientExists,
-        address_id: address,
+      const result = await client.createAdress({
+        nickname,
+        street,
+        number,
+        neighborhood,
+        cep,
+        city_id: city.id,
       });
 
-      // Salvando no Banco de dados
-      await clientAddressRepository.save(clientAddress);
-
-      return { result: clientAddress, err: null };
+      return { result: !!result, err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }

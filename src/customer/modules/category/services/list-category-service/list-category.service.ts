@@ -4,11 +4,9 @@ import { ServiceResponse } from '@shared/utils/service-response';
 export class ListCategoryService {
   async execute(): Promise<ServiceResponse<Category[]>> {
     try {
-      const categoryRepository = getCustomRepository(CategoryRepository);
+      const result = await Category.findAll({ attributes: ['name', 'id'] });
 
-      const categories = await categoryRepository.find({ select: ['name', 'id'] });
-
-      return { result: categories, err: null };
+      return { result, err: null };
     } catch (err) {
       return { err: err.message, result: [] };
     }

@@ -9,9 +9,7 @@ import { ServiceResponse } from '@shared/utils/service-response';
 class ShowOrderService {
   async execute(id: string): Promise<ServiceResponse<Order | null>> {
     try {
-      const orderRepository = getCustomRepository(OrderRepository);
-
-      const order = await orderRepository.findOne(id);
+      const order = await Order.findByPk(id);
 
       if (!order) throw new Error('Pedido não encontrado.');
 
