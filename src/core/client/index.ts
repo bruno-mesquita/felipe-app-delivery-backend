@@ -14,9 +14,7 @@ import AddressClient from '@core/address-client';
 class Client extends UserBase {
   cpf: string;
   avatar_id!: number;
-/*
-  adresses: AddressClient[];
-  orders: Order[]; */
+
   public readonly avatar?: Image;
   public readonly adresses?: AddressClient[];
 
@@ -51,10 +49,6 @@ class Client extends UserBase {
 
   public setAvatar(avatarId: number): void {
     this.avatar_id = avatarId;
-  }
-
-  public comparePassword(comparePassword: string): boolean {
-    return compareSync(comparePassword, this.password);
   }
 }
 
