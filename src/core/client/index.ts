@@ -17,7 +17,7 @@ class Client extends UserBase {
 /*
   adresses: AddressClient[];
   orders: Order[]; */
-  public readonly avatar?: Image
+  public readonly avatar?: Image;
   public readonly adresses?: AddressClient[];
 
   public createAdress!: HasManyCreateAssociationMixin<AddressClient>;

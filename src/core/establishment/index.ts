@@ -4,6 +4,8 @@ import { setHours, isPast } from 'date-fns';
 
 import Model from '../_Bases/model';
 import Category from '../category';
+import Image from '@core/image';
+import { AddressEstablishment } from '@core/address-establishment';
 
 class Establishment extends Model {
   name: string;
@@ -14,6 +16,12 @@ class Establishment extends Model {
   openingTime: number;
   closingTime: number;
   freightValue: number;
+
+  image_id!: number;
+
+  public readonly image?: Image;
+  public readonly categories?: Category[];
+  public readonly address?: AddressEstablishment;
 
   // Relacionamento de outras tabelas
   /* address: Address;
@@ -27,20 +35,26 @@ class Establishment extends Model {
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,
-      cellphone: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
-      active: DataTypes.BOOLEAN,
+      cellphone: DataTypes.STRING,
       openingTime: DataTypes.NUMBER,
       closingTime: DataTypes.NUMBER,
       freightValue: DataTypes.NUMBER,
+      active: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'establismnts' });
 
     return this;
   }
 
-  static associate(models) {
-    this.hasMany(models.Category, { foreignKey: 'establishment_id', as: 'categories' });
+  static associate({ Category, Image, AddressEstablishment }) {
+    this.hasMany(Category, { foreignKey: 'establishment_id', as: 'categories' });
+    this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
+    this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address_establishment' });
+  }
+
+  public setImage(imageId: number): void {
+    this.image_id = imageId;
   }
 
   public getName(): string {

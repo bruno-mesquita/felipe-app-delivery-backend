@@ -16,12 +16,12 @@ export interface CreateEstablishmentDto {
     name: string;
     encoded: string;
   };
-  categories: string[];
+  categories: number[];
   address: {
     street: string;
     number: number;
     neighborhood: string;
     cep: string;
-    city: string;
+    city: number;
   };
 }

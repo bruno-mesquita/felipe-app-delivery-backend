@@ -26,13 +26,13 @@ const schema: SchemaOf<CreateEstablishmentDto> = object({
     name: string().required(REQUIRED),
     encoded: string().required(REQUIRED),
   }),
-  categories: array().of(string().uuid().required(REQUIRED)),
+  categories: array().of(number().integer().required(REQUIRED)),
   address: object({
     street: string().required(REQUIRED),
     number: number().required(REQUIRED),
     neighborhood: string().required(REQUIRED),
     cep: string().required(REQUIRED),
-    city: string().uuid().required(REQUIRED),
+    city: number().integer().required(REQUIRED),
   }),
 });
 
