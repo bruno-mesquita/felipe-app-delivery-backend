@@ -18,7 +18,7 @@ class AddressClient extends AddressModel {
     return this;
   }
 
-  static associate({ Client, City }) {
+  static associate({ City }) {
     this.belongsTo(City, { foreignKey: 'city_id' });
   }
 

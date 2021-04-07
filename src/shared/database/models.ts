@@ -14,8 +14,10 @@ import ItemOrder from '@core/item-order';
 import Menu from '@core/menu';
 import Order from '@core/order';
 import Product from '@core/product';
+import {AddressEstablishment} from '@core/address-establishment';
 
 const models = [
+  AddressEstablishment,
   City,
   AddressClient,
   State,
