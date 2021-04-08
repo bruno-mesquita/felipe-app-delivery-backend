@@ -24,9 +24,6 @@ export class CreateEstablishmentService {
 
       if (!valid) throw new Error('Dados invalidos');
 
-      // Criar a imagem
-      const image = await Image.create(createEstablishmentDto.image);
-
       // Criar o endereço
       const city = await City.findByPk(createEstablishmentDto.address.city);
 
@@ -34,8 +31,12 @@ export class CreateEstablishmentService {
 
       const address = await AddressEstablishment.create({
         ...createEstablishmentDto.address,
-        city,
       });
+
+      console.log(address);
+
+      // Criar a imagem
+      const image = await Image.create(createEstablishmentDto.image);
 
       // Criar o estabelecimento
       const { categories, ...establishmentDto } = createEstablishmentDto;
