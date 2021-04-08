@@ -5,20 +5,20 @@ import { setHours, isPast } from 'date-fns';
 import UserModel from '../_Bases/user';
 import Image from '@core/image';
 import { AddressEstablishment } from '@core/address-establishment';
-import Category from '@core/category';
 
 class Establishment extends UserModel {
   openingTime: number;
   closingTime: number;
   freightValue: number;
+  evaluation: number;
   image_id!: number;
+  address_id!: number;
 
   public readonly image?: Image;
   public readonly address?: AddressEstablishment;
 
   // Relacionamento de outras tabelas
-  /* address: Address;
-  image: Image;
+  /*
   categories: EstablishmentCategory[]; */
 
   // Relacionamento para outras tabelas
@@ -33,7 +33,8 @@ class Establishment extends UserModel {
       cellphone: DataTypes.STRING,
       openingTime: DataTypes.NUMBER,
       closingTime: DataTypes.NUMBER,
-      freightValue: DataTypes.NUMBER,
+      freightValue: DataTypes.DECIMAL,
+      evaluation: DataTypes.DECIMAL,
       active: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'establishments' });
 
@@ -44,10 +45,10 @@ class Establishment extends UserModel {
     return this;
   }
 
-  static associate({ Image, AddressEstablishment, EstablishmentCategory }) {
+  static associate({ Image, AddressEstablishment, Category, EstablishmentCategory }) {
+    this.belongsToMany(Category, { through: EstablishmentCategory });
     this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
-    this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address_establishment' });
-    this.belongsToMany(Category, {  through: EstablishmentCategory, foreignKey: 'establishment_id' });
+    this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address' });
   }
 
   public setImageId(imageId: number): void {

@@ -11,6 +11,8 @@ class EstablishmentController {
 
       const response = await listEstablishmentService.execute(addressId, categoryId);
 
+      if(response.err) throw new Error(response.err);
+
       return res.json(response);
     } catch (err) {
       return res.status(400).json({ err: err.message });

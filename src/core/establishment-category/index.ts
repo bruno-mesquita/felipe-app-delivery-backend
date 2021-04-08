@@ -11,7 +11,7 @@ class EstablishmentCategory extends Model {
   establishment_id: number;
 
   static start(sequelize: Sequelize) {
-    this.init({}, { sequelize, tableName: 'establismnt_category' });
+    this.init({}, { sequelize, tableName: 'establishment_category' });
 
     return this;
   }

@@ -7,7 +7,6 @@
 
 import { DataTypes, Sequelize } from 'sequelize';
 
-import EstablishmentCategory from '@core/establishment-category';
 import Model from '../_Bases/model';
 
 class Category extends Model {
@@ -19,8 +18,8 @@ class Category extends Model {
     return this;
   }
 
-  static associate({ Establishment }) {
-    this.belongsToMany(Establishment, { through: EstablishmentCategory, foreignKey: 'category_id', as: 'categories' });
+  static associate({ Establishment, EstablishmentCategory }) {
+    this.belongsToMany(Establishment, { through: EstablishmentCategory });
   }
 
   public getName(): string {

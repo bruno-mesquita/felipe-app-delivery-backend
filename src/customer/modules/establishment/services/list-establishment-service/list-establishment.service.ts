@@ -25,29 +25,46 @@ class ListEstablishmentService {
 
       if(!addressClient) throw new Error('Endereço não encontrado');
 
-      const establishments = await EstablishmentCategory.findAll({
-        where: { category_id: categoryId },
-        attributes: ['id'],
+      const establishments = (await Establishment.findAll({
+        where: { active: true },
+        attributes: ['id', 'name' ,'openingTime', 'closingTime', 'freightValue'],
         include: [
           {
-            model: Establishment,
-            attributes: ['name', 'freightValue', 'openingTime', 'closingTime'],
-            include: [
-              {
-                model: AddressEstablishment,
-                where: { city_id: addressClient.city_id }
-              },
-              {
-                model: Image,
-                attributes: ['encoded']
-              }
-            ]
+            model: Image,
+            as: 'image',
+            attributes: ['encoded'],
+          },
+          {
+            model: AddressEstablishment,
+            as: 'address',
+            where: { city_id: addressClient.city_id },
+            attributes: { exclude: ['createdAt', 'updatedAt', 'city_id'] }
+          },
+          {
+            model: Category,
+            attributes: ['id'],
+            through: {
+              as: 'establishment_category',
+              attributes: ['category_id'],
+              where: { category_id: categoryId }
+            }
           }
         ]
-      })
+      })).map(item => ({
+        id: item.id,
+        name: item.name,
+        image: item.image.encoded,
+        address: item.address,
+        openingTime: item.openingTime,
+        closingTime: item.closingTime,
+        freightValue: item.freightValue,
+        evaluation: item.evaluation
+      }))
+
 
       return { result: establishments, err: null };
     } catch (err) {
+
       return { result: [], err: err.null };
     }
   }

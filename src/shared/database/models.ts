@@ -17,6 +17,7 @@ import Product from '@core/product';
 import {AddressEstablishment} from '@core/address-establishment';
 
 const models = [
+  Image,
   AddressEstablishment,
   City,
   AddressClient,
@@ -28,7 +29,6 @@ const models = [
   Establishment,
   EstablishmentCategory,
   Evaluation,
-  Image,
   ItemOrder,
   Menu,
   Order,
