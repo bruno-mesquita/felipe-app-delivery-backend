@@ -1,26 +1,18 @@
 import { DataTypes, Sequelize } from 'sequelize';
-import { compareSync, hashSync } from 'bcryptjs';
+import { hashSync } from 'bcryptjs';
 import { setHours, isPast } from 'date-fns';
 
-import Model from '../_Bases/model';
-import Category from '../category';
+import UserModel from '../_Bases/user';
 import Image from '@core/image';
 import { AddressEstablishment } from '@core/address-establishment';
 
-class Establishment extends Model {
-  name: string;
-  cellphone: string;
-  email: string;
-  password: string;
-  active: boolean;
+class Establishment extends UserModel {
   openingTime: number;
   closingTime: number;
   freightValue: number;
-
   image_id!: number;
 
   public readonly image?: Image;
-  public readonly categories?: Category[];
   public readonly address?: AddressEstablishment;
 
   // Relacionamento de outras tabelas
@@ -44,6 +36,10 @@ class Establishment extends Model {
       active: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'establismnts' });
 
+    this.addHook('beforeSave', (user: Establishment) => {
+      if (user.password) user.password = hashSync(user.password, 8);
+    });
+
     return this;
   }
 
@@ -52,33 +48,12 @@ class Establishment extends Model {
     this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address_establishment' });
   }
 
-  public setImage(imageId: number): void {
+  public setImageId(imageId: number): void {
     this.image_id = imageId;
-  }
-
-  public getName(): string {
-    return this.name;
   }
 
   public getFreightValue(): number {
     return this.freightValue;
-  }
-
-
-  hashPassword(): void {
-    this.password = hashSync(this.password, 8);
-  }
-
-  public isActive(): boolean {
-    return this.active;
-  }
-
-  public comparePassword(comparePassword: string): boolean {
-    return compareSync(comparePassword, this.password);
-  }
-
-  public activate(): void {
-    this.active = true;
   }
 
   public updateProfile(name: string, email: string, cellphone: string): void {

@@ -1,10 +1,13 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize, HasManyGetAssociationsMixin } from 'sequelize';
 
+import Order from '@core/order';
 import AddressModel from '../_Bases/address';
 
 class AddressClient extends AddressModel {
   nickname: string;
-  client_id: number;
+  client_id!: number;
+
+  public getOrders!: HasManyGetAssociationsMixin<Order>;
 
   static start(sequelize: Sequelize) {
     this.init({
@@ -18,8 +21,9 @@ class AddressClient extends AddressModel {
     return this;
   }
 
-  static associate({ City }) {
+  static associate({ City, Order }) {
     this.belongsTo(City, { foreignKey: 'city_id' });
+    this.hasMany(Order, { foreignKey: 'address_id', as: 'orders', sourceKey: 'id' });
   }
 
   public getNickname(): string {

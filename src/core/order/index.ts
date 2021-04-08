@@ -13,10 +13,9 @@ class Order extends Model {
   client_order_status: CustomerStatusType;
   order_status: StatusOrderType;
   freight_value: number;
-/*
-  address: Address;
-  evaluation: Evaluation;
-  establishment: Establishment; */
+  address_id: number;
+  evaluation_id: number;
+  establishment_id: number;
 
   static start(sequelize: Sequelize) {
     this.init({
@@ -25,23 +24,23 @@ class Order extends Model {
       discount: DataTypes.NUMBER,
       client_order_status: DataTypes.STRING,
       order_status: DataTypes.STRING,
-      freight_value: DataTypes.NUMBER,
-     /*
-      address: DataTypes.UUIDV4,
-      evaluation: DataTypes.UUIDV4,
-      establishment: DataTypes.UUIDV4, */
+      freight_value: DataTypes.DECIMAL,
     }, { sequelize, tableName: 'orders' });
 
     return this;
+  }
+
+  static associate({ Evaluation }): void {
+    this.belongsTo(Evaluation, { foreignKey: 'evaluation_id', as: 'evaluation' })
   }
 
   public getClientOrderStatus(): CustomerStatusType {
     return this.client_order_status;
   }
 
-/*   public setEvaluation(evaluation: Evaluation): void {
-    this.evaluation = evaluation;
-  } */
+  public setEvaluationId(evaluationId: number): void {
+    this.evaluation_id = evaluationId;
+  }
 
   public updateOrder(payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
     this.payment = payment;
