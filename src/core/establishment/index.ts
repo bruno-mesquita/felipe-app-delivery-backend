@@ -35,7 +35,7 @@ class Establishment extends UserModel {
       closingTime: DataTypes.NUMBER,
       freightValue: DataTypes.NUMBER,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'establismnts' });
+    }, { sequelize, tableName: 'establishments' });
 
     this.addHook('beforeSave', (user: Establishment) => {
       if (user.password) user.password = hashSync(user.password, 8);
