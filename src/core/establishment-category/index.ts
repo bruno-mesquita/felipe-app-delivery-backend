@@ -15,11 +15,6 @@ class EstablishmentCategory extends Model {
 
     return this;
   }
-
-  static associate({ Category, Establishment }) {
-    this.belongsTo(Category, { foreignKey: 'category_id', as: 'categories' });
-    this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'category_establishment' });
-  }
 }
 
 export default EstablishmentCategory;
