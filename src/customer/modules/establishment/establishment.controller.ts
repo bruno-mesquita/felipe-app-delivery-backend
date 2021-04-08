@@ -35,11 +35,11 @@ class EstablishmentController {
 
   async searchByName(req: Request, res: Response): Promise<Response> {
     try {
-      const { search, city } = req.body;
+      const { name, addressId } = req.body;
 
       const searchEstablishmentsByName = new SearchEstablishmentsByName();
 
-      const response = await searchEstablishmentsByName.execute(search, city);
+      const response = await searchEstablishmentsByName.execute(name, addressId);
 
       if (response.err) throw new Error(response.err);
 

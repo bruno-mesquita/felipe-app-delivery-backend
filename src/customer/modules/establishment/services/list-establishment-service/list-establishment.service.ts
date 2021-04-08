@@ -49,7 +49,8 @@ class ListEstablishmentService {
               where: { category_id: categoryId }
             }
           }
-        ]
+        ],
+        order: [['evaluation', 'asc']]
       })).map(item => ({
         id: item.id,
         name: item.name,
@@ -58,7 +59,8 @@ class ListEstablishmentService {
         openingTime: item.openingTime,
         closingTime: item.closingTime,
         freightValue: item.freightValue,
-        evaluation: item.evaluation
+        evaluation: item.evaluation,
+        isOpen: item.isOpen(),
       }))
 
 
