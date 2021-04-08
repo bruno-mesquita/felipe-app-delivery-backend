@@ -14,6 +14,7 @@ import Image from '@core/image';
 import City from '@core/city';
 import { AddressEstablishment } from '@core/address-establishment';
 import Category from '@core/category';
+import EstablishmetCategory from '@core/establishment-category';
 
 export class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
@@ -52,10 +53,12 @@ export class CreateEstablishmentService {
 
         if (!category) throw new Error('Categoria não encontrada');
 
-        await Category.create({
+        const categoryStore = await Category.create({
           category,
           establishment,
         });
+
+        await EstablishmetCategory.create(categoryStore);
       }
 
       return { result: establishment, err: null };
