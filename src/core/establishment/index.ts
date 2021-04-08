@@ -1,10 +1,11 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize, HasManyGetAssociationsMixin } from 'sequelize';
 import { hashSync } from 'bcryptjs';
 import { setHours, isPast } from 'date-fns';
 
 import UserModel from '../_Bases/user';
 import Image from '@core/image';
 import { AddressEstablishment } from '@core/address-establishment';
+import Order from '@core/order';
 
 class Establishment extends UserModel {
   openingTime: number;
@@ -16,6 +17,9 @@ class Establishment extends UserModel {
 
   public readonly image?: Image;
   public readonly address?: AddressEstablishment;
+  public readonly orders?: Order[];
+
+  public getOrders!: HasManyGetAssociationsMixin<Order>;
 
   // Relacionamento de outras tabelas
   /*
@@ -45,10 +49,11 @@ class Establishment extends UserModel {
     return this;
   }
 
-  static associate({ Image, AddressEstablishment, Category, EstablishmentCategory }) {
+  static associate({ Image, AddressEstablishment, Category, EstablishmentCategory, Order }) {
     this.belongsToMany(Category, { through: EstablishmentCategory });
     this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
     this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address' });
+    this.hasMany(Order, { foreignKey: 'establishment_id', as: 'orders', sourceKey: 'id' })
   }
 
   public setImageId(imageId: number): void {

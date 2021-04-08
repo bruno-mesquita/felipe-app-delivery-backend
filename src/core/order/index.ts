@@ -16,11 +16,12 @@ class Order extends Model {
   address_id: number;
   evaluation_id: number;
   establishment_id: number;
+  client_id: number;
 
   static start(sequelize: Sequelize) {
     this.init({
       payment: DataTypes.STRING,
-      total: DataTypes.NUMBER,
+      total: DataTypes.DECIMAL,
       discount: DataTypes.NUMBER,
       client_order_status: DataTypes.STRING,
       order_status: DataTypes.STRING,
@@ -30,8 +31,11 @@ class Order extends Model {
     return this;
   }
 
-  static associate({ Evaluation }): void {
+  static associate({ Evaluation, Establishment, Client, AddressClient }): void {
     this.belongsTo(Evaluation, { foreignKey: 'evaluation_id', as: 'evaluation' })
+    this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishment' })
+    this.belongsTo(Client, { foreignKey: 'client_id', as: 'client' })
+    this.belongsTo(AddressClient, { foreignKey: 'address_id', as: 'address_client' })
   }
 
   public getClientOrderStatus(): CustomerStatusType {
