@@ -7,7 +7,9 @@ export class MenuController {
     try {
       const findProductsByMenuService = new FindProductsByMenuService();
 
-      const result = await findProductsByMenuService.execute(req.params.id);
+      const result = await findProductsByMenuService.execute(req.params.id, Number(req.query.page || 1));
+
+      if(result.err) throw new Error(result.err);
 
       return res.json(result);
     } catch (err) {

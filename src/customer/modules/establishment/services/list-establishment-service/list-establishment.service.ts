@@ -5,14 +5,12 @@
 import AddressClient from '@core/address-client';
 import { AddressEstablishment } from '@core/address-establishment';
 import Category from '@core/category';
-import City from '@core/city';
 import Establishment from '@core/establishment';
-import EstablishmentCategory from '@core/establishment-category';
 import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class ListEstablishmentService {
-  async execute(categoryId: string, addressId: string): Promise<ServiceResponse<any[]>> {
+  async execute(categoryId: string, addressId: string, page: number = 1): Promise<ServiceResponse<any[]>> {
     try {
       const category = await Category.findByPk(categoryId);
 
@@ -50,7 +48,9 @@ class ListEstablishmentService {
             }
           }
         ],
-        order: [['evaluation', 'asc']]
+        order: [['evaluation', 'asc']],
+        limit: 15,
+        offset: page * 15,
       })).map(item => ({
         id: item.id,
         name: item.name,

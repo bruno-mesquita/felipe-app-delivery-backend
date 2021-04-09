@@ -5,11 +5,11 @@ import { ListEstablishmentService, FindOneEstablishmentService, SearchEstablishm
 class EstablishmentController {
   async list(req: Request, res: Response): Promise<Response> {
     try {
-      const { addressId, categoryId }: any = req.query;
+      const { addressId, categoryId, page = 1 }: any = req.query;
 
       const listEstablishmentService = new ListEstablishmentService();
 
-      const response = await listEstablishmentService.execute(addressId, categoryId);
+      const response = await listEstablishmentService.execute(addressId, categoryId, page);
 
       if(response.err) throw new Error(response.err);
 

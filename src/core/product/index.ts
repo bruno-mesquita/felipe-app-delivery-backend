@@ -14,9 +14,9 @@ class Product extends Model {
   menu_id!: number;
   image_id!: number;
 
-  public readonly avatar?: Image;
+  public readonly photo?: Image;
 
-  public getAvatar!: BelongsToGetAssociationMixin<Image>;
+  public getPhoto!: BelongsToGetAssociationMixin<Image>;
 
   static start(sequelize: Sequelize) {
     this.init({
