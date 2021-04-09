@@ -8,12 +8,12 @@ import { FormOfPaymentType } from '@core/order/order.types';
 export interface Item {
   amount: number;
   price: number;
-  itemId: string; // produto
+  itemId: number; // produto
   total: number;
 }
 
 export interface CreateOrderDto {
-  establishmentId: string;
+  establishmentId: number;
   items: Item[];
   total: number;
   payment: FormOfPaymentType;
