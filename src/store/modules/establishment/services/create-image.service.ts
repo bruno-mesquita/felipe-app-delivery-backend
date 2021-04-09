@@ -1,32 +1,32 @@
-import Image from '@core/image';
-import { ServiceResponse } from '@shared/utils/service-response';
-import { CreateImageDto } from '../../images/create-image-dto';
-import { schema } from '../../images/create-image-validation';
+// import Image from '@core/image';
+// import { ServiceResponse } from '@shared/utils/service-response';
+// import { CreateImageDto } from '../../images/create-image-dto';
+// import { schema } from '../../images/create-image-validation';
 
-export class CreateImageService {
-  async execute(createImageDto: CreateImageDto): Promise<ServiceResponse<Image | null>> {
-    try {
-      // Validando
+// export class CreateImageService {
+//   async execute(createImageDto: CreateImageDto): Promise<ServiceResponse<Image | null>> {
+//     try {
+//       // Validando
 
-      const valid = schema.isValidSync(createImageDto);
+//       const valid = schema.isValidSync(createImageDto);
 
-      if (!valid) throw new Error('[Image]: Dados inválidos.');
+//       if (!valid) throw new Error('[Image]: Dados inválidos.');
 
-      // Verificando se o estabelecimento existe
+//       // Verificando se o estabelecimento existe
 
-      const establishment = await establishmentRepository.findById(createImageDto.id);
+//       const establishment = await establishmentRepository.findById(createImageDto.id);
 
-      if (!establishment) throw new Error('[Image]: Estabelecimento não encontrado.');
+//       if (!establishment) throw new Error('[Image]: Estabelecimento não encontrado.');
 
-      // Criando classe
+//       // Criando classe
 
-      const image = imageRepository.create(createImageDto);
+//       const image = imageRepository.create(createImageDto);
 
-      await imageRepository.save(image);
+//       await imageRepository.save(image);
 
-      return { result: image, err: null };
-    } catch (err) {
-      return { result: null, err: err.message };
-    }
-  }
-}
+//       return { result: image, err: null };
+//     } catch (err) {
+//       return { result: null, err: err.message };
+//     }
+//   }
+// }

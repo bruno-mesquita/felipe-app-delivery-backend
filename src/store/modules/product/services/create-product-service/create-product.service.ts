@@ -35,20 +35,16 @@ class CreateProductService {
       // Pegando valor da image do produto
 
       const image = await Image.findOne({
-        where: { name: createProductDto.name, encoded: createProductDto.image },
+        where: {
+          encoded: createProductDto.image
+        }
       });
 
-      // verificando se ela existe
-      if (image.name && image.encoded === "") {
-        throw new Error('Selecione uma image para o produto!');
-      }
-
-      // Salvando imagev
       await image.save();
 
       await Product.create({
         ...createProductDto,
-        image: image.encoded,
+        image_id: image.id,
         menu_id: menu.id,
       });
 
