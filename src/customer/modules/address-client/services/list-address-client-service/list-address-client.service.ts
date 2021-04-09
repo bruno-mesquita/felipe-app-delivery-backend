@@ -16,10 +16,12 @@ export class ListAddressClientService {
           {
             model: City,
             attributes: ['id', 'name'],
+            as: 'city',
             include: [
               {
                 model: State,
-                attributes: ['id', 'name']
+                attributes: ['id', 'name'],
+                as: 'state'
               }
             ]
           }
