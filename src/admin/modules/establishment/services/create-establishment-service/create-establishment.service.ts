@@ -19,7 +19,6 @@ import EstablishmetCategory from '@core/establishment-category';
 export class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
     try {
-      console.log(createEstablishmentDto);
       // validação
       const valid = createEstablishmentSchema.isValidSync(createEstablishmentDto);
 
@@ -49,13 +48,17 @@ export class CreateEstablishmentService {
         city_id: city.id,
       });
 
+
       // Criar a imagem
       const image = await Image.create(createEstablishmentDto.image);
 
-      console.log(image);
-
       // Criar o estabelecimento
       const { categories, ...establishmentDto } = createEstablishmentDto;
+
+
+
+      delete establishmentDto.address;
+      delete establishmentDto.image;
 
       const establishment = await Establishment.create({
         ...establishmentDto,
@@ -78,7 +81,6 @@ export class CreateEstablishmentService {
 
       return { result: establishment, err: null };
     } catch (err) {
-      console.log(err);
       return { result: null, err: err.message };
     }
   }
