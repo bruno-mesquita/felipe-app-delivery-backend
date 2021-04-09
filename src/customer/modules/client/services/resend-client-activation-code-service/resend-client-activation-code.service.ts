@@ -1,14 +1,9 @@
 /**
-
  * @fileoverview Criação do serviço para reenvio do codigo de ativação
-
- *
-
- * @author Bruno Mesquita
-
  */
-import { validate } from 'uuid';
 
+import Client from '@core/client';
+import ClientActivationCode from '@core/client-activation-code';
 import { ServiceResponse } from '@shared/utils/service-response';
 import SmsService from '@shared/utils/sms';
 
@@ -17,19 +12,14 @@ class ResendClientActivationCodeService {
     try {
       const smsService = new SmsService();
 
-      const clientRepository = getCustomRepository(ClientRepository);
 
-      const clientActivationCodeRepository = getCustomRepository(ClientActivationCodeRepository);
-
-      // Verificando se o id é valido
-
-      if (validate(clientId)) throw new Error('Id inválido');
-
-      const client = await clientRepository.findById(clientId);
+      const client = await Client.findByPk(clientId);
 
       if (!client) throw new Error('Cliente não encontrado');
 
-      const clientActivationCode = await clientActivationCodeRepository.findByClientId(client.getId());
+      const clientActivationCode = await ClientActivationCode.findOne({
+        where: { client_id: client.id }
+      });
 
       if (!clientActivationCode) throw new Error('Codigo de ativação não encontrado');
 
