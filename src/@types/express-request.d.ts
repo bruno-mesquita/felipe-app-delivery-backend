@@ -6,7 +6,7 @@ declare global {
     // eslint-disable-next-line no-shadow
     interface Request {
       client: {
-        id: string;
+        id: number;
       };
     }
   }
