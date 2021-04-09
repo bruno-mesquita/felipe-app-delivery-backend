@@ -21,6 +21,8 @@ class ProductController {
 
       const products = await listProductsService.execute();
 
+      if (products.err) throw new Error(products.err);
+
       return res.status(201).json(products);
     } catch (err) {
       return res.status(400).json({ err: err.message });

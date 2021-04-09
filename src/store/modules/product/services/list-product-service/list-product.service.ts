@@ -11,7 +11,9 @@ import { ServiceResponse } from '@shared/utils/service-response';
 export class ListProductsService {
   async execute(): Promise<ServiceResponse<Product[] | null>> {
     try {
-      const products = await productsRepository.find();
+      const products = await Product.findAll({
+        attributes: ['id', 'name', 'price', 'description'],
+      });
 
       return { result: products, err: null };
     } catch (err) {
