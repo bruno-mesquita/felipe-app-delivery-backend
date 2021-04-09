@@ -1,28 +1,25 @@
+import Evaluation from '@core/evaluation';
+import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { RateOrderDto } from '../dtos/rate-order.dto';
 
 export class RateOrderService {
   async execute({ value, message, orderId, userId }: RateOrderDto): Promise<ServiceResponse<boolean>> {
     try {
-      const orderRepository = getCustomRepository(OrderRepository);
-      const evaluationRepository = getCustomRepository(EvaluationRepository);
-
-      const order = await orderRepository.findOne({
-        where: [{ id: orderId }, { client: userId }],
-      });
+      const order = await Order.findOne({
+        where: { id: orderId, user_id: userId },
+      })
 
       if (!order) throw new Error('Pedido não encontrado');
 
-      const evaluation = evaluationRepository.create({
+      const evaluation = await Evaluation.create({
         value,
         message,
       });
 
-      await evaluationRepository.save(evaluation);
+      order.setEvaluationId(evaluation.id);
 
-      order.setEvaluation(evaluation);
-
-      await orderRepository.save(order);
+      await order.save();
 
       return { err: null, result: true };
     } catch (err) {
