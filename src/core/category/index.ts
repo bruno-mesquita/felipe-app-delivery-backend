@@ -18,8 +18,8 @@ class Category extends Model {
     return this;
   }
 
-  static associate({ Establishment, EstablishmentCategory }) {
-    this.belongsToMany(Establishment, { through: EstablishmentCategory });
+  static associate({ EstablishmentCategory }) {
+    this.hasMany(EstablishmentCategory, { foreignKey: 'category_id', as: 'categories' });
   }
 
   public getName(): string {

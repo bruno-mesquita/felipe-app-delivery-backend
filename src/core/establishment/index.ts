@@ -45,8 +45,8 @@ class Establishment extends UserModel {
     return this;
   }
 
-  static associate({ Image, AddressEstablishment, Category, EstablishmentCategory }) {
-    this.belongsToMany(Category, { through: EstablishmentCategory });
+  static associate({ Image, AddressEstablishment, EstablishmentCategory }) {
+    this.hasMany(EstablishmentCategory, { foreignKey: 'establishment_id', as: 'establishments' });
     this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
     this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address' });
   }

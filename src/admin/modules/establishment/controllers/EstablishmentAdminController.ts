@@ -33,6 +33,7 @@ class EstablishmentController {
 
   async create(req: Request, res: Response): Promise<Response> {
     try {
+      // console.log(req.body);
       const createEstablishmentService = new CreateEstablishmentService();
 
       const establishment = await createEstablishmentService.execute(req.body);

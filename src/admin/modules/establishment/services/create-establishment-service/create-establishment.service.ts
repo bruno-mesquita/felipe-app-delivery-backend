@@ -19,10 +19,25 @@ import EstablishmetCategory from '@core/establishment-category';
 export class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
     try {
+      console.log(createEstablishmentDto);
       // validação
       const valid = createEstablishmentSchema.isValidSync(createEstablishmentDto);
 
       if (!valid) throw new Error('Dados invalidos');
+
+      // Verificando se o email existe
+      const email = await Establishment.findOne({
+        where: { email: createEstablishmentDto.email },
+      });
+
+      if (email) throw new Error('E-mail já cadastrado no sistema');
+
+      // Verificando se o celular já existe
+      const cellphone = await Establishment.findOne({
+        where: { cellphone: createEstablishmentDto.cellphone },
+      });
+
+      if (cellphone) throw new Error('Celular já cadastrado no sistema');
 
       // Criar o endereço
       const city = await City.findByPk(createEstablishmentDto.address.city);
@@ -31,20 +46,21 @@ export class CreateEstablishmentService {
 
       const address = await AddressEstablishment.create({
         ...createEstablishmentDto.address,
+        city_id: city.id,
       });
-
-      console.log(address);
 
       // Criar a imagem
       const image = await Image.create(createEstablishmentDto.image);
+
+      console.log(image);
 
       // Criar o estabelecimento
       const { categories, ...establishmentDto } = createEstablishmentDto;
 
       const establishment = await Establishment.create({
         ...establishmentDto,
-        address,
-        image,
+        address_id: address.id,
+        image_id: image.id,
       });
 
       // Criar categorias do estabelecimento
@@ -54,16 +70,15 @@ export class CreateEstablishmentService {
 
         if (!category) throw new Error('Categoria não encontrada');
 
-        const categoryStore = await Category.create({
-          category,
-          establishment,
+        await EstablishmetCategory.create({
+          category_id: category.id,
+          establishment_id: establishment.id,
         });
-
-        await EstablishmetCategory.create(categoryStore);
       }
 
       return { result: establishment, err: null };
     } catch (err) {
+      console.log(err);
       return { result: null, err: err.message };
     }
   }
