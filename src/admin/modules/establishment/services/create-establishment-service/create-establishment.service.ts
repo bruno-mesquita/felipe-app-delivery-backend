@@ -5,8 +5,8 @@
  * @author Jonatas Rosa Moura
  */
 
-import Establishment from 'src/core/establishment';
 
+import Establishment from '@core/establishment';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
 import createEstablishmentSchema from '../../validation/create-client.validation';

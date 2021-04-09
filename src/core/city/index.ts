@@ -16,7 +16,7 @@ class City extends Model {
   }
 
   static associate({ State }) {
-    this.belongsTo(State, { foreignKey: 'state_id' });
+    this.belongsTo(State, { foreignKey: 'state_id', as: 'state' });
   }
 }
 

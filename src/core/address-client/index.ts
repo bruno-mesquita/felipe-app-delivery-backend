@@ -22,7 +22,7 @@ class AddressClient extends AddressModel {
   }
 
   static associate({ City, Order }) {
-    this.belongsTo(City, { foreignKey: 'city_id' });
+    this.belongsTo(City, { foreignKey: 'city_id', as: 'city' });
     this.hasMany(Order, { foreignKey: 'address_id', as: 'orders', sourceKey: 'id' });
   }
 
