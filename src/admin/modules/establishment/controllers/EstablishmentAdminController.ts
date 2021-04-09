@@ -17,8 +17,6 @@ class EstablishmentController {
       const { id } = req.params;
       const showEstablishmentService = new ShowEstablishmentService();
 
-      if (!showEstablishmentService) throw new Error('Estabelecimento não encontrado.');
-
       const establishment = await showEstablishmentService.execute({ id });
 
       if (!id) throw new Error('Estabelecimeto inválido.');
@@ -33,7 +31,6 @@ class EstablishmentController {
 
   async create(req: Request, res: Response): Promise<Response> {
     try {
-      // console.log(req.body);
       const createEstablishmentService = new CreateEstablishmentService();
 
       const establishment = await createEstablishmentService.execute(req.body);

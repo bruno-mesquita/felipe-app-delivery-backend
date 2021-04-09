@@ -48,11 +48,17 @@ export class CreateEstablishmentService {
         city_id: city.id,
       });
 
+
       // Criar a imagem
       const image = await Image.create(createEstablishmentDto.image);
 
       // Criar o estabelecimento
       const { categories, ...establishmentDto } = createEstablishmentDto;
+
+
+
+      delete establishmentDto.address;
+      delete establishmentDto.image;
 
       const establishment = await Establishment.create({
         ...establishmentDto,

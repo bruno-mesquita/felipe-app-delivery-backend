@@ -22,12 +22,10 @@ class Establishment extends UserModel {
   public getOrders!: HasManyGetAssociationsMixin<Order>;
 
   // Relacionamento de outras tabelas
-  /*
-  categories: EstablishmentCategory[]; */
+  /* categories: EstablishmentCategory[]; */
 
   // Relacionamento para outras tabelas
-  /* menus: Menu[];
-  orders: Order[]; */
+  /* menus: Menu[]; */
 
   static start(sequelize: Sequelize) {
     this.init({
