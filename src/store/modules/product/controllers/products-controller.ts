@@ -47,6 +47,8 @@ class ProductController {
 
       const product = await createProductService.execute(req.body);
 
+      if (product.err) throw new Error(product.err);
+
       return res.status(201).json(product);
     } catch (err) {
       return res.status(400).json({ err: err.message });

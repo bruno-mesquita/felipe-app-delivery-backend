@@ -31,8 +31,9 @@ class Menu extends Model {
     return this;
   }
 
-  static associate({ Product }): void {
-    this.hasMany(Product, { foreignKey: 'menu_id', as: 'products', sourceKey: 'id' })
+  static associate({ Establishment, Product }): void {
+    this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishments' });
+    this.hasMany(Product, { foreignKey: 'menu_id', as: 'products', sourceKey: 'id' });
   }
 }
 

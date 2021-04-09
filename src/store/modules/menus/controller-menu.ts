@@ -10,6 +10,8 @@ export class MenuController {
 
       const menu = await menuService.execute({ ...req.body, establishment });
 
+      if (menu.err) throw new Error(menu.err);
+
       return res.status(201).json(menu);
     } catch (err) {
       return res.status(400).json({ err: err.message });
