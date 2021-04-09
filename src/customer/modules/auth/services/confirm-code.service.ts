@@ -3,9 +3,7 @@ import ClientActivationCode from '@core/client-activation-code';
 export class ConfirmCodeService {
   async execute(code: string) {
     try {
-      const clientActivationCodeRepository = getRepository(ClientActivationCode);
-
-      const clientCode = await clientActivationCodeRepository.findOne({ where: { code }, relations: ['client'] });
+      const clientCode = await ClientActivationCode.findOne({ where: { code } });
 
       if (!clientCode) throw new Error();
 

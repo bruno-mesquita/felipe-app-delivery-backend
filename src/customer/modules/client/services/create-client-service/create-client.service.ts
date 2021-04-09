@@ -18,7 +18,7 @@ import ClientActivationCode from '@core/client-activation-code';
 const UNINFORMED = 'Não informado';
 
 class CreateClientService {
-  async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<string | null>> {
+  async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<number | null>> {
     try {
       const smsService = new SmsService();
 
