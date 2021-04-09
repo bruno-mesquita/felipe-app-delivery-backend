@@ -5,7 +5,7 @@ import Evaluation from '@core/evaluation';
 import Establishment from '@core/establishment';
 
 export class ListOrdersService {
-  async execute(userId: string): Promise<ServiceResponse<Order[]>> {
+  async execute(userId: string, page = 0): Promise<ServiceResponse<Order[]>> {
     try {
       const client = await Client.findByPk(userId);
 
@@ -24,7 +24,10 @@ export class ListOrdersService {
             as: 'evaluation',
             attributes: ['id', 'value'],
           }
-        ]
+        ],
+        order: [['createdAt', 'asc']],
+        limit: 15,
+        offset: page * 15,
       });
 
       return { err: null, result: orders };
