@@ -3,6 +3,7 @@
  *
  * @author Bruno Mesquita
  */
+import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdatePasswordClientDto } from '../../dtos/update-password-client-dto';
 import updatePasswordClientValidation from '../../validation/update-password-client.validation';
@@ -10,13 +11,11 @@ import updatePasswordClientValidation from '../../validation/update-password-cli
 class UpdatePasswordClientService {
   async execute(updatePasswordClientDto: UpdatePasswordClientDto): Promise<ServiceResponse<boolean>> {
     try {
-      const clientRepository = getCustomRepository(ClientRepository);
-
       // validando dados
       if (!updatePasswordClientValidation.isValidSync(updatePasswordClientDto)) throw new Error('Dados inválidos');
 
       // Verificando se o usuário existe
-      const user = await clientRepository.findById(updatePasswordClientDto.id);
+      const user = await Client.findByPk(updatePasswordClientDto.id);
 
       if (!user) throw new Error('Usuário não encontrado');
 
@@ -25,7 +24,7 @@ class UpdatePasswordClientService {
 
       user.setPassword(updatePasswordClientDto.newPassword);
 
-      await clientRepository.save(user);
+      await user.save();
 
       return { result: true, err: null };
     } catch (err) {

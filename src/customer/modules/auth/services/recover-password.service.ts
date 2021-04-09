@@ -13,7 +13,7 @@ export class RecoverPasswordService {
 
       const clientCode = await ClientActivationCode.create({ client: user, attempts: 0 });
 
-      await smsService.send(user.getCellphone(), clientCode.getCode());
+      await smsService.send(user.cellphone, clientCode.getCode());
 
       return { err: null, result: true };
     } catch (err) {
