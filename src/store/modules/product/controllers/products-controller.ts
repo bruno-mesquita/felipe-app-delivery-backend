@@ -23,7 +23,7 @@ class ProductController {
 
       if (products.err) throw new Error(products.err);
 
-      return res.status(201).json(products);
+      return res.status(200).json(products);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
@@ -39,7 +39,7 @@ class ProductController {
 
       if (product.err) throw new Error(product.err);
 
-      return res.status(201).json(product);
+      return res.status(200).json(product);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

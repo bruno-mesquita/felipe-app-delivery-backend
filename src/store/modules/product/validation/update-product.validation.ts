@@ -13,7 +13,7 @@ import { UpdateProductDto } from '../dtos/update-product-dto';
 // Tirar dúvia com Bruno, sobre essa parte
 
 const schema: SchemaOf<UpdateProductDto> = object({
-  id: string().uuid().required(),
+  id: number().integer().required(),
 
   name: string().required(),
 
@@ -21,7 +21,7 @@ const schema: SchemaOf<UpdateProductDto> = object({
 
   description: string().required(),
 
-  menu: string().uuid().required(),
+  menu: number().integer().required(),
 });
 
 export default schema;

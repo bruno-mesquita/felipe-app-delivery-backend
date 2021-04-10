@@ -44,10 +44,11 @@ class Product extends Model {
     return this.description;
   }
 
-  public updateProduct(name: string, price: number, description: string): void {
+  public updateProduct(name: string, price: number, description: string, menuId: number): void {
     this.name = name;
     this.price = price;
     this.description = description;
+    this.menu_id = menuId;
   }
 
   public calcTotal(amount: number): number {
