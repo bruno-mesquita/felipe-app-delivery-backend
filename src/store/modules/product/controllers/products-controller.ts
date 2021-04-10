@@ -35,7 +35,9 @@ class ProductController {
 
       const productService = new ShowProductService();
 
-      const product = await productService.execute(id);
+      const product = await productService.execute(Number(id));
+
+      if (product.err) throw new Error(product.err);
 
       return res.status(201).json(product);
     } catch (err) {
