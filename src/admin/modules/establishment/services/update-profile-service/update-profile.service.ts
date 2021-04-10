@@ -11,7 +11,6 @@ import updateEstablishmentValidation from '../../validation/update-establishment
 class UpdateProfileEstablishmentService {
   async execute(updateEstablishmentDto: UpdateEstablishmentDto): Promise<ServiceResponse<boolean>> {
     try {
-      console.log(updateEstablishmentDto);
       // Validando dto
 
       const valid = updateEstablishmentValidation.isValidSync(updateEstablishmentDto);
