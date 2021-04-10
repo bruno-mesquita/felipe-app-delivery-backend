@@ -14,4 +14,12 @@ export interface UpdateEstablishmentDto {
   email: string;
 
   cellphone: string;
+
+  freightValue: number;
+
+  openingTime: number;
+
+  closingTime: number;
+
+  active: boolean;
 }

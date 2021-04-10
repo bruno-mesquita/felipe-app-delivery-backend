@@ -62,10 +62,16 @@ class Establishment extends UserModel {
     return this.freightValue;
   }
 
-  public updateProfile(name: string, email: string, cellphone: string): void {
+  public updateProfile(
+    name: string, email: string, cellphone: string, openingTime: number, closingTime: number, freightValue: number, active: boolean
+    ): void {
     this.name = name;
     this.email = email;
     this.cellphone = cellphone;
+    this.freightValue = freightValue,
+    this.openingTime = openingTime,
+    this.closingTime = closingTime,
+    this.active = active
   }
 
   public setPassword(password: string): void {
@@ -78,6 +84,10 @@ class Establishment extends UserModel {
     if (isPast(closedDate)) return false;
 
     return true;
+  }
+
+  public isActive(): boolean {
+    return this.active;
   }
 }
 

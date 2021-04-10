@@ -7,14 +7,13 @@ import Establishment from '@core/establishment';
 
 import { ServiceResponse } from '@shared/utils/service-response';
 
-interface IRequest {
-  id: string;
-}
-
 class ShowEstablishmentService {
-  async execute({ id }: IRequest): Promise<ServiceResponse<Establishment | null>> {
+  async execute(id: number): Promise<ServiceResponse<Establishment | null>> {
     try {
-      const establishment = await establishmentRepository.findById(id);
+      const establishment = await Establishment.findOne({
+        where: { id },
+        attributes: ['image_id', 'name', 'email', 'cellphone', 'opening_time', 'closing_time','freight_value', 'active' ],
+      });
 
       if (!establishment) {
         throw new Error('Estabelecimento não encontrado.');

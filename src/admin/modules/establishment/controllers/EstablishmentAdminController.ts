@@ -17,11 +17,9 @@ class EstablishmentController {
       const { id } = req.params;
       const showEstablishmentService = new ShowEstablishmentService();
 
-      const establishment = await showEstablishmentService.execute({ id });
+      const establishment = await showEstablishmentService.execute(Number(id));
 
-      if (!id) throw new Error('Estabelecimeto inválido.');
-
-      if (!establishment) throw new Error('Erro ao tentar achar o Estabelecimento.');
+      if (establishment.err) throw new Error(establishment.err);
 
       return res.status(200).json(establishment);
     } catch (err) {
