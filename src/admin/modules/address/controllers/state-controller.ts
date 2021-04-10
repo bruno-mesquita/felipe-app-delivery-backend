@@ -24,21 +24,33 @@ class StateController {
   }
 
   async listCitiesByState(req: Request, res: Response): Promise<Response> {
-    const { state_id } = req.params;
+    try {
+      const { state_id } = req.params;
 
-    const listCitiesByState = new ListCitiesByStatesService();
+      const listCitiesByState = new ListCitiesByStatesService();
 
-    const state = await listCitiesByState.execute(state_id);
+      const citiesByState = await listCitiesByState.execute(Number(state_id));
 
-    return res.json(state);
+      if (citiesByState.err) throw new Error(citiesByState.err);
+
+      return res.status(200).json(citiesByState);
+    } catch(err) {
+      return res.status(400).json({ err: err.meesage });
+    }
   }
 
   async listState(req: Request, res: Response): Promise<Response> {
-    const listStates = new ListStatesService();
+    try {
+      const listStates = new ListStatesService();
 
-    const states = await listStates.execute();
+      const states = await listStates.execute();
 
-    return res.json(states);
+      if (states.err) throw new Error(states.err);
+
+      return res.json(states);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
   }
 }
 

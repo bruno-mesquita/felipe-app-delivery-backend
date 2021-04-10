@@ -1,22 +1,18 @@
+import City from '@core/city';
+import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
 
-import { AddresStateRepository } from '../repository/state-repository';
-
 class ListCitiesByStatesService {
-  async execute(state_id: string): Promise<ServiceResponse<any[]>> {
+  async execute(state_id: number): Promise<ServiceResponse<City[] | null>> {
     try {
-      const states = await statesRepository.findOne({
-        where: {
-          id: state_id,
-        },
-        relations: ['cities'],
+      const citiesByState = await City.findAll({
+        where: { state_id },
+        attributes: ['id', 'name'],
       });
 
-      const result = states?.cities.map((city) => ({ id: city.getId(), name: city.name }));
-
-      return { result, err: null };
+      return { result: citiesByState, err: null };
     } catch (err) {
-      return { result: [], err: err.message };
+      return { result: null, err: err.message };
     }
   }
 }

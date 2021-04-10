@@ -6,7 +6,7 @@ const REQUIRED = 'Campo obrigátorio';
 
 const schema: SchemaOf<CityAddressDto> = object({
   name: string().required(REQUIRED),
-  state: number().required(REQUIRED),
+  state: number().integer().required(REQUIRED),
   active: boolean().required(REQUIRED),
 });
 

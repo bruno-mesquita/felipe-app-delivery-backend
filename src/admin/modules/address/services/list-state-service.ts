@@ -1,14 +1,16 @@
 import State from '@core/state';
-import { AddresStateRepository } from '../repository/state-repository';
+import { ServiceResponse } from '@shared/utils/service-response';
 
 class ListStatesService {
-  async execute(): Promise<State[]> {
+  async execute(): Promise<ServiceResponse<State[] | null>> {
     try {
-      const states = await statesRepository.find({ where: { active: true }, select: ['name', 'id'] });
+      const states = await State.findAll({
+        attributes: ['id', 'name']
+      });
 
-      return states;
+      return { result: states, err: null };
     } catch (err) {
-      return [];
+      return { result: null, err: err.message};
     }
   }
 }

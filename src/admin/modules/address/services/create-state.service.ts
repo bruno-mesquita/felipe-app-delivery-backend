@@ -26,7 +26,7 @@ class CreateStateService {
 
       // criando classe
 
-      const state = await State.create({
+      await State.create({
         ...createStateDto,
       });
 
