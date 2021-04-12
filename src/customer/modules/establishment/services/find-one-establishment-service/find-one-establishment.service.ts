@@ -1,24 +1,34 @@
+import Establishment from '@core/establishment';
+import Image from '@core/image';
+import Menu from '@core/menu';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class FindOneEstablishmentService {
   async execute(id: string): Promise<ServiceResponse<any>> {
     try {
-      const establishmentRepository = getCustomRepository(EstablishmentRepository);
-
-      const establishment = await establishmentRepository.findOne({
+      const establishment = await Establishment.findOne({
         where: { id, active: true },
-        select: ['image', 'id', 'name', 'freightValue'],
-        relations: ['menus', 'image'],
-      });
-
-      if (!establishment) throw new Error('Estabelecimento não encontrado');
+        attributes: ['id', 'name', 'freightValue'],
+        include: [
+          {
+            model: Menu,
+            as: 'menus',
+            attributes: ['id', 'name'],
+          },
+          {
+            model: Image,
+            as: 'image',
+            attributes: ['encoded'],
+          }
+        ]
+      })
 
       const result = {
-        id: establishment.getId(),
-        name: establishment.getName(),
-        freightValue: establishment.getFreightValue(),
-        image: establishment.getImage().getEncoded(),
-        menus: establishment.getMenus().map((menu) => ({ id: menu.getId(), name: menu.getName() })),
+        id: establishment.id,
+        name: establishment.name,
+        freightValue: establishment.freightValue,
+        image: establishment.image.encoded,
+        menus: establishment.menus,
         isOpen: establishment.isOpen(),
       };
 

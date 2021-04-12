@@ -6,6 +6,7 @@ import UserModel from '../_Bases/user';
 import Image from '@core/image';
 import { AddressEstablishment } from '@core/address-establishment';
 import Order from '@core/order';
+import Menu from '@core/menu';
 
 class Establishment extends UserModel {
   openingTime: number;
@@ -18,14 +19,11 @@ class Establishment extends UserModel {
   public readonly image?: Image;
   public readonly address?: AddressEstablishment;
   public readonly orders?: Order[];
+  public readonly menus?: Menu[];
 
   public getOrders!: HasManyGetAssociationsMixin<Order>;
+  public getMenus!: HasManyGetAssociationsMixin<Menu>;
 
-  // Relacionamento de outras tabelas
-  /* categories: EstablishmentCategory[]; */
-
-  // Relacionamento para outras tabelas
-  /* menus: Menu[]; */
 
   static start(sequelize: Sequelize) {
     this.init({
@@ -47,11 +45,12 @@ class Establishment extends UserModel {
     return this;
   }
 
-  static associate({ Image, AddressEstablishment, EstablishmentCategory, Order }) {
+  static associate({ Image, AddressEstablishment, EstablishmentCategory, Order, Menu }) {
     this.hasMany(EstablishmentCategory, { foreignKey: 'establishment_id', as: 'establishments' });
     this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
     this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address' });
     this.hasMany(Order, { foreignKey: 'establishment_id', as: 'orders', sourceKey: 'id' })
+    this.hasMany(Menu, { foreignKey: 'establishment_id', as: 'menus', sourceKey: 'id' })
   }
 
   public setImageId(imageId: number): void {
