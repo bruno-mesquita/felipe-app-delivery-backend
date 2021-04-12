@@ -4,7 +4,7 @@ import { setHours, isPast } from 'date-fns';
 
 import UserModel from '../_Bases/user';
 import Image from '@core/image';
-import { AddressEstablishment } from '@core/address-establishment';
+import AddressEstablishment from '@core/address-establishment';
 import Order from '@core/order';
 import Menu from '@core/menu';
 

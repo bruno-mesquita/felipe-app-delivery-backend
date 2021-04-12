@@ -4,7 +4,7 @@ import AddressClient from '@core/address-client';
 import Establishment from '@core/establishment';
 import { ServiceResponse } from '@shared/utils/service-response';
 import Image from '@core/image';
-import { AddressEstablishment } from '@core/address-establishment';
+import AddressEstablishment from '@core/address-establishment';
 
 export class SearchEstablishmentsByName {
   async execute(searchName: string, addressId: string): Promise<ServiceResponse<any[]>> {

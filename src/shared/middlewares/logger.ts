@@ -1,7 +1,5 @@
 /**
  * @fileoverview Middleware para armazenar os logs
- *
- * @author Bruno Mesquita
  */
 
 import morgan from 'morgan';

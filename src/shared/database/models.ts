@@ -1,4 +1,3 @@
-/* import Address from '@core/address'; */
 import City from '@core/city';
 import AddressClient from '@core/address-client';
 import State from '@core/state';
@@ -14,9 +13,9 @@ import ItemOrder from '@core/item-order';
 import Menu from '@core/menu';
 import Order from '@core/order';
 import Product from '@core/product';
-import {AddressEstablishment} from '@core/address-establishment';
+import AddressEstablishment from '@core/address-establishment';
 
-const models = [
+export default [
   Image,
   AddressEstablishment,
   City,
@@ -35,4 +34,4 @@ const models = [
   Product
 ]
 
-export default models;
+

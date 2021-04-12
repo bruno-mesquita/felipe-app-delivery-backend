@@ -18,4 +18,4 @@ class AddressEstablishment extends AddressModel {
   }
 }
 
-export { AddressEstablishment };
+export default AddressEstablishment;

@@ -3,7 +3,7 @@
  */
 
 import AddressClient from '@core/address-client';
-import { AddressEstablishment } from '@core/address-establishment';
+import AddressEstablishment from '@core/address-establishment';
 import Category from '@core/category';
 import Establishment from '@core/establishment';
 import Image from '@core/image';

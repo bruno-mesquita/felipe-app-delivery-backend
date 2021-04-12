@@ -5,14 +5,13 @@
  * @author Jonatas Rosa Moura
  */
 
-
 import Establishment from '@core/establishment';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
 import createEstablishmentSchema from '../../validation/create-client.validation';
 import Image from '@core/image';
 import City from '@core/city';
-import { AddressEstablishment } from '@core/address-establishment';
+import AddressEstablishment from '@core/address-establishment';
 import Category from '@core/category';
 import EstablishmetCategory from '@core/establishment-category';
 

@@ -1,11 +1,5 @@
 /**
-
  * @fileoverview Classe para manipulação de arquivo JSON
-
- *
-
- * @author Bruno Mesquita
-
  */
 
 import { readFileSync, writeFileSync, existsSync } from 'fs';

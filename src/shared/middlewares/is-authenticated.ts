@@ -1,9 +1,5 @@
 /**
-
  * @fileoverview verificar se o usuário está autenticado -> middleware de autenticação -> proteger as rotas que vão ser verificadas
-
- * @author Jonatas Rosa Moura
-
  */
 
 import { Request, Response, NextFunction } from 'express';
