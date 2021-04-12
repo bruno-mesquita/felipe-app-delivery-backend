@@ -14,10 +14,10 @@
     "moduleResolution": "node",
     "baseUrl": ".",
     "paths": {
-      "@core/*": ["src/core/*"],
+      "@core/*": ["./src/core/*"],
       "@shared/*": ["./src/shared/*"],
       "@dtos/*": ["./src/dtos/*"],
-      "@customer/*": ["src/customer/*"],
+      "@customer/*": ["./src/customer/*"],
       "@admin/*": ["./src/admin/*"],
       "@store/*": ["./src/store/*"]
     },
@@ -32,7 +32,7 @@
   },
   "exclude": [
     "node_modules",
-    "dist",
+    "dist"
   ],
   "include": ["./src/**/*"]
 }
