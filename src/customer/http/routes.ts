@@ -31,7 +31,7 @@ routes.post('/auth/login', authController.login);
 
 // State
 routes.get('/states', addressStateController.listState);
-routes.get('/state/:state_id', addressStateController.listCitiesByState);
+routes.get('/cities/:state_id', addressStateController.listCitiesByState);
 
 // Client
 routes.post('/clients', clientController.create);
