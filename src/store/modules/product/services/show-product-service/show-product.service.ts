@@ -3,7 +3,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import Product from 'src/core/product';
+import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class ShowProductService {
