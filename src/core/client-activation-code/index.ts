@@ -2,7 +2,6 @@ import { DataTypes, Sequelize } from 'sequelize';
 
 import Model from '../_Bases/model';
 class ClientActivationCode extends Model {
-  id: string;
   attempts: number;
   code: string;
 
