@@ -6,6 +6,7 @@ import AddressModel from '../_Bases/address';
 class AddressClient extends AddressModel {
   nickname: string;
   client_id!: number;
+  active: boolean;
 
   public getOrders!: HasManyGetAssociationsMixin<Order>;
 
@@ -16,6 +17,7 @@ class AddressClient extends AddressModel {
       number: DataTypes.STRING,
       neighborhood: DataTypes.STRING,
       cep: DataTypes.STRING,
+      active: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'address_client' });
 
     return this;

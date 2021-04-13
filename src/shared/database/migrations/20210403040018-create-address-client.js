@@ -36,6 +36,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+      },
       city_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

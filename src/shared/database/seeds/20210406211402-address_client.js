@@ -11,6 +11,7 @@ module.exports = {
 	      number: 'Não informado',
 	      neighborhood: 'Não informado',
 	      cep: 'Não informado',
+        active: true,
 	      city_id: 1,
         created_at: new Date(),
         updated_at: new Date()
@@ -23,6 +24,7 @@ module.exports = {
 	      number: 'Não informado',
 	      neighborhood: 'Não informado',
 	      cep: 'Não informado',
+        active: true,
 	      city_id: 3,
         created_at: new Date(),
         updated_at: new Date()

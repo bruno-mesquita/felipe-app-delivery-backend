@@ -3,24 +3,39 @@ import Client from '@core/client';
 import Image from '@core/image';
 
 export default class ProfileClientService {
-  async execute(id: string): Promise<ServiceResponse<any>> {
+  async execute(id: number, selects: string[]): Promise<ServiceResponse<any>> {
     try {
-      const client = await Client.findOne({
-        where: { id },
-        attributes: ['id','name', 'email', 'cpf', 'cellphone'],
-        include: [
-          {
-            model: Image,
+      const include = [];
+
+      const includeAvatar = selects.find(item => item === 'avatar');
+
+      if(includeAvatar) {
+        include.push({
+          model: Image,
             as: 'avatar',
             attributes: ['name', 'encoded'],
-          }
-        ]
+        })
+        selects = selects.filter(item => item !== 'avatar');
+      }
+
+      const client = await Client.findOne({
+        where: { id },
+        attributes: selects,
+        include
       })
 
       if(!client) throw new Error('Cliente não encontrado');
 
+      const result = {
+        ...client.toJSON()
+      }
+
+      if(includeAvatar) {
+        result['avatar'] = client?.avatar?.encoded || null
+      }
+
       return {
-        result: { ...client.toJSON(), avatar: client.avatar.encoded },
+        result,
         err: null,
       };
     } catch (err) {
