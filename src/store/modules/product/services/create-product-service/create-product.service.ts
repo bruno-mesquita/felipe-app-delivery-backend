@@ -27,20 +27,18 @@ class CreateProductService {
       // Verificando se já existe esse produto
 
       const productExists = await Product.findOne({
-        where: {name: createProductDto.name},
+        where: { name: createProductDto.name },
       });
 
       if (productExists) throw new Error('Produto já cadastrado no sistema!');
 
       // Pegando valor da image do produto
 
-      const image = await Image.findOne({
-        where: {
-          encoded: createProductDto.image
-        }
+      const image = await Image.create({
+        encoded: createProductDto.image,
       });
 
-      await image.save();
+      // await image.save();
 
       await Product.create({
         ...createProductDto,

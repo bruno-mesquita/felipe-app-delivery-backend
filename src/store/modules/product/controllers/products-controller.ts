@@ -1,11 +1,7 @@
 /**
-
  * @fileoverview Controller do produto
 
- *
-
  * @author Jonatas Rosa Moura
-
  */
 
 import { Request, Response } from 'express';
@@ -47,7 +43,6 @@ class ProductController {
 
   async create(req: Request, res: Response): Promise<Response> {
     try {
-      console.log(req.body);
       const createProductService = new CreateProductService();
 
       const product = await createProductService.execute(req.body);

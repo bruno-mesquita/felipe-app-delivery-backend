@@ -5,6 +5,7 @@
  * @author Jonatas Rosa Moura
 
  */
+import Client from '@core/client';
 import Establishment from '@core/establishment';
 import ItemOrder from '@core/item-order';
 import Order from '@core/order';
@@ -16,27 +17,31 @@ import { schema } from '../../validation/create-order.validation';
 export class CreateOrderService {
   async execute(createOrderDto: CreateOrderDto): Promise<ServiceResponse<any>> {
     try {
+      console.log(createOrderDto);
       // Fazendo validação DTO
-
       const valid = schema.isValidSync(createOrderDto);
 
       if (!valid) throw new Error('Campos inválidos');
 
-      // Buscando o estabelecimento do pedido
+     // Verificando Estabelecimento
 
       const establishmentExists = await Establishment.findByPk(createOrderDto.establishmentId);
 
       if (!establishmentExists) throw new Error('Estabelecimento não encontrado');
 
-      // pedido
+      // verificando cliente
 
-      // console.log({ ...createOrderDto, freight_value: establishmentExists.freightValue });
+      const clientExists = await Client.findByPk(createOrderDto.client_id);
 
-      // Salvando no db
+      if (!clientExists) throw new Error('Cliente não encontrado');
 
-      const order = await Order.create({
-        ...createOrderDto,
+       // Buscando o pedido
+
+      const order = new Order({
+        establishmentId: establishmentExists.id,
         freight_value: establishmentExists.freightValue,
+        client_id: clientExists.id,
+        payment: createOrderDto.payment,
       });
 
       order.open();
@@ -75,6 +80,7 @@ export class CreateOrderService {
 
       return { result: { totalOrder }, err: null };
     } catch (err) {
+      console.log(err);
       return { result: null, err: err.message };
     }
   }

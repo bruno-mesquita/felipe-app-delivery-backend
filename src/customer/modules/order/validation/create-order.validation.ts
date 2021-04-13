@@ -11,6 +11,7 @@ const REQUIRED = 'Campo obrigátorio';
 
 export const schema: SchemaOf<CreateOrderDto> = object({
   establishmentId: number().integer().required(REQUIRED),
+  client_id: number().integer().required(REQUIRED),
   items: array()
     .of<any>(
       object({
