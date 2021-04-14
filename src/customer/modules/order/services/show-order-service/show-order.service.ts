@@ -19,7 +19,7 @@ class ShowOrderService {
           {
             model: Establishment,
             as: 'establishment',
-            attributes: ['id', 'name'],
+            attributes: ['id', 'name', 'freightValue'],
           },
           {
             model: Evaluation,
@@ -37,10 +37,12 @@ class ShowOrderService {
           {
             model: Product,
             as: 'product',
-            attributes: ['id', 'name'],
+            attributes: ['id', 'name', 'price'],
           }
         ]
       })
+
+      console.log(itemsOrder);
 
       return { result: { order, items: itemsOrder }, err: null };
     } catch (err) {
