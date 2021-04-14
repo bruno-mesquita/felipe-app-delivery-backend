@@ -5,6 +5,8 @@
  * @author Jonatas Rosa Moura
 
  */
+import AddressClient from '@core/address-client';
+import Client from '@core/client';
 import Establishment from '@core/establishment';
 import ItemOrder from '@core/item-order';
 import Order from '@core/order';
@@ -17,33 +19,46 @@ export class CreateOrderService {
   async execute(createOrderDto: CreateOrderDto): Promise<ServiceResponse<any>> {
     try {
       // Fazendo validação DTO
-
       const valid = schema.isValidSync(createOrderDto);
 
       if (!valid) throw new Error('Campos inválidos');
 
-      // Buscando o estabelecimento do pedido
+     // Verificando Estabelecimento
 
-      const establishmentExists = await Establishment.findByPk(createOrderDto.establishmentId);
+      const establishmentExists = await Establishment.findByPk(createOrderDto.establishment_id);
 
       if (!establishmentExists) throw new Error('Estabelecimento não encontrado');
 
-      // pedido
+      // verificando cliente
 
-      // console.log({ ...createOrderDto, freight_value: establishmentExists.freightValue });
+      const clientExists = await Client.findByPk(createOrderDto.client_id);
 
-      // Salvando no db
+      if (!clientExists) throw new Error('Cliente não encontrado');
 
-      const order = await Order.create({
-        ...createOrderDto,
+      // Verificando endereço do cliente
+
+      const addressExists = await AddressClient.findByPk(createOrderDto.address_id);
+
+      if (!addressExists) throw new Error('Endereço do cliente não encontrado');
+
+      // Buscando o pedido
+
+      const order = new Order({
+        establishment_id: establishmentExists.id,
+        client_id: clientExists.id,
+        address_id: addressExists.id,
         freight_value: establishmentExists.freightValue,
+        payment: createOrderDto.payment,
+        total: createOrderDto.total,
       });
+
+      // console.log(order.id);
 
       order.open();
 
-      let total = 0;
+      await order.save();
 
-      // Verificar os produtos
+      let total = 0;
 
       createOrderDto.items.map(async (item) => {
         const product = await Product.findByPk(item.itemId);
@@ -54,9 +69,9 @@ export class CreateOrderService {
           total += tot;
 
           await ItemOrder.create({
-            product_id: product,
+            product_id: product.id,
 
-            order_id: order,
+            order_id: order.id,
 
             quantity: item.amount,
 
@@ -68,6 +83,8 @@ export class CreateOrderService {
       order.setTotal(total);
 
       const totalOrder = order.calcTotal();
+
+      console.log(totalOrder);
 
       // Salvando produto no db
 

@@ -10,7 +10,9 @@ import { CreateOrderDto } from '../dtos/create-order.dto';
 const REQUIRED = 'Campo obrigátorio';
 
 export const schema: SchemaOf<CreateOrderDto> = object({
-  establishmentId: number().integer().required(REQUIRED),
+  establishment_id: number().integer().required(REQUIRED),
+  client_id: number().integer().required(REQUIRED),
+  address_id: number().integer().required(REQUIRED),
   items: array()
     .of<any>(
       object({
