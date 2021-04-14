@@ -6,6 +6,8 @@ import {
   DeleteAddressClientService,
   UpdateAddressClientService,
   FindOneAddressClientService,
+  ActiveAddressClientService,
+  DeactivateAddressClientService
 } from './services';
 
 class ClientAddressController {
@@ -41,7 +43,35 @@ class ClientAddressController {
     try {
       const findOneAddressClientService = new FindOneAddressClientService();
 
-      const result = await findOneAddressClientService.execute(req.params.id);
+      const result = await findOneAddressClientService.execute(Number(req.params.id), req.client.id);
+
+      if (result.err) throw new Error(result.err);
+
+      return res.json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async deactivate(req: Request, res: Response): Promise<Response> {
+    try {
+      const deactivateAddressClientService = new DeactivateAddressClientService();
+
+      const result = await deactivateAddressClientService.execute(Number(req.params.id), req.client.id);
+
+      if (result.err) throw new Error(result.err);
+
+      return res.json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async active(req: Request, res: Response): Promise<Response> {
+    try {
+      const activeAddressClientService = new ActiveAddressClientService();
+
+      const result = await activeAddressClientService.execute(Number(req.params.id), req.client.id);
 
       if (result.err) throw new Error(result.err);
 

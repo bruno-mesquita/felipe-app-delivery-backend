@@ -26,16 +26,17 @@ export class CreateAddressClientService {
 
       const { cep, neighborhood, nickname, number, street } = createAddressDto;
 
-      const result = await client.createAdress({
+      await client.createAdress({
         nickname,
         street,
         number,
         neighborhood,
         cep,
         city_id: city.id,
+        active: false,
       });
 
-      return { result: !!result, err: null };
+      return { result: true, err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }

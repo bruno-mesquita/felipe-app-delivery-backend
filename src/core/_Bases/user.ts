@@ -42,7 +42,7 @@ abstract class User extends Model {
   }
 
   public setPassword(password: string): void {
-    this.password = hashSync(password, 8);
+    this.password = password;
   }
 }
 

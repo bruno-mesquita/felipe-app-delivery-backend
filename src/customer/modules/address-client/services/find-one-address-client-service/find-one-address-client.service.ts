@@ -4,17 +4,19 @@ import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class FindOneAddressClientService {
-  async execute(id: number): Promise<ServiceResponse<any>> {
+  async execute(id: number, userId: number): Promise<ServiceResponse<any>> {
     try {
       const address = await AddressClient.findOne({
-        where: { id },
+        where: { id, client_id: userId },
         attributes: { exclude: ['createdAt', 'updatedAt', 'client_id'] },
         include: [
           {
             model: City,
+            as: 'city',
             attributes: ['id'],
             include: [{
               model: State,
+              as: 'state',
               attributes: ['id'],
             }]
           }
@@ -28,9 +30,9 @@ export class FindOneAddressClientService {
 
       Object.entries(address.toJSON()).map(e => {
         if(e[0] !== 'city_id') {
-          if(e[0] === 'City') {
+          if(e[0] === 'city') {
             result['city'] = e[1].id;
-            result['state'] = e[1].State.id
+            result['state'] = e[1].state.id
           } else {
             result[e[0]] = e[1];
           }

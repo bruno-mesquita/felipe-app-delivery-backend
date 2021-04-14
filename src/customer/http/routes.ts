@@ -55,6 +55,8 @@ routes.get('/adresses-client', clientAddressController.list);
 routes.get('/adresses-client/:id', clientAddressController.findOne);
 routes.post('/adresses-client', clientAddressController.create);
 routes.put('/adresses-client/:id', clientAddressController.update);
+routes.put('/adresses-client/:id/active', clientAddressController.active);
+routes.put('/adresses-client/:id/deactivate', clientAddressController.deactivate);
 routes.delete('/adresses-client/:id', clientAddressController.delete);
 
 // Categoria

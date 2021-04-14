@@ -3,7 +3,7 @@ export interface ClientAddressDto {
   number: string;
   neighborhood: string;
   cep: string;
-  city: string;
+  city: number;
   nickname: string;
   userId: number;
 }
