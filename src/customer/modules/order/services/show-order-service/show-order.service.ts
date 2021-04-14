@@ -11,10 +11,9 @@ import Product from '@core/product';
 import Evaluation from '@core/evaluation';
 
 class ShowOrderService {
-  async execute(id: string): Promise<ServiceResponse<any | null>> {
+  async execute(id: number): Promise<ServiceResponse<any | null>> {
     try {
       const order = await Order.findOne({
-        where: { id },
         attributes: ['id', 'createdAt', 'total'],
         include: [
           {
@@ -26,14 +25,13 @@ class ShowOrderService {
             model: Evaluation,
             as: 'evaluation',
             attributes: ['id', 'value', 'message']
-          }
+          },
         ]
       });
 
       if (!order) throw new Error('Pedido não encontrado.');
 
       const itemsOrder = await ItemOrder.findAll({
-        where: { order_id: id },
         attributes: ['id', 'quantity', 'total'],
         include: [
           {

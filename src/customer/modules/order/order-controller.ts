@@ -31,9 +31,9 @@ export class OrderController {
       const { id } = req.params;
       const showOrderService = new ShowOrderService();
 
-      const order = await showOrderService.execute(id);
+      const order = await showOrderService.execute(Number(id));
 
-      if (order.err) throw new Error(`${order.err} Pedido inválido`);
+      if (order.err) throw new Error(order.err);
 
       return res.status(200).json(order);
     } catch (err) {
