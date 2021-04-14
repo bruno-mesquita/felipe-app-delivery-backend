@@ -76,7 +76,7 @@ class ClientController {
     try {
       const profileClientService = new ProfileClientService();
 
-      const profile = await profileClientService.execute(req.client.id);
+      const profile = await profileClientService.execute(req.client.id, req.body.selects);
 
       if (profile.err) throw new Error(profile.err);
 

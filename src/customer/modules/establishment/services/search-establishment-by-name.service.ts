@@ -7,10 +7,10 @@ import Image from '@core/image';
 import AddressEstablishment from '@core/address-establishment';
 
 export class SearchEstablishmentsByName {
-  async execute(searchName: string, addressId: string): Promise<ServiceResponse<any[]>> {
+  async execute(searchName: string, clientId: number): Promise<ServiceResponse<any[]>> {
     try {
       const addressClient = await AddressClient.findOne({
-        where: { id: addressId },
+        where: { client_id: clientId, active: true },
         attributes: ['id', 'city_id'],
       });
 

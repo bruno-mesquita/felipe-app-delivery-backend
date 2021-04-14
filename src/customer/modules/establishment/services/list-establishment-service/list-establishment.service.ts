@@ -10,14 +10,14 @@ import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class ListEstablishmentService {
-  async execute(categoryId: string, addressId: string, page: number = 1): Promise<ServiceResponse<any[]>> {
+  async execute(categoryId: string, clientId: number, page: number = 1): Promise<ServiceResponse<any[]>> {
     try {
       const category = await Category.findByPk(categoryId);
 
       if(!category) throw new Error('Categoria não encontrada');
 
       const addressClient = await AddressClient.findOne({
-        where: { id: addressId },
+        where: { client_id: clientId, active: true },
         attributes: ['id', 'city_id'],
       });
 

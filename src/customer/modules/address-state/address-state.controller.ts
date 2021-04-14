@@ -19,11 +19,18 @@ class AddressStateController {
   }
 
   async listState(req: Request, res: Response): Promise<Response> {
-    const listStates = new ListStatesService();
+    try {
+      const listStates = new ListStatesService();
 
-    const states = await listStates.execute();
+      const result = await listStates.execute();
 
-    return res.json(states);
+      if(result.err) throw new Error(result.err);
+
+      return res.json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+
   }
 }
 

@@ -31,7 +31,7 @@ routes.post('/auth/login', authController.login);
 
 // State
 routes.get('/states', addressStateController.listState);
-routes.get('/state/:state_id', addressStateController.listCitiesByState);
+routes.get('/cities/:state_id', addressStateController.listCitiesByState);
 
 // Client
 routes.post('/clients', clientController.create);
@@ -44,7 +44,7 @@ routes.use(isAuthenticated);
 routes.put('/clients', clientController.updateProfile);
 routes.put('/clients/update-password', clientController.updatePassword);
 routes.get('/clients/orders', clientController.listOrdersByClient);
-routes.get('/clients/me', clientController.profile);
+routes.post('/clients/me', clientController.profile);
 
 // Avatar
 routes.post('/avatar', avatarController.create);
@@ -62,7 +62,7 @@ routes.get('/categories', categoryController.getAll);
 
 // Estabelecimento
 routes.get('/establishments/:id', establishmentController.findOne);
-routes.post('/establishments', establishmentController.searchByName);
+routes.post('/establishments-by-name', establishmentController.searchByName);
 routes.get('/establishments', establishmentController.list);
 
 // menu

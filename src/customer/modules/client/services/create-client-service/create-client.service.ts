@@ -51,13 +51,14 @@ class CreateClientService {
 
       if (!city) throw new Error('Cidade não encontrada');
 
-      const address = await AddressClient.create({
+      await AddressClient.create({
         city_id: city.id,
         neighborhood: UNINFORMED,
         cep: UNINFORMED,
         street: UNINFORMED,
         number: UNINFORMED,
         nickname: 'Meu endereço',
+        active: true,
         client_id: user.id
       });
 
