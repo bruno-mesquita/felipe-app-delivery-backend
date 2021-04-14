@@ -32,17 +32,15 @@ class ShowOrderService {
       if (!order) throw new Error('Pedido não encontrado.');
 
       const itemsOrder = await ItemOrder.findAll({
-        attributes: ['id', 'quantity', 'total'],
+        attributes: ['quantity', 'total'],
         include: [
           {
             model: Product,
             as: 'product',
-            attributes: ['id', 'name', 'price'],
+            attributes: ['name'],
           }
         ]
       })
-
-      console.log(itemsOrder);
 
       return { result: { order, items: itemsOrder }, err: null };
     } catch (err) {
