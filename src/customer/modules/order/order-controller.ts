@@ -33,7 +33,7 @@ export class OrderController {
 
       const order = await showOrderService.execute(id);
 
-      if (!order) throw new Error('Pedido inválido.');
+      if (order.err) throw new Error(`${order.err} Pedido inválido`);
 
       return res.status(200).json(order);
     } catch (err) {
