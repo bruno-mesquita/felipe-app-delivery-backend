@@ -5,6 +5,7 @@
  * @author Jonatas Rosa Moura
 
  */
+import AddressClient from '@core/address-client';
 import Client from '@core/client';
 import Establishment from '@core/establishment';
 import ItemOrder from '@core/item-order';
@@ -17,7 +18,6 @@ import { schema } from '../../validation/create-order.validation';
 export class CreateOrderService {
   async execute(createOrderDto: CreateOrderDto): Promise<ServiceResponse<any>> {
     try {
-      console.log(createOrderDto);
       // Fazendo validação DTO
       const valid = schema.isValidSync(createOrderDto);
 
@@ -25,7 +25,7 @@ export class CreateOrderService {
 
      // Verificando Estabelecimento
 
-      const establishmentExists = await Establishment.findByPk(createOrderDto.establishmentId);
+      const establishmentExists = await Establishment.findByPk(createOrderDto.establishment_id);
 
       if (!establishmentExists) throw new Error('Estabelecimento não encontrado');
 
@@ -35,20 +35,30 @@ export class CreateOrderService {
 
       if (!clientExists) throw new Error('Cliente não encontrado');
 
-       // Buscando o pedido
+      // Verificando endereço do cliente
+
+      const addressExists = await AddressClient.findByPk(createOrderDto.address_id);
+
+      if (!addressExists) throw new Error('Endereço do cliente não encontrado');
+
+      // Buscando o pedido
 
       const order = new Order({
-        establishmentId: establishmentExists.id,
-        freight_value: establishmentExists.freightValue,
+        establishment_id: establishmentExists.id,
         client_id: clientExists.id,
+        address_id: addressExists.id,
+        freight_value: establishmentExists.freightValue,
         payment: createOrderDto.payment,
+        total: createOrderDto.total,
       });
+
+      // console.log(order.id);
 
       order.open();
 
-      let total = 0;
+      await order.save();
 
-      // Verificar os produtos
+      let total = 0;
 
       createOrderDto.items.map(async (item) => {
         const product = await Product.findByPk(item.itemId);
@@ -59,9 +69,9 @@ export class CreateOrderService {
           total += tot;
 
           await ItemOrder.create({
-            product_id: product,
+            product_id: product.id,
 
-            order_id: order,
+            order_id: order.id,
 
             quantity: item.amount,
 
@@ -74,13 +84,14 @@ export class CreateOrderService {
 
       const totalOrder = order.calcTotal();
 
+      console.log(totalOrder);
+
       // Salvando produto no db
 
       await order.save();
 
       return { result: { totalOrder }, err: null };
     } catch (err) {
-      console.log(err);
       return { result: null, err: err.message };
     }
   }

@@ -13,8 +13,9 @@ export interface Item {
 }
 
 export interface CreateOrderDto {
-  establishmentId: number;
+  establishment_id: number;
   client_id: number;
+  address_id: number;
   items: Item[];
   total: number;
   payment: FormOfPaymentType;
