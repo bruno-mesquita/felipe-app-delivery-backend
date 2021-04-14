@@ -22,7 +22,7 @@ export class CreateMenuService {
       // Verificando se o menu já existe cadastrado
 
       const menuExists = await Menu.findOne({
-        where: { name: createMenuDto.name },
+        where: { name: createMenuDto.name, establishment_id: createMenuDto.establishment },
       });
 
       if (menuExists) throw new Error('Menu já cadastrado no sistema');
