@@ -25,8 +25,8 @@ class ActiveClientService {
 
       user.activate();
 
-      await Client.update(user, { where: {  id: user.id } });
-      await ClientActivationCode.destroy({ where: { id: clientActivationCode.id } });
+      await user.save();
+      await clientActivationCode.destroy();
 
       return { result: true, err: null };
     } catch (err) {
