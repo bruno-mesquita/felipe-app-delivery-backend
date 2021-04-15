@@ -8,7 +8,7 @@ import ClientActivationCode from '@core/client-activation-code';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class ActiveClientService {
-  async execute(code: string, clientId: string): Promise<ServiceResponse<boolean>> {
+  async execute(code: string, clientId: number): Promise<ServiceResponse<boolean>> {
     try {
       // verificar se o usuário existe
       const user = await Client.findByPk(clientId);

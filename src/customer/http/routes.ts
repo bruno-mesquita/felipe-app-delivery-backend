@@ -45,7 +45,7 @@ routes.post('/clients/activate', clientController.activate);
 routes.use(isAuthenticated);
 
 // Clients
-routes.put('/clients/:id', clientController.updateProfile);
+routes.put('/clients', clientController.updateProfile);
 routes.put('/clients/update-password', clientController.updatePassword);
 routes.get('/clients/orders', clientController.listOrdersByClient);
 routes.post('/clients/me', clientController.profile);
