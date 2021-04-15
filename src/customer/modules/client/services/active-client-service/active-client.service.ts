@@ -11,7 +11,7 @@ class ActiveClientService {
   async execute(code: string, clientId: number): Promise<ServiceResponse<boolean>> {
     try {
       // verificar se o usuário existe
-      const user = await Client.findByPk(clientId);
+      const user = await Client.findOne({ where: { id: clientId, active: false } });
 
       if (!user) throw new Error('Cliente não encontrado');
 

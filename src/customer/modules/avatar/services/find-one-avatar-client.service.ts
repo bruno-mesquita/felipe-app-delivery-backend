@@ -6,7 +6,7 @@ class FindOneAvatarClientClientService {
   async execute(userId: string): Promise<ServiceResponse<string | null>> {
     try {
       const client = await Client.findOne({
-        where: { id: userId },
+        where: { id: userId, active: true },
         attributes: ['avatar_id'],
         include: [
           {

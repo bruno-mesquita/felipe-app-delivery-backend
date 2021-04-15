@@ -14,7 +14,7 @@ class CreateAvatarClientService {
 
       // Verificando se o usuário existe
 
-      const client = await Client.findOne({ where: { id: createAvatar.client_id } });
+      const client = await Client.findOne({ where: { id: createAvatar.client_id, active: true } });
 
       if (!client) throw new Error('[Avatar]: Usuário não econtrado.');
 

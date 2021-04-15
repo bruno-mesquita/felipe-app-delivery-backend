@@ -19,7 +19,7 @@ class LoginClientService {
 
       // Procurar pelo e-mail e pegar o avatar desse cliente
       const client = await Client.findOne({
-        where: { email: loginDto.email },
+        where: { email: loginDto.email, active: true },
         attributes: ['id', 'password', 'email']
       });
 

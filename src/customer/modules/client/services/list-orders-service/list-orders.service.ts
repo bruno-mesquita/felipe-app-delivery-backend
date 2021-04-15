@@ -7,7 +7,7 @@ import Establishment from '@core/establishment';
 export class ListOrdersService {
   async execute(userId: number, page = 0): Promise<ServiceResponse<Order[]>> {
     try {
-      const client = await Client.findByPk(userId);
+      const client = await Client.findOne({ where: { id: userId, active: true } });
 
       if(!client) throw new Error('Cliente não encontrado');
 

@@ -34,7 +34,7 @@ class ClientController {
     try {
       const activeClientService = new ActiveClientService();
 
-      const result = await activeClientService.execute(req.body.code, req.client.id);
+      const result = await activeClientService.execute(req.body.code, req.body.id);
 
       if (result.err) throw new Error(result.err);
 
