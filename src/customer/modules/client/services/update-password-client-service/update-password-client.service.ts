@@ -15,7 +15,7 @@ class UpdatePasswordClientService {
       if (!updatePasswordClientValidation.isValidSync(updatePasswordClientDto)) throw new Error('Dados inválidos');
 
       // Verificando se o usuário existe
-      const user = await Client.findOne({where: { id: updatePasswordClientDto.id, active: false } });
+      const user = await Client.findOne({where: { id: updatePasswordClientDto.id, active: true } });
 
       if (!user) throw new Error('Usuário não encontrado');
 

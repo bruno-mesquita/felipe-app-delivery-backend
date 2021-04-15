@@ -3,7 +3,7 @@ import Client from '@core/client';
 import Image from '@core/image';
 
 class FindOneAvatarClientClientService {
-  async execute(userId: string): Promise<ServiceResponse<string | null>> {
+  async execute(userId: number): Promise<ServiceResponse<string | null>> {
     try {
       const client = await Client.findOne({
         where: { id: userId, active: true },
