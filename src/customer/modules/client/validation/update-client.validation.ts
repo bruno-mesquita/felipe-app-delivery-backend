@@ -5,7 +5,7 @@
 
  */
 
-import { object, SchemaOf, string } from 'yup';
+import { object, SchemaOf, string, number } from 'yup';
 
 import { UpdateClientDto } from '../dtos/update-client-dto';
 
@@ -14,7 +14,7 @@ const REQUIRED = 'Campo obrigátorio';
 const phoneRegxp = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
 
 const schema: SchemaOf<UpdateClientDto> = object({
-  id: string().required(REQUIRED),
+  id: number().integer().required(REQUIRED),
 
   name: string().required(REQUIRED),
 

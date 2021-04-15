@@ -6,7 +6,7 @@
  */
 
 export interface UpdateClientDto {
-  id: string;
+  id: number;
 
   name: string;
 
