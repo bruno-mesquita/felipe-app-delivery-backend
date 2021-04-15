@@ -19,7 +19,7 @@ export default class ProfileClientService {
       }
 
       const client = await Client.findOne({
-        where: { id, active: false },
+        where: { id, active: true },
         attributes: selects,
         include
       })
