@@ -97,9 +97,10 @@ class ClientAddressController {
 
   async delete(req: Request, res: Response): Promise<Response> {
     try {
+      const { addressClientId } = req.params;
       const deleteAddressClientService = new DeleteAddressClientService();
 
-      const clientAddress = await deleteAddressClientService.execute(req.params.id);
+      const clientAddress = await deleteAddressClientService.execute(Number(addressClientId));
 
       if (clientAddress.err) throw new Error(clientAddress.err);
 

@@ -24,7 +24,12 @@ const orderController = new OrderController();
 
 const routes = Router();
 
-// Rotas não autenticadas
+// Rotas não autenticadas //
+
+// Clients
+routes.post('/clients', clientController.create);
+
+// Rotas autenticadas //
 
 // Auth
 routes.post('/auth/login', authController.login);
@@ -34,7 +39,6 @@ routes.get('/states', addressStateController.listState);
 routes.get('/cities/:state_id', addressStateController.listCitiesByState);
 
 // Client
-routes.post('/clients', clientController.create);
 routes.post('/clients/activate', clientController.activate);
 
 // Rotas autenticadas
@@ -57,7 +61,7 @@ routes.post('/adresses-client', clientAddressController.create);
 routes.put('/adresses-client/:id', clientAddressController.update);
 routes.put('/adresses-client/:id/active', clientAddressController.active);
 routes.put('/adresses-client/:id/deactivate', clientAddressController.deactivate);
-routes.delete('/adresses-client/:id', clientAddressController.delete);
+routes.delete('/adresses-client/:addressClientId', clientAddressController.delete);
 
 // Categoria
 routes.get('/categories', categoryController.getAll);
