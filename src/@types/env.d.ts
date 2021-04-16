@@ -5,7 +5,7 @@ declare global {
     interface ProcessEnv {
       NODE_ENV: 'dev' | 'prod' | 'test';
 
-      API_PORT: number;
+      PORT: number;
 
       JWT_PASS: string;
       JWT_EXPIRES: string;
