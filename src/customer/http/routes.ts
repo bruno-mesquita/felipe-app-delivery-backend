@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import isAuthenticated from '@shared/middlewares/is-authenticated';
 import { ClientController } from '../modules/client';
-import { AuthController } from '../modules/auth';
+import { AuthController } from '../modules/auth/controllers';
 import { AvatarController } from '../modules/avatar';
 import { CategoryController } from '../modules/category';
 import { EstablishmentController } from '../modules/establishment';
