@@ -1,7 +1,7 @@
 import { Request, Response } from "express";
 import { CreateCodeForgotPasswordService } from '../services/forgot-password/create-code-forgot-password.service';
 
-class ForgotPasswordController {
+export class ForgotPasswordController {
   async code(req: Request, res: Response): Promise<Response> {
     try {
       const createCodeService = new CreateCodeForgotPasswordService();
