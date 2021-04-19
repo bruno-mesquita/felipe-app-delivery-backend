@@ -20,6 +20,7 @@ const UNINFORMED = 'Não informado';
 class CreateClientService {
   async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<number | null>> {
     try {
+      console.log(createClientDto.password);
       const smsService = new SmsService();
 
       // Fazendo Validação do DTO
@@ -42,10 +43,12 @@ class CreateClientService {
         attributes: { exclude: ['password'] },
       });
 
-      if(userExists) throw new Error('Já existe um usuário cadastrado com esses dados')
+      if(userExists) throw new Error('Já existe um usuário cadastrado com esses dados');
 
       // Criando a classe
       const user = await Client.create(createClientDto);
+
+      console.log(user.password);
 
       const city = await City.findOne({ where: { id: createClientDto.city } });
 
