@@ -13,6 +13,7 @@ import loginValidation from '../validation/login.validation';
 class LoginClientService {
   async execute(loginDto: LoginClientDto): Promise<ServiceResponse<{ token: string } | null>> {
     try {
+      console.log();
       if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
 
       const tokenManager = new TokenManager();
