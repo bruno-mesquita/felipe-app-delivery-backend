@@ -45,7 +45,11 @@ class CreateClientService {
       if(userExists) throw new Error('Já existe um usuário cadastrado com esses dados');
 
       // Criando a classe
-      const user = await Client.create(createClientDto);
+      const user = new Client(createClientDto);
+
+      user.hashPassword();
+
+      await user.save();
 
       const city = await City.findOne({ where: { id: createClientDto.city } });
 
@@ -74,6 +78,7 @@ class CreateClientService {
 
       return { result: user.id, err: null };
     } catch (err) {
+      console.log(err);
       return { result: null, err: err.message };
     }
   }

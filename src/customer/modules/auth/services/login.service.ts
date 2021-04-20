@@ -4,6 +4,8 @@
  * @author Bruno Mesquita
  */
 
+import { hashSync } from 'bcryptjs';
+
 import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';

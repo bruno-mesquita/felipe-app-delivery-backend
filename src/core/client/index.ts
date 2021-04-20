@@ -5,7 +5,6 @@ import {
   HasManyCreateAssociationMixin,
   BelongsToGetAssociationMixin,
 } from 'sequelize';
-import { hashSync } from 'bcryptjs';
 
 import UserBase from '../_Bases/user';
 import Image from '@core/image';
@@ -37,12 +36,6 @@ class Client extends UserBase {
       cpf: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'clients' });
-
-    this.addHook('beforeSave', (user: Client) => {
-      if (user.password) {
-        user.password = hashSync(user.password, 8);
-      }
-    });
 
     return this;
   }
