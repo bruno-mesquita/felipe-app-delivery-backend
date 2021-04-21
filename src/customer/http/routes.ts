@@ -30,7 +30,7 @@ const routes = Router();
 
 // Clients
 routes.post('/clients', clientController.create);
-routes.post('/clients/forgot-password', forgotPassword.code);
+routes.get('/clients/forgot-password', forgotPassword.setPassword);
 
 // Rotas autenticadas //
 

@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { CreateCodeForgotPasswordService } from '../services/forgot-password/create-code-forgot-password.service';
 
 export class ForgotPasswordController {
-  async code(req: Request, res: Response): Promise<Response> {
+  async setPassword(req: Request, res: Response): Promise<Response> {
     try {
       const createCodeService = new CreateCodeForgotPasswordService();
 
@@ -10,9 +10,9 @@ export class ForgotPasswordController {
 
       if (code.err) throw new Error(code.err);
 
-      return res.status(201).json(code);
+      return res.status(200).json(code);
     } catch (err) {
-      return res.status(400).json(err);
+      return res.status(400).json(err.message);
     }
   }
 }

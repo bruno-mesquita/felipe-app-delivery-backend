@@ -6,6 +6,8 @@ const REQUIRED = 'Campo obrigatório';
 
 const schema: SchemaOf<EmailToForgotPasswordDto> = object().shape({
   email: string().email('Email inválido').required(REQUIRED),
+  password: string().required(REQUIRED),
+  confirmPassword: string().required(REQUIRED),
 });
 
 export { schema };
