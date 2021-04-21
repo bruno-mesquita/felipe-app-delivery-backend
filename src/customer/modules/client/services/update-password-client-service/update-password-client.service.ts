@@ -11,6 +11,7 @@ import updatePasswordClientValidation from '../../validation/update-password-cli
 class UpdatePasswordClientService {
   async execute(updatePasswordClientDto: UpdatePasswordClientDto): Promise<ServiceResponse<boolean>> {
     try {
+      console.log(updatePasswordClientDto);
       // validando dados
       if (!updatePasswordClientValidation.isValidSync(updatePasswordClientDto)) throw new Error('Dados inválidos');
 

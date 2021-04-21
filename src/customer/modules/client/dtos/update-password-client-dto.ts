@@ -3,7 +3,7 @@
  */
 
 export interface UpdatePasswordClientDto {
-  id: string;
+  id: number;
   currentPassword: string;
   newPassword: string;
   confirmNewPassword: string;
