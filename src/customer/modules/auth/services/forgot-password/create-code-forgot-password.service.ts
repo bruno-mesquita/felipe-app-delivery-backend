@@ -16,17 +16,21 @@ export class CreateCodeForgotPasswordService {
       if (!valid) throw new Error('Dados inválidos');
 
       // pegando e verificando se o e-mail existe
-      const emailExists = await Client.findOne({
+      const client = await Client.findOne({
         where: { email },
       });
 
-      if (!emailExists) throw new Error('E-mail do usuário não encontrado');
+      if (!client) throw new Error('E-mail do usuário não encontrado');
 
-      // criando código do usuário desse email selecionado
-      const code = await ClientActivationCode.create({ client: emailExists, attempts: 0 });
+      // Gerando codigo de check e Enviando sms
+      const clientCode = await ClientActivationCode.create({ client_id: client.id, attempts: 0, code: 'code1' });
 
       // checando o número e o código passados
-      await smsService.send(emailExists.cellphone, code.getCode());
+      const sendResult = await smsService.send(client.cellphone, clientCode.code);
+
+      if (!sendResult) {
+        throw new Error('Houve um erro ao enviar o codigo, verifique o seu número de telefone e tente novamente');
+      }
 
       return { result: true, err: null };
     } catch (err) {
