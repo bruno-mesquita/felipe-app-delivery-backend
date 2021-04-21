@@ -9,8 +9,8 @@
 import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
-import { LoginClientDto } from '../dtos/login-client.dto';
-import loginValidation from '../validation/login.validation';
+import { LoginClientDto } from '../../dtos/login-client.dto';
+import loginValidation from '../../validation/login.validation';
 
 class LoginClientService {
   async execute(loginDto: LoginClientDto): Promise<ServiceResponse<{ token: string } | null>> {

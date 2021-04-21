@@ -20,7 +20,6 @@ class RefrishTokenService {
 
       return { result: accessToken, err: null };
     } catch (err) {
-      console.log(err);
       return { result: null, err: "Token inválido" };
     }
   }

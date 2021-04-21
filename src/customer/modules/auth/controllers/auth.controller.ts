@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
-import { LoginClientService } from '../services/login.service';
-import { RefrishTokenService } from '../services/refresh-token.service';
+import { LoginClientService } from '../services/token/login.service';
+import { RefrishTokenService } from '../services/token/refresh-token.service';
 
 export class AuthController {
   async login(req: Request, res: Response): Promise<Response> {
