@@ -41,11 +41,12 @@ export class CreateCodeForgotPasswordService {
 
       client.setPassword(password);
 
+      client.hashPassword();
+
       await client.save();
 
       return { result: true, err: null };
     } catch (err) {
-      // console.log(err);
       return { err: err.message, result: false, };
     }
   };
