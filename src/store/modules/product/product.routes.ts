@@ -5,7 +5,7 @@
  */
 
 import { Router } from 'express';
-import ProductController from './controllers/products-controller';
+import ProductController from './product.controller';
 
 const productController = new ProductController();
 const productsRoutes = Router();
@@ -14,5 +14,6 @@ productsRoutes.post('/products', productController.create);
 productsRoutes.get('/products', productController.list);
 productsRoutes.get('/products/:id', productController.show);
 productsRoutes.put('/products/:id', productController.update);
+productsRoutes.delete('/products/:id', productController.delete);
 
 export { productsRoutes };

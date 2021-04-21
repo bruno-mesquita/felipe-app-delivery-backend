@@ -26,7 +26,7 @@ const orderController = new OrderController();
 
 const routes = Router();
 
-// Rotas não autenticadas //
+// Rotas não autenticadas
 
 // Clients
 routes.post('/clients', clientController.create);
@@ -46,43 +46,41 @@ routes.get('/cities/:state_id', addressStateController.listCitiesByState);
 routes.post('/clients/activate', clientController.activate);
 
 // Rotas autenticadas
-routes.use(isAuthenticated);
 
 // Clients
-routes.put('/clients', clientController.updateProfile);
-routes.put('/clients/update-password', clientController.updatePassword);
-routes.get('/clients/orders', clientController.listOrdersByClient);
-routes.post('/clients/me', clientController.profile);
+routes.put('/clients', isAuthenticated, clientController.updateProfile);
+routes.put('/clients/update-password', isAuthenticated, clientController.updatePassword);
+routes.get('/clients/orders', isAuthenticated, clientController.listOrdersByClient);
+routes.post('/clients/me', isAuthenticated, clientController.profile);
 
 // Avatar
 routes.post('/avatar', avatarController.create);
 routes.get('/avatar', avatarController.findOneAvatarByUserId);
 
 // Endereços do cliente
-routes.get('/adresses-client', clientAddressController.list);
-routes.get('/adresses-client/:id', clientAddressController.findOne);
-routes.post('/adresses-client', clientAddressController.create);
-routes.put('/adresses-client/:id', clientAddressController.update);
-routes.put('/adresses-client/:id/active', clientAddressController.active);
-routes.put('/adresses-client/:id/deactivate', clientAddressController.deactivate);
-routes.delete('/adresses-client/:addressClientId', clientAddressController.delete);
+routes.get('/adresses-client', isAuthenticated, clientAddressController.list);
+routes.get('/adresses-client/:id', isAuthenticated, clientAddressController.findOne);
+routes.post('/adresses-client', isAuthenticated, clientAddressController.create);
+routes.put('/adresses-client/:id', isAuthenticated, clientAddressController.update);
+routes.put('/adresses-client/:id/active', isAuthenticated, clientAddressController.active);
+routes.put('/adresses-client/:id/deactivate', isAuthenticated, clientAddressController.deactivate);
+routes.delete('/adresses-client/:addressClientId', isAuthenticated, clientAddressController.delete);
 
 // Categoria
-routes.get('/categories', categoryController.getAll);
+routes.get('/categories', isAuthenticated,categoryController.getAll);
 
 // Estabelecimento
-routes.get('/establishments/:id', establishmentController.findOne);
-routes.post('/establishments-by-name', establishmentController.searchByName);
-routes.get('/establishments', establishmentController.list);
+routes.get('/establishments/:id', isAuthenticated, establishmentController.findOne);
+routes.post('/establishments-by-name', isAuthenticated, establishmentController.searchByName);
+routes.get('/establishments', isAuthenticated, establishmentController.list);
 
 // menu
-routes.get('/menus/:id/products', menuController.findProductsByMenu);
+routes.get('/menus/:id/products', isAuthenticated, menuController.findProductsByMenu);
 
 // Orders
-routes.use(isAuthenticated);
-routes.post('/orders', orderController.create);
-routes.get('/orders/:id', orderController.show);
-routes.get('/orders/:id/verify', orderController.verify);
-routes.post('/orders/:id/rate', orderController.rateOrder);
+routes.post('/orders', isAuthenticated, orderController.create);
+routes.get('/orders/:id', isAuthenticated, orderController.show);
+routes.get('/orders/:id/verify', isAuthenticated, orderController.verify);
+routes.post('/orders/:id/rate', isAuthenticated, orderController.rateOrder);
 
 export default routes;

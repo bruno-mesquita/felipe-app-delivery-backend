@@ -12,8 +12,8 @@ import storeRoutes from '@store/http/routes';
 
 const routes = Router();
 
-routes.use('/app', customerRoutes);
 routes.use('/admin', adminRoutes);
+routes.use('/app', customerRoutes);
 routes.use('/app-store', storeRoutes);
 
 const app = express();
