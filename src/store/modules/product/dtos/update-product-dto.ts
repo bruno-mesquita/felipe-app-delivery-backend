@@ -3,7 +3,7 @@
  * @author Jonatas Rosa Moura
  */
 
-export interface UpdateProductDto {
+ export interface DeleteProductDto {
   id: number;
   name: string;
   price: number;

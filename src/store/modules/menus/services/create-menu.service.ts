@@ -19,16 +19,7 @@ export class CreateMenuService {
 
       if (!establishment) throw new Error('Estabelicimento não encontrado.');
 
-      // Verificando se o menu já existe cadastrado
-
-      const menuExists = await Menu.findOne({
-        where: { name: createMenuDto.name, establishment_id: createMenuDto.establishment },
-      });
-
-      if (menuExists) throw new Error('Menu já cadastrado no sistema');
-
       // Criando Classe
-
       await Menu.create({
         ...createMenuDto,
         establishment_id: establishment.id,

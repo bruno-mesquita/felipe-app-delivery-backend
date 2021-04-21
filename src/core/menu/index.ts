@@ -35,6 +35,10 @@ class Menu extends Model {
     this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishments' });
     this.hasMany(Product, { foreignKey: 'menu_id', as: 'products', sourceKey: 'id' });
   }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
 }
 
 export default Menu;

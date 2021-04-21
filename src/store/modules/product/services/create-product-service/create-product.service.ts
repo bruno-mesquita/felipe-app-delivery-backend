@@ -11,7 +11,7 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateProductDto } from '../../dtos/create-product-dto';
 import createProductSchema from '../../validation/create-product.validation';
 
-class CreateProductService {
+export class CreateProductService {
   public async execute(createProductDto: CreateProductDto): Promise<ServiceResponse<boolean>> {
     try {
       const valid = createProductSchema.isValidSync(createProductDto);
@@ -52,5 +52,3 @@ class CreateProductService {
     }
   }
 }
-
-export default CreateProductService;
