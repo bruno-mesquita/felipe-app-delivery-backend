@@ -9,6 +9,7 @@ declare global {
 
       JWT_PASS: string;
       JWT_EXPIRES: string;
+      JWT_REFRESH_EXPIRES: string;
 
       DB_TYPE: Dialect;
       DB_PASS: string;

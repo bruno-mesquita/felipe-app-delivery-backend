@@ -4,7 +4,7 @@
  * @author Bruno Mesquita
  */
 
-import { hashSync } from 'bcryptjs';
+ import jwt from 'jsonwebtoken';
 
 import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
@@ -15,7 +15,6 @@ import loginValidation from '../validation/login.validation';
 class LoginClientService {
   async execute(loginDto: LoginClientDto): Promise<ServiceResponse<{ token: string } | null>> {
     try {
-      console.log();
       if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
 
       const tokenManager = new TokenManager();
@@ -37,11 +36,12 @@ class LoginClientService {
       // Criando token
       const token = tokenManager.create(client.id);
 
+      const refreshToken = tokenManager.createRefreshToken(client.id);
+
+      const accessToken = { token, refreshToken };
+
       return {
-        result: {
-          token,
-        },
-        err: null,
+        result: accessToken, err: null,
       };
     } catch (err) {
       return { result: null, err: err.message };

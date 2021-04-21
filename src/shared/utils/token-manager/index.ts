@@ -14,6 +14,10 @@ class TokenManager {
   public create(id: number): string {
     return sign({ id }, process.env.JWT_PASS, { expiresIn: process.env.JWT_EXPIRES });
   }
+
+  public createRefreshToken(id: number): string {
+    return sign({ id }, process.env.JWT_PASS, { expiresIn: process.env.JWT_REFRESH_EXPIRES });
+  }
 }
 
 export default TokenManager;

@@ -36,6 +36,7 @@ routes.post('/clients/forgot-password', forgotPassword.code);
 
 // Auth
 routes.post('/auth/login', authController.login);
+routes.post('/auth/refresh', authController.refresh);
 
 // State
 routes.get('/states', addressStateController.listState);
