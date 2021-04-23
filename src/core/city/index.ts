@@ -18,6 +18,14 @@ class City extends Model {
   static associate({ State }) {
     this.belongsTo(State, { foreignKey: 'state_id', as: 'state' });
   }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public setActive(active: boolean): void {
+    this.active = active;
+  }
 }
 
 export default City;
