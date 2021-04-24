@@ -26,6 +26,10 @@ class City extends Model {
   public setActive(active: boolean): void {
     this.active = active;
   }
+
+  public setStateId(stateId: number): void {
+    this.state_id = stateId;
+  }
 }
 
 export default City;

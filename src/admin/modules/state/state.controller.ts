@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreateStateService, ListStatesService, UpdateStateService, ListCitiesByStatesService } from './services';
+import { CreateStateService, ListStatesService, UpdateStateService } from './services';
 
 export class StateController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -35,20 +35,6 @@ export class StateController {
       const updateStateService = new UpdateStateService();
 
       const states = await updateStateService.execute({ ...req.body, id: req.body.id });
-
-      if (states.err) throw new Error(states.err);
-
-      return res.json(states);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
-  async listCities(req: Request, res: Response): Promise<Response> {
-    try {
-      const listCitiesByStatesService = new ListCitiesByStatesService();
-
-      const states = await listCitiesByStatesService.execute(Number(req.params.id));
 
       if (states.err) throw new Error(states.err);
 

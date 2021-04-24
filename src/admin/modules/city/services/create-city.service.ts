@@ -2,7 +2,6 @@
  * @fileoverview Criação de serviço de address City de user customer
  */
 
-
 import City from '@core/city';
 import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
@@ -10,7 +9,7 @@ import { CityAddressDto } from '../dtos/create-city-dto';
 import { schema } from '../validations/create-city.validation';
 
 export class CreateCityService {
-  async execute(createCityDto: CityAddressDto): Promise<ServiceResponse<boolean>> {
+  async execute(createCityDto: CityAddressDto): Promise<ServiceResponse<number>> {
     try {
       // Fazendo validação DTO
       const valid = schema.isValidSync(createCityDto);
@@ -33,15 +32,15 @@ export class CreateCityService {
       if (!stateExists && !createCityDto.state) throw new Error('[ERRO]: Estado não encontrado/selecionado.');
 
       // criando classe
-      await City.create({
+      const state = await City.create({
         name: createCityDto.name,
         state_id: stateExists.id,
         active: true,
       });
 
-      return { result: true, err: null };
+      return { result: state.id, err: null };
     } catch (err) {
-      return { result: false, err: err.message };
+      return { result: 0, err: err.message };
     }
   }
 }

@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import { CreateCityService, UpdateCityService } from './services';
+import { CreateCityService, UpdateCityService, ListCitiesService } from './services';
 
 class CityController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -24,7 +24,21 @@ class CityController {
 
       if (city.err) throw new Error(city.err);
 
-      return res.status(201).json(city);
+      return res.status(200).json(city);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async list(req: Request, res: Response): Promise<Response> {
+    try {
+      const listCitiesService = new ListCitiesService();
+
+      const result = await listCitiesService.execute();
+
+      if (result.err) throw new Error(result.err);
+
+      return res.status(200).json(result);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

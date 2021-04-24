@@ -21,6 +21,9 @@ export class UpdateCityService {
 
       city.setName(updateCityDto.name);
       city.setActive(updateCityDto.active);
+      city.setStateId(updateCityDto.stateId);
+
+      await city.save();
 
       return { result: true, err: null };
     } catch (err) {
