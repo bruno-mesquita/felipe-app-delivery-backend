@@ -4,11 +4,11 @@
 
 import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { StateAddressDto } from '../dtos/create-state-dto';
+import { CreateStateADto } from '../dtos/create-state-dto';
 import { schema } from '../validations/create-state.validation';
 
 class CreateStateService {
-  async execute(createStateDto: StateAddressDto): Promise<ServiceResponse<number>> {
+  async execute(createStateDto: CreateStateADto): Promise<ServiceResponse<number>> {
     try {
       // Fazendo validação DTO
 

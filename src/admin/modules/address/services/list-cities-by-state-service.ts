@@ -2,11 +2,11 @@ import City from '@core/city';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class ListCitiesByStatesService {
-  async execute(state_id: number): Promise<ServiceResponse<City[] | null>> {
+  async execute(state_id: number): Promise<ServiceResponse<any[] | null>> {
     try {
       const citiesByState = await City.findAll({
-        where: { state_id },
-        attributes: ['id', 'name', 'active'],
+        where: { state_id, active: true },
+        attributes: ['id', 'name'],
       });
 
       return { result: citiesByState, err: null };

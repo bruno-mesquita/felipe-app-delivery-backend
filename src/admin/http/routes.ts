@@ -4,10 +4,12 @@ import { categoryRoutes } from '../modules/category/category.routes';
 import { cityRoutes } from '../modules/city';
 import { stateRoutes } from '../modules/state';
 import { authRoutes } from '../modules/auth'
+import { addressEstablishmentRoutes } from '../modules/address/address.routes';
 
 const routes = Router();
 
 routes.use(authRoutes);
+routes.use(addressEstablishmentRoutes);
 routes.use(cityRoutes);
 routes.use(stateRoutes);
 routes.use(establishmentRoutes);
