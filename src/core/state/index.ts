@@ -13,6 +13,14 @@ class State extends Model {
 
     return this;
   }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public setActive(active: boolean): void {
+    this.active = active;
+  }
 }
 
 export default State;

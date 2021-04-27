@@ -13,7 +13,6 @@ export class LoginEstablishmentLoginService {
     try {
       if (!loginValidation.isValidSync(loginEstablishment)) throw new Error('Dados inválidos.');
 
-
       const tokenManager = new TokenManager();
 
       const establishment = await Establishment.findOne({
@@ -25,8 +24,9 @@ export class LoginEstablishmentLoginService {
       if (!establishment.comparePassword(loginEstablishment.password)) throw new Error('Credenciais inválidas.');
 
       const token = tokenManager.create(establishment.id);
+      const refreshToken = tokenManager.createRefreshToken(establishment.id);
 
-      return { result: { token, establishment }, err: null };
+      return { result: { token, refreshToken }, err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }

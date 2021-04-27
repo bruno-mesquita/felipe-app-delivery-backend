@@ -4,9 +4,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import Establishment from '@core/establishment';
-
 export interface IEstablishmentAuth {
-  establishment: Establishment;
+  refreshToken: string;
   token: string;
 }

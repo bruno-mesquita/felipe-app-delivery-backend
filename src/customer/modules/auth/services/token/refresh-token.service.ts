@@ -3,11 +3,13 @@ import TokenManager from "@shared/utils/token-manager";
 import Client from '@core/client';
 
 class RefrishTokenService {
-  async execute(token: string): Promise<ServiceResponse<string | null>> {
+  async execute(token: string): Promise<ServiceResponse<any>> {
     try {
       const tokenManager = new TokenManager();
 
       const clientId = tokenManager.check(token);
+
+      if(!clientId) throw new Error();
 
       const client = await Client.findOne({
         where: { id: clientId.id },
@@ -16,9 +18,10 @@ class RefrishTokenService {
 
       if (!client) throw new Error('Cliente não encontrado');
 
-      const accessToken = tokenManager.createRefreshToken(client.id);
+      const refreshToken = tokenManager.createRefreshToken(client.id);
+      const accessToken = tokenManager.create(client.id);
 
-      return { result: accessToken, err: null };
+      return { result: { accessToken, refreshToken  }, err: null };
     } catch (err) {
       return { result: null, err: "Token inválido" };
     }

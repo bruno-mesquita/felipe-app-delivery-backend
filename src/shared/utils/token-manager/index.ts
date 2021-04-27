@@ -7,8 +7,12 @@
 import { verify, sign } from 'jsonwebtoken';
 
 class TokenManager {
-  public check(token: string): { id: number } {
-    return verify(token, process.env.JWT_PASS) as { id: number };
+  public check(token: string): { id: number } | null {
+    try {
+      return verify(token, process.env.JWT_PASS) as { id: number };
+    } catch {
+      return null;
+    }
   }
 
   public create(id: number): string {
