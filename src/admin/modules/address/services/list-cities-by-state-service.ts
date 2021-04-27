@@ -6,7 +6,7 @@ class ListCitiesByStatesService {
     try {
       const citiesByState = await City.findAll({
         where: { state_id },
-        attributes: ['id', 'name'],
+        attributes: ['id', 'name', 'active'],
       });
 
       return { result: citiesByState, err: null };
