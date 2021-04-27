@@ -15,7 +15,7 @@ export default function isAuthenticated(request: Request, response: Response, ne
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {
-      return response.status(401).json('[Falha de autenticação]: JWT Token está ausente');
+      return response.status(401).json('[Autenticação]: JWT Token está ausente');
     }
 
     // array token vai ter 2 posições -> Bearer açsd6464JAFPO(&&%/;). -> chave secreta (token)
@@ -32,6 +32,6 @@ export default function isAuthenticated(request: Request, response: Response, ne
 
     return next();
   } catch (err) {
-    throw new Error('Token JWT Inválido.');
+    return response.status(401).json({ error: '[Autenticação]: Token Inválido.', type: 'Autenticação', message: 'Token Inválido.' });
   }
 }
