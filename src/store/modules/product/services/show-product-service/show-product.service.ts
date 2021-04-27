@@ -3,6 +3,7 @@
  * @author Jonatas Rosa Moura
  */
 
+import Image from '@core/image';
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
 
@@ -16,7 +17,14 @@ export class ShowProductService {
       }
 
       const product = await Product.findOne({
-        attributes: ['id', 'name', 'price', 'description'],
+        attributes: ['id', 'name', 'price', 'description', 'menu_id'],
+        include: [
+          {
+            model: Image,
+            as: 'photo',
+            attributes: ['encoded']
+          }
+        ]
       });
 
       return { result: product, err: null };
