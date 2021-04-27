@@ -1,5 +1,4 @@
 import City from '@core/city';
-import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class ListCitiesByStatesService {
