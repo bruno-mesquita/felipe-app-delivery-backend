@@ -10,8 +10,13 @@ import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class ListProductsService {
-  async execute(): Promise<ServiceResponse<Product[] | null>> {
+  static LIMIT = 15
+
+  async execute(page?: number | undefined): Promise<ServiceResponse<Product[] | null>> {
     try {
+      const limit = ListProductsService.LIMIT;
+      const offset = ListProductsService.LIMIT * page || 0;
+
       const products = await Product.findAll({
         attributes: ['id', 'name', 'price'],
         include: [
@@ -20,7 +25,9 @@ export class ListProductsService {
             as: 'photo',
             attributes: ['encoded']
           }
-        ]
+        ],
+        limit,
+        offset,
       });
 
       return { result: products, err: null };

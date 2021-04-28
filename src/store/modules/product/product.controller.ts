@@ -12,14 +12,31 @@ import {
   ListProductsService,
   ShowProductService,
   UpdateProductService,
+  SearchNameProductsService
 } from './services';
 
 class ProductController {
   async list(req: Request, res: Response): Promise<Response> {
     try {
       const listProductsService = new ListProductsService();
+      const { page } = req.query;
 
-      const products = await listProductsService.execute();
+      const products = await listProductsService.execute(page ? Number(page) : 0);
+
+      if (products.err) throw new Error(products.err);
+
+      return res.status(200).json(products);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async searchName(req: Request, res: Response): Promise<Response> {
+    try {
+      const searchNameProductsService = new SearchNameProductsService();
+      const { search } = req.query;
+
+      const products = await searchNameProductsService.execute(search as string, req.client.id);
 
       if (products.err) throw new Error(products.err);
 

@@ -12,6 +12,7 @@ const productsRoutes = Router();
 
 productsRoutes.post('/products', productController.create);
 productsRoutes.get('/products', productController.list);
+productsRoutes.get('/products/search-name', productController.searchName);
 productsRoutes.get('/products/:id', productController.show);
 productsRoutes.put('/products/:id', productController.update);
 productsRoutes.delete('/products/:id', productController.delete);
