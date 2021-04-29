@@ -12,31 +12,14 @@ import {
   ListProductsService,
   ShowProductService,
   UpdateProductService,
-  SearchNameProductsService
 } from './services';
 
 class ProductController {
   async list(req: Request, res: Response): Promise<Response> {
     try {
       const listProductsService = new ListProductsService();
-      const { page } = req.query;
 
-      const products = await listProductsService.execute(page ? Number(page) : 0);
-
-      if (products.err) throw new Error(products.err);
-
-      return res.status(200).json(products);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
-  async searchName(req: Request, res: Response): Promise<Response> {
-    try {
-      const searchNameProductsService = new SearchNameProductsService();
-      const { search } = req.query;
-
-      const products = await searchNameProductsService.execute(search as string, req.client.id);
+      const products = await listProductsService.execute();
 
       if (products.err) throw new Error(products.err);
 
@@ -96,9 +79,10 @@ class ProductController {
 
   async delete(req: Request, res: Response) {
     try {
+      const { menu_id, product_id } = req.params;
       const deleteProductService = new DeleteProductService();
 
-      const result = await deleteProductService.execute(req.body);
+      const result = await deleteProductService.execute({ ...req.body, menu_id, product_id});
 
       if (result.err) throw new Error(result.err);
 

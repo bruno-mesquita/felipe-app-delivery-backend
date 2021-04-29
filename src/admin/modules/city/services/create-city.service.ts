@@ -18,7 +18,7 @@ export class CreateCityService {
 
       // Verificando se a Cidade existe no banco de dados
       const cityExists = await City.findOne({
-        where: { name: createCityDto.name }
+        where: { name: createCityDto.name }, attributes: ['id', 'name'],
       });
 
       if (cityExists) throw new Error('[ERRO]: Cidade já existente no sistema!');
