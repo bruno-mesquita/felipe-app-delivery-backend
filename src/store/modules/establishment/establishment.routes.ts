@@ -8,5 +8,6 @@ const estabishmentController = new EstabishmentController();
 routes.put('/establisments/update-password', estabishmentController.updatePassword);
 routes.post('/establisments/me', estabishmentController.profile);
 routes.put('/establisments', estabishmentController.updateProfile);
+routes.put('/establisments/deactive', estabishmentController.deactiveAccount);
 
 export default routes;
