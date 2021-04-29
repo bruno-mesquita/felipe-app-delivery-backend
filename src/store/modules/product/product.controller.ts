@@ -18,15 +18,15 @@ import {
 class ProductController {
   async searchName(req: Request, res: Response): Promise<Response> {
     try {
-      const { name } = req.query;
-      const searchNameService = new SearchNameProductsService();
+      const searchNameProductsService = new SearchNameProductsService();
+      const { search } = req.query;
 
-      const searchName = await searchNameService.execute(name, req.client.id);
+      const products = await searchNameProductsService.execute(search as string, req.client.id);
 
-      if (searchName.err) throw new Error(searchName.err);
+      if (products.err) throw new Error(products.err);
 
-      return res.status(200).json(searchName);
-    }catch(err) {
+      return res.status(200).json(products);
+    } catch (err) {
       return res.status(400).json({ err: err.message });
     }
   }
