@@ -15,7 +15,6 @@ export class UpdateProfileService {
 
       // verificando se o usuário existe
 
-
       const user = await Establishment.findOne({
         where: { id: UpdateEstablishmentDto.id, active: true }
       });

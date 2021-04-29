@@ -1,3 +1,7 @@
+/**
+ * @fileoverview Voltar os dados do estabelecimento
+ */
+
 import { ServiceResponse } from '@shared/utils/service-response';
 import Establishment from '@core/establishment';
 import Image from '@core/image';
@@ -23,6 +27,8 @@ export class ProfileEstablishmentService {
         attributes: selects,
         include
       })
+
+      console.log(client)
 
       if(!client) throw new Error('Cliente não encontrado');
 
