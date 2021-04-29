@@ -79,9 +79,10 @@ class ProductController {
 
   async delete(req: Request, res: Response) {
     try {
+      const { menu_id, product_id } = req.params;
       const deleteProductService = new DeleteProductService();
 
-      const result = await deleteProductService.execute(req.body);
+      const result = await deleteProductService.execute({ ...req.body, menu_id, product_id});
 
       if (result.err) throw new Error(result.err);
 

@@ -14,6 +14,6 @@ productsRoutes.post('/products', productController.create);
 productsRoutes.get('/products', productController.list);
 productsRoutes.get('/products/:id', productController.show);
 productsRoutes.put('/products/:id', productController.update);
-productsRoutes.delete('/products/:id', productController.delete);
+productsRoutes.delete('/products/:menu_id/:product_id', productController.delete);
 
 export { productsRoutes };
