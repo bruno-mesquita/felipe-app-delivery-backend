@@ -57,11 +57,15 @@ export class CreateEstablishmentService {
       delete establishmentDto.address;
       delete establishmentDto.image;
 
-      const establishment = await Establishment.create({
+      const establishment = new Establishment({
         ...establishmentDto,
         address_id: address.id,
         image_id: image.id,
       });
+
+      establishment.hashPassword();
+
+      await establishment.save();
 
       // Criar categorias do estabelecimento
 
