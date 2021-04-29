@@ -5,7 +5,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { object, SchemaOf, string, number, array } from 'yup';
+import { object, SchemaOf, string, number, array, boolean } from 'yup';
 
 import { CreateEstablishmentDto } from '../dtos/create-establishment-dto';
 
@@ -17,15 +17,12 @@ const schema: SchemaOf<CreateEstablishmentDto> = object({
   name: string().required(REQUIRED),
   email: string().email('Email inválido').required(REQUIRED),
   password: string().required(REQUIRED),
-  confirmPassword: string().required(REQUIRED),
+  active: boolean().required(REQUIRED),
   cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
   openingTime: number().min(0).max(23).required(REQUIRED),
   closingTime: number().required(REQUIRED),
   freightValue: number().required(REQUIRED),
-  image: object({
-    name: string().required(REQUIRED),
-    encoded: string().required(REQUIRED),
-  }),
+  image: string().required(REQUIRED),
   categories: array().of(number().integer().required(REQUIRED)),
   address: object({
     street: string().required(REQUIRED),

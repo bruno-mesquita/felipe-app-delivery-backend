@@ -28,8 +28,9 @@ class Product extends Model {
     return this;
   }
 
-  static associate({ Image }): void {
+  static associate({ Image, Menu }): void {
     this.belongsTo(Image, { foreignKey: 'image_id', as: 'photo' })
+    this.belongsTo(Menu, { foreignKey: 'menu_id', as: 'menu' })
   }
 
   public getName(): string {

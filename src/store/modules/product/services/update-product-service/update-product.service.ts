@@ -1,9 +1,7 @@
 /**
-
  * @fileoverview Criação do serviço para atualização de Produto
  *
  * @author Jonatas Rosa Moura
-
 */
 
 import Menu from '@core/menu';
@@ -32,20 +30,16 @@ export class UpdateProductService {
 
       if (!menuExists) throw new Error('Menu não encontrado.');
 
-      // Verificando se já existe com esse nome
-
-      const productExists = await Product.findOne({
-        where: { name: updateProductDto.name },
-      });
-
-      if (productExists) throw new Error('Produto já cadastrado no sistema');
-
       // Editando classe e Salvando no DB
-
-      const { name, price, description } = updateProductDto;
+      const { name, price, description, image } = updateProductDto;
 
       product.updateProduct(name, price, description, menuExists.id);
 
+      const photo = await product.getPhoto();
+
+      photo.setEncoded(image);
+
+      await photo.save();
       await product.save();
 
       return { result: true, err: null };

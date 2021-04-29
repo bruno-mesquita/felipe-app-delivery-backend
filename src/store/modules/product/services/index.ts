@@ -3,3 +3,4 @@ export { DeleteProductService } from './delete-product-service';
 export { ListProductsService } from './list-product-service';
 export { ShowProductService } from './show-product-service';
 export { UpdateProductService } from './update-product-service';
+export { SearchNameProductsService } from './search-name-product-service';

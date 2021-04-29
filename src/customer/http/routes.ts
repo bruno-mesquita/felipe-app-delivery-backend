@@ -67,7 +67,7 @@ routes.put('/adresses-client/:id/deactivate', isAuthenticated, clientAddressCont
 routes.delete('/adresses-client/:addressClientId', isAuthenticated, clientAddressController.delete);
 
 // Categoria
-routes.get('/categories', isAuthenticated,categoryController.getAll);
+routes.get('/categories', isAuthenticated, categoryController.getAll);
 
 // Estabelecimento
 routes.get('/establishments/:id', isAuthenticated, establishmentController.findOne);
