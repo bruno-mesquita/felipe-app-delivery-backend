@@ -7,7 +7,6 @@ import validateMenuCreation from '../validations/create-menu.validation';
 export class CreateMenuService {
   async execute(createMenuDto: createMenuStablishmentDto): Promise<ServiceResponse<boolean | null>> {
     try {
-      console.log(createMenuDto);
       // Validandos os dados
       const valid = validateMenuCreation.isValidSync(createMenuDto);
 

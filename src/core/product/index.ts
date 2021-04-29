@@ -11,6 +11,7 @@ class Product extends Model {
   name: string;
   price: number;
   description: string;
+  active: boolean;
   menu_id!: number;
   image_id!: number;
 
@@ -23,6 +24,7 @@ class Product extends Model {
       name: DataTypes.STRING,
       price: DataTypes.NUMBER,
       description: DataTypes.STRING,
+      active: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'products' });
 
     return this;
@@ -45,11 +47,16 @@ class Product extends Model {
     return this.description;
   }
 
-  public updateProduct(name: string, price: number, description: string, menuId: number): void {
+  public updateProduct(name: string, price: number, description: string, menuId: number, active: boolean): void {
     this.name = name;
     this.price = price;
     this.description = description;
+    this.active = active;
     this.menu_id = menuId;
+  }
+
+  public isActive(): boolean {
+    return this.active;
   }
 
   public calcTotal(amount: number): number {

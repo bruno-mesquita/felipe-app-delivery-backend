@@ -9,4 +9,5 @@ export interface CreateProductDto {
   description: string;
   menu: number;
   image: string;
+  active: boolean;
 }

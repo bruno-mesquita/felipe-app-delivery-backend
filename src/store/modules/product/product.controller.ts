@@ -12,9 +12,25 @@ import {
   ListProductsService,
   ShowProductService,
   UpdateProductService,
+  SearchNameProductsService
 } from './services';
 
 class ProductController {
+  async searchName(req: Request, res: Response): Promise<Response> {
+    try {
+      const { name } = req.query;
+      const searchNameService = new SearchNameProductsService();
+
+      const searchName = await searchNameService.execute(name, req.client.id);
+
+      if (searchName.err) throw new Error(searchName.err);
+
+      return res.status(200).json(searchName);
+    }catch(err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
   async list(req: Request, res: Response): Promise<Response> {
     try {
       const listProductsService = new ListProductsService();

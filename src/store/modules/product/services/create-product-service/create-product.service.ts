@@ -15,7 +15,7 @@ export class CreateProductService {
   public async execute(createProductDto: CreateProductDto): Promise<ServiceResponse<boolean>> {
     try {
       const valid = createProductSchema.isValidSync(createProductDto);
-      console.log(createProductDto);
+
       if (!valid) throw new Error('Por favor reveja seus dados.');
 
       // Verificando se o Menu existe.

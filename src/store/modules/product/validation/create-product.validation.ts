@@ -9,7 +9,7 @@
 
  */
 
-import { object, SchemaOf, string, number } from 'yup';
+import { object, SchemaOf, string, number, boolean } from 'yup';
 import { CreateProductDto } from '../dtos/create-product-dto';
 
 const REQUIRED = 'Campo obrigatório';
@@ -20,6 +20,7 @@ const schema: SchemaOf<CreateProductDto> = object({
   description: string().max(150).required(REQUIRED),
   menu: number().integer().required(REQUIRED),
   image: string().required(REQUIRED),
+  active: boolean().required(REQUIRED),
 });
 
 export default schema;

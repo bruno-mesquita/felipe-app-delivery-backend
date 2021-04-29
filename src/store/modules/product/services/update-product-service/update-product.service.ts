@@ -13,6 +13,7 @@ import updateProductValidation from '../../validation/update-product.validation'
 export class UpdateProductService {
   async execute(updateProductDto: UpdateProductDto): Promise<ServiceResponse<boolean>> {
     try {
+      console.log(updateProductDto)
       // validando dto
       const valid = updateProductValidation.isValidSync(updateProductDto);
 
@@ -31,9 +32,9 @@ export class UpdateProductService {
       if (!menuExists) throw new Error('Menu não encontrado.');
 
       // Editando classe e Salvando no DB
-      const { name, price, description, image } = updateProductDto;
+      const { name, price, description, image, active } = updateProductDto;
 
-      product.updateProduct(name, price, description, menuExists.id);
+      product.updateProduct(name, price, description, menuExists.id, active);
 
       const photo = await product.getPhoto();
 
