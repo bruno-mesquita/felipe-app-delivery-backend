@@ -49,12 +49,10 @@ export class CreateEstablishmentService {
 
 
       // Criar a imagem
-      const image = await Image.create(createEstablishmentDto.image);
+      const image = await Image.create({ encoded: createEstablishmentDto.image, name: `${createEstablishmentDto.name}-image` });
 
       // Criar o estabelecimento
       const { categories, ...establishmentDto } = createEstablishmentDto;
-
-
 
       delete establishmentDto.address;
       delete establishmentDto.image;
