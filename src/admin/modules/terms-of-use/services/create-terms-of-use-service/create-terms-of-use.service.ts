@@ -4,7 +4,7 @@ import { schema } from '../../validations/create-state.validation';
 import TermsOfUse from '@core/terms-of-use';
 
 export class CreateTermsOfUseService {
-  public async execute({ description }: CreateTermsOfUseDto): Promise<ServiceResponse<boolean>> {
+  public async execute({ id, description }: CreateTermsOfUseDto): Promise<ServiceResponse<boolean>> {
     try {
       const valid = schema.isValidSync({ description });
 
