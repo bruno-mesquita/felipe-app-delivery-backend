@@ -9,4 +9,4 @@ routes.post('/states', stateController.create);
 routes.get('/states', stateController.list);
 routes.put('/states/:id', stateController.update);
 
-export default  routes
+export default  routes;

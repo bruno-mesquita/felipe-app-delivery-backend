@@ -10,10 +10,11 @@ import { schema } from '../validations/create-state.validation';
 export class UpdateStateService {
   async execute(updateStateDto: UpdateStateDto): Promise<ServiceResponse<boolean>> {
     try {
+      console.log(updateStateDto)
       // Fazendo validação DTO
       const valid = schema.isValidSync(updateStateDto);
 
-      if (!valid) throw new Error('[Erro: Estado] Por favor reveja seus dados');
+      if (!valid) throw new Error('Dados inválidos');
 
       // Verificando se o Estado já exite
 
