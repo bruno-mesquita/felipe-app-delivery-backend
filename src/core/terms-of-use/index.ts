@@ -1,4 +1,4 @@
-import { Sequelize, DataTypes } from "sequelize/types";
+import { Sequelize, DataTypes } from "sequelize";
 
 import Model from "@core/_Bases/model";
 
@@ -13,7 +13,7 @@ class TermsOfUse extends Model {
     return this;
   }
 
-  public setName(description: string): void {
+  public setDescription(description: string): void {
     this.description = description;
   }
 }
