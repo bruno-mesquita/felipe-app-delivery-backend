@@ -18,7 +18,7 @@ export class ListProductsService {
       const offset = ListProductsService.LIMIT * page || 0;
 
       const products = await Product.findAll({
-        attributes: ['id', 'name', 'price'],
+        attributes: ['id', 'name', 'price', 'menu_id'],
         include: [
           {
             model: Image,
