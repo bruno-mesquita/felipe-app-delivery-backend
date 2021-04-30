@@ -12,12 +12,10 @@ export class ShowProductService {
     try {
       const productExists = await Product.findByPk(id);
 
-      if (!productExists) {
-        throw new Error('Produto não encontrado.');
-      }
+      if (!productExists) throw new Error('Produto não encontrado.');
 
       const product = await Product.findOne({
-        attributes: ['id', 'name', 'price', 'description', 'menu_id'],
+        attributes: ['id', 'name', 'price', 'description', 'menu_id', 'active'],
         include: [
           {
             model: Image,
