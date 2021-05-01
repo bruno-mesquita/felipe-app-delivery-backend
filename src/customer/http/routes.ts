@@ -11,6 +11,7 @@ import { ClientAddressController } from '../modules/address-client';
 import { AddressStateController } from '../modules/address-state';
 import { OrderController } from '../modules/order';
 import { MenuController } from '../modules/menus';
+import { TermsOfUseController } from '@customer/modules/terms-of-use/terms-of-use.controller';
 
 // Controllers
 const authController = new AuthController();
@@ -23,6 +24,7 @@ const categoryController = new CategoryController();
 const establishmentController = new EstablishmentController();
 const menuController = new MenuController();
 const orderController = new OrderController();
+const termsOfUseController = new TermsOfUseController();
 
 const routes = Router();
 
@@ -37,6 +39,8 @@ routes.put('/clients/forgot-password', forgotPassword.setPassword);
 // Auth
 routes.post('/auth/login', authController.login);
 routes.post('/auth/refresh', authController.refresh);
+
+routes.get('/terms-of-use', termsOfUseController.show);
 
 // State
 routes.get('/states', addressStateController.listState);
