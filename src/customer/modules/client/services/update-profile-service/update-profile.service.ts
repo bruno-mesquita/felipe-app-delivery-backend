@@ -20,7 +20,6 @@ class UpdateProfileService {
 
       // verificando se o usuário existe
 
-
       const user = await Client.findOne({
         where: { id: updateClientDto.id, active: true }
       });

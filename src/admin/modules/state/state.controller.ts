@@ -32,9 +32,10 @@ export class StateController {
 
   async update(req: Request, res: Response): Promise<Response> {
     try {
+      const { id } = req.params;
       const updateStateService = new UpdateStateService();
 
-      const states = await updateStateService.execute({ ...req.body, id: req.body.id });
+      const states = await updateStateService.execute({ ...req.body, id });
 
       if (states.err) throw new Error(states.err);
 
@@ -44,4 +45,3 @@ export class StateController {
     }
   }
 }
-
