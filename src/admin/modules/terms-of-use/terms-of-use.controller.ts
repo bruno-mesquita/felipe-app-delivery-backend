@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 
 import { CreateTermsOfUseService } from './services/create-terms-of-use-service/create-terms-of-use.service';
+import { ShowTermsOfUse } from './services/show-terms-of-use-service/show-terms-of-use.service';
 import { UpdateTermsOfUseService } from './services/update-terms-of-use-service/update-terms-of-use.service';
 
 export class TermsOfUseController {
@@ -10,6 +11,20 @@ export class TermsOfUseController {
       const updateTermsOfUseService = new UpdateTermsOfUseService();
 
       const termsOfUse = await updateTermsOfUseService.execute({ ...req.body, id });
+
+      if (termsOfUse.err) throw new Error(termsOfUse.err);
+
+      return res.status(201).json(termsOfUse);
+    } catch(err) {
+      return res.status(401).json({ err: err.message });
+    }
+  }
+
+  async show(req: Request, res: Response): Promise<Response> {
+    try {
+      const showTermsOfUseService = new ShowTermsOfUse();
+
+      const termsOfUse = await showTermsOfUseService.execute();
 
       if (termsOfUse.err) throw new Error(termsOfUse.err);
 

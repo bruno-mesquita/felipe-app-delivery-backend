@@ -10,6 +10,6 @@ const routes = Router();
 
 routes.post('/terms-of-use', isAuthenticated, accessAdmin, termsOfUseController.create);
 routes.put('/terms-of-use/:id', isAuthenticated, accessAdmin, termsOfUseController.update);
-// routes.get('/states', termsOfUseController.list);
+routes.get('/terms-of-use', isAuthenticated, accessAdmin, termsOfUseController.show);
 
 export  { routes };
