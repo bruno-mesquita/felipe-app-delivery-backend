@@ -82,6 +82,18 @@ class Establishment extends UserModel {
     return true;
   }
 
+  public setOpeningTime(value: number): void {
+    this.openingTime = value;
+  }
+
+  public setClosingTime(value: number): void {
+    this.closingTime = value;
+  }
+
+  public setFreightValue(value: number): void {
+    this.freightValue = value;
+  }
+
   public isActive(): boolean {
     return this.active;
   }

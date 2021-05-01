@@ -47,7 +47,7 @@ export class ProfileEstablishmentService {
 
       const client = await Establishment.findOne({
         where: { id, active: true },
-        attributes: selects,
+        attributes: ['id', ...selects],
         include
       })
 

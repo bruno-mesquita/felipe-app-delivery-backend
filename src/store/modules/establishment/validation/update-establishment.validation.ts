@@ -8,12 +8,12 @@ const phoneRegxp = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|
 
 const schema: SchemaOf<UpdateEstablishmentDto> = object({
   id: number().integer().required(REQUIRED),
-
   name: string().required(REQUIRED),
-
   email: string().email('Email inválido').required(REQUIRED),
-
   cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
+  openingTime: number().required(REQUIRED),
+  closingTime: number().required(REQUIRED),
+  freightValue: number().required(REQUIRED),
 });
 
 export default schema;
