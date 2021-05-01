@@ -5,21 +5,44 @@
 import { ServiceResponse } from '@shared/utils/service-response';
 import Establishment from '@core/establishment';
 import Image from '@core/image';
+import AddressEstablishment from '@core/address-establishment';
+import City from '@core/city';
 
 export class ProfileEstablishmentService {
   async execute(id: number, selects: string[]): Promise<ServiceResponse<any>> {
     try {
+      const fieldsBlocks = ['password']
+
+      selects = selects.filter(field => !(!!fieldsBlocks.find(block => block === field)))
+
       const include = [];
 
-      const includeAvatar = selects.find(item => item === 'avatar');
+      const includeAvatar = selects.find(item => item === 'image');
+      const includeAddress = selects.find(item => item === 'address');
 
       if(includeAvatar) {
         include.push({
           model: Image,
             as: 'image',
-            attributes: ['name', 'encoded'],
+            attributes: ['encoded'],
         })
-        selects = selects.filter(item => item !== 'avatar');
+        selects = selects.filter(item => item !== 'image');
+      }
+
+      if(includeAddress) {
+        include.push({
+            model: AddressEstablishment,
+            as: 'address',
+            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            include: [
+              {
+                model: City,
+                as: 'city',
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
+              }
+            ],
+        })
+        selects = selects.filter(item => item !== 'address');
       }
 
       const client = await Establishment.findOne({
@@ -27,8 +50,6 @@ export class ProfileEstablishmentService {
         attributes: selects,
         include
       })
-
-      console.log(client)
 
       if(!client) throw new Error('Cliente não encontrado');
 
