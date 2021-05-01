@@ -6,6 +6,7 @@ import { establishmentRoutes } from '@store/modules/establishment';
 import { termsOfUseRoutes } from '@store/modules/terms-of-use/terms-of-use.routes';
 import { addressRoutes } from '@store/modules/address-establishment/address.routes';
 import { imagesRoutes } from '@store/modules/image/image.routes';
+import listRatesRoutes from '@store/modules/rate/rate.routes';
 
 import isAuthenticated from '@shared/middlewares/is-authenticated';
 
@@ -19,5 +20,6 @@ routes.use(menuRoutes);
 routes.use(termsOfUseRoutes);
 routes.use(addressRoutes);
 routes.use(imagesRoutes);
+routes.use(listRatesRoutes);
 
 export default routes;
