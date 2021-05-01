@@ -36,11 +36,14 @@ export class UpdateProfileService {
       if (!userExists) throw new Error('Já existe uma conta com esse email/telefone ');
 
       // Desestruturando
-      const { cellphone, email, name } = UpdateEstablishmentDto;
+      const { cellphone, email, name, freightValue, openingTime, closingTime } = UpdateEstablishmentDto;
 
       user.setName(name);
       user.setEmail(email);
       user.setCellphone(cellphone);
+      user.setOpeningTime(openingTime);
+      user.setClosingTime(closingTime);
+      user.setFreightValue(freightValue);
 
       await user.save();
 

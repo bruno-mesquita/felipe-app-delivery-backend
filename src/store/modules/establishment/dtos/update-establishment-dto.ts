@@ -3,4 +3,7 @@ export interface UpdateEstablishmentDto {
   name: string;
   email: string;
   cellphone: string;
+  openingTime: number;
+  closingTime: number;
+  freightValue: number;
 }
