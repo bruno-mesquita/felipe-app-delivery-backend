@@ -1,4 +1,5 @@
 import AddressEstablishment from "@core/address-establishment";
+import Establishment from "@core/establishment";
 import { ServiceResponse } from "@shared/utils/service-response";
 import { UpdateAddressDto } from "../dtos/update-address.dto";
 import addressUpdateValidation from '../validation/update-address.validation';
@@ -10,7 +11,13 @@ export class UpdateAdressService {
 
       if (!valid) throw new Error('Dados inválidos');
 
-      const addressEstablishment = await AddressEstablishment.findByPk(updateAddressDto.id);
+      const establishmet = await Establishment.findOne({
+        where: { id: updateAddressDto.id, active: true },
+      });
+
+      if (!establishmet) throw new Error('Estabelecimento não encontrado');
+
+      const addressEstablishment = await AddressEstablishment.findByPk(establishmet.address_id);
 
       if (!addressEstablishment) throw new Error('Endereço do Estabelecimento não encontrado');
 

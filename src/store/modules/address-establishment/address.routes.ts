@@ -6,6 +6,6 @@ const addressEstablishmentController = new AddressEstablishmentController();
 
 const addressRoutes = Router();
 
-addressRoutes.put('/establishments/:id', addressEstablishmentController.update);
+addressRoutes.put('/establishments', addressEstablishmentController.update);
 
 export { addressRoutes }
