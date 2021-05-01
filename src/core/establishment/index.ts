@@ -1,4 +1,4 @@
-import { DataTypes, Sequelize, HasManyGetAssociationsMixin } from 'sequelize';
+import { DataTypes, Sequelize, HasManyGetAssociationsMixin, BelongsToSetAssociationMixin } from 'sequelize';
 import { hashSync } from 'bcryptjs';
 import { setHours, isPast } from 'date-fns';
 
@@ -23,6 +23,7 @@ class Establishment extends UserModel {
 
   public getOrders!: HasManyGetAssociationsMixin<Order>;
   public getMenus!: HasManyGetAssociationsMixin<Menu>;
+  public setImage!: BelongsToSetAssociationMixin<Image, string>;
 
 
   static start(sequelize: Sequelize) {
