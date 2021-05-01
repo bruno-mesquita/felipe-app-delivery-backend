@@ -13,6 +13,7 @@ export class UpdateAdressService {
 
       const establishmet = await Establishment.findOne({
         where: { id: updateAddressDto.id, active: true },
+        attributes: ['id', 'address_id'],
       });
 
       if (!establishmet) throw new Error('Estabelecimento não encontrado');

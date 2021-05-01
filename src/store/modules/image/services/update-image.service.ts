@@ -13,6 +13,7 @@ export class UpdateImageService {
 
       const establishment = await Establishment.findOne({
         where: { id: updateImageDto.id, active: true },
+        attributes: ['image_id']
       });
 
       if (!establishment) throw new Error('Estabelecimento não encontrado');
