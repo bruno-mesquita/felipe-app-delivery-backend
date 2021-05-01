@@ -9,6 +9,6 @@ menuRoutes.post('/menus', menuController.create);
 menuRoutes.get('/menus', menuController.list);
 menuRoutes.get('/menus/:id', menuController.findOne);
 menuRoutes.put('/menus/:id', menuController.update);
-menuRoutes.delete('/menus', menuController.delete);
+menuRoutes.delete('/menus/:id', menuController.delete);
 
 export { menuRoutes };
