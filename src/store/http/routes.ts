@@ -9,6 +9,7 @@ import { addressRoutes } from '@store/modules/address-establishment/address.rout
 import { imagesRoutes } from '@store/modules/image/image.routes';
 import listRatesRoutes from '@store/modules/rate/rate.routes';
 import { addressStateRoutes } from '@store/modules/address-state';
+import { routesOrders } from '@store/modules/orders/orders.routes';
 
 import isAuthenticated from '@shared/middlewares/is-authenticated';
 
@@ -24,5 +25,6 @@ routes.use(termsOfUseRoutes);
 routes.use(addressRoutes);
 routes.use(imagesRoutes);
 routes.use(listRatesRoutes);
+routes.use(routesOrders);
 
 export default routes;
