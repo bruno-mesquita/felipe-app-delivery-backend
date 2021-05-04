@@ -1,42 +1,36 @@
 import { Op } from "sequelize";
-
 import AddressClient from "@core/address-client";
+import City from "@core/city";
 import Establishment from "@core/establishment";
 import Order from "@core/order";
-import { ServiceResponse } from "@shared/utils/service-response";
-import { ListOrdersDto } from '../../dtos/list-orders-types.dto';
 import State from "@core/state";
-import City from "@core/city";
-import Client from "@core/client";
+import { ServiceResponse } from "@shared/utils/service-response";
 
-export class ListOrdersForTypesServices {
+export class ListOrderCanceledService {
   static LIMIT = 15;
 
-  async execute({ page, id }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
+  async execute(id: number, page?: number): Promise<ServiceResponse<Order[] | null>> {
     try {
-      const limit = ListOrdersForTypesServices.LIMIT;
-      const offset = ListOrdersForTypesServices.LIMIT * page || 0;
+      const limit = ListOrderCanceledService.LIMIT;
+      const offset = ListOrderCanceledService.LIMIT * page || 0;
 
       const establishment = await Establishment.findByPk(id);
 
       if (!establishment) throw new Error('Estabelecimento não encontrado');
 
-      const orders = await establishment.getOrders({
+      const orderCanceled = await establishment.getOrders({
         where: {
-          order_status: { [Op.between]: ['Cancelado', 'Recebido'] },
+          order_status: 'Cancelado',
+          address_id: { [Op.ne]: null },
+          payment: 'Dinheiro' || 'Cartão de crédito' || 'Cartão de débidto',
         },
-        attributes: ['payment', 'total', 'order_status', 'createdAt'],
+        attributes: ['payment', 'order_status', 'createdAt'],
         include: [
           {
             model: AddressClient,
             as: 'address_client',
-            attributes: ['id', 'street', 'number', 'neighborhood', 'cep', 'city_id'],
+            attributes: ['id', 'client_id', 'nickname', 'street', 'number', 'neighborhood', 'cep', 'city_id'],
             include: [
-              {
-                model: Client,
-                as: 'client',
-                attributes: ['name', 'cellphone'],
-              },
               {
                 model: City,
                 as: 'city',
@@ -56,7 +50,7 @@ export class ListOrdersForTypesServices {
         offset,
       });
 
-      return { result: orders, err: null };
+      return { result: orderCanceled, err: null }
     } catch(err) {
       return { result: [], err: err.message };
     }

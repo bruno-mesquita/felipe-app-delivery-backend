@@ -23,9 +23,10 @@ class AddressClient extends AddressModel {
     return this;
   }
 
-  static associate({ City, Order }) {
+  static associate({ City, Order, Client }) {
     this.belongsTo(City, { foreignKey: 'city_id', as: 'city' });
     this.hasMany(Order, { foreignKey: 'address_id', as: 'orders', sourceKey: 'id' });
+    this.belongsTo(Client, { foreignKey: 'client_id', as: 'client' });
   }
 
   public getNickname(): string {
