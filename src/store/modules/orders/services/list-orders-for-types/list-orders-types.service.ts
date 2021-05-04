@@ -23,7 +23,7 @@ export class ListOrdersForTypesServices {
 
       const orders = await establishment.getOrders({
         where: {
-          order_status: { [Op.between]: ['Cancelado', 'Recebido'] },
+          order_status: { [Op.or]: ['Cancelado', 'Recebido'] },
         },
         attributes: ['payment', 'total', 'order_status', 'createdAt'],
         include: [
