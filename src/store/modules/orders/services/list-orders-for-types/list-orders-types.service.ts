@@ -32,7 +32,7 @@ export class ListOrdersForTypesServices {
         where: {
           order_status: types === 'Aberto' ? [types, 'Em andamento'] : types,
         },
-        attributes: ['payment', 'total', 'order_status', 'createdAt'],
+        attributes: ['id', 'payment', 'total', 'order_status', 'createdAt'],
         include: [
           {
             model: AddressClient,
