@@ -1,24 +1,22 @@
-import { Op } from "sequelize/types";
 import Order from "@core/order";
 import { ServiceResponse } from "@shared/utils/service-response";
 import { UpdateOrderStatusDto } from '../../dtos/update-order.dto';
 import { schema } from '../../validations/update-order-status.validation';
 
 export class UpdateOrderStatusServices {
-  async execute({ id, order_status }: UpdateOrderStatusDto): Promise<ServiceResponse<boolean>> {
+  async execute({ id, establishmentId }: UpdateOrderStatusDto): Promise<ServiceResponse<boolean>> {
     try {
-      console.log({ id, order_status });
-      const valid = schema.isValidSync({ id, order_status });
+      const valid = schema.isValidSync({ id, establishmentId });
 
       if (!valid) throw new Error('Dados inválidos');
 
       const order = await Order.findOne({
-        where: { id, order_status },
+        where: { id, establishment_id: establishmentId },
       });
 
       if (!order) throw new Error('Pedido não encontrado');
 
-      order.setOrderStatus(order_status);
+      order.nextStatus();
 
       await order.save();
 
