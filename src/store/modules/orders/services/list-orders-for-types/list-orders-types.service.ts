@@ -8,14 +8,21 @@ import { ListOrdersDto } from '../../dtos/list-orders-types.dto';
 import State from "@core/state";
 import City from "@core/city";
 import Client from "@core/client";
+import { schema } from '../../validations/list-orders-types.validation';
 
 export class ListOrdersForTypesServices {
   static LIMIT = 15;
 
-  async execute({ page, id }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
+  async execute({ page = 0, id, types }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
     try {
+      console.log({ page, id, types })
+      const valid = schema.isValidSync({ page, id, types });
+
+      if (!valid) throw new Error('Dados inválidos');
+
       const limit = ListOrdersForTypesServices.LIMIT;
-      const offset = ListOrdersForTypesServices.LIMIT * page || 0;
+      const offset = ListOrdersForTypesServices.LIMIT * page;
+
 
       const establishment = await Establishment.findByPk(id);
 
@@ -23,7 +30,7 @@ export class ListOrdersForTypesServices {
 
       const orders = await establishment.getOrders({
         where: {
-          order_status: { [Op.or]: ['Cancelado', 'Recebido'] },
+          order_status: types === 'Aberto' ? [types, 'Em andamento'] : types,
         },
         attributes: ['payment', 'total', 'order_status', 'createdAt'],
         include: [

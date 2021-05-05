@@ -22,7 +22,7 @@ export class OrdersController {
     try {
       const listOrdersForTypesServices = new ListOrdersForTypesServices();
 
-      const listOrders = await listOrdersForTypesServices.execute({ ...req.body, id: req.client.id });
+      const listOrders = await listOrdersForTypesServices.execute({ ...req.body, id: req.client.id, types: req.query.types });
 
       if (listOrders.err) throw new Error(listOrders.err);
 
