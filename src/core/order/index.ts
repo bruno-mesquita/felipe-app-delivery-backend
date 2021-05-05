@@ -42,6 +42,10 @@ class Order extends Model {
     return this.client_order_status;
   }
 
+  public setOrderStatus(order_status: StatusOrderType): void {
+    this.order_status = order_status;
+  }
+
   public setEvaluationId(evaluationId: number): void {
     this.evaluation_id = evaluationId;
   }

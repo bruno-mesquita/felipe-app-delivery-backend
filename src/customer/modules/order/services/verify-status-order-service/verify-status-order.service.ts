@@ -7,7 +7,7 @@ import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class VerifyStatusOrderService {
-  async execute(id: string): Promise<ServiceResponse<string>> {
+  async execute(id: number): Promise<ServiceResponse<string>> {
     try {
       const order = await Order.findOne({ where: { id }, attributes: ['client_order_status'] });
 
