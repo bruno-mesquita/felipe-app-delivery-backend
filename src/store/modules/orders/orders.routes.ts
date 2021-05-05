@@ -6,6 +6,6 @@ const routesOrders = Router();
 const ordersController = new OrdersController();
 
 routesOrders.get('/list-orders-types', ordersController.listFotTypes);
-routesOrders.get('/show-order', ordersController.showOrder);
+routesOrders.get('/show-order/:id', ordersController.showOrder);
 
 export { routesOrders };

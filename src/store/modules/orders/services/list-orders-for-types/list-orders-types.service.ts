@@ -25,7 +25,7 @@ export class ListOrdersForTypesServices {
         where: {
           order_status: { [Op.or]: ['Cancelado', 'Recebido'] },
         },
-        attributes: ['payment', 'total', 'order_status', 'createdAt'],
+        attributes: ['id', 'payment', 'total', 'order_status', 'createdAt'],
         include: [
           {
             model: AddressClient,

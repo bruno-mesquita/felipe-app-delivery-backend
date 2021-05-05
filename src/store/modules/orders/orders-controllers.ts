@@ -7,7 +7,7 @@ export class OrdersController {
     try {
       const showOrderService = new ShowOrderService();
 
-      const showOrder = await showOrderService.execute({ ...req.body, id: req.client.id });
+      const showOrder = await showOrderService.execute({ id: Number(req.params.id), clientId: req.client.id });
 
       if (showOrder.err) throw new Error(showOrder.err);
 

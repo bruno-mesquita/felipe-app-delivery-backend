@@ -1,4 +1,3 @@
-import Establishment from "@core/establishment";
 import Evaluation from "@core/evaluation";
 import ItemOrder from "@core/item-order";
 import Order from "@core/order";
@@ -15,13 +14,8 @@ export class ShowOrderService {
     try {
       const order = await Order.findOne({
         where: { id },
-        attributes: ['id', 'payment', 'total', 'discount', 'order_status', 'freight_value', 'client_id', 'createdAt'],
+        attributes: ['id', 'payment', 'total', 'discount', 'order_status', 'createdAt'],
         include: [
-          {
-            model: Establishment,
-            as: 'establishment',
-            attributes: ['id', 'name', 'cellphone'],
-          },
           {
             model: Evaluation,
             as: 'evaluation',
