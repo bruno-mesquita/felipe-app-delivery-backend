@@ -1,4 +1,4 @@
-import {  DataTypes, Sequelize, BelongsToGetAssociationMixin } from 'sequelize';
+import {  DataTypes, Sequelize, BelongsToGetAssociationMixin, OrderItem } from 'sequelize';
 
 import Order from '@core/order';
 import Product from '@core/product';
@@ -27,6 +27,10 @@ class ItemOrder extends Model {
   static associate({ Product, Order }): void {
     this.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
     this.belongsTo(Order, { foreignKey: 'order_id', as: 'order' })
+  }
+
+  getRenatorio(): void {
+    
   }
 }
 
