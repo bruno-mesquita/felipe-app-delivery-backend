@@ -15,7 +15,6 @@ export class ListOrdersForTypesServices {
 
   async execute({ page = 0, id, types }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
     try {
-      console.log({ page, id, types })
       const valid = schema.isValidSync({ page, id, types });
 
       if (!valid) throw new Error('Dados inválidos');

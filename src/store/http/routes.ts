@@ -10,6 +10,7 @@ import { imagesRoutes } from '@store/modules/image/image.routes';
 import listRatesRoutes from '@store/modules/rate/rate.routes';
 import { addressStateRoutes } from '@store/modules/address-state';
 import { routesOrders } from '@store/modules/orders/orders.routes';
+import { routesFinancial } from '@store/modules/financial/financial.routes';
 
 import isAuthenticated from '@shared/middlewares/is-authenticated';
 
@@ -26,5 +27,6 @@ routes.use(addressRoutes);
 routes.use(imagesRoutes);
 routes.use(listRatesRoutes);
 routes.use(routesOrders);
+routes.use(routesFinancial);
 
 export default routes;

@@ -1,10 +1,10 @@
 import { object, SchemaOf, number } from 'yup';
 
-import { UpdateOrderStatusDto } from '../dtos/update-order.dto';
+import { CacelOrderDto } from '../dtos/cancel-order.dto';
 
 const REQUIRED = 'Campo obrigátorio';
 
-const schema: SchemaOf<UpdateOrderStatusDto> = object({
+const schema: SchemaOf<CacelOrderDto> = object({
   id: number().integer().required(REQUIRED),
   establishmentId: number().integer().required(REQUIRED),
 });

@@ -1,4 +1,4 @@
-export interface UpdateOrderStatusDto {
+export interface CacelOrderDto {
   id: number;
   establishmentId: number;
 };
