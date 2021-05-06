@@ -3,12 +3,11 @@ import { Op } from "sequelize";
 import Establishment from "@core/establishment";
 import ItemOrder from "@core/item-order";
 import { ServiceResponse } from "@shared/utils/service-response";
-import { GenerateRenatorioDto } from '../dtos/generate-renatorio.dto';
-import { schema } from '../validation/generate-renatorio.validation';
-import { getDate } from "date-fns";
+import { GenerateReportDto } from '../dtos/generate-report.dto';
+import { schema } from '../validation/generate-report.validation';
 
-export class GenerateRenatorioService {
- async execute({ id, data_initial, data_final }: GenerateRenatorioDto): Promise<ServiceResponse<any[]>> {
+export class GenerateReportService {
+ async execute({ id, data_initial, data_final }: GenerateReportDto): Promise<ServiceResponse<any[]>> {
   try {
     console.log({ id, data_initial, data_final })
     const valid = schema.isValidSync({ id, data_initial, data_final });
