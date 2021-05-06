@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
-import { GenerateRenatorioService } from "./services/generate-renatorio.service";
+import { GenerateReportService } from "./services/generate-report.service";
 
 export class FinancialController {
   async listRenatorio(req: Request, res: Response): Promise<Response> {
     try {
-      const generateRenatorio = new GenerateRenatorioService();
+      const generateRenatorio = new GenerateReportService();
 
       const renatorio = await generateRenatorio.execute({
         id: Number(req.client.id),
