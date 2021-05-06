@@ -6,12 +6,18 @@ import AddressClient from '@core/address-client';
 import AddressEstablishment from '@core/address-establishment';
 import Category from '@core/category';
 import Establishment from '@core/establishment';
+import EstablishmentCategory from '@core/establishment-category';
 import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 class ListEstablishmentService {
-  async execute(categoryId: string, clientId: number, page: number = 1): Promise<ServiceResponse<any[]>> {
+  static LIMIT = 15
+
+  async execute(categoryId: string, clientId: number, page = 0): Promise<ServiceResponse<any[]>> {
     try {
+      const limit = ListEstablishmentService.LIMIT;
+      const offset = ListEstablishmentService.LIMIT * page;
+
       const category = await Category.findByPk(categoryId);
 
       if(!category) throw new Error('Categoria não encontrada');
@@ -23,7 +29,7 @@ class ListEstablishmentService {
 
       if(!addressClient) throw new Error('Endereço não encontrado');
 
-      const establishments = (await Establishment.findAll({
+      const establishments = await Establishment.findAll({
         where: { active: true },
         attributes: ['id', 'name' ,'openingTime', 'closingTime', 'freightValue'],
         include: [
@@ -36,32 +42,18 @@ class ListEstablishmentService {
             model: AddressEstablishment,
             as: 'address',
             where: { city_id: addressClient.city_id },
-            attributes: { exclude: ['createdAt', 'updatedAt', 'city_id'] }
+            attributes: ['city_id'],
           },
           {
-            model: Category,
-            attributes: ['id'],
-            through: {
-              as: 'establishment_category',
-              attributes: ['category_id'],
-              where: { category_id: categoryId }
-            }
+            model: EstablishmentCategory,
+            as:  'establishments',
+            attributes: ['category_id'],
+            where: { category_id: categoryId }
           }
         ],
-        order: [['evaluation', 'asc']],
-        limit: 15,
-        offset: page * 15,
-      })).map(item => ({
-        id: item.id,
-        name: item.name,
-        image: item.image.encoded,
-        address: item.address,
-        openingTime: item.openingTime,
-        closingTime: item.closingTime,
-        freightValue: item.freightValue,
-        evaluation: item.evaluation,
-        isOpen: item.isOpen(),
-      }))
+        limit,
+        offset,
+      })
 
 
       return { result: establishments, err: null };

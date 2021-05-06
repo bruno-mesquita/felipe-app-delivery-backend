@@ -3,13 +3,18 @@ import Menu from '@core/menu';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class FindProductsByMenuService {
-  async execute(menuId: string, page: number = 1): Promise<ServiceResponse<any[]>> {
+  static LIMIT = 15;
+
+  async execute(menuId: string, page = 0): Promise<ServiceResponse<any[]>> {
     try {
-      const menu = await Menu.findByPk(menuId);
+      const limit = FindProductsByMenuService.LIMIT;
+      const offset = FindProductsByMenuService.LIMIT * page;
+
+      const menu = await Menu.findOne({ where: { id: menuId }, attributes: ['id'] });
 
       if(!menu) throw new Error('Menu não encontrado');
 
-      const products = (await menu.getProducts({
+      const products = await menu.getProducts({
         attributes: ['id', 'name', 'price', 'description'],
         include: [
           {
@@ -18,15 +23,9 @@ export class FindProductsByMenuService {
             attributes: ['encoded']
           }
         ],
-        limit: 15,
-        offset: page * 15,
-      })).map(item => ({
-        id: item.id,
-        name: item.name,
-        photo: item.photo.encoded,
-        description: item.description,
-        price: item.price,
-      }));
+        limit,
+        offset
+      });
 
       return { result: products, err: null };
     } catch (err) {

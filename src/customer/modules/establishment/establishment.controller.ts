@@ -1,15 +1,31 @@
 import { Request, Response } from 'express';
 
-import { ListEstablishmentService, FindOneEstablishmentService, SearchEstablishmentsByName } from './services';
+import { ListEstablishmentService, FindOneEstablishmentService, SearchEstablishmentsByName, ListMenusByEstablishmentService } from './services';
 
 class EstablishmentController {
   async list(req: Request, res: Response): Promise<Response> {
     try {
-      const { categoryId, page = 1 }: any = req.query;
+      const { categoryId, page }: any = req.query;
 
       const listEstablishmentService = new ListEstablishmentService();
 
       const response = await listEstablishmentService.execute(categoryId, req.client.id, page);
+
+      if(response.err) throw new Error(response.err);
+
+      return res.json(response);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async listMenus(req: Request, res: Response): Promise<Response> {
+    try {
+      const { id }: any = req.params;
+
+      const listMenusByEstablishmentService = new ListMenusByEstablishmentService();
+
+      const response = await listMenusByEstablishmentService.execute(id);
 
       if(response.err) throw new Error(response.err);
 

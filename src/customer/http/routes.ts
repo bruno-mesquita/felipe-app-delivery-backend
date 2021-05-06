@@ -77,6 +77,7 @@ routes.get('/categories', isAuthenticated, categoryController.getAll);
 routes.get('/establishments/:id', isAuthenticated, establishmentController.findOne);
 routes.post('/establishments-by-name', isAuthenticated, establishmentController.searchByName);
 routes.get('/establishments', isAuthenticated, establishmentController.list);
+routes.get('/establishments/:id/menus', isAuthenticated, establishmentController.listMenus);
 
 // menu
 routes.get('/menus/:id/products', isAuthenticated, menuController.findProductsByMenu);

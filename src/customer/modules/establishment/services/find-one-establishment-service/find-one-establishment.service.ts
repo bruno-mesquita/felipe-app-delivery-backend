@@ -23,18 +23,9 @@ export class FindOneEstablishmentService {
         ]
       })
 
-      const result = {
-        id: establishment.id,
-        name: establishment.name,
-        freightValue: establishment.freightValue,
-        image: establishment.image.encoded,
-        menus: establishment.menus,
-        isOpen: establishment.isOpen(),
-      };
-
-      return { result, err: null };
+      return { result: establishment, err: null };
     } catch (err) {
-      return { result: [null], err: err.message };
+      return { result: null, err: err.message };
     }
   }
 }
