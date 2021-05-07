@@ -11,6 +11,7 @@ import { ClientAddressController } from '../modules/address-client';
 import { AddressStateController } from '../modules/address-state';
 import { OrderController } from '../modules/order';
 import { MenuController } from '../modules/menus';
+import { RateController } from '../modules/rate';
 import { TermsOfUseController } from '@customer/modules/terms-of-use/terms-of-use.controller';
 
 // Controllers
@@ -25,6 +26,7 @@ const establishmentController = new EstablishmentController();
 const menuController = new MenuController();
 const orderController = new OrderController();
 const termsOfUseController = new TermsOfUseController();
+const rateController = new RateController();
 
 const routes = Router();
 
@@ -87,5 +89,7 @@ routes.post('/orders', isAuthenticated, orderController.create);
 routes.get('/orders/:id', isAuthenticated, orderController.show);
 routes.get('/orders/:id/verify', isAuthenticated, orderController.verify);
 routes.post('/orders/:id/rate', isAuthenticated, orderController.rateOrder);
+
+routes.get('/rates/:id', isAuthenticated, rateController.findOne);
 
 export default routes;

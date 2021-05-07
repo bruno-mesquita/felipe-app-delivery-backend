@@ -4,10 +4,10 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { RateOrderDto } from '../dtos/rate-order.dto';
 
 export class RateOrderService {
-  async execute({ value, message, orderId, userId }: RateOrderDto): Promise<ServiceResponse<boolean>> {
+  async execute({ value, message, orderId, clientId }: RateOrderDto): Promise<ServiceResponse<boolean>> {
     try {
       const order = await Order.findOne({
-        where: { id: orderId, user_id: userId },
+        where: { id: orderId, client_id: clientId },
       })
 
       if (!order) throw new Error('Pedido não encontrado');

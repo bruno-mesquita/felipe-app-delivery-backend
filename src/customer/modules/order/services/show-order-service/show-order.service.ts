@@ -14,6 +14,7 @@ class ShowOrderService {
   async execute(id: number): Promise<ServiceResponse<any | null>> {
     try {
       const order = await Order.findOne({
+        where: { id },
         attributes: ['id', 'createdAt', 'total'],
         include: [
           {
@@ -32,6 +33,7 @@ class ShowOrderService {
       if (!order) throw new Error('Pedido não encontrado.');
 
       const itemsOrder = await ItemOrder.findAll({
+        where: { order_id: id },
         attributes: ['quantity', 'total'],
         include: [
           {

@@ -57,9 +57,11 @@ export class OrderController {
 
   async rateOrder(req: Request, res: Response): Promise<Response> {
     try {
+      const { id } = req.params;
+
       const rateOrderService = new RateOrderService();
 
-      const order = await rateOrderService.execute({ ...req.body, id: req.client.id });
+      const order = await rateOrderService.execute({ ...req.body, clientId: req.client.id, orderId: Number(id) });
 
       if (order.err) throw new Error(order.err);
 

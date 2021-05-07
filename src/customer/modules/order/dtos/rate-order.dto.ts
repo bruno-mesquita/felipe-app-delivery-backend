@@ -1,6 +1,6 @@
 export interface RateOrderDto {
   value: number;
   message: string;
-  orderId: string;
-  userId: string;
+  orderId: number;
+  clientId: number;
 }

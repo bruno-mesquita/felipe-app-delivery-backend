@@ -22,7 +22,7 @@ export class ListOrdersService {
           {
             model: Establishment,
             as: 'establishment',
-            attributes: ['id', 'name'],
+            attributes: ['name'],
           },
           {
             model: Evaluation,
