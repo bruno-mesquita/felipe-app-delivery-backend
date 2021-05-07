@@ -45,6 +45,7 @@ export class GenerateReportService {
             'client_order_status',
             'order_status',
             'freight_value',
+            'createdAt'
           ],
           include: [
             {
