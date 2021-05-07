@@ -5,8 +5,13 @@ import Evaluation from '@core/evaluation';
 import Establishment from '@core/establishment';
 
 export class ListOrdersService {
+  static LIMIT = 15;
+
   async execute(userId: number, page = 0): Promise<ServiceResponse<Order[]>> {
     try {
+      const limit = ListOrdersService.LIMIT;
+      const offset = ListOrdersService.LIMIT * page;
+
       const client = await Client.findOne({ where: { id: userId, active: true } });
 
       if(!client) throw new Error('Cliente não encontrado');
@@ -26,8 +31,8 @@ export class ListOrdersService {
           }
         ],
         order: [['createdAt', 'asc']],
-        limit: 15,
-        offset: page * 15,
+        limit,
+        offset,
       });
 
       return { err: null, result: orders };

@@ -13,7 +13,7 @@ class VerifyStatusOrderService {
 
       if (!order) throw new Error('Pedido não encontrado.');
 
-      return { result: order.getClientOrderStatus(), err: null };
+      return { result: order.client_order_status, err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }

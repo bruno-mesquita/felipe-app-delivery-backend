@@ -90,7 +90,7 @@ export class CreateOrderService {
 
       await order.save();
 
-      return { result: { totalOrder }, err: null };
+      return { result: order.id, err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }

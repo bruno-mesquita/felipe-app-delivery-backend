@@ -16,7 +16,7 @@ export class OrderController {
       const { id } = req.params;
       const verifyStatusOrderService = new VerifyStatusOrderService();
 
-      const order = await verifyStatusOrderService.execute(id);
+      const order = await verifyStatusOrderService.execute(Number(id));
 
       if (!order) throw new Error(order.err);
 
@@ -45,7 +45,7 @@ export class OrderController {
     try {
       const createOrderService = new CreateOrderService();
 
-      const order = await createOrderService.execute(req.body);
+      const order = await createOrderService.execute({ ...req.body, client_id: req.client.id });
 
       if (order.err) throw new Error(order.err);
 

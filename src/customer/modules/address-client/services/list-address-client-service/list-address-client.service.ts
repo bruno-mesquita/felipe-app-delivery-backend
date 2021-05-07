@@ -10,7 +10,7 @@ export class ListAddressClientService {
 
       if(!client) throw new Error('Cliente não encontrado');
 
-      const adresses = (await client.getAdresses({
+      const adresses = await client.getAdresses({
         attributes: ['id', 'nickname', 'street', 'number', 'neighborhood', 'cep', 'active'],
         include: [
           {
@@ -26,11 +26,7 @@ export class ListAddressClientService {
             ]
           }
         ]
-      })).map((item: any) => ({
-        ...item.toJSON(),
-        city: item.city.name,
-        state: item.city.state.name
-      }));
+      })
 
       return { err: null, result: adresses };
     } catch (err) {
