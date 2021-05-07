@@ -28,10 +28,6 @@ class ItemOrder extends Model {
     this.belongsTo(Product, { foreignKey: 'product_id', as: 'product' })
     this.belongsTo(Order, { foreignKey: 'order_id', as: 'order' })
   }
-
-  getRenatorio(): void {
-    
-  }
 }
 
 export default ItemOrder;

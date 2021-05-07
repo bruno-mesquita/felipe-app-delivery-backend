@@ -5,11 +5,12 @@ import ItemOrder from "@core/item-order";
 import { ServiceResponse } from "@shared/utils/service-response";
 import { GenerateReportDto } from '../dtos/generate-report.dto';
 import { schema } from '../validation/generate-report.validation';
+import Order from "@core/order";
+import Evaluation from "@core/evaluation";
 
 export class GenerateReportService {
- async execute({ id, data_initial, data_final }: GenerateReportDto): Promise<ServiceResponse<any[]>> {
+ async execute({ id, data_initial, data_final }: GenerateReportDto): Promise<ServiceResponse<any>> {
   try {
-    console.log({ id, data_initial, data_final })
     const valid = schema.isValidSync({ id, data_initial, data_final });
 
     if (!valid) throw new Error('Dados Inválidos');
@@ -18,21 +19,46 @@ export class GenerateReportService {
 
     if (!establishment) throw new Error('Estabelecimento não encontrado');
 
-    const convert = new Date();
-    convert.setDate(convert.getDate());
+    // Formatar e Converter String para Date
 
-    const init = convert.toLocaleDateString();
-    const final = convert.toLocaleDateString();
+    const dataI = data_initial.split('/');
+    const dataF = data_final.split('/');
 
-    console.log({ init, final });
+    const formatToStringI = dataI[1] + '-' + dataI[0] + '-' + dataI[2];
+    const formatToStringF = dataF[1] + '-' + dataF[0] + '-' + dataF[2];
 
-    // pegar data de inicio e data final
-    const renatorio = await ItemOrder.findAll({
-      where: { createdAt: { data_initial, data_final } },
-      attributes: ['id', 'quantity', 'total', 'product_id', 'order_id', 'createdAt'],
+    const dataInit = new Date(formatToStringI);
+    const dataFinal = new Date(formatToStringF);
+
+    const report = await ItemOrder.findAll({
+      where: { createdAt: { [Op.between]: [dataInit, dataFinal] } },
+      attributes: ['id', 'quantity', 'total'],
+      include: [
+        {
+          model: Order,
+          as: 'order',
+          attributes: [
+            'id',
+            'payment',
+            'total',
+            'discount',
+            'client_order_status',
+            'order_status',
+            'freight_value',
+            'createdAt'
+          ],
+          include: [
+            {
+              model: Evaluation,
+              as: 'evaluation',
+              attributes: ['value', 'message'],
+            }
+          ]
+        },
+      ]
     });
 
-    return { result: renatorio, err: null };
+    return { result: report, err: null };
   } catch(err) {
     return { result: [], err: err.message };
   }
