@@ -29,7 +29,7 @@ class ClientAddressController {
     try {
       const listAddressClientService = new ListAddressClientService();
 
-      const clientAddress = await listAddressClientService.execute(req.client.id);
+      const clientAddress = await listAddressClientService.execute(req.client.id, Number(req.query.page || 0));
 
       if (clientAddress.err) throw new Error(clientAddress.err);
 

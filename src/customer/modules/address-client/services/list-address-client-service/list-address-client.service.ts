@@ -4,8 +4,13 @@ import City from '@core/city';
 import State from '@core/state';
 
 export class ListAddressClientService {
-  async execute(userId: number): Promise<ServiceResponse<any>> {
+  static LIMIT = 15;
+
+  async execute(userId: number, page = 0): Promise<ServiceResponse<any>> {
     try {
+      const limit = ListAddressClientService.LIMIT;
+      const offset = ListAddressClientService.LIMIT * page;
+
       const client = await Client.findByPk(userId);
 
       if(!client) throw new Error('Cliente não encontrado');
@@ -25,7 +30,9 @@ export class ListAddressClientService {
               }
             ]
           }
-        ]
+        ],
+        limit,
+        offset,
       })
 
       return { err: null, result: adresses };
