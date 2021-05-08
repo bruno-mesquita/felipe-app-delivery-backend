@@ -9,6 +9,7 @@ import ItemOrder from '@core/item-order';
 import { ServiceResponse } from '@shared/utils/service-response';
 import Product from '@core/product';
 import Evaluation from '@core/evaluation';
+import AddressClient from '@core/address-client';
 
 class ShowOrderService {
   async execute(id: number): Promise<ServiceResponse<any | null>> {
@@ -20,13 +21,18 @@ class ShowOrderService {
           {
             model: Establishment,
             as: 'establishment',
-            attributes: ['id', 'name', 'freightValue'],
+            attributes: ['id', 'name'],
           },
           {
             model: Evaluation,
             as: 'evaluation',
             attributes: ['id', 'value', 'message']
           },
+          {
+            model: AddressClient,
+            as: 'address_client',
+            attributes: ['nickname'],
+          }
         ]
       });
 
