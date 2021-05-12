@@ -12,7 +12,6 @@ import { CreateClientDto } from '../../dtos/create-client-dto';
 import createClientSchema from '../../validation/create-client.validation';
 import Client from '@core/client';
 import City from '@core/city';
-import AddressClient from '@core/address-client';
 import ClientActivationCode from '@core/client-activation-code';
 
 const UNINFORMED = 'Não informado';
@@ -55,7 +54,7 @@ class CreateClientService {
 
       if (!city) throw new Error('Cidade não encontrada');
 
-      await AddressClient.create({
+      await user.createAdress({
         city_id: city.id,
         neighborhood: UNINFORMED,
         cep: UNINFORMED,
@@ -63,7 +62,6 @@ class CreateClientService {
         number: UNINFORMED,
         nickname: 'Meu endereço',
         active: true,
-        client_id: user.id
       });
 
 
