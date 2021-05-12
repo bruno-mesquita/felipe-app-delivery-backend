@@ -21,9 +21,11 @@ export class OrdersController {
 
   async listFotTypes(req: Request, res: Response): Promise<Response> {
     try {
+      const { page = 0, type } = req.query;
+
       const listOrdersForTypesServices = new ListOrdersForTypesServices();
 
-      const listOrders = await listOrdersForTypesServices.execute({ ...req.body, id: req.client.id, types: req.query.types });
+      const listOrders = await listOrdersForTypesServices.execute({ id: req.client.id, type: type as any, page: Number(page) });
 
       if (listOrders.err) throw new Error(listOrders.err);
 

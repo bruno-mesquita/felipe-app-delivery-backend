@@ -13,15 +13,14 @@ import { schema } from '../../validations/list-orders-types.validation';
 export class ListOrdersForTypesServices {
   static LIMIT = 15;
 
-  async execute({ page = 0, id, types }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
+  async execute({ page = 0, id, type }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
     try {
-      const valid = schema.isValidSync({ page, id, types });
+      const valid = schema.isValidSync({ page, id, type });
 
       if (!valid) throw new Error('Dados inválidos');
 
       const limit = ListOrdersForTypesServices.LIMIT;
       const offset = ListOrdersForTypesServices.LIMIT * page;
-
 
       const establishment = await Establishment.findByPk(id);
 
@@ -29,7 +28,7 @@ export class ListOrdersForTypesServices {
 
       const orders = await establishment.getOrders({
         where: {
-          order_status: types === 'Aberto' ? [types, 'Em andamento'] : types,
+          order_status: type === 'Aberto' ? [type, 'Em andamento'] : type,
         },
         attributes: ['id', 'payment', 'total', 'order_status', 'createdAt'],
         include: [
@@ -64,6 +63,7 @@ export class ListOrdersForTypesServices {
 
       return { result: orders, err: null };
     } catch(err) {
+      console.log(err);
       return { result: [], err: err.message };
     }
   }

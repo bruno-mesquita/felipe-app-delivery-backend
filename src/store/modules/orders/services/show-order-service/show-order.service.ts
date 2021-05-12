@@ -27,6 +27,7 @@ export class ShowOrderService {
       if (!order) throw new Error('Pedido não encontrado');
 
       const itemsOrder = await ItemOrder.findAll({
+        where: { order_id: id },
         attributes: ['quantity', 'total'],
         include: [
           {

@@ -23,6 +23,7 @@ export class ListRateService {
           order_status: 'Finalizado',
           evaluation_id: { [Op.ne]: null },
         },
+        attributes: ['total', 'createdAt'],
         include: [
           {
             model: Evaluation,
