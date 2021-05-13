@@ -4,17 +4,17 @@ import { GenerateReportService } from "./services/generate-report.service";
 export class FinancialController {
   async listRenatorio(req: Request, res: Response): Promise<Response> {
     try {
-      const generateRenatorio = new GenerateReportService();
+      const generateReportService = new GenerateReportService();
 
-      const renatorio = await generateRenatorio.execute({
+      const report = await generateReportService.execute({
         id: Number(req.client.id),
         data_initial: String(req.query.data_initial),
         data_final: String(req.query.data_final)
       });
 
-      if (renatorio.err) throw new Error(renatorio.err);
+      if (report.err) throw new Error(report.err);
 
-      return res.status(200).json(renatorio);
+      return res.status(200).json(report);
     } catch(err) {
       return res.status(400).json({ err: err.message });
     }
