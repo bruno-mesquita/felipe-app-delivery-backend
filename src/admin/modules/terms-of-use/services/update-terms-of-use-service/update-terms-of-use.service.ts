@@ -4,13 +4,15 @@ import { UpdateTermsOfUseDto } from '../../dtos/update-terms-of-use.dto';
 import { schema } from '../../validations/update-state.validation';
 
 export class UpdateTermsOfUseService {
-  async execute(updateTermsOfUseDto: UpdateTermsOfUseDto): Promise<ServiceResponse<boolean>> {
+  async execute(updateTermsOfUseDto: UpdateTermsOfUseDto): Promise<ServiceResponse<any>> {
     try {
       const valid = schema.isValidSync(updateTermsOfUseDto);
 
       if (!valid) throw new  Error('Dados inválidos');
 
-      const termsOfUse = await TermsOfUse.findByPk(updateTermsOfUseDto.id);
+      const termsOfUse = await TermsOfUse.findOne({
+        where: { id: updateTermsOfUseDto.id }
+      });
 
       if (!termsOfUse) throw new Error('Termos de uso não encontrado');
 
@@ -20,7 +22,7 @@ export class UpdateTermsOfUseService {
 
       await termsOfUse.save();
 
-      return{ result: true, err: null }
+      return{ result: termsOfUse.id, err: null };
     } catch(err) {
       return { result: false, err: err.message };
     }
