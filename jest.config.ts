@@ -3,7 +3,7 @@
  * https://jestjs.io/docs/en/configuration.html
  */
 
-import { pathsToModuleNameMapper } from 'ts-jest/utils'; // eslint-disable-line
+// import { pathsToModuleNameMapper } from 'ts-jest/utils'; // eslint-disable-line
 
 import { compilerOptions } from './tsconfig.json';
 
@@ -14,7 +14,7 @@ export default {
 
   // Stop running tests after `n` failures
 
-  // bail: 0,
+  bail: true,
 
   // The directory where Jest should store its cached dependency information
 
@@ -105,9 +105,9 @@ export default {
 
   // A map from regular expressions to module names or to arrays of module names that allow to stub out resources with a single module
 
-  moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
-    prefix: '<rootDir>',
-  }),
+  // moduleNameMapper: pathsToModuleNameMapper(compilerOptions.paths, {
+  //   prefix: '<rootDir>',
+  // }),
 
   // An array of regexp pattern strings, matched against all module paths before considered 'visible' to the module loader
 
@@ -195,13 +195,11 @@ export default {
 
   // The glob patterns Jest uses to detect test files
 
-  // testMatch: [
-
-  //   "**/__tests__/**/*.[jt]s?(x)",
-
-  //   "**/?(*.)+(spec|test).[tj]s?(x)"
-
-  // ],
+  testMatch: [
+    "**/src/admin/__tests__/**/*.test.ts?(x)",
+    "**/src/store/__tests__/**/*.test.ts?(x)",
+    "**/src/customer/__tests__/**/*.test.ts?(x)",
+  ],
 
   // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
 

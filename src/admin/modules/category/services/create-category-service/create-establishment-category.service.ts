@@ -4,9 +4,8 @@ import { CreateCategoryDtos } from '../../dtos/create-category.dtos';
 import { schema } from '../../validation/create-category.validation';
 
 export class CreateCategoryService {
-  async execute(createCategoryDto: CreateCategoryDtos): Promise<ServiceResponse<Category | null>> {
+  async execute(createCategoryDto: CreateCategoryDtos): Promise<ServiceResponse<any | null>> {
     try {
-      console.log(createCategoryDto);
       // Validação
       const valid = schema.isValidSync(createCategoryDto);
 
@@ -24,7 +23,7 @@ export class CreateCategoryService {
 
       const category = await Category.create(createCategoryDto);
 
-      return { result: category, err: null };
+      return { result: category.id, err: null };
     } catch (err) {
       return { result: null, err: err.message };
     }
