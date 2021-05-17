@@ -38,7 +38,7 @@ class ProductController {
 
       const listProductsService = new ListProductsService();
 
-      const products = await listProductsService.execute(Number(page));
+      const products = await listProductsService.execute(Number(req.client.id), Number(page));
 
       if (products.err) throw new Error(products.err);
 
