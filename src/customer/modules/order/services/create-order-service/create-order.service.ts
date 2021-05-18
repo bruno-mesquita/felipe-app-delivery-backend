@@ -92,8 +92,6 @@ export class CreateOrderService {
 
       const totalOrder = order.calcTotal();
 
-      console.log(totalOrder);
-
       // Salvando produto no db
 
       await order.save();
