@@ -5,6 +5,7 @@
  * @author Jonatas Rosa Moura
 
  */
+import { Op } from 'sequelize';
 import AddressClient from '@core/address-client';
 import Client from '@core/client';
 import Establishment from '@core/establishment';
@@ -37,9 +38,18 @@ export class CreateOrderService {
 
       // Verificando endereço do cliente
 
-      const addressExists = await AddressClient.findByPk(createOrderDto.address_id);
+      const addressExists = await AddressClient.findOne({
+        where: {
+          id: createOrderDto.address_id,
+          street: { [Op.notIn]: ['Não informado', ''] },
+          neighborhood: { [Op.notIn]: ['Não informado', ''] },
+          number: { [Op.notIn]: ['Não informado', ''] },
+        },
+      });
 
-      if (!addressExists) throw new Error('Endereço do cliente não encontrado');
+      if (!addressExists) {
+        throw new Error('Endereço do cliente não encontrado');
+      }
 
       // Buscando o pedido
 
@@ -51,8 +61,6 @@ export class CreateOrderService {
         payment: createOrderDto.payment,
         total: createOrderDto.total,
       });
-
-      // console.log(order.id);
 
       order.open();
 
