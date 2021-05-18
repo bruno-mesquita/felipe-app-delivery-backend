@@ -60,8 +60,8 @@ routes.get('/clients/orders', isAuthenticated, clientController.listOrdersByClie
 routes.post('/clients/me', isAuthenticated, clientController.profile);
 
 // Avatar
-routes.post('/avatar', avatarController.create);
-routes.get('/avatar', avatarController.findOneAvatarByUserId);
+routes.post('/avatar', isAuthenticated,  avatarController.create);
+routes.get('/avatar', isAuthenticated, avatarController.findOneAvatarByUserId);
 
 // Endereços do cliente
 routes.get('/adresses-client', isAuthenticated, clientAddressController.list);
