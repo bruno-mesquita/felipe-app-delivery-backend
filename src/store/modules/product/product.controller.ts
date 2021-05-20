@@ -21,7 +21,6 @@ class ProductController {
       const searchNameProductsService = new SearchNameProductsService();
       const { search } = req.query;
 
-      console.log(search);
       const products = await searchNameProductsService.execute(search as string, req.client.id);
 
       if (products.err) throw new Error(products.err);
@@ -54,7 +53,7 @@ class ProductController {
 
       const productService = new ShowProductService();
 
-      const product = await productService.execute(Number(id));
+      const product = await productService.execute(Number(id), Number(req.client.id));
 
       if (product.err) throw new Error(product.err);
 

@@ -4,11 +4,12 @@
  */
 
 import Image from '@core/image';
+import Menu from '@core/menu';
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class ShowProductService {
-  async execute(id: number): Promise<ServiceResponse<Product | null>> {
+  async execute(id: number, establishmentId: number): Promise<ServiceResponse<Product | null>> {
     try {
       const product = await Product.findOne({
         where: { id },
@@ -18,6 +19,11 @@ export class ShowProductService {
             model: Image,
             as: 'photo',
             attributes: ['encoded']
+          },
+          {
+            model: Menu,
+            as: 'menu',
+            where: { establishment_id: establishmentId },
           }
         ]
       });
