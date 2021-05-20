@@ -10,11 +10,8 @@ import { ServiceResponse } from '@shared/utils/service-response';
 export class ShowProductService {
   async execute(id: number): Promise<ServiceResponse<Product | null>> {
     try {
-      const productExists = await Product.findByPk(id);
-
-      if (!productExists) throw new Error('Produto não encontrado.');
-
       const product = await Product.findOne({
+        where: { id },
         attributes: ['id', 'name', 'price', 'description', 'menu_id', 'active'],
         include: [
           {
