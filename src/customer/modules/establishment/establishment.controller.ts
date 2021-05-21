@@ -41,7 +41,7 @@ class EstablishmentController {
 
       const findOneEstablishmentService = new FindOneEstablishmentService();
 
-      const response = await findOneEstablishmentService.execute(id);
+      const response = await findOneEstablishmentService.execute(Number(id));
 
       return res.json(response);
     } catch (err) {

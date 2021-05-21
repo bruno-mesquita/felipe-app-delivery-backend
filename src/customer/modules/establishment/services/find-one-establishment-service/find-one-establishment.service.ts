@@ -4,7 +4,7 @@ import Menu from '@core/menu';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class FindOneEstablishmentService {
-  async execute(id: string): Promise<ServiceResponse<any>> {
+  async execute(id: number): Promise<ServiceResponse<any>> {
     try {
       const establishment = await Establishment.findOne({
         where: { id, active: true },

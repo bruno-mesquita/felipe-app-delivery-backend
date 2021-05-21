@@ -13,7 +13,6 @@ import updateProductValidation from '../../validation/update-product.validation'
 export class UpdateProductService {
   async execute(updateProductDto: UpdateProductDto): Promise<ServiceResponse<boolean>> {
     try {
-      console.log(updateProductDto)
       // validando dto
       const valid = updateProductValidation.isValidSync(updateProductDto);
 
