@@ -49,7 +49,7 @@ module.exports = {
         type: Sequelize.DECIMAL,
         precision: 10,
         scale: 2,
-        allowNull: false,
+        allowNull: true,
       },
       image_id: {
         type: Sequelize.INTEGER,
