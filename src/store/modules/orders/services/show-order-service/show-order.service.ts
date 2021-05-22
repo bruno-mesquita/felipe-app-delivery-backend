@@ -14,7 +14,7 @@ export class ShowOrderService {
     try {
       const order = await Order.findOne({
         where: { id },
-        attributes: ['id', 'payment', 'total', 'discount', 'order_status', 'createdAt'],
+        attributes: ['id', 'payment', 'total', 'discount', 'order_status', 'transshipment', 'note', 'createdAt'],
         include: [
           {
             model: Evaluation,
