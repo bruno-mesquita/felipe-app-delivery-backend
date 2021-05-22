@@ -34,7 +34,6 @@ export class GenerateReportService {
         order_status: 'Finalizado',
       },
       attributes: ['id', 'payment', 'total', 'createdAt'],
-      order: [['createdAt', 'asc']]
     })
 
     return { result: report, err: null };

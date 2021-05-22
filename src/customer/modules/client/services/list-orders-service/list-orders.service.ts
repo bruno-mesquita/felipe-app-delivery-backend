@@ -30,7 +30,7 @@ export class ListOrdersService {
             attributes: ['id', 'value'],
           }
         ],
-        order: [['createdAt', 'asc']],
+        order: [['createdAt', 'desc']],
         limit,
         offset,
       });

@@ -31,6 +31,7 @@ export class ListRateService {
             attributes: ['value', 'message'],
           }
         ],
+        order: [['createdAt', 'desc']],
         limit,
         offset,
       });
