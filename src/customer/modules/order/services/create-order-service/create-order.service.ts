@@ -58,6 +58,8 @@ export class CreateOrderService {
         client_id: clientExists.id,
         address_id: addressExists.id,
         freight_value: establishmentExists.freightValue,
+        transshipment: createOrderDto.transshipment,
+        note: createOrderDto.note,
         payment: createOrderDto.payment,
         total: createOrderDto.total,
       });

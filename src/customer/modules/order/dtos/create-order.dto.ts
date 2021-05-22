@@ -14,6 +14,8 @@ export interface Item {
 
 export interface CreateOrderDto {
   establishment_id: number;
+  transshipment: number;
+  note: string;
   client_id: number;
   address_id: number;
   items: Item[];
