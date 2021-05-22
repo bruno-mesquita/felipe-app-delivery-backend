@@ -1,5 +1,5 @@
 import 'dotenv/config';
-import express, { Router } from 'express';
+import express, { Router, json } from 'express';
 import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
@@ -17,7 +17,7 @@ routes.use('/app', customerRoutes);
 routes.use('/app-store', storeRoutes);
 
 const app = express();
-app.use(express.json({ limit: '20mb' }));
+app.use(json({ limit: '15mb' }));
 app.use(cors());
 app.use(compression());
 app.use(helmet());

@@ -13,6 +13,8 @@ class Order extends Model {
   client_order_status: CustomerStatusType;
   order_status: StatusOrderType;
   freight_value: number;
+  transshipment: number;
+  note: string;
   address_id: number;
   evaluation_id: number;
   establishment_id: number;
@@ -26,6 +28,8 @@ class Order extends Model {
       client_order_status: DataTypes.STRING,
       order_status: DataTypes.STRING,
       freight_value: DataTypes.DECIMAL,
+      transshipment: DataTypes.DECIMAL,
+      note: DataTypes.STRING,
     }, { sequelize, tableName: 'orders' });
 
     return this;

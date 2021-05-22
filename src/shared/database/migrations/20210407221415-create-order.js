@@ -40,6 +40,30 @@ module.exports = {
         scale: 2,
         allowNull: false,
       },
+      transshipment: {
+        type: Sequelize.DECIMAL,
+        precision: 10,
+        scale: 2,
+        allowNull: false,
+      },
+      note: {
+        type: Sequelize.STRING,
+        allowNull: true,
+      },
+      evaluation: {
+        type: Sequelize.DECIMAL,
+        precision: 10,
+        scale: 2,
+        allowNull: true,
+        defaultValue: 0
+      },
+      client_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'clients', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
+        allowNull: false,
+      },
       address_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

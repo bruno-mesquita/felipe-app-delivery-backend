@@ -45,6 +45,12 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
       },
+      evaluation: {
+        type: Sequelize.DECIMAL,
+        precision: 10,
+        scale: 2,
+        allowNull: false,
+      },
       image_id: {
         type: Sequelize.INTEGER,
         allowNull: false,

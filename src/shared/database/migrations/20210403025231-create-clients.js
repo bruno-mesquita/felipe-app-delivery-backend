@@ -34,6 +34,13 @@ module.exports = {
         defaultValue: false,
         allowNull: false,
       },
+      avatar_id: {
+        type: Sequelize.INTEGER,
+        references: { model: 'images', key: 'id' },
+        onUpdate: 'CASCADE',
+        onDelete: 'SET NULL',
+        allowNull: true,
+      },
       created_at: {
         type: Sequelize.DATE,
         allowNull: false,
