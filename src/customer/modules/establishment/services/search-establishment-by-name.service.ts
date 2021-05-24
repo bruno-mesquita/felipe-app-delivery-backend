@@ -30,20 +30,7 @@ export class SearchEstablishmentsByName {
             attributes: { exclude: ['createdAt', 'updatedAt', 'city_id'] }
           },
         ],
-        order: [['evaluation', 'asc']]
-      })).map(item => ({
-        id: item.id,
-        name: item.name,
-        image: item.image.encoded,
-        address: item.address,
-        openingTime: item.openingTime,
-        closingTime: item.closingTime,
-        freightValue: item.freightValue,
-        evaluation: item.evaluation,
-        isOpen: item.isOpen(),
       }))
-
-
 
       return { result: establishments, err: null };
     } catch (err) {
