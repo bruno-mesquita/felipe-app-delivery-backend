@@ -9,8 +9,8 @@ abstract class User extends Model {
   cellphone: string;
   active: boolean;
 
-  public setName(email: string): void {
-    this.name = email;
+  public setName(name: string): void {
+    this.name = name;
   }
 
   public setEmail(email: string): void {
