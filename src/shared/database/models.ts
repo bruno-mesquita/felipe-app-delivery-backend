@@ -15,6 +15,8 @@ import Order from '@core/order';
 import Product from '@core/product';
 import AddressEstablishment from '@core/address-establishment';
 import TermsOfUse from '@core/terms-of-use';
+import { Ticket } from '@core/ticket';
+import { EstablishmentOwner } from '@core/establishment-owner';
 
 export default [
   Image,
@@ -33,7 +35,9 @@ export default [
   Menu,
   Order,
   Product,
-  TermsOfUse
+  TermsOfUse,
+  Ticket,
+  EstablishmentOwner
 ]
 
 

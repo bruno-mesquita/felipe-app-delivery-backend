@@ -13,15 +13,6 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-      },
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-      },
       cellphone: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -55,11 +46,13 @@ module.exports = {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'images', key: 'id' },
+        onDelete: 'CASCADE',
       },
       address_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         references: { model: 'address_establishment', key: 'id' },
+        onDelete: 'CASCADE',
       },
       created_at: {
         type: Sequelize.DATE,

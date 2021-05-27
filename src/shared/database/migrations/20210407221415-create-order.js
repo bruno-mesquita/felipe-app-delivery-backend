@@ -57,6 +57,11 @@ module.exports = {
         allowNull: true,
         defaultValue: 0
       },
+      commission: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+        allowNull: true,
+      },
       client_id: {
         type: Sequelize.INTEGER,
         references: { model: 'clients', key: 'id' },

@@ -2,13 +2,16 @@ import { DataTypes, Sequelize, HasManyGetAssociationsMixin, BelongsToSetAssociat
 import { hashSync } from 'bcryptjs';
 import { setHours, isPast } from 'date-fns';
 
-import UserModel from '../_Bases/user';
+import Model from '../_Bases/model';
 import Image from '@core/image';
 import AddressEstablishment from '@core/address-establishment';
 import Order from '@core/order';
 import Menu from '@core/menu';
 
-class Establishment extends UserModel {
+class Establishment extends Model {
+  name: string;
+  cellphone: string;
+  active: boolean;
   openingTime: number;
   closingTime: number;
   freightValue: number;
@@ -59,19 +62,14 @@ class Establishment extends UserModel {
   }
 
   public updateProfile(
-    name: string, email: string, cellphone: string, openingTime: number, closingTime: number, freightValue: number, active: boolean
+    name: string, cellphone: string, openingTime: number, closingTime: number, freightValue: number, active: boolean
     ): void {
     this.name = name;
-    this.email = email;
     this.cellphone = cellphone;
     this.freightValue = freightValue,
     this.openingTime = openingTime,
     this.closingTime = closingTime,
     this.active = active
-  }
-
-  public setPassword(password: string): void {
-    this.password = hashSync(password, 8);
   }
 
   public isOpen(): boolean {

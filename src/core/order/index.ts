@@ -19,6 +19,7 @@ class Order extends Model {
   evaluation_id: number;
   establishment_id: number;
   client_id: number;
+  commission: boolean;
 
   static start(sequelize: Sequelize) {
     this.init({
@@ -30,6 +31,7 @@ class Order extends Model {
       freight_value: DataTypes.DECIMAL,
       transshipment: DataTypes.DECIMAL,
       note: DataTypes.STRING,
+      commission: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'orders' });
 
     return this;

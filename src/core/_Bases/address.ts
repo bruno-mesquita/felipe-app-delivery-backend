@@ -1,3 +1,5 @@
+import City from '@core/city';
+
 import Model from './model';
 
 abstract class Address extends Model {
@@ -6,6 +8,8 @@ abstract class Address extends Model {
   neighborhood: string;
   cep: string;
   city_id: number;
+
+  public readonly city: City;
 
   public getStreet(): string {
     return this.street;
