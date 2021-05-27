@@ -19,7 +19,9 @@ module.exports = {
         unique: true,
       },
       price: {
-        type: Sequelize.NUMBER,
+        type: Sequelize.DECIMAL,
+        precision: 10,
+        scale: 2,
         allowNull: false,
       },
       status: {
