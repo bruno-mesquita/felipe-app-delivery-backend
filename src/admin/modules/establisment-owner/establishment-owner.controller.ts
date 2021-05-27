@@ -7,7 +7,9 @@ export class EstablishmentOwnerController {
     try {
       const createOwnerService = new CreateOwnerService();
 
-      const result = createOwnerService.execute(req.body);
+      const result = await createOwnerService.execute(req.body);
+
+      if(result.err) throw new Error();
 
       return res.status(201).json(result);
     } catch (err) {

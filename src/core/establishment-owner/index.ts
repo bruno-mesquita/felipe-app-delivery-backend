@@ -8,8 +8,8 @@ import Establishment from '@core/establishment';
 import Model from '../_Bases/model';
 
 export class EstablishmentOwner extends Model {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   password: string;
   email: string;
   cellphone: string;
@@ -20,8 +20,8 @@ export class EstablishmentOwner extends Model {
 
   static start(sequelize: Sequelize) {
     this.init({
-      firstName: DataTypes.STRING,
-      lastName: DataTypes.STRING,
+      first_name: DataTypes.STRING,
+      last_name: DataTypes.STRING,
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       cellphone: DataTypes.STRING,
