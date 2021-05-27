@@ -1,14 +1,16 @@
-import Establishment from '@core/establishment';
 import {
   DataTypes,
   Sequelize,
 } from 'sequelize';
+import { compareSync, hashSync } from 'bcryptjs';
 
+import Establishment from '@core/establishment';
 import Model from '../_Bases/model';
 
 export class EstablishmentOwner extends Model {
   firstName: string;
   lastName: string;
+  password: string;
   email: string;
   cellphone: string;
   cpf: string;
@@ -32,5 +34,17 @@ export class EstablishmentOwner extends Model {
 
   static associate({ Establishment }) {
     this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishment' });
+  }
+
+  public hashPassword(): void {
+    this.password = hashSync(this.password, 8);
+  }
+
+  public comparePassword(comparePassword: string): boolean {
+    return compareSync(comparePassword, this.password);
+  }
+
+  public setPassword(password: string): void {
+    this.password = password;
   }
 }

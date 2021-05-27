@@ -6,7 +6,7 @@
 
 import { Request, Response } from 'express';
 
-import { CreateEstablishmentService, ListEstablishmentService } from './services';
+import { ListEstablishmentService } from './services';
 import ShowEstablishmentService from './services/show-establishment-service/show-establishment.service';
 
 import UpdateProfileEstablishmentService from './services/update-profile-service/update-profile.service';
@@ -22,20 +22,6 @@ class EstablishmentController {
       if (establishment.err) throw new Error(establishment.err);
 
       return res.status(200).json(establishment);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
-  async create(req: Request, res: Response): Promise<Response> {
-    try {
-      const createEstablishmentService = new CreateEstablishmentService();
-
-      const establishment = await createEstablishmentService.execute(req.body);
-
-      if (establishment.err) throw new Error(establishment.err);
-
-      return res.status(201).json(establishment);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

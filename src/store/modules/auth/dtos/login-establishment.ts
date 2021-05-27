@@ -1,4 +1,4 @@
-export interface LoginEstablishmentDto {
+export interface LoginEstablishmentOwnerDto {
   email: string;
   password: string;
 }

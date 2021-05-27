@@ -5,13 +5,13 @@
  */
 
 import { Request, Response } from 'express';
-import { LoginEstablishmentLoginService } from './services/login-service/login-establishment.service';
+import { LoginEstablishmentOwnerService } from './services/login-service/login-establishment-owner.service';
 import { RefrishTokenService } from './services/refresh-token.service';
 
 export class AuthEstablishmentController {
   async login(req: Request, res: Response): Promise<Response> {
     try {
-      const loginService = new LoginEstablishmentLoginService();
+      const loginService = new LoginEstablishmentOwnerService();
 
       const result = await loginService.execute(req.body);
 

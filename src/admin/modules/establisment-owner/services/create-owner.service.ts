@@ -3,7 +3,11 @@ import { EstablishmentOwner } from "@core/establishment-owner"
 export class CreateOwnerService {
   async execute(model: any): Promise<any> {
     try {
-      await EstablishmentOwner.create(model);
+      const owner = new EstablishmentOwner(model);
+
+      owner.hashPassword();
+
+      await owner.save();
 
       return { result: true, err: null };
     } catch (err) {

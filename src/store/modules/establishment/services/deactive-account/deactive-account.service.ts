@@ -8,9 +8,9 @@ export class DeactiveAccountService {
         where: { id, active: true }
       });
 
-      if (!establishment) throw new Error('Estabelecimento não desativado');
+      if (!establishment) throw new Error('Estabelecimento não encontrado');
 
-      establishment.deactivate();
+      establishment.active = false;
 
       await establishment.save();
       return { result: true, err: null }

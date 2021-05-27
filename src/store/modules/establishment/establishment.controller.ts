@@ -5,10 +5,25 @@
    UpdateProfileService,
    ProfileEstablishmentService,
    UpdatePasswordEstabishmentService,
-   DeactiveAccountService
+   DeactiveAccountService,
+   CreateEstablishmentService
  } from './services';
 
 export class EstabishmentController {
+  async create(req: Request, res: Response): Promise<Response> {
+    try {
+      const createEstablishmentService = new CreateEstablishmentService();
+
+      const establishment = await createEstablishmentService.execute({ ...req.body, userId: req.client.id });
+
+      if (establishment.err) throw new Error(establishment.err);
+
+      return res.status(201).json(establishment);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
   async updateProfile(req: Request, res: Response): Promise<Response> {
     try {
       const updateProfileService = new UpdateProfileService();

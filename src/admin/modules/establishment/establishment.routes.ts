@@ -13,7 +13,6 @@ import EstablishmentController from './EstablishmentAdminController';
 const establishmentRouter = Router();
 const establishmentController = new EstablishmentController();
 
-establishmentRouter.post('/establishments', isAuthenticated, accessAdmin, establishmentController.create);
 establishmentRouter.get('/establishments/:id', isAuthenticated, accessAdmin, establishmentController.show);
 establishmentRouter.put('/establishments/:id', isAuthenticated, accessAdmin, establishmentController.updateProfile);
 establishmentRouter.get('/establishments', isAuthenticated, accessAdmin, establishmentController.list);
