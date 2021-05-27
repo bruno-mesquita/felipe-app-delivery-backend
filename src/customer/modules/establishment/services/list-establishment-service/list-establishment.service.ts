@@ -13,12 +13,12 @@ import { ServiceResponse } from '@shared/utils/service-response';
 class ListEstablishmentService {
   static LIMIT = 15
 
-  async execute(categoryId: string, clientId: number, page = 0): Promise<ServiceResponse<any[]>> {
+  async execute(categoryName: string, clientId: number, page = 0): Promise<ServiceResponse<any[]>> {
     try {
       const limit = ListEstablishmentService.LIMIT;
       const offset = ListEstablishmentService.LIMIT * page;
 
-      const category = await Category.findByPk(categoryId);
+      const category = await Category.findOne({ where: { name: categoryName } });
 
       if(!category) throw new Error('Categoria não encontrada');
 
@@ -48,7 +48,7 @@ class ListEstablishmentService {
             model: EstablishmentCategory,
             as:  'establishments',
             attributes: ['category_id'],
-            where: { category_id: categoryId }
+            where: { category_id: category.id }
           }
         ],
         limit,
