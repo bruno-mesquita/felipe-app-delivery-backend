@@ -1,17 +1,24 @@
 import Establishment from '@core/establishment';
+import { EstablishmentOwner } from '@core/establishment-owner';
 import Menu from '@core/menu';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class ListMenuService {
-  async execute(establishmentId: number): Promise<ServiceResponse<Menu[]>> {
+  async execute(ownerId: number): Promise<ServiceResponse<Menu[]>> {
     try {
       // Verificar se o estabelecimento existe.
-      const establishment = await Establishment.findByPk(establishmentId);
+      const owner = await EstablishmentOwner.findOne({
+        where: { id: ownerId },
+        include: [{
+          model: Establishment,
+          attributes: ['id'],
+        }],
+      });
 
-      if (!establishment) throw new Error('Estabelicimento não encontrado.');
+      if (!owner) throw new Error('Estabelicimento não encontrado.');
 
       // Verificando se o menu já existe cadastrado
-      const menus = await establishment.getMenus({ attributes: ['id', 'name'] })
+      const menus = await owner.establishment.getMenus({ attributes: ['id', 'name'] })
 
       return { result: menus, err: null };
     } catch (err) {

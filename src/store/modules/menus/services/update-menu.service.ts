@@ -1,4 +1,4 @@
-import Establishment from '@core/establishment';
+import { EstablishmentOwner } from '@core/establishment-owner';
 import Menu from '@core/menu';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateMenuStablishmentDto } from '../dtos/update-menu.dto';
@@ -13,13 +13,13 @@ export class UpdateMenuService {
       if (!valid) throw new Error('Dados inválidos.');
 
       // Verificar se o estabelecimento existe
-      const establishment = await Establishment.findByPk(updateMenuDto.establishment);
+      const owner = await EstablishmentOwner.findByPk(updateMenuDto.owner);
 
-      if (!establishment) throw new Error('Estabelicimento não encontrado.');
+      if (!owner) throw new Error('Estabelicimento não encontrado.');
 
       // Verificando se o menu já existe cadastrado
       const menu = await Menu.findOne({
-        where: { id: updateMenuDto.id, establishment_id: updateMenuDto.establishment },
+        where: { id: updateMenuDto.id, establishment_id: owner.establishment_id },
       });
 
       if (!menu) throw new Error('Menu não encontrado');

@@ -6,8 +6,7 @@ const REQUIRED = 'Campo obrigátorio';
 
 const schema: SchemaOf<createMenuStablishmentDto> = object({
   name: string().required(REQUIRED),
-
-  establishment: number().integer().required(REQUIRED),
+  owner: number().integer().required(REQUIRED),
 });
 
 export default schema;
