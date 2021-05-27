@@ -6,10 +6,12 @@ import { stateRoutes } from '../modules/state';
 import { authRoutes } from '../modules/auth'
 import { addressEstablishmentRoutes as cityStore } from '../modules/address/address.routes';
 import { routes as termsOfUseRoutes } from '../modules/terms-of-use/terms-of-use.routes';
+import { ownerRoutes } from '../modules/establisment-owner';
 
 const routes = Router();
 
 routes.use(authRoutes);
+routes.use(ownerRoutes);
 routes.use(cityStore);
 routes.use(cityRoutes);
 routes.use(stateRoutes);
