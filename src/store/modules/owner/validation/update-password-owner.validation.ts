@@ -6,11 +6,11 @@
 
 import { object, SchemaOf, string, number } from 'yup';
 
-import { UpdatePasswordClientDto } from '../dtos/update-password-client-dto';
+import { UpdatePasswordEstablishmentDto } from '../dtos/update-password-owner-dto';
 
 const REQUIRED = 'Campo obrigátorio';
 
-const schema: SchemaOf<UpdatePasswordClientDto> = object({
+const schema: SchemaOf<UpdatePasswordEstablishmentDto> = object({
   id: number().integer().required(REQUIRED),
   currentPassword: string().required(REQUIRED),
   newPassword: string().required(REQUIRED),

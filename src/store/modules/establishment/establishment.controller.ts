@@ -4,7 +4,6 @@
  import {
    UpdateProfileService,
    ProfileEstablishmentService,
-   UpdatePasswordEstabishmentService,
    DeactiveAccountService,
    CreateEstablishmentService
  } from './services';
@@ -38,25 +37,11 @@ export class EstabishmentController {
     }
   }
 
-  async updatePassword(req: Request, res: Response): Promise<Response> {
-    try {
-      const updatePasswordEstabishmentService = new UpdatePasswordEstabishmentService();
-
-      const result = await updatePasswordEstabishmentService.execute({ ...req.body, id: req.client.id });
-
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
   async profile(req: Request, res: Response): Promise<Response> {
      try {
       const profileEstablishmentService = new ProfileEstablishmentService();
 
-      const profile = await profileEstablishmentService.execute(req.client.id, req.body.selects);
+      const profile = await profileEstablishmentService.execute(req.body.id, req.body.selects, req.client.id);
 
       if (profile.err) throw new Error(profile.err);
 

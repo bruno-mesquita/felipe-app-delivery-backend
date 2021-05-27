@@ -7,9 +7,10 @@ import Establishment from '@core/establishment';
 import Image from '@core/image';
 import AddressEstablishment from '@core/address-establishment';
 import City from '@core/city';
+import { EstablishmentOwner } from '@core/establishment-owner';
 
 export class ProfileEstablishmentService {
-  async execute(id: number, selects: string[]): Promise<ServiceResponse<any>> {
+  async execute(id: number, selects: string[], ownerId: number): Promise<ServiceResponse<any>> {
     try {
       const fieldsBlocks = ['password']
 
@@ -45,20 +46,25 @@ export class ProfileEstablishmentService {
         selects = selects.filter(item => item !== 'address');
       }
 
-      const client = await Establishment.findOne({
-        where: { id, active: true },
-        attributes: ['id', ...selects],
-        include
-      })
+      const owner = await EstablishmentOwner.findOne({
+        where: { id: ownerId, active: true },
+        include: [{
+          model: Establishment,
+          where: { id, active: true },
+          attributes: ['id', ...selects],
+          include
+        }]
+      });
 
-      if(!client) throw new Error('Cliente não encontrado');
+      if(!owner) throw new Error('Estabelecimento não encontrado');
+
 
       const result = {
-        ...client.toJSON()
+        ...owner.establishment.toJSON()
       }
 
       if(includeAvatar) {
-        result['image'] = client?.image?.encoded || null
+        result['image'] = owner.establishment?.image?.encoded || null
       }
 
       return {

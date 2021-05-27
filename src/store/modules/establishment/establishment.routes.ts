@@ -6,7 +6,6 @@ import isAuthenticated from '@shared/middlewares/is-authenticated';
 const routes = Router();
 const estabishmentController = new EstabishmentController();
 
-routes.put('/establisments/update-password', isAuthenticated, estabishmentController.updatePassword);
 routes.post('/establisments/me', isAuthenticated, estabishmentController.profile);
 routes.put('/establisments', isAuthenticated, estabishmentController.updateProfile);
 routes.put('/establisments/deactive', isAuthenticated, estabishmentController.deactiveAccount);
