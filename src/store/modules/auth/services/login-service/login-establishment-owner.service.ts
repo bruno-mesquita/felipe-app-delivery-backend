@@ -13,7 +13,8 @@ export class LoginEstablishmentOwnerService {
       const tokenManager = new TokenManager();
 
       const owner = await EstablishmentOwner.findOne({
-        where: { email: loginEstablishment.email }
+        where: { email: loginEstablishment.email },
+        attributes: ['password', 'id']
       });
 
       if (!owner) throw new Error('usuário não encontrado.');

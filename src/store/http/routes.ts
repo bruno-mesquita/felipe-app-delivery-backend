@@ -11,13 +11,12 @@ import listRatesRoutes from '@store/modules/rate/rate.routes';
 import { addressStateRoutes } from '@store/modules/address-state';
 import { routesOrders } from '@store/modules/orders/orders.routes';
 import { routesFinancial } from '@store/modules/financial/financial.routes';
-
-import isAuthenticated from '@shared/middlewares/is-authenticated';
+import { categoryRoutes } from '@store/modules/category';
 
 const routes = Router();
 
 routes.use(authRoutes);
-routes.use(isAuthenticated);
+routes.use(categoryRoutes);
 routes.use(addressStateRoutes);
 routes.use(productsRoutes);
 routes.use(establishmentRoutes);

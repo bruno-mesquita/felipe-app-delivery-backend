@@ -1,12 +1,12 @@
+import { Request, Response } from 'express';
 
- import { Request, Response } from 'express';
-
- import {
-   UpdateProfileService,
-   ProfileEstablishmentService,
-   DeactiveAccountService,
-   CreateEstablishmentService
- } from './services';
+import {
+  UpdateProfileService,
+  ProfileEstablishmentService,
+  DeactiveAccountService,
+  CreateEstablishmentService,
+  ExistsEstablishmentService,
+} from './services';
 
 export class EstabishmentController {
   async create(req: Request, res: Response): Promise<Response> {
@@ -60,6 +60,20 @@ export class EstabishmentController {
       if (deactive.err) throw new  Error(deactive.err);
 
       return res.status(200).json(deactive);
+    }catch(err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async exists(req: Request, res: Response): Promise<Response> {
+    try {
+      const existsEstablishmentService = new ExistsEstablishmentService();
+
+      const result = await existsEstablishmentService.execute(req.client.id);
+
+      if (result.err) throw new  Error(result.err);
+
+      return res.json(result);
     }catch(err) {
       return res.status(400).json({ err: err.message });
     }

@@ -15,9 +15,6 @@ const phoneRegxp = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|
 
 const schema: SchemaOf<CreateEstablishmentDto> = object({
   name: string().required(REQUIRED),
-  email: string().email('Email inválido').required(REQUIRED),
-  password: string().required(REQUIRED),
-  active: boolean().required(REQUIRED),
   cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
   openingTime: number().min(0).max(23).required(REQUIRED),
   closingTime: number().required(REQUIRED),

@@ -5,10 +5,7 @@
 
 export interface CreateEstablishmentDto {
   name: string;
-  email: string;
-  password: string;
   cellphone: string;
-  active: boolean;
   openingTime: number;
   closingTime: number;
   freightValue: number;

@@ -6,9 +6,10 @@ import isAuthenticated from '@shared/middlewares/is-authenticated';
 const routes = Router();
 const estabishmentController = new EstabishmentController();
 
-routes.post('/establisments/me', isAuthenticated, estabishmentController.profile);
-routes.put('/establisments', isAuthenticated, estabishmentController.updateProfile);
-routes.put('/establisments/deactive', isAuthenticated, estabishmentController.deactiveAccount);
-routes.post('/establisments', isAuthenticated, estabishmentController.create);
+routes.post('/establishments/me', isAuthenticated, estabishmentController.profile);
+routes.put('/establishments', isAuthenticated, estabishmentController.updateProfile);
+routes.put('/establishments/deactive', isAuthenticated, estabishmentController.deactiveAccount);
+routes.post('/establishments', isAuthenticated, estabishmentController.create);
+routes.get('/establishments/exists', isAuthenticated, estabishmentController.exists);
 
 export default routes;
