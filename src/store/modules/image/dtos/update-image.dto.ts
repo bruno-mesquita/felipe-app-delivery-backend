@@ -1,4 +1,4 @@
 export interface UpdateImageDto {
-  id: number;
+  onwerId: number;
   encoded: string;
 }

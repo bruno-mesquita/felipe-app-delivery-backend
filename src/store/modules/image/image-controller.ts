@@ -6,7 +6,7 @@ export class ImageEstablishmentController {
     try {
       const updateImageService = new UpdateImageService();
 
-      const imageEstablishment = await updateImageService.execute({ ...req.body, id: req.client.id });
+      const imageEstablishment = await updateImageService.execute({ encoded: req.body.encoded, onwerId: req.client.id });
 
       if (imageEstablishment.err) throw new Error(imageEstablishment.err);
 
