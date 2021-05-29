@@ -1,25 +1,26 @@
-/**
- * @fileoverview Voltar os dados do estabelecimento
- */
-
 import { ServiceResponse } from '@shared/utils/service-response';
 import Establishment from '@core/establishment';
 import Image from '@core/image';
 import AddressEstablishment from '@core/address-establishment';
 import City from '@core/city';
 import { EstablishmentOwner } from '@core/establishment-owner';
+import State from '@core/state';
+import EstablishmentCategory from '@core/establishment-category';
 
 export class ProfileEstablishmentService {
-  async execute(id: number, selects: string[], ownerId: number): Promise<ServiceResponse<any>> {
-    try {
-      const fieldsBlocks = ['password']
+  static FULL = ['name', 'cellphone', 'active', 'openingTime', 'closingTime', 'freightValue', 'address', 'image', 'categories']
 
-      selects = selects.filter(field => !(!!fieldsBlocks.find(block => block === field)))
+  async execute(selects: string[], ownerId: number): Promise<ServiceResponse<any>> {
+    try {
+      if(selects[0].toLowerCase() === 'full') selects = ProfileEstablishmentService.FULL;
+
+      const defaultFieldExclude = ['createdAt', 'updatedAt']
 
       const include = [];
 
       const includeAvatar = selects.find(item => item === 'image');
       const includeAddress = selects.find(item => item === 'address');
+      const includeCategories = selects.find(item => item === 'categories');
 
       if(includeAvatar) {
         include.push({
@@ -34,23 +35,39 @@ export class ProfileEstablishmentService {
         include.push({
             model: AddressEstablishment,
             as: 'address',
-            attributes: { exclude: ['createdAt', 'updatedAt'] },
+            attributes: { exclude: defaultFieldExclude.concat('city_id') },
             include: [
               {
                 model: City,
                 as: 'city',
-                attributes: { exclude: ['createdAt', 'updatedAt'] },
+                attributes: ['id','name'],
+                include: [{
+                  model: State,
+                  as: 'state',
+                  attributes: ['id','name'],
+                }],
               }
             ],
         })
         selects = selects.filter(item => item !== 'address');
       }
 
+      if(includeCategories) {
+        include.push({
+          model: EstablishmentCategory,
+          as: 'categories',
+          attributes: ['category_id'],
+        });
+
+        selects = selects.filter(item => item !== 'categories');
+      }
+
       const owner = await EstablishmentOwner.findOne({
         where: { id: ownerId, active: true },
         include: [{
           model: Establishment,
-          where: { id, active: true },
+          as: 'establishment',
+          where: { active: true },
           attributes: ['id', ...selects],
           include
         }]
@@ -58,14 +75,10 @@ export class ProfileEstablishmentService {
 
       if(!owner) throw new Error('Estabelecimento não encontrado');
 
+      const result: any = owner.establishment.toJSON()
 
-      const result = {
-        ...owner.establishment.toJSON()
-      }
-
-      if(includeAvatar) {
-        result['image'] = owner.establishment?.image?.encoded || null
-      }
+      if (includeAvatar) result.image = owner.establishment?.image?.encoded || null
+      if (includeCategories) result.categories = result.categories.map(e => e.category_id)
 
       return {
         result,

@@ -1,5 +1,4 @@
 import { DataTypes, Sequelize, HasManyGetAssociationsMixin, BelongsToSetAssociationMixin } from 'sequelize';
-import { hashSync } from 'bcryptjs';
 import { setHours, isPast } from 'date-fns';
 
 import Model from '../_Bases/model';
@@ -7,6 +6,15 @@ import Image from '@core/image';
 import AddressEstablishment from '@core/address-establishment';
 import Order from '@core/order';
 import Menu from '@core/menu';
+
+interface UpdateProfile {
+  name: string;
+  cellphone: string;
+  openingTime: number;
+  closingTime: number;
+  freightValue: number;
+  active: boolean;
+}
 
 class Establishment extends Model {
   name: string;
@@ -32,8 +40,6 @@ class Establishment extends Model {
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
       cellphone: DataTypes.STRING,
       openingTime: DataTypes.NUMBER,
       closingTime: DataTypes.NUMBER,
@@ -46,7 +52,7 @@ class Establishment extends Model {
   }
 
   static associate({ Image, AddressEstablishment, EstablishmentCategory, Order, Menu }) {
-    this.hasMany(EstablishmentCategory, { foreignKey: 'establishment_id', as: 'establishments' });
+    this.hasMany(EstablishmentCategory, { foreignKey: 'establishment_id', as: 'categories' });
     this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
     this.belongsTo(AddressEstablishment, { foreignKey: 'address_id', as: 'address' });
     this.hasMany(Order, { foreignKey: 'establishment_id', as: 'orders', sourceKey: 'id' })
@@ -61,9 +67,7 @@ class Establishment extends Model {
     return this.freightValue;
   }
 
-  public updateProfile(
-    name: string, cellphone: string, openingTime: number, closingTime: number, freightValue: number, active: boolean
-    ): void {
+  public updateProfile({ name, cellphone, active, closingTime, openingTime, freightValue }: UpdateProfile): void {
     this.name = name;
     this.cellphone = cellphone;
     this.freightValue = freightValue,
