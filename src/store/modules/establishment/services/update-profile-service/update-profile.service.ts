@@ -1,9 +1,9 @@
-import { Op } from 'sequelize';
-
 import Establishment from '@core/establishment';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateEstablishmentDto } from '../../dtos/update-establishment-dto';
 import updateClientValidation from '../../validation/update-establishment.validation';
+import { EstablishmentOwner } from '@core/establishment-owner';
+import AddressEstablishment from '@core/address-establishment';
 
 export class UpdateProfileService {
   async execute(UpdateEstablishmentDto: UpdateEstablishmentDto): Promise<ServiceResponse<boolean>> {
@@ -14,38 +14,33 @@ export class UpdateProfileService {
       if (!valid) throw new Error('Dados inválidos');
 
       // verificando se o usuário existe
-
-      const user = await Establishment.findOne({
-        where: { id: UpdateEstablishmentDto.id, active: true }
+      const owner = await EstablishmentOwner.findOne({
+        where: { id: UpdateEstablishmentDto.userId },
+        include: [{
+          model: Establishment,
+          as: 'establishment',
+          where: { id: UpdateEstablishmentDto.id, active: true },
+          include: [{
+            model: AddressEstablishment,
+            as: 'address',
+          }]
+        }],
       });
 
-      if (!user) throw new Error('Usuário não encontrado');
+      if (!owner) throw new Error('Dono não encontrado');
 
-      // Verificando se E-mail e Celular já existe no banco
-      const userExists = await Establishment.findOne({
-        where: {
-          [Op.or]: [
-            { [Op.not]: { email: user.email } },
-            { email: UpdateEstablishmentDto.email },
-            { [Op.not]: { cellphone: user.cellphone } },
-            { cellphone: UpdateEstablishmentDto.cellphone },
-          ]
-        }
-      });
+      const { establishment } = owner;
+      const { address, ...rest } = UpdateEstablishmentDto;
 
-      if (!userExists) throw new Error('Já existe uma conta com esse email/telefone ');
+      establishment.updateProfile(rest as any);
+      establishment.address.setCityId(address.city)
+      establishment.address.setNeighborhood(address.neighborhood)
+      establishment.address.setNumber(address.number)
+      establishment.address.setStreet(address.street)
+      establishment.address.setCep(address.cep)
 
-      // Desestruturando
-      const { cellphone, email, name, freightValue, openingTime, closingTime } = UpdateEstablishmentDto;
-
-      user.setName(name);
-      user.setEmail(email);
-      user.setCellphone(cellphone);
-      user.setOpeningTime(openingTime);
-      user.setClosingTime(closingTime);
-      user.setFreightValue(freightValue);
-
-      await user.save();
+      await establishment.save();
+      await establishment.address.save();
 
       return { result: true, err: null };
     } catch (err) {

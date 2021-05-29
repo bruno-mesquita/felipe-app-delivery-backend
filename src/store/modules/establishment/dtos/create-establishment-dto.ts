@@ -14,7 +14,7 @@ export interface CreateEstablishmentDto {
   userId: number;
   address: {
     street: string;
-    number: number;
+    number: string;
     neighborhood: string;
     cep: string;
     city: number;

@@ -13,7 +13,6 @@ interface UpdateProfile {
   openingTime: number;
   closingTime: number;
   freightValue: number;
-  active: boolean;
 }
 
 class Establishment extends Model {
@@ -67,13 +66,12 @@ class Establishment extends Model {
     return this.freightValue;
   }
 
-  public updateProfile({ name, cellphone, active, closingTime, openingTime, freightValue }: UpdateProfile): void {
+  public updateProfile({ name, cellphone, closingTime, openingTime, freightValue }: UpdateProfile): void {
     this.name = name;
     this.cellphone = cellphone;
-    this.freightValue = freightValue,
-    this.openingTime = openingTime,
-    this.closingTime = closingTime,
-    this.active = active
+    this.freightValue = freightValue;
+    this.openingTime = openingTime;
+    this.closingTime = closingTime;
   }
 
   public isOpen(): boolean {

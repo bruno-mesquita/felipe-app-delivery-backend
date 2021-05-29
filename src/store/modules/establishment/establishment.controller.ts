@@ -27,7 +27,7 @@ export class EstabishmentController {
     try {
       const updateProfileService = new UpdateProfileService();
 
-      const result = await updateProfileService.execute({ ...req.body, id: req.client.id });
+      const result = await updateProfileService.execute({ ...req.body, userId: req.client.id });
 
       if (result.err) throw new Error(result.err);
 
@@ -41,7 +41,7 @@ export class EstabishmentController {
      try {
       const profileEstablishmentService = new ProfileEstablishmentService();
 
-      const profile = await profileEstablishmentService.execute(req.body.id, req.body.selects, req.client.id);
+      const profile = await profileEstablishmentService.execute(req.body.selects, req.client.id);
 
       if (profile.err) throw new Error(profile.err);
 

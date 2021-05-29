@@ -24,7 +24,7 @@ const schema: SchemaOf<CreateEstablishmentDto> = object({
   userId: number().required(REQUIRED),
   address: object({
     street: string().required(REQUIRED),
-    number: number().required(REQUIRED),
+    number: string().required(REQUIRED),
     neighborhood: string().required(REQUIRED),
     cep: string().required(REQUIRED),
     city: number().integer().required(REQUIRED),
