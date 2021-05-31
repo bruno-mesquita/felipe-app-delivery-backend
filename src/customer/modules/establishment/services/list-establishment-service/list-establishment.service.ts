@@ -46,7 +46,7 @@ class ListEstablishmentService {
           },
           {
             model: EstablishmentCategory,
-            as:  'establishments',
+            as:  'categories',
             attributes: ['category_id'],
             where: { category_id: category.id }
           }
