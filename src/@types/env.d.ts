@@ -19,6 +19,9 @@ declare global {
       DB_DATABASE: string;
 
       ENCRYPTION_KEY: string;
+
+      MERCADO_PAGO_KEY: string;
+      MERCADO_PAGO_TOKEN: string;
     }
   }
 }
