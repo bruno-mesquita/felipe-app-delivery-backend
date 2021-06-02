@@ -6,7 +6,7 @@ export class ListEstablishmentService {
   async execute(): Promise<ServiceResponse<Establishment[]>> {
     try {
       const establishments = await Establishment.findAll({
-        attributes: ['name', 'email', 'cellphone', 'openingTime', 'closingTime', 'active'],
+        attributes: ['name', 'cellphone', 'openingTime', 'closingTime', 'active'],
       });
 
       return { result: establishments, err: null };

@@ -12,27 +12,16 @@ class UpdateProfileEstablishmentService {
   async execute(updateEstablishmentDto: UpdateEstablishmentDto): Promise<ServiceResponse<boolean>> {
     try {
       // Validando dto
-
       const valid = updateEstablishmentValidation.isValidSync(updateEstablishmentDto);
 
       if (!valid) throw new Error('Dados inválidos');
 
       // verificando se o estabelecimento existe
-
       const establishment = await Establishment.findByPk(updateEstablishmentDto.id);
 
       if (!establishment) throw new Error('Estabelecimento não encontrado.');
 
-      // Verificando Email existente
-
-      const emailExists = await Establishment.findOne({
-        where: { email: updateEstablishmentDto.email },
-      });
-
-      if (emailExists) throw new Error('E-mail já cadastrado no sistema');
-
       // Verificando Celular existente
-
       const cellphoneExists = await Establishment.findOne({
         where: { cellphone: updateEstablishmentDto.cellphone },
       });
@@ -40,14 +29,11 @@ class UpdateProfileEstablishmentService {
       if (cellphoneExists) throw new Error('Celular/Telefone já cadastrado no sistema');
 
       // Verificando se ele está Ativo
-
       if (!establishment.isActive()) throw new Error('Esse estabelecimento não se encontra ativo');
 
       // Editando classe e salvando no DB
-
       const {
         name,
-        email,
         cellphone,
         freightValue,
         openingTime,
@@ -57,12 +43,11 @@ class UpdateProfileEstablishmentService {
 
       establishment.updateProfile(
         name,
-        email,
         cellphone,
         freightValue,
         openingTime,
         closingTime,
-        active
+        active,
       );
 
       await establishment.save();
