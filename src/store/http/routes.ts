@@ -14,11 +14,13 @@ import { routesFinancial } from '@store/modules/financial/financial.routes';
 import { categoryRoutes } from '@store/modules/category';
 import { establishmentCategoriesRoutes } from '@store/modules/establishment-categories';
 import { ownerRoutes } from '@store/modules/owner';
+import { boletosRoutes } from '@store/modules/boletos';
 
 const routes = Router();
 
 routes.use(authRoutes);
 routes.use(ownerRoutes);
+routes.use(boletosRoutes);
 routes.use(categoryRoutes);
 routes.use(establishmentCategoriesRoutes);
 routes.use(addressStateRoutes);
