@@ -32,7 +32,12 @@ export class CreateOwnerService {
 
       if (ownerExist) throw new Error('Usuário já existente no sistema');
 
-      const owner = new EstablishmentOwner(createOwnerDto);
+      const owner = new EstablishmentOwner({
+        ...createOwnerDto,
+        first_name: createOwnerDto.firstName,
+        last_name: createOwnerDto.lastName,
+      });
+
 
       owner.hashPassword();
 
