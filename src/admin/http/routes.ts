@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { establishmentRoutes } from '../modules/establishment';
+
 import { categoryRoutes } from '../modules/category/category.routes';
 import { cityRoutes } from '../modules/city';
 import { stateRoutes } from '../modules/state';
@@ -15,7 +15,6 @@ routes.use(ownerRoutes);
 routes.use(cityStore);
 routes.use(cityRoutes);
 routes.use(stateRoutes);
-routes.use(establishmentRoutes);
 routes.use(categoryRoutes);
 routes.use(termsOfUseRoutes);
 
