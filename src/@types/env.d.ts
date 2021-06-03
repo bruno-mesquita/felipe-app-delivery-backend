@@ -6,6 +6,7 @@ declare global {
       NODE_ENV: 'dev' | 'prod' | 'test';
 
       PORT: number;
+      PORT_AGIOTA: number;
 
       JWT_PASS: string;
       JWT_EXPIRES: string;
@@ -19,6 +20,11 @@ declare global {
       DB_DATABASE: string;
 
       ENCRYPTION_KEY: string;
+
+      MERCADO_PAGO_KEY: string;
+      MERCADO_PAGO_TOKEN: string;
+
+      AGIOTA_API: string;
     }
   }
 }

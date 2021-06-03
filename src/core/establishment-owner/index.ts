@@ -47,4 +47,20 @@ export class EstablishmentOwner extends Model {
   public setPassword(password: string): void {
     this.password = password;
   }
+
+  public setFirstName(firstName: string): void {
+    this.first_name = firstName;
+  }
+
+  public setLastName(lastName: string): void {
+    this.last_name = lastName;
+  }
+
+  public setEmail(password: string): void {
+    this.password = password;
+  }
+
+  public setCpf(cpf: string): void {
+    this.cpf = cpf;
+  }
 }

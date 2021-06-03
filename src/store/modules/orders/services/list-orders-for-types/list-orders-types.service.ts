@@ -1,5 +1,3 @@
-import { Op } from "sequelize";
-
 import AddressClient from "@core/address-client";
 import Establishment from "@core/establishment";
 import Order from "@core/order";
@@ -30,7 +28,7 @@ export class ListOrdersForTypesServices {
         where: {
           order_status: type === 'Aberto' ? [type, 'Em andamento'] : type,
         },
-        attributes: ['id', 'payment', 'total', 'order_status', 'createdAt'],
+        attributes: ['id', 'payment', 'total', 'order_status', 'createdAt', 'client_order_status'],
         include: [
           {
             model: AddressClient,
