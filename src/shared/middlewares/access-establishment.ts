@@ -10,7 +10,7 @@ import { EstablishmentOwner } from '@core/establishment-owner';
     // Verificar o id do admin
     const ownerId = request.client.id;
 
-    const store = await EstablishmentOwner.findByPk(ownerId);
+    const store = await EstablishmentOwner.findByPk(ownerId, { attributes: ['id'] });
 
     if (!store) {
       return response.status(401).json('[Acesso]: ID está ausente');
