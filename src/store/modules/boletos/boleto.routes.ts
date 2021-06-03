@@ -7,5 +7,6 @@ const routes = Router();
 const boletoController = new BoletoController();
 
 routes.get('/tickets', isAuthenticated, boletoController.list);
+routes.get('/tickets/:id/new', isAuthenticated, boletoController.newBoleto);
 
 export default routes;

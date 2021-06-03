@@ -5,10 +5,10 @@ import { ServiceResponse } from "@shared/utils/service-response";
 export class ListBoletosService {
   static LIMIT = 15
 
-  async execute(ownerId: number, page?: number | undefined): Promise<ServiceResponse<Ticket[]>> {
+  async execute(ownerId: number, page = 0): Promise<ServiceResponse<Ticket[]>> {
     try {
       const limit = ListBoletosService.LIMIT;
-      const offset = ListBoletosService.LIMIT * page || 0;
+      const offset = ListBoletosService.LIMIT * page;
 
       const owner = await EstablishmentOwner.findOne({ where: { id: ownerId }, attributes: ['establishment_id'] });
 
@@ -16,7 +16,7 @@ export class ListBoletosService {
 
       const boletos = await Ticket.findAll({
         where: { establishment_id: owner.establishment_id },
-        attributes: ['barcode', 'price', 'status', 'date_of_expiration'],
+        attributes: ['id', 'barcode', 'price', 'status', 'date_of_expiration', 'link'],
         limit,
         offset,
       });
