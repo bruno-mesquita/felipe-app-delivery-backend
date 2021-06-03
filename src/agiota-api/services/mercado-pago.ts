@@ -43,6 +43,7 @@ interface GeneratePaymentData {
   owner: EstablishmentOwner;
   transaction_amount: number;
   description: string;
+  date_of_expiration: Date;
 }
 
 export class MercadoPago {
@@ -56,12 +57,11 @@ export class MercadoPago {
     }
   }
 
-  generatePaymentData({ description, transaction_amount, owner }: GeneratePaymentData): PaymentData {
+  generatePaymentData({ owner, ...rest }: GeneratePaymentData): PaymentData {
     const address = owner.establishment.address;
 
     return {
-      transaction_amount,
-      description,
+      ...rest,
       payment_method_id: 'bolbradesco',
       payer: {
         email: owner.email,

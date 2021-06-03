@@ -1,4 +1,4 @@
-import { parseISO, addBusinessDays, isAfter } from 'date-fns';
+import { addBusinessDays, isAfter, subHours } from 'date-fns';
 
 import { Ticket } from '@core/ticket';
 import { MercadoPago } from '../../../../services/mercado-pago';
@@ -13,10 +13,12 @@ export class CheckExpiredBillsService {
       await Promise.all(tickets.map(async ticket => {
         const maxDateExpired = addBusinessDays(ticket.date_of_expiration as any, 3);
 
-        console.log(ticket.date_of_expiration);
+        const today = subHours(new Date(), 3);
+
+        console.log(today);
         console.log(maxDateExpired);
 
-        if (isAfter(new Date(), maxDateExpired)) {
+        if (isAfter(today, maxDateExpired)) {
           await mercadoPago.cancelTicket(ticket.reference_id);
 
           ticket.cancel();

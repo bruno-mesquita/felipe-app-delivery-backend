@@ -1,4 +1,4 @@
-import { lastDayOfMonth, isToday } from 'date-fns';
+import { lastDayOfMonth, isToday, subHours } from 'date-fns';
 
 import AddressEstablishment from '@core/address-establishment';
 import Establishment from '@core/establishment';
@@ -63,6 +63,12 @@ export class GenerateTicketService {
     return ((orders.reduce((prev, current) => current.total + prev, 0)) * commission) + monthlyPayment;
   }
 
+  private getDateOfExpiration(): Date {
+    const today = new Date();
+
+    return subHours(today, 3);
+  }
+
   async execute(): Promise<ServiceResponse<any>> {
     try {
       const mercadoPago = new MercadoPago();
@@ -84,6 +90,7 @@ export class GenerateTicketService {
             owner,
             description: 'Comissão + mensalidade do Flipp Delivery',
             transaction_amount: total,
+            date_of_expiration: this.getDateOfExpiration(),
           });
 
           const mercadoPagoTicket = await mercadoPago.generateTicket(paymentData);
