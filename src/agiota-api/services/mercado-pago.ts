@@ -1,4 +1,3 @@
-import Establishment from '@core/establishment';
 import { EstablishmentOwner } from '@core/establishment-owner';
 import axios from 'axios';
 
@@ -66,8 +65,8 @@ export class MercadoPago {
       payment_method_id: 'bolbradesco',
       payer: {
         email: owner.email,
-        first_name: owner.firstName,
-        last_name: owner.lastName,
+        first_name: owner.first_name,
+        last_name: owner.last_name,
         identification: {
           type: 'CPF',
           number: owner.cpf
@@ -96,6 +95,16 @@ export class MercadoPago {
   async verifyTicket(id: number) {
     try {
       const { data } = await api.get(`/v1/payments/${id}`);
+
+      return data;
+    } catch (err) {
+      return err.response;
+    }
+  }
+
+  async cancelTicket(id: number) {
+    try {
+      const { data } = await api.put(`/v1/payments/${id}`, { status: 'cancelled' });
 
       return data;
     } catch (err) {

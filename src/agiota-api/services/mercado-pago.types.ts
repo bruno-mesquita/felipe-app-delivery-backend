@@ -8,6 +8,8 @@ export interface PaymentResponse {
   barcode: { content: string };
   transaction_details: {
     external_resource_url: string;
+    verification_code: string;
+    payment_method_reference_id: string;
   }
   status_detail: string;
   verification_code: string;

@@ -6,7 +6,8 @@ const boletosController = new BoletosController();
 
 const routes = Router();
 
-routes.post('/tickets', boletosController.generateTicket);
-routes.get('/tickets/:id', boletosController.verifyTicket);
+routes.post('/generate-tickets', boletosController.generateTicket);
+routes.get('/verify-tickets', boletosController.verifyTicket);
+routes.get('/verify-tickets-expired', boletosController.checkExpiredBills);
 
 export default routes;
