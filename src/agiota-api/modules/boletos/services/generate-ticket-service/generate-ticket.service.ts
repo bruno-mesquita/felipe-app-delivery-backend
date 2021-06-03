@@ -1,4 +1,4 @@
-import { lastDayOfMonth, isToday, subHours } from 'date-fns';
+import { lastDayOfMonth, isToday, subHours, addDays } from 'date-fns';
 
 import AddressEstablishment from '@core/address-establishment';
 import Establishment from '@core/establishment';
@@ -66,7 +66,7 @@ export class GenerateTicketService {
   private getDateOfExpiration(): Date {
     const today = new Date();
 
-    return subHours(today, 3);
+    return addDays(subHours(today, 3), 5);
   }
 
   async execute(): Promise<ServiceResponse<any>> {

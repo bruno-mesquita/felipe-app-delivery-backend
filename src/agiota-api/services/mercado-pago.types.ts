@@ -3,7 +3,7 @@ export interface PaymentResponse {
   date_created: string;
   date_approved: string;
   date_last_updated: string;
-  date_of_expiration: string;
+  date_of_expiration: Date;
   operation_type: string;
   barcode: { content: string };
   transaction_details: {

@@ -15,9 +15,6 @@ export class CheckExpiredBillsService {
 
         const today = subHours(new Date(), 3);
 
-        console.log(today);
-        console.log(maxDateExpired);
-
         if (isAfter(today, maxDateExpired)) {
           await mercadoPago.cancelTicket(ticket.reference_id);
 
