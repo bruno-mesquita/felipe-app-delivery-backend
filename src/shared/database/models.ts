@@ -17,6 +17,7 @@ import AddressEstablishment from '@core/address-establishment';
 import TermsOfUse from '@core/terms-of-use';
 import { Ticket } from '@core/ticket';
 import { EstablishmentOwner } from '@core/establishment-owner';
+import { Deliveryman } from '@core/deliveryman';
 
 export default [
   Image,
@@ -37,7 +38,8 @@ export default [
   Product,
   TermsOfUse,
   Ticket,
-  EstablishmentOwner
+  EstablishmentOwner,
+  Deliveryman
 ]
 
 
