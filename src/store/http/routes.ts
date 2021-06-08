@@ -15,10 +15,12 @@ import { categoryRoutes } from '@store/modules/category';
 import { establishmentCategoriesRoutes } from '@store/modules/establishment-categories';
 import { ownerRoutes } from '@store/modules/owner';
 import { boletosRoutes } from '@store/modules/boletos';
+import { deliverymanRoutes } from '@store/modules/deliveryman';
 
 const routes = Router();
 
 routes.use(authRoutes);
+routes.use(deliverymanRoutes);
 routes.use(ownerRoutes);
 routes.use(boletosRoutes);
 routes.use(categoryRoutes);

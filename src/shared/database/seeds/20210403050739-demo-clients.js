@@ -22,7 +22,7 @@ module.exports = {
 	      email: "jonatas@gmail.com",
 	      cellphone: "12981315531",
 	      password: hashSync('senhaforte', 8),
-	      cpf: "00300730420",
+	      cpf: "00300730421",
         active: true,
         created_at: new Date(),
         updated_at: new Date()
