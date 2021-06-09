@@ -4,7 +4,6 @@
  * @author Bruno Mesquita
  * @author Jonatas Rosa Moura
  */
-import Image from '@core/image';
 import Menu from '@core/menu';
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
@@ -32,18 +31,15 @@ export class CreateProductService {
 
       if (productExists) throw new Error('Produto já cadastrado no sistema!');
 
-      // Pegando valor da image do produto
-
-      const image = await Image.create({
-        encoded: createProductDto.image,
-      });
-
-      // await image.save();
-
       await Product.create({
-        ...createProductDto,
-        image_id: image.id,
+        name: createProductDto.name,
+        description: createProductDto.description,
+        price: createProductDto.price,
+        active: createProductDto.active,
+        photo: { encoded: createProductDto.image },
         menu_id: menu.id,
+      }, {
+        include: [Product.Photo],
       });
 
       return { result: true, err: null };

@@ -2,7 +2,7 @@
  * @fileoverview Criação da entidade Produto
  */
 
-import { DataTypes, Sequelize, BelongsToGetAssociationMixin } from 'sequelize';
+import { DataTypes, Sequelize, BelongsToGetAssociationMixin, BelongsTo } from 'sequelize';
 
 import Image from '@core/image';
 import Model from '../_Bases/model';
@@ -16,6 +16,8 @@ class Product extends Model {
   image_id!: number;
 
   public readonly photo?: Image;
+
+  public static Photo: BelongsTo<Product, Image>;
 
   public getPhoto!: BelongsToGetAssociationMixin<Image>;
 
@@ -31,7 +33,7 @@ class Product extends Model {
   }
 
   static associate({ Image, Menu }): void {
-    this.belongsTo(Image, { foreignKey: 'image_id', as: 'photo' })
+    Product.Photo = this.belongsTo(Image, { foreignKey: 'image_id', as: 'photo' })
     this.belongsTo(Menu, { foreignKey: 'menu_id', as: 'menu' })
   }
 
