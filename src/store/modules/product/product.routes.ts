@@ -1,21 +1,18 @@
-/**
- * @fileoverview Controller do estabelecimento Admin
- *
- * @author Jonatas Rosa Moura
- */
-
 import { Router } from 'express';
 import ProductController from './product.controller';
-import { accessEstablishment } from '@shared/middlewares/access-establishment';
+import { accessEstablishmentOwner } from '@shared/middlewares/access-establishment-owner';
+import isAuthenticated from '@shared/middlewares/is-authenticated';
 
 const productController = new ProductController();
 const productsRoutes = Router();
 
-productsRoutes.post('/products', accessEstablishment, productController.create);
-productsRoutes.get('/products', accessEstablishment, productController.list);
-productsRoutes.get('/products/search-name', accessEstablishment, productController.searchName);
-productsRoutes.get('/products/:id', accessEstablishment, productController.show);
-productsRoutes.put('/products/:id', accessEstablishment, productController.update);
-productsRoutes.delete('/products/:menu_id/:product_id', accessEstablishment, productController.delete);
+const middlewares = [isAuthenticated, accessEstablishmentOwner];
+
+productsRoutes.post('/products', ...middlewares, productController.create);
+productsRoutes.get('/products', ...middlewares, productController.list);
+productsRoutes.get('/products/search-name', ...middlewares, productController.searchName);
+productsRoutes.get('/products/:id', ...middlewares, productController.show);
+productsRoutes.put('/products/:id', ...middlewares, productController.update);
+productsRoutes.delete('/products/:menu_id/:product_id', ...middlewares, productController.delete);
 
 export { productsRoutes };

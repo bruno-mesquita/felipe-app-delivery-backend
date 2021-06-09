@@ -13,19 +13,16 @@ export class ListOrdersForTypesServices {
 
   async execute({ page = 0, id, type }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
     try {
+      const limit = ListOrdersForTypesServices.LIMIT;
+      const offset = ListOrdersForTypesServices.LIMIT * page;
+
       const valid = schema.isValidSync({ page, id, type });
 
       if (!valid) throw new Error('Dados inválidos');
 
-      const limit = ListOrdersForTypesServices.LIMIT;
-      const offset = ListOrdersForTypesServices.LIMIT * page;
-
-      const establishment = await Establishment.findByPk(id);
-
-      if (!establishment) throw new Error('Estabelecimento não encontrado');
-
-      const orders = await establishment.getOrders({
+      const orders = await Order.findAll({
         where: {
+          establishment_id: id,
           order_status: type === 'Aberto' ? [type, 'Em andamento'] : type,
         },
         attributes: ['id', 'payment', 'total', 'order_status', 'createdAt', 'client_order_status'],

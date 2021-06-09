@@ -21,7 +21,7 @@ class ProductController {
       const searchNameProductsService = new SearchNameProductsService();
       const { search } = req.query;
 
-      const products = await searchNameProductsService.execute(search as string, req.client.id);
+      const products = await searchNameProductsService.execute(search as string, req.client.entity.establishment_id);
 
       if (products.err) throw new Error(products.err);
 
@@ -33,11 +33,11 @@ class ProductController {
 
   async list(req: Request, res: Response): Promise<Response> {
     try {
-      const { page } = req.query;
+      const { page = 0 } = req.query;
 
       const listProductsService = new ListProductsService();
 
-      const products = await listProductsService.execute(Number(req.client.id), Number(page));
+      const products = await listProductsService.execute(req.client.entity.establishment_id, Number(page));
 
       if (products.err) throw new Error(products.err);
 
@@ -53,7 +53,7 @@ class ProductController {
 
       const productService = new ShowProductService();
 
-      const product = await productService.execute(Number(id), Number(req.client.id));
+      const product = await productService.execute(Number(id), req.client.entity.establishment_id);
 
       if (product.err) throw new Error(product.err);
 

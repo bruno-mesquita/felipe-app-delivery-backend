@@ -1,3 +1,6 @@
+import Admin from '@core/admin';
+import { EstablishmentOwner } from '@core/establishment-owner';
+import User from '@core/_Bases/user';
 import { Request } from 'express';
 
 declare global {
@@ -7,6 +10,7 @@ declare global {
     interface Request {
       client: {
         id: number;
+        entity: User & EstablishmentOwner & Admin;
       };
     }
   }

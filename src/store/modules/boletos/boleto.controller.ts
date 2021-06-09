@@ -7,7 +7,7 @@ export class BoletoController {
     try {
       const listBoletosService = new ListBoletosService();
 
-      const result = await listBoletosService.execute(req.client.id, Number(req.query.page || 0));
+      const result = await listBoletosService.execute(req.client.entity.establishment_id, Number(req.query.page || 0));
 
       if(result.err) throw new Error(result.err);
 
@@ -21,7 +21,7 @@ export class BoletoController {
     try {
       const newBoletoService = new NewBoletoService();
 
-      const result = await newBoletoService.execute(req.client.id, Number(req.params.id));
+      const result = await newBoletoService.execute(req.client.entity, Number(req.params.id));
 
       if(result.err) throw new Error(result.err);
 

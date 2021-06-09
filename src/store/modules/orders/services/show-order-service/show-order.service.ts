@@ -6,14 +6,14 @@ import { ServiceResponse } from "@shared/utils/service-response";
 
 export interface IRequest {
   id: number;
-  clientId: number;
+  establishmentId: number;
 }
 
 export class ShowOrderService {
-  async execute({ id }: IRequest): Promise<ServiceResponse<any | null>> {
+  async execute({ id, establishmentId }: IRequest): Promise<ServiceResponse<any | null>> {
     try {
       const order = await Order.findOne({
-        where: { id },
+        where: { id, establishment_id: establishmentId },
         attributes: ['id', 'payment', 'total', 'discount', 'order_status', 'transshipment', 'note', 'createdAt'],
         include: [
           {

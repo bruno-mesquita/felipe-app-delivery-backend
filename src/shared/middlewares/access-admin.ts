@@ -10,11 +10,13 @@ export async function accessAdmin(request: Request, response: Response, next: Ne
     // Verificar o id do admin
     const adminId = request.client.id;
 
-    const admin = await Admin.findByPk(adminId);
+    const admin = await Admin.findByPk(adminId, { attributes: ['id'] });
 
     if (!admin) {
       return response.status(401).json('[Acesso]: ID está ausente');
     }
+
+    request.client.entity = admin as any;
 
     return next();
   } catch(err) {

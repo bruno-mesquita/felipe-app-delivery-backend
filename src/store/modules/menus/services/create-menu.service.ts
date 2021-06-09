@@ -1,4 +1,3 @@
-import { EstablishmentOwner } from '@core/establishment-owner';
 import Menu from '@core/menu';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { createMenuStablishmentDto } from '../dtos/create-menu.dtos';
@@ -12,15 +11,10 @@ export class CreateMenuService {
 
       if (!valid) throw new Error('Dados inválidos.');
 
-      // Verificar se o estabelecimento existe.
-      const owner = await EstablishmentOwner.findByPk(createMenuDto.owner);
-
-      if (!owner) throw new Error('Estabelicimento não encontrado.');
-
       // Criando Classe
       await Menu.create({
         ...createMenuDto,
-        establishment_id: owner.establishment_id,
+        establishment_id: createMenuDto.establishmentId
       });
 
       return { result: true, err: null };

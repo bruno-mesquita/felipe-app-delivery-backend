@@ -1,6 +1,5 @@
 import { Op } from 'sequelize';
 
-import Establishment from '@core/establishment';
 import Evaluation from '@core/evaluation';
 import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
@@ -9,17 +8,14 @@ import { ListRateDto } from '../../dtos';
 export class ListRateService {
   static LIMIT = 15;
 
-  public async execute({ page, id }: ListRateDto): Promise<ServiceResponse<Order[]>> {
+  public async execute({ page, establishmentId }: ListRateDto): Promise<ServiceResponse<Order[]>> {
     try {
       const limit = ListRateService.LIMIT;
       const offset = ListRateService.LIMIT * page || 0;
 
-      const establishment = await Establishment.findByPk(id);
-
-      if (!establishment) throw new Error('Estabelecimento não encontrado');
-
-      const orders = await establishment.getOrders({
+      const orders = await Order.findAll({
         where: {
+          establishment_id: establishmentId,
           order_status: 'Finalizado',
           evaluation_id: { [Op.ne]: null },
         },

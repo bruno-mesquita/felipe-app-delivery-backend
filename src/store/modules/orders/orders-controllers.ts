@@ -9,7 +9,7 @@ export class OrdersController {
     try {
       const showOrderService = new ShowOrderService();
 
-      const showOrder = await showOrderService.execute({ id: Number(req.params.id), clientId: req.client.id });
+      const showOrder = await showOrderService.execute({ id: Number(req.params.id), establishmentId: req.client.entity.establishment_id });
 
       if (showOrder.err) throw new Error(showOrder.err);
 
@@ -25,7 +25,7 @@ export class OrdersController {
 
       const listOrdersForTypesServices = new ListOrdersForTypesServices();
 
-      const listOrders = await listOrdersForTypesServices.execute({ id: req.client.id, type: type as any, page: Number(page) });
+      const listOrders = await listOrdersForTypesServices.execute({ id: req.client.entity.establishment_id, type: type as any, page: Number(page) });
 
       if (listOrders.err) throw new Error(listOrders.err);
 
@@ -39,7 +39,7 @@ export class OrdersController {
     try {
       const cancelOrderService = new CancelOrderService();
 
-      const order = await cancelOrderService.execute({ id: Number(req.params.id), establishmentId: req.client.id });
+      const order = await cancelOrderService.execute({ id: Number(req.params.id), establishmentId: req.client.entity.establishment_id });
 
       if (order.err) throw new Error(order.err);
 
@@ -53,7 +53,7 @@ export class OrdersController {
     try {
       const updateOrderService = new UpdateOrderStatusServices();
 
-      const order = await updateOrderService.execute({ id: Number(req.params.id), establishmentId: req.client.id });
+      const order = await updateOrderService.execute({ id: Number(req.params.id), establishmentId: req.client.entity.establishment_id });
 
       if (order.err) throw new Error(order.err);
 

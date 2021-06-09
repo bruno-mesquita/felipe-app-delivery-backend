@@ -9,7 +9,7 @@ const categoryController = new CategoryController();
 const categoryRoutes = Router();
 
 categoryRoutes.post('/categories', isAuthenticated, accessAdmin, categoryController.create);
-categoryRoutes.get('/categories', isAuthenticated, categoryController.list);
+categoryRoutes.get('/categories', isAuthenticated, accessAdmin, categoryController.list);
 categoryRoutes.put('/categories/:id', isAuthenticated, accessAdmin, categoryController.update);
 
 export { categoryRoutes };

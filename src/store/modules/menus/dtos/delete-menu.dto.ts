@@ -1,4 +1,4 @@
 export interface DeleteMenuDto {
   id: number;
-  ownerId: number;
+  establishmentId: number;
 }

@@ -7,7 +7,7 @@ export class MenuController {
     try {
       const menuService = new CreateMenuService();
 
-      const menu = await menuService.execute({ ...req.body, owner: req.client.id });
+      const menu = await menuService.execute({ ...req.body, establishmentId: req.client.entity.establishment_id });
 
       if (menu.err) throw new Error(menu.err);
 
@@ -21,7 +21,7 @@ export class MenuController {
     try {
       const menuService = new ListMenuService();
 
-      const menu = await menuService.execute(req.client.id);
+      const menu = await menuService.execute(req.client.entity.establishment_id);
 
       if (menu.err) throw new Error(menu.err);
 
@@ -35,7 +35,7 @@ export class MenuController {
     try {
       const menuService = new GetMenuService();
 
-      const menu = await menuService.execute(req.client.id, req.params.id);
+      const menu = await menuService.execute(req.client.entity.establishment_id, req.params.id);
 
       if (menu.err) throw new Error(menu.err);
 
@@ -49,7 +49,7 @@ export class MenuController {
     try {
       const menuService = new UpdateMenuService();
 
-      const menu = await menuService.execute({ id: Number(req.params.id), name: req.body.name, owner: req.client.id });
+      const menu = await menuService.execute({ id: Number(req.params.id), name: req.body.name, establishmentId: req.client.entity.establishment_id });
 
       if (menu.err) throw new Error(menu.err);
 
@@ -63,7 +63,7 @@ export class MenuController {
     try {
       const menuService = new DeleteMenuService();
 
-      const menu = await menuService.execute({ id: Number(req.params.id), ownerId: req.client.id });
+      const menu = await menuService.execute({ id: Number(req.params.id), establishmentId: req.client.entity.establishment_id });
 
       if (menu.err) throw new Error(menu.err);
 

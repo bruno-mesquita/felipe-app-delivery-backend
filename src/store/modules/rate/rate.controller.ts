@@ -6,7 +6,9 @@ export class RateController {
     try {
       const listRateService = new ListRateService();
 
-      const listRates = await listRateService.execute({...req.body, id: req.client.id});
+      const { page = 0 } = req.query;
+
+      const listRates = await listRateService.execute({ page: Number(page), establishmentId: req.client.entity.establishment_id});
 
       if (listRates.err) throw new Error(listRates.err);
 
