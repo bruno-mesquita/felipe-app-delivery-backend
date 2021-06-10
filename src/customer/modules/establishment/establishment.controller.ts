@@ -51,11 +51,11 @@ class EstablishmentController {
 
   async searchByName(req: Request, res: Response): Promise<Response> {
     try {
-      const { name } = req.body;
+      const { name, category } = req.query;
 
       const searchEstablishmentsByName = new SearchEstablishmentsByName();
 
-      const response = await searchEstablishmentsByName.execute(name, req.client.id);
+      const response = await searchEstablishmentsByName.execute(name as string, category as string, req.client.id);
 
       if (response.err) throw new Error(response.err);
 

@@ -36,7 +36,7 @@ const routes = Router();
 routes.post('/clients', clientController.create);
 routes.put('/clients/forgot-password', forgotPassword.setPassword);
 
-// Rotas autenticadas //
+// Rotas autenticadas
 
 // Auth
 routes.post('/auth/login', authController.login);
@@ -77,7 +77,7 @@ routes.get('/categories', isAuthenticated, categoryController.getAll);
 
 // Estabelecimento
 routes.get('/establishments/:id', isAuthenticated, establishmentController.findOne);
-routes.post('/establishments-by-name', isAuthenticated, establishmentController.searchByName);
+routes.get('/establishments-by-name', isAuthenticated, establishmentController.searchByName);
 routes.get('/establishments', isAuthenticated, establishmentController.list);
 routes.get('/establishments/:id/menus', isAuthenticated, establishmentController.listMenus);
 
