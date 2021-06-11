@@ -33,6 +33,7 @@ export class UpdateProfileService {
       const { address, ...rest } = UpdateEstablishmentDto;
 
       establishment.updateProfile(rest as any);
+      establishment.setFreightValue(rest.freightValue);
       establishment.address.setCityId(address.city)
       establishment.address.setNeighborhood(address.neighborhood)
       establishment.address.setNumber(address.number)
