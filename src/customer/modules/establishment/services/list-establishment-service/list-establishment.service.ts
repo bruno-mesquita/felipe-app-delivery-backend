@@ -55,7 +55,6 @@ class ListEstablishmentService {
         offset,
       })
 
-
       return { result: establishments, err: null };
     } catch (err) {
 
