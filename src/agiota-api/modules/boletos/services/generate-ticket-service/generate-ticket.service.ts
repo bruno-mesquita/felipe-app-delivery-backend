@@ -1,4 +1,5 @@
 import { lastDayOfMonth, isToday, subHours, addDays } from 'date-fns';
+import { Op } from 'sequelize';
 
 import AddressEstablishment from '@core/address-establishment';
 import Establishment from '@core/establishment';
@@ -60,7 +61,7 @@ export class GenerateTicketService {
   private calcTotal(orders: Order[]): number {
     const { commission, monthlyPayment } = this.getFlippPrices();
 
-    return ((orders.reduce((prev, current) => current.total + prev, 0)) * commission) + monthlyPayment;
+    return ((orders.reduce((prev, current) => Number(current.total) + prev, 0)) * commission) + monthlyPayment;
   }
 
   private getDateOfExpiration(): Date {
@@ -80,8 +81,8 @@ export class GenerateTicketService {
 
         await Promise.all(owners.map(async owner => {
           const orders = await owner.establishment.getOrders({
-            where: { commission: false },
-            attributes: ['total'],
+            where: { commission: false, order_status: 'Finalizado' },
+            attributes: ['total', 'id'],
           });
 
           const total = this.calcTotal(orders);
@@ -109,6 +110,10 @@ export class GenerateTicketService {
             reference_id: mercadoPagoTicket.id,
             establishment_id: owner.establishment.id,
           });
+
+          const ids = orders.map(order => order.id);
+
+          await Order.update({ commission: true }, { where: { id: { [Op.in]: ids } } })
         }))
       } else {
         return { result: 'Hoje não é o dia de gerar boleto', err: null }
