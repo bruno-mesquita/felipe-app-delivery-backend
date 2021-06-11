@@ -1,10 +1,10 @@
 import { Op } from "sequelize";
 
-import Establishment from "@core/establishment";
 import { ServiceResponse } from "@shared/utils/service-response";
 import { GenerateReportDto } from '../dtos/generate-report.dto';
 import { schema } from '../validation/generate-report.validation';
 import Order from "@core/order";
+import { EstablishmentOwner } from "@core/establishment-owner";
 
 export class GenerateReportService {
  async execute({ id, data_initial, data_final }: GenerateReportDto): Promise<ServiceResponse<any>> {
@@ -13,9 +13,7 @@ export class GenerateReportService {
 
     if (!valid) throw new Error('Dados Inválidos');
 
-    const establishment = await Establishment.findByPk(id);
-
-    if (!establishment) throw new Error('Estabelecimento não encontrado');
+    await EstablishmentOwner.findByPk(id);
 
     // Formatar e Converter String para Date
 
