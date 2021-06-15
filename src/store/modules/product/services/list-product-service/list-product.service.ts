@@ -13,10 +13,14 @@ import { ServiceResponse } from '@shared/utils/service-response';
 export class ListProductsService {
   static LIMIT = 15
 
-  async execute(establishmentId: number, page?: number | undefined): Promise<ServiceResponse<Product[] | null>> {
+  async execute(establishmentId: number, page?: number | undefined, menuId?: string | undefined): Promise<ServiceResponse<Product[] | null>> {
     try {
       const limit = ListProductsService.LIMIT;
       const offset = ListProductsService.LIMIT * page || 0;
+
+      const menuWhere: any = { establishment_id: establishmentId };
+
+      if(menuId) menuWhere.menu_id = menuId;
 
       const products = await Product.findAll({
         attributes: ['id', 'name', 'price'],
@@ -29,7 +33,7 @@ export class ListProductsService {
           {
             model: Menu,
             as: 'menu',
-            where: { establishment_id: establishmentId },
+            where: menuWhere,
             attributes: ['id']
           }
         ],
