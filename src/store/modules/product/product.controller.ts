@@ -33,11 +33,11 @@ class ProductController {
 
   async list(req: Request, res: Response): Promise<Response> {
     try {
-      const { page = 0 } = req.query;
+      const { page = 0, menuId } = req.query;
 
       const listProductsService = new ListProductsService();
 
-      const products = await listProductsService.execute(req.client.entity.establishment_id, Number(page));
+      const products = await listProductsService.execute(req.client.entity.establishment_id, Number(page), menuId ? Number(menuId) : undefined);
 
       if (products.err) throw new Error(products.err);
 

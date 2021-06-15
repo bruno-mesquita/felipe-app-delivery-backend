@@ -13,7 +13,7 @@ import { ServiceResponse } from '@shared/utils/service-response';
 export class ListProductsService {
   static LIMIT = 15
 
-  async execute(establishmentId: number, page?: number | undefined, menuId?: string | undefined): Promise<ServiceResponse<Product[] | null>> {
+  async execute(establishmentId: number, page?: number | undefined, menuId?: number | undefined): Promise<ServiceResponse<Product[] | null>> {
     try {
       const limit = ListProductsService.LIMIT;
       const offset = ListProductsService.LIMIT * page || 0;
