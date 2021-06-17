@@ -20,7 +20,7 @@ export class ListProductsService {
 
       const menuWhere: any = { establishment_id: establishmentId };
 
-      if(menuId) menuWhere.menu_id = menuId;
+      if(menuId) menuWhere.id = menuId;
 
       const products = await Product.findAll({
         attributes: ['id', 'name', 'price'],
