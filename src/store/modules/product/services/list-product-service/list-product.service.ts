@@ -23,7 +23,7 @@ export class ListProductsService {
       if(menuId) menuWhere.id = menuId;
 
       const products = await Product.findAll({
-        attributes: ['id', 'name', 'price'],
+        attributes: ['id', 'name', 'price', 'menu_id'],
         include: [
           {
             model: Image,

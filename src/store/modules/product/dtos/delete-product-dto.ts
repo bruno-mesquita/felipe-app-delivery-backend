@@ -1,4 +1,5 @@
 export interface DeleteProductDto {
-  menu_id: number;
-  product_id: number;
+  menuId: number;
+  productId: number;
+  establishmentId: number;
 }

@@ -100,7 +100,11 @@ class ProductController {
       const { menu_id, product_id } = req.params;
       const deleteProductService = new DeleteProductService();
 
-      const result = await deleteProductService.execute({ menu_id: Number(menu_id), product_id: Number(product_id)});
+      const result = await deleteProductService.execute({
+        menuId: Number(menu_id),
+        productId: Number(product_id),
+        establishmentId: req.client.entity.establishment_id
+      });
 
       if (result.err) throw new Error(result.err);
 
