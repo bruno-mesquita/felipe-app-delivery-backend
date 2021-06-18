@@ -16,6 +16,7 @@ export class DeleteProductService {
           where: { id: menuId },
           include: [{
             model: Establishment,
+            as: 'establishments',
             where: { id: establishmentId }
           }],
         }]
