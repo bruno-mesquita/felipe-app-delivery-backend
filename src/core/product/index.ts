@@ -27,7 +27,7 @@ class Product extends Model {
       price: DataTypes.NUMBER,
       description: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'products' });
+    }, { sequelize, tableName: 'products', paranoid: true });
 
     return this;
   }

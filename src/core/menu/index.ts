@@ -26,14 +26,14 @@ class Menu extends Model {
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.NUMBER,
-    }, { sequelize, tableName: 'menus' });
+    }, { sequelize, tableName: 'menus', paranoid: true });
 
     return this;
   }
 
   static associate({ Establishment, Product }): void {
     this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishments' });
-    this.hasMany(Product, { foreignKey: 'menu_id', as: 'products', sourceKey: 'id' });
+    this.hasMany(Product, { foreignKey: 'menu_id', as: 'products', sourceKey: 'id', onDelete: 'cascade' });
   }
 
   public setName(name: string): void {

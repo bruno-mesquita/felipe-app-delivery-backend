@@ -18,7 +18,7 @@ class AddressClient extends AddressModel {
       neighborhood: DataTypes.STRING,
       cep: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'address_client' });
+    }, { sequelize, tableName: 'address_client', paranoid: true });
 
     return this;
   }
