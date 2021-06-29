@@ -14,7 +14,8 @@ module.exports = {
         active: true,
 	      city_id: 1,
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
+        deleted_at: null,
       },
       {
         id: 2,
@@ -27,7 +28,8 @@ module.exports = {
         active: true,
 	      city_id: 3,
         created_at: new Date(),
-        updated_at: new Date()
+        updated_at: new Date(),
+        deleted_at: null,
       }
     ], {});
 

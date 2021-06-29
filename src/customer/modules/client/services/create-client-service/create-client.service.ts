@@ -65,7 +65,6 @@ class CreateClientService {
         active: true,
       });
 
-
       // Gerando codigo de ativação e Enviando sms de ativação
       const clientActivationCode = await ClientActivationCode.create({ client_id: user.id, attemps: 0, code: 'code1' });
 
