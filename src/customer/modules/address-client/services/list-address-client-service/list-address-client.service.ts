@@ -2,14 +2,12 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import Client from '@core/client';
 import City from '@core/city';
 import State from '@core/state';
+import { usePage } from '@shared/utils/use-page';
 
 export class ListAddressClientService {
-  static LIMIT = 15;
-
   async execute(userId: number, page = 0): Promise<ServiceResponse<any>> {
     try {
-      const limit = ListAddressClientService.LIMIT;
-      const offset = ListAddressClientService.LIMIT * page;
+      const { limit, offset } = usePage(page);
 
       const client = await Client.findByPk(userId);
 

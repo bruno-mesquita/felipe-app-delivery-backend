@@ -1,5 +1,4 @@
 import AddressClient from "@core/address-client";
-import Establishment from "@core/establishment";
 import Order from "@core/order";
 import { ServiceResponse } from "@shared/utils/service-response";
 import { ListOrdersDto } from '../../dtos/list-orders-types.dto';
@@ -7,14 +6,12 @@ import State from "@core/state";
 import City from "@core/city";
 import Client from "@core/client";
 import { schema } from '../../validations/list-orders-types.validation';
+import { usePage } from "@shared/utils/use-page";
 
 export class ListOrdersForTypesServices {
-  static LIMIT = 15;
-
   async execute({ page = 0, id, type }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
     try {
-      const limit = ListOrdersForTypesServices.LIMIT;
-      const offset = ListOrdersForTypesServices.LIMIT * page;
+      const { limit, offset } = usePage(page);
 
       const valid = schema.isValidSync({ page, id, type });
 

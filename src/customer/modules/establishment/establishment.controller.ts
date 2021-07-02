@@ -5,11 +5,11 @@ import { ListEstablishmentService, FindOneEstablishmentService, SearchEstablishm
 class EstablishmentController {
   async list(req: Request, res: Response): Promise<Response> {
     try {
-      const { category, page }: any = req.query;
+      const { category, page = 0 }: any = req.query;
 
       const listEstablishmentService = new ListEstablishmentService();
 
-      const response = await listEstablishmentService.execute(category, req.client.id, page);
+      const response = await listEstablishmentService.execute(category, req.client.id, Number(page));
 
       if(response.err) throw new Error(response.err);
 
@@ -59,7 +59,7 @@ class EstablishmentController {
 
       if (response.err) throw new Error(response.err);
 
-      return res.status(200).json(response);
+      return res.json(response);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

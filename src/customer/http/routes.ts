@@ -13,6 +13,7 @@ import { OrderController } from '../modules/order';
 import { MenuController } from '../modules/menus';
 import { RateController } from '../modules/rate';
 import { TermsOfUseController } from '@customer/modules/terms-of-use/terms-of-use.controller';
+import { DeliverymanController } from '@customer/modules/deliveryman/deliveryman.controller';
 
 // Controllers
 const authController = new AuthController();
@@ -27,6 +28,7 @@ const menuController = new MenuController();
 const orderController = new OrderController();
 const termsOfUseController = new TermsOfUseController();
 const rateController = new RateController();
+const deliverymanController = new DeliverymanController();
 
 const routes = Router();
 
@@ -91,5 +93,7 @@ routes.get('/orders/:id/verify', isAuthenticated, orderController.verify);
 routes.post('/orders/:id/rate', isAuthenticated, orderController.rateOrder);
 
 routes.get('/rates/:id', isAuthenticated, rateController.findOne);
+
+routes.get('/deliveryman', isAuthenticated, deliverymanController.list);
 
 export default routes;

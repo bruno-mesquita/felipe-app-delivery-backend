@@ -9,7 +9,7 @@ export class DeliverymanController {
 
       const { page = 0 } = req.query;
 
-      const { err, result } = await listDeliverymanService.execute(Number(page));
+      const { err, result } = await listDeliverymanService.execute(Number(page) || 0);
 
       if(err) throw new Error();
 

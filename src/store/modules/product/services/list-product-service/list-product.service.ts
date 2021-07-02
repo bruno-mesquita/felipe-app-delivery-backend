@@ -1,22 +1,13 @@
-/**
- * @fileoverview serviço de listagem dos produtos
- *
- * @author Jonatas Rosa Moura
-
- */
-
 import Image from '@core/image';
 import Menu from '@core/menu';
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
+import { usePage } from '@shared/utils/use-page';
 
 export class ListProductsService {
-  static LIMIT = 15
-
-  async execute(establishmentId: number, page?: number | undefined, menuId?: number | undefined): Promise<ServiceResponse<Product[] | null>> {
+  async execute(establishmentId: number, page = 0, menuId?: number | undefined): Promise<ServiceResponse<Product[] | null>> {
     try {
-      const limit = ListProductsService.LIMIT;
-      const offset = ListProductsService.LIMIT * page || 0;
+      const { limit, offset } = usePage(page);
 
       const menuWhere: any = { establishment_id: establishmentId };
 

@@ -1,7 +1,3 @@
-/**
- * @fileoverview serviço de listagem dos estabelecimentos
- */
-
 import AddressClient from '@core/address-client';
 import AddressEstablishment from '@core/address-establishment';
 import Category from '@core/category';
@@ -9,14 +5,12 @@ import Establishment from '@core/establishment';
 import EstablishmentCategory from '@core/establishment-category';
 import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
+import { usePage } from '@shared/utils/use-page';
 
 class ListEstablishmentService {
-  static LIMIT = 15
-
   async execute(categoryName: string, clientId: number, page = 0): Promise<ServiceResponse<any[]>> {
     try {
-      const limit = ListEstablishmentService.LIMIT;
-      const offset = ListEstablishmentService.LIMIT * page;
+      const { limit, offset } = usePage(page);
 
       const category = await Category.findOne({ where: { name: categoryName } });
 

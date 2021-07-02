@@ -4,14 +4,13 @@ import Evaluation from '@core/evaluation';
 import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { ListRateDto } from '../../dtos';
+import { usePage } from '@shared/utils/use-page';
 
 export class ListRateService {
-  static LIMIT = 15;
 
-  public async execute({ page, establishmentId }: ListRateDto): Promise<ServiceResponse<Order[]>> {
+  public async execute({ page = 0, establishmentId }: ListRateDto): Promise<ServiceResponse<Order[]>> {
     try {
-      const limit = ListRateService.LIMIT;
-      const offset = ListRateService.LIMIT * page || 0;
+      const { limit, offset } = usePage(page);
 
       const orders = await Order.findAll({
         where: {

@@ -3,14 +3,12 @@ import Order from '@core/order';
 import Client from '@core/client';
 import Evaluation from '@core/evaluation';
 import Establishment from '@core/establishment';
+import { usePage } from '@shared/utils/use-page';
 
 export class ListOrdersService {
-  static LIMIT = 15;
-
   async execute(userId: number, page = 0): Promise<ServiceResponse<Order[]>> {
     try {
-      const limit = ListOrdersService.LIMIT;
-      const offset = ListOrdersService.LIMIT * page;
+      const { limit, offset } = usePage(page);
 
       const client = await Client.findOne({ where: { id: userId, active: true } });
 

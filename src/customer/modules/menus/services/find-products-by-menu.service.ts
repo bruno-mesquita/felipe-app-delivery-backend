@@ -1,14 +1,12 @@
 import Image from '@core/image';
 import Menu from '@core/menu';
 import { ServiceResponse } from '@shared/utils/service-response';
+import { usePage } from '@shared/utils/use-page';
 
 export class FindProductsByMenuService {
-  static LIMIT = 15;
-
-  async execute(menuId: string, page = 0): Promise<ServiceResponse<any[]>> {
+  async execute(menuId: number, page = 0): Promise<ServiceResponse<any[]>> {
     try {
-      const limit = FindProductsByMenuService.LIMIT;
-      const offset = FindProductsByMenuService.LIMIT * page;
+      const { limit, offset } = usePage(page);
 
       const menu = await Menu.findOne({ where: { id: menuId }, attributes: ['id'] });
 
