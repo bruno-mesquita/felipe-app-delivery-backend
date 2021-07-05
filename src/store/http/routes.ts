@@ -19,21 +19,23 @@ import { deliverymanRoutes } from '@store/modules/deliveryman';
 
 const routes = Router();
 
-routes.use(authRoutes);
-routes.use(deliverymanRoutes);
-routes.use(ownerRoutes);
-routes.use(boletosRoutes);
-routes.use(categoryRoutes);
-routes.use(establishmentCategoriesRoutes);
-routes.use(addressStateRoutes);
-routes.use(productsRoutes);
-routes.use(establishmentRoutes);
-routes.use(menuRoutes);
-routes.use(termsOfUseRoutes);
-routes.use(addressRoutes);
-routes.use(imagesRoutes);
-routes.use(listRatesRoutes);
-routes.use(routesOrders);
-routes.use(routesFinancial);
+routes.use([
+  authRoutes,
+  deliverymanRoutes,
+  ownerRoutes,
+  boletosRoutes,
+  categoryRoutes,
+  establishmentCategoriesRoutes,
+  addressStateRoutes,
+  productsRoutes,
+  establishmentRoutes,
+  menuRoutes,
+  termsOfUseRoutes,
+  addressRoutes,
+  imagesRoutes,
+  listRatesRoutes,
+  routesOrders,
+  routesFinancial
+]);
 
 export default routes;

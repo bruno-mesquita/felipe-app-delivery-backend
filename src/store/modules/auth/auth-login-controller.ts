@@ -31,9 +31,9 @@ export class AuthEstablishmentController {
 
       if (refresh.err) throw new Error(refresh.err);
 
-      return res.status(200).json(refresh);
+      return res.json(refresh);
     } catch (err) {
-      return res.status(403).json({ err: err.message });
+      return res.status(401).json({ err: err.message });
     }
   }
 }
