@@ -7,7 +7,7 @@ export class EstablishmentOwnerController {
     try {
       const createOwnerService = new CreateOwnerService();
 
-      const result = await createOwnerService.execute(req.client.id, req.body);
+      const result = await createOwnerService.execute(req.body);
 
       if(result.err) throw new Error(result.err);
 

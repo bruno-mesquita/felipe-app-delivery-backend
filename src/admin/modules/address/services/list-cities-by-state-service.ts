@@ -1,7 +1,7 @@
 import City from '@core/city';
 import { ServiceResponse } from '@shared/utils/service-response';
 
-class ListCitiesByStatesService {
+export class ListCitiesByStatesService {
   async execute(state_id: number): Promise<ServiceResponse<any[] | null>> {
     try {
       const citiesByState = await City.findAll({
@@ -15,5 +15,3 @@ class ListCitiesByStatesService {
     }
   }
 }
-
-export { ListCitiesByStatesService };

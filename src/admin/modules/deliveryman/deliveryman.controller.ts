@@ -7,7 +7,7 @@ export class DeliverymanController {
     try {
       const createDeliverymanService = new CreateDeliverymanService();
 
-      const { err } = await createDeliverymanService.execute(req.client.id, req.body);
+      const { err } = await createDeliverymanService.execute(req.body);
 
       if(err) throw new Error();
 
@@ -23,7 +23,7 @@ export class DeliverymanController {
 
       const id = Number(req.params.id);
 
-      const { err } = await updateDeliverymanService.execute(req.client.id, { ...req.body, id });
+      const { err } = await updateDeliverymanService.execute({ ...req.body, id });
 
       if(err) throw new Error();
 
@@ -37,7 +37,7 @@ export class DeliverymanController {
     try {
       const listDeliverymanService = new ListDeliverymanService();
 
-      const { err, result } = await listDeliverymanService.execute(req.client.id);
+      const { err, result } = await listDeliverymanService.execute();
 
       if(err) throw new Error();
 
@@ -51,7 +51,7 @@ export class DeliverymanController {
     try {
       const deleteDeliverymanService = new DeleteDeliverymanService();
 
-      const { err } = await deleteDeliverymanService.execute(req.client.id, Number(req.params.id));
+      const { err } = await deleteDeliverymanService.execute(Number(req.params.id));
 
       if(err) throw new Error();
 

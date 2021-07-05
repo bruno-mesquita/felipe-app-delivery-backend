@@ -4,22 +4,13 @@ import { EstablishmentOwner } from "@core/establishment-owner";
 import { ServiceResponse } from "@shared/utils/service-response";
 import { CreateOwnerDto } from '../dtos/create-owner-dtos';
 import { schema } from '../validations/create-owner.validation';
-import Admin from "@core/admin";
 
 export class CreateOwnerService {
-  async execute(adminId: number, createOwnerDto: CreateOwnerDto): Promise<ServiceResponse<boolean>> {
+  async execute(createOwnerDto: CreateOwnerDto): Promise<ServiceResponse<boolean>> {
     try {
       const validation = schema.isValidSync(createOwnerDto);
 
       if (!validation) throw new Error('Dados inválidos');
-
-      const admin = await Admin.findOne({
-        where: {
-          id: adminId,
-        },
-      });
-
-      if (!admin) throw new Error('Administrador não encontrado');
 
       const ownerExist = await EstablishmentOwner.findOne({
         where: {
@@ -37,7 +28,6 @@ export class CreateOwnerService {
         first_name: createOwnerDto.firstName,
         last_name: createOwnerDto.lastName,
       });
-
 
       owner.hashPassword();
 
