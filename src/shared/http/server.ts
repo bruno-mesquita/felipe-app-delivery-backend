@@ -24,6 +24,6 @@ app.use(helmet());
 app.disable('x-powered-by');
 app.use('/api', routes);
 
-app.listen(process.env.PORT || 80, () => {
-  console.log(`Server started ON! ${process.env.PORT || 80}`);
+app.listen(process.env.PORT || 3030, () => {
+  console.log(`Server started ON! ${process.env.PORT || 3030}`);
 });
