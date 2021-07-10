@@ -20,15 +20,13 @@ export default function isAuthenticated(request: Request, response: Response, ne
 
     // array token vai ter 2 posições -> Bearer açsd6464JAFPO(&&%/;). -> chave secreta (token)
 
-    const [, token] = authHeader.split(' ');
+    const token = authHeader.split(' ')[1];
 
     // verificar se esse token foi criado pela minha aplicação, se ele é válido (se eu posso liberar o acesso)
 
     const decodedToken = authConfig.check(token);
 
-    request.client = {
-      id: decodedToken.id,
-    };
+    request.client.id = decodedToken.id;
 
     return next();
   } catch (err) {
