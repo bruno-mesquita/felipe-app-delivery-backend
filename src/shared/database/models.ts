@@ -18,6 +18,7 @@ import TermsOfUse from '@core/terms-of-use';
 import { Ticket } from '@core/ticket';
 import { EstablishmentOwner } from '@core/establishment-owner';
 import { Deliveryman } from '@core/deliveryman';
+import { Announcement } from '@core/announcement';
 
 export default [
   Image,
@@ -39,7 +40,8 @@ export default [
   TermsOfUse,
   Ticket,
   EstablishmentOwner,
-  Deliveryman
+  Deliveryman,
+  Announcement
 ]
 
 

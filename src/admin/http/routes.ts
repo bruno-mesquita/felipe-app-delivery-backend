@@ -8,6 +8,7 @@ import { addressEstablishmentRoutes as cityStore } from '../modules/address/addr
 import { routes as termsOfUseRoutes } from '../modules/terms-of-use/terms-of-use.routes';
 import { ownerRoutes } from '../modules/establisment-owner';
 import { deliverymanRoutes } from '../modules/deliveryman';
+import { announcementRoutes } from '../modules/announcement/announcement.routes';
 
 const routes = Router();
 
@@ -19,5 +20,6 @@ routes.use(cityRoutes);
 routes.use(stateRoutes);
 routes.use(categoryRoutes);
 routes.use(termsOfUseRoutes);
+routes.use(announcementRoutes);
 
 export default routes;
