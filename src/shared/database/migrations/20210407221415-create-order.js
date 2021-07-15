@@ -1,54 +1,58 @@
-'use strict';
+"use strict";
 
-module.exports = {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('orders', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       payment: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       total: {
         type: Sequelize.DECIMAL,
         precision: 10,
         scale: 2,
-        allowNull: false,
+        allowNull: false
       },
       discount: {
         type: Sequelize.DECIMAL,
         precision: 10,
         scale: 2,
         allowNull: true,
-        defaultValue: 0,
+        defaultValue: 0
       },
       client_order_status: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       order_status: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       freight_value: {
         type: Sequelize.DECIMAL,
         precision: 10,
         scale: 2,
-        allowNull: false,
+        allowNull: false
       },
       transshipment: {
         type: Sequelize.DECIMAL,
         precision: 10,
         scale: 2,
-        allowNull: false,
+        allowNull: false
       },
       note: {
         type: Sequelize.STRING,
-        allowNull: true,
+        allowNull: true
       },
       evaluation: {
         type: Sequelize.DECIMAL,
@@ -60,42 +64,54 @@ module.exports = {
       commission: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
-        allowNull: true,
+        allowNull: true
       },
       client_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'clients', key: 'id' },
+        references: {
+          model: 'clients',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
-        allowNull: false,
+        allowNull: false
       },
       address_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'address_client', key: 'id' },
+        references: {
+          model: 'address_client',
+          key: 'id'
+        }
       },
       establishment_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'establishments', key: 'id' },
+        references: {
+          model: 'establishments',
+          key: 'id'
+        }
       },
       evaluation_id: {
         type: Sequelize.INTEGER,
         allowNull: true,
-        references: { model: 'evaluations', key: 'id' },
+        references: {
+          model: 'evaluations',
+          key: 'id'
+        }
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
-      },
+        allowNull: false
+      }
     });
   },
-
-  down: async (queryInterface, Sequelize) => {
+  down: async queryInterface => {
     await queryInterface.dropTable('orders');
   }
 };
+exports.default = _default;

@@ -1,35 +1,38 @@
-'use strict';
+"use strict";
 
-module.exports = {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('images', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       name: {
         type: Sequelize.STRING(50),
-        allowNull: true,
+        allowNull: true
       },
       encoded: {
         type: Sequelize.TEXT,
-        allowNull: false,
+        allowNull: false
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
-      },
+        allowNull: false
+      }
     });
   },
-
-  down: async (queryInterface) => {
+  down: async queryInterface => {
     await queryInterface.dropTable('images');
-
   }
 };
+exports.default = _default;

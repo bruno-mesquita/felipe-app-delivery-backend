@@ -1,67 +1,77 @@
-'use strict';
+"use strict";
 
-module.exports = {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('address_client', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
         autoIncrement: true,
-        primaryKey: true,
+        primaryKey: true
       },
       client_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'clients', key: 'id' },
+        references: {
+          model: 'clients',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
-        onDelete: 'CASCADE',
+        onDelete: 'CASCADE'
       },
       nickname: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       street: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       number: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       neighborhood: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       cep: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       active: {
         type: Sequelize.BOOLEAN,
-        defaultValue: false,
+        defaultValue: false
       },
       city_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'cities', key: 'id' },
+        references: {
+          model: 'cities',
+          key: 'id'
+        }
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
-        default: null,
-      },
+        defaultValue: null
+      }
     });
   },
-
-  down: async (queryInterface) => {
+  down: async queryInterface => {
     await queryInterface.dropTable('address_client');
   }
 };
+exports.default = _default;

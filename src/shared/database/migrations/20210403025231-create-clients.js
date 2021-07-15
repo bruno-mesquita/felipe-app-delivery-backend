@@ -1,65 +1,72 @@
-'use strict';
+"use strict";
 
-module.exports = {
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('clients', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
+        allowNull: false
       },
       name: {
         type: Sequelize.STRING(60),
-        allowNull: false,
+        allowNull: false
       },
       email: {
         type: Sequelize.STRING(50),
         allowNull: false,
-        unique: true,
+        unique: true
       },
       password: {
         type: Sequelize.STRING,
-        allowNull: false,
+        allowNull: false
       },
       cellphone: {
         type: Sequelize.STRING(15),
-        allowNull: false,
+        allowNull: false
       },
       cpf: {
         type: Sequelize.STRING(11),
         allowNull: false,
-        unique: true,
+        unique: true
       },
       active: {
         type: Sequelize.BOOLEAN,
         defaultValue: false,
-        allowNull: false,
+        allowNull: false
       },
       avatar_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'images', key: 'id' },
+        references: {
+          model: 'images',
+          key: 'id'
+        },
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
-        allowNull: true,
+        allowNull: true
       },
       created_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       updated_at: {
         type: Sequelize.DATE,
-        allowNull: false,
+        allowNull: false
       },
       deleted_at: {
         type: Sequelize.DATE,
         allowNull: true,
-        default: null,
-      },
+        defaultValue: null
+      }
     });
   },
-
-  down: async (queryInterface) => {
+  down: async queryInterface => {
     await queryInterface.dropTable('clients');
   }
 };
+exports.default = _default;
