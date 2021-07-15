@@ -19,7 +19,8 @@ declare global {
       DB_PORT: number;
       DB_DATABASE: string;
 
-      ENCRYPTION_KEY: string;
+      SECURITY_ALGORITHM: string;
+      SECURITY_KEY: string;
 
       MERCADO_PAGO_KEY: string;
       MERCADO_PAGO_TOKEN: string;
