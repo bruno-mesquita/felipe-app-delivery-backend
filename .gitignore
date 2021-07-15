@@ -7,4 +7,4 @@ temp/
 .env
 logs
 dist
-**/migrations-ts
+**/migrations
