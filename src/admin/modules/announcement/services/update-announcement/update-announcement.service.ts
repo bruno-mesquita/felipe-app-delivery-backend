@@ -1,4 +1,3 @@
-import Admin from '@core/admin';
 import { Announcement } from '@core/announcement';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateAnnouncementDto } from '../../dtos/update-announcement.dto';
@@ -14,11 +13,9 @@ export class UpdateProductService {
 
       if (!valid) throw new Error('Dados inválidos');
 
-      const admin = Admin.findOne({ where: { id: updateAnnouncement.adminId } });
-
-      if (!admin) throw new Error('Admin não encontrado');
-
-      const announcement = await Announcement.findByPk(updateAnnouncement.id);
+      const announcement = await Announcement.findOne({
+        where: { id: updateAnnouncement.id },
+      });
 
       if (!announcement) throw new Error('Anúncio não encontrado.');
 
@@ -28,11 +25,14 @@ export class UpdateProductService {
 
       announcement.updateAnnouncement(name, active);
 
-      const photo = await announcement.getPhoto();
+      if(updateAnnouncement.image) {
+        const photo = await announcement.getPhoto();
 
-      photo.setEncoded(image);
+        photo.setEncoded(image);
 
-      await photo.save();
+        await photo.save();
+      };
+
       await announcement.save();
 
       return { result: true, err: null };

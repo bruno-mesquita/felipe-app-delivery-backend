@@ -1,18 +1,20 @@
-import Admin from "@core/admin";
 import { Announcement } from "@core/announcement";
+import Image from "@core/image";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 export class ShowAnnouncementService {
   async execute(adminId: number, announcementId: number): Promise<ServiceResponse<Announcement>> {
     try {
-      const admin = await Admin.findOne({
-        where: { id: adminId },
-      });
-
-      if (!admin) throw new Error('Usuário inválido');
-
       const announcement = await Announcement.findOne({
         where: { id: announcementId },
+        attributes: ['id', 'name', 'active'],
+        include: [
+          {
+            model: Image,
+            as: 'photo',
+            attributes: ['encoded'],
+          }
+        ],
       });
 
       if (!announcement) throw new Error('Anúncio inválido');

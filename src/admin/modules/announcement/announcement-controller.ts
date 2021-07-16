@@ -53,18 +53,15 @@ export class AnnouncementController {
 
   async update(req: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
-      const createAnnouncement = new UpdateProductService();
+      const updateProductService = new UpdateProductService();
 
-      const announcement = await createAnnouncement.execute({
-        ...req.body,
-        adminId: req.client.id,
-        id
-      });
+      const id = Number(req.params.id);
 
-      if (announcement.err) throw new Error(announcement.err);
+      const { err } = await updateProductService.execute({ ...req.body, id });
 
-      return res.status(200).json(announcement);
+      if(err) throw new Error();
+
+      return res.status(200).json();
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

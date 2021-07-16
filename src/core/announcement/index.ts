@@ -7,7 +7,7 @@ export class Announcement extends Model {
   active: boolean;
   image_id!: number;
 
-  public readonly photo?: Image;
+  public photo?: Image | String;
 
   public static Photo: BelongsTo<Announcement, Image>;
 
