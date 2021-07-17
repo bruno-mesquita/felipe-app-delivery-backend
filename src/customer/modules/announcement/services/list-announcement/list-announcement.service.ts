@@ -1,4 +1,5 @@
 import { Announcement } from "@core/announcement";
+import Image from "@core/image";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 export class ListAnnouncementService {
@@ -6,10 +7,14 @@ export class ListAnnouncementService {
     try {
       const announcement = await Announcement.findAll({
         where: { active: true },
-
-        attributes: {
-          exclude: ['createdAt', 'updatedAt'],
-        },
+        attributes: ['id', 'name'],
+        include: [
+          {
+            model: Image,
+            as: 'photo',
+            attributes: ['encoded'],
+          }
+        ],
       });
 
       return { result: announcement, err: null };
