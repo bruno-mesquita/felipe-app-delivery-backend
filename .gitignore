@@ -8,3 +8,4 @@ temp/
 logs
 dist
 **/migrations
+**/seeds

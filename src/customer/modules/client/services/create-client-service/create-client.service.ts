@@ -19,7 +19,6 @@ const UNINFORMED = 'Não informado';
 class CreateClientService {
   async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<number | null>> {
     try {
-      console.log(createClientDto);
       const smsService = new SmsService();
 
       // Fazendo Validação do DTO
@@ -46,6 +45,7 @@ class CreateClientService {
 
       // Criando a classe
       const user = new Client(createClientDto);
+      console.log(user);
 
       user.hashPassword();
 

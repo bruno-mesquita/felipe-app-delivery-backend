@@ -1,3 +1,4 @@
+import security from '@shared/utils/security-js';
 import { QueryInterface, DataTypes } from 'sequelize';
 
 export default {
@@ -10,26 +11,50 @@ export default {
         allowNull: false,
       },
       name: {
-        type: Sequelize.STRING(60),
+        type: Sequelize.STRING,
         allowNull: false,
+        get() {
+          return security.decrypt(this.getDataValue('name'));
+        },
+        set(value) {
+          this.setDataValue('name', security.encrypt(value))
+        }
       },
       email: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
+        get() {
+          return security.decrypt(this.getDataValue('email'));
+        },
+        set(value) {
+          this.setDataValue('email', security.encrypt(value))
+        }
       },
       password: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       cellphone: {
-        type: Sequelize.STRING(15),
+        type: Sequelize.STRING,
         allowNull: false,
+        get() {
+          return security.decrypt(this.getDataValue('cellphone'));
+        },
+        set(value) {
+          this.setDataValue('cellphone', security.encrypt(value))
+        }
       },
       cpf: {
-        type: Sequelize.STRING(11),
+        type: Sequelize.STRING,
         allowNull: false,
         unique: true,
+        get() {
+          return security.decrypt(this.getDataValue('cpf'));
+        },
+        set(value) {
+          this.setDataValue('cpf', security.encrypt(value))
+        }
       },
       active: {
         type: Sequelize.BOOLEAN,
