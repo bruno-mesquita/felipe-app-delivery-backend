@@ -3,7 +3,7 @@ import Image from "@core/image";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 export class ShowAnnouncementService {
-  async execute(adminId: number, announcementId: number): Promise<ServiceResponse<Announcement>> {
+  async execute(announcementId: number): Promise<ServiceResponse<Announcement>> {
     try {
       const announcement = await Announcement.findOne({
         where: { id: announcementId },

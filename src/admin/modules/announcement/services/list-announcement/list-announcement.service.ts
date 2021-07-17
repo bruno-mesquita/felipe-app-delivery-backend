@@ -3,7 +3,7 @@ import Image from "@core/image";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 export class ListAnnouncementService {
-  async execute(adminId: number): Promise<ServiceResponse<Announcement[]>> {
+  async execute(): Promise<ServiceResponse<Announcement[]>> {
     try {
       const announcement = await Announcement.findAll({
         attributes: ['id', 'name', 'active'],

@@ -27,7 +27,7 @@ export class AnnouncementController {
       const { id } = req.params;
       const showAnnouncement = new ShowAnnouncementService();
 
-      const announcement = await showAnnouncement.execute(req.client.id, Number(id));
+      const announcement = await showAnnouncement.execute(Number(id));
 
       if (announcement.err) throw new Error(announcement.err);
 
@@ -41,7 +41,7 @@ export class AnnouncementController {
     try {
       const listAnnouncement = new ListAnnouncementService();
 
-      const announcement = await listAnnouncement.execute(req.client.id);
+      const announcement = await listAnnouncement.execute();
 
       if (announcement.err) throw new Error(announcement.err);
 
@@ -72,7 +72,7 @@ export class AnnouncementController {
       const { id } = req.params;
       const deleteAnnouncement = new DeleteAnnouncementService();
 
-      const announcement = await deleteAnnouncement.execute(req.client.id, Number(id));
+      const announcement = await deleteAnnouncement.execute(Number(id));
 
       if (announcement.err) throw new Error(announcement.err);
 
