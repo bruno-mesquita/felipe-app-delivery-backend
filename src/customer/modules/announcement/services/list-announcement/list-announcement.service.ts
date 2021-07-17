@@ -9,7 +9,7 @@ export class ListAnnouncementService {
         where: { active: true },
         attributes: {
           exclude: [
-            'id', 'name', 'active', 'createdAt', 'updatedAt', 'image_id'
+            'name', 'active', 'createdAt', 'updatedAt', 'image_id'
           ]
         },
         include: [
