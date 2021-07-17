@@ -7,7 +7,11 @@ export class ListAnnouncementService {
     try {
       const announcement = await Announcement.findAll({
         where: { active: true },
-        attributes: ['id', 'name'],
+        attributes: {
+          exclude: [
+            'id', 'name', 'active', 'createdAt', 'updatedAt', 'image_id'
+          ]
+        },
         include: [
           {
             model: Image,
