@@ -14,28 +14,7 @@ export class ListOwnerService {
           {
             model: Establishment,
             as: 'establishment',
-            attributes: ['id', 'name', 'active'],
-            include: [
-              {
-                model: AddressEstablishment,
-                as: 'address',
-                attributes: ['id', 'neighborhood', 'cep'],
-                include: [
-                  {
-                    model: City,
-                    as: 'city',
-                    attributes: ['id', 'name'],
-                    include: [
-                      {
-                        model: State,
-                        as: 'state',
-                        attributes: ['id', 'name'],
-                      },
-                    ],
-                  },
-                ],
-              },
-            ],
+            attributes: ['id', 'name'],
           },
         ],
       });

@@ -9,5 +9,6 @@ const establishmentOwnerController = new EstablishmentOwnerController();
 
 routes.post('/establishment-owners', isAuthenticated, accessAdmin, establishmentOwnerController.create);
 routes.get('/establishment-owners', isAuthenticated, accessAdmin, establishmentOwnerController.list);
+routes.get('/establishment-owners/:id', isAuthenticated, accessAdmin, establishmentOwnerController.show);
 
 export default routes;
