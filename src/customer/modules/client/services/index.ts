@@ -5,3 +5,5 @@ export { default as UpdateProfileService } from './update-profile-service/update
 export { default as UpdatePasswordClientService } from './update-password-client-service/update-password-client.service';
 export { default as ProfileClientService } from './profile-client-service/profile-client.service';
 export * from './list-orders-service';
+export { DeleteClientService } from './delete-client-service';
+export { DeactiveteClientService } from './deactivate-client-service';

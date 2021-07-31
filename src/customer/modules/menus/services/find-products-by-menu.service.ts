@@ -27,7 +27,6 @@ export class FindProductsByMenuService {
 
       return { result: products, err: null };
     } catch (err) {
-      console.log(err);
       return { result: [], err: err.message };
     }
   }

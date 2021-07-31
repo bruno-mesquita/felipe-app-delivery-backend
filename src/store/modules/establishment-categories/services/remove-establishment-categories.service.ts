@@ -26,15 +26,12 @@ export class RemoveEstablishmentCategoryService {
         }
       });
 
-      console.log(establishmentCategory);
-
       if(!establishmentCategory) throw new Error();
 
       await establishmentCategory.destroy();
 
       return { result: true, err: null }
     } catch (err) {
-      console.log(err);
       return { err: 'Erro ao remover', result: false }
     }
   }

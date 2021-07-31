@@ -3,7 +3,6 @@
  */
 
 import Client from '@core/client';
-import ClientActivationCode from '@core/client-activation-code';
 import { ServiceResponse } from '@shared/utils/service-response';
 import SmsService from '@shared/utils/sms';
 
@@ -12,20 +11,11 @@ class ResendClientActivationCodeService {
     try {
       const smsService = new SmsService();
 
-
       const client = await Client.findByPk(clientId);
 
       if (!client) throw new Error('Cliente não encontrado');
 
-      const clientActivationCode = await ClientActivationCode.findOne({
-        where: { client_id: client.id }
-      });
-
-      if (!clientActivationCode) throw new Error('Codigo de ativação não encontrado');
-
-      const code = clientActivationCode.generateCode();
-
-      const result = await smsService.send(client.cellphone, code);
+      const result = await smsService.send(client.cellphone);
 
       if (!result) throw new Error('Erro ao enviar o codigo');
 

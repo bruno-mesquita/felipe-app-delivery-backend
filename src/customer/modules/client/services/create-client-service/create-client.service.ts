@@ -6,21 +6,17 @@
 
 import { Op } from 'sequelize';
 
-import SmsService from '@shared/utils/sms';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateClientDto } from '../../dtos/create-client-dto';
 import createClientSchema from '../../validation/create-client.validation';
 import Client from '@core/client';
 import City from '@core/city';
-import ClientActivationCode from '@core/client-activation-code';
 
 const UNINFORMED = 'Não informado';
 
 class CreateClientService {
   async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<number | null>> {
     try {
-      const smsService = new SmsService();
-
       // Fazendo Validação do DTO
       const valid = createClientSchema.isValidSync(createClientDto);
 
@@ -45,7 +41,6 @@ class CreateClientService {
 
       // Criando a classe
       const user = new Client(createClientDto);
-      console.log(user);
 
       user.hashPassword();
 
@@ -64,15 +59,6 @@ class CreateClientService {
         nickname: 'Meu endereço',
         active: true,
       });
-
-      // Gerando codigo de ativação e Enviando sms de ativação
-      const clientActivationCode = await ClientActivationCode.create({ client_id: user.id, attemps: 0, code: 'code1' });
-
-      const sendResult = await smsService.send(user.cellphone, clientActivationCode.code);
-
-      if (!sendResult) {
-        throw new Error('Houve um erro ao enviar o codigo, verifique o seu número de telefone e tente novamente');
-      }
 
       return { result: user.id, err: null };
     } catch (err) {

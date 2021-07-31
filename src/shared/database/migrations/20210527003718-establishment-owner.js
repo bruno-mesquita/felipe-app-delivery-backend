@@ -4,6 +4,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.default = void 0;
+
+var _securityJs = _interopRequireDefault(require("../../utils/security-js"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 var _default = {
   up: async (queryInterface, Sequelize) => {
     await queryInterface.createTable('establishment-owners', {
@@ -14,30 +19,75 @@ var _default = {
         allowNull: false
       },
       first_name: {
-        type: Sequelize.STRING(60),
-        allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false,
+
+        get() {
+          return _securityJs.default.decrypt(this.getDataValue('first_name'));
+        },
+
+        set(value) {
+          this.setDataValue('first_name', _securityJs.default.encrypt(value));
+        }
+
       },
       last_name: {
-        type: Sequelize.STRING(60),
-        allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false,
+
+        get() {
+          return _securityJs.default.decrypt(this.getDataValue('last_name'));
+        },
+
+        set(value) {
+          this.setDataValue('last_name', _securityJs.default.encrypt(value));
+        }
+
       },
       email: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+
+        get() {
+          return _securityJs.default.decrypt(this.getDataValue('email'));
+        },
+
+        set(value) {
+          this.setDataValue('email', _securityJs.default.encrypt(value));
+        }
+
       },
       password: {
         type: Sequelize.STRING,
         allowNull: false
       },
       cellphone: {
-        type: Sequelize.STRING(15),
-        allowNull: false
+        type: Sequelize.STRING,
+        allowNull: false,
+
+        get() {
+          return _securityJs.default.decrypt(this.getDataValue('cellphone'));
+        },
+
+        set(value) {
+          this.setDataValue('cellphone', _securityJs.default.encrypt(value));
+        }
+
       },
       cpf: {
-        type: Sequelize.STRING(11),
+        type: Sequelize.STRING,
         allowNull: false,
-        unique: true
+        unique: true,
+
+        get() {
+          return _securityJs.default.decrypt(this.getDataValue('cpf'));
+        },
+
+        set(value) {
+          this.setDataValue('cpf', _securityJs.default.encrypt(value));
+        }
+
       },
       active: {
         type: Sequelize.BOOLEAN,

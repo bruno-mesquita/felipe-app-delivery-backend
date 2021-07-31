@@ -6,7 +6,6 @@ import { updateAnnouncementValidate } from '../../validations/update-announcemen
 export class UpdateProductService {
   async execute(updateAnnouncement: UpdateAnnouncementDto): Promise<ServiceResponse<boolean>> {
     try {
-      console.log(updateAnnouncement);
       // validando e fazendo verificações
 
       const valid = updateAnnouncementValidate.isValidSync(updateAnnouncement);

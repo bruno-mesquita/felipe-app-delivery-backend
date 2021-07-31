@@ -6,8 +6,6 @@ export class DeactivateAddressClientService {
     try {
       const adresses = await AddressClient.findAll({ where: { client_id: userId }, attributes: ['id'] });
 
-      console.log(adresses);
-
       if(adresses.length <= 1) throw new Error('Você não pode desativar essa endereço');
 
       const address = await AddressClient.findOne({

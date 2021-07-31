@@ -10,7 +10,6 @@ import { schema } from '../validations/create-state.validation';
 export class UpdateStateService {
   async execute(updateStateDto: UpdateStateDto): Promise<ServiceResponse<boolean>> {
     try {
-      console.log(updateStateDto)
       // Fazendo validação DTO
       const valid = schema.isValidSync(updateStateDto);
 

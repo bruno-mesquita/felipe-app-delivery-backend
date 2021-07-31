@@ -83,7 +83,6 @@ export class GenerateATicketService {
 
       return { result: ticket, err: null };
     } catch (err) {
-      console.log(err);
       return { err: err.message, result: null };
     }
   }

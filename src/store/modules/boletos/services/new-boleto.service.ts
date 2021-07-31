@@ -20,7 +20,6 @@ export class NewBoletoService {
 
       return { result: data.result, err: null }
     } catch (err) {
-      console.log(err);
       return { err: 'Erro', result: null }
     }
   }

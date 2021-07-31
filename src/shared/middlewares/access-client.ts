@@ -5,19 +5,21 @@
  import Client from '@core/client';
  import { Request, Response, NextFunction } from 'express';
 
- export async function accessClient(request: Request, response: Response, next: NextFunction): Promise<Response | void> {
+ export async function accessClient(req: Request, res: Response, next: NextFunction): Promise<Response | void> {
    try {
     // Verificar o id do admin
-    const clientId = request.client.id;
+    const clientId = req.client.id;
 
     const client = await Client.findByPk(clientId);
 
     if (!client) {
-      return response.status(401).json('[Acesso]: ID está ausente');
+      return res.status(401).json('[Acesso]: ID está ausente');
     }
+
+    req.client.entity = client as any;
 
     return next();
   } catch(err) {
-    return response.status(401).json({ err: '[Falha no acesso]: ID inválido', type: 'Autenticação', message: 'ID Inválido' });
+    return res.status(401).json({ err: '[Falha no acesso]: ID inválido', type: 'Autenticação', message: 'ID Inválido' });
   }
 }

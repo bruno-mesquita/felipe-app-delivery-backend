@@ -20,10 +20,6 @@ export class CheckExpiredBillsService {
 
           ticket.cancel();
           await ticket.save();
-
-          console.log('Venceu');
-        } else {
-          console.log('não venceu');
         }
       }))
 

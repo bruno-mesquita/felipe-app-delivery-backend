@@ -1,6 +1,5 @@
 import Client from '@core/client';
 import SmsService from '@shared/utils/sms';
-import ClientActivationCode from '@core/client-activation-code';
 
 export class RecoverPasswordService {
   async execute(email: string) {
@@ -11,9 +10,7 @@ export class RecoverPasswordService {
 
       if (!user) throw new Error('Usuário não encontrado');
 
-      const clientCode = await ClientActivationCode.create({ client: user, attempts: 0 });
-
-      await smsService.send(user.cellphone, clientCode.getCode());
+      await smsService.send(user.cellphone);
 
       return { err: null, result: true };
     } catch (err) {

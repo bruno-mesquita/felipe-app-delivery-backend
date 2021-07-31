@@ -55,7 +55,7 @@ routes.get('/states', addressStateController.listState);
 routes.get('/cities/:state_id', addressStateController.listCitiesByState);
 
 // Client
-routes.post('/clients/activate', clientController.activate);
+routes.put('/clients/activate', isAuthenticated, clientController.activate);
 
 // Rotas autenticadas
 
@@ -63,7 +63,9 @@ routes.post('/clients/activate', clientController.activate);
 routes.put('/clients', isAuthenticated, accessClient, clientController.updateProfile);
 routes.put('/clients/update-password', isAuthenticated, accessClient, clientController.updatePassword);
 routes.get('/clients/orders', isAuthenticated, accessClient, clientController.listOrdersByClient);
-routes.post('/clients/me', isAuthenticated, accessClient, clientController.profile);
+routes.post('/clients/me', isAuthenticated, clientController.profile);
+routes.delete('/clients', isAuthenticated, accessClient, clientController.remove);
+routes.put('/clients/deactivate', isAuthenticated, accessClient, clientController.deactivate);
 
 // Avatar
 routes.post('/avatar', isAuthenticated, accessClient,  avatarController.create);

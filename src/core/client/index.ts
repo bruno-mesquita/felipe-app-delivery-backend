@@ -35,7 +35,7 @@ class Client extends UserBase {
       cellphone: DataTypes.STRING,
       cpf: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'clients' });
+    }, { sequelize, tableName: 'clients', paranoid: true });
 
     return this;
   }

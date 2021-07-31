@@ -56,7 +56,6 @@ export class ListOrdersForTypesServices {
 
       return { result: orders, err: null };
     } catch(err) {
-      console.log(err);
       return { result: [], err: err.message };
     }
   }

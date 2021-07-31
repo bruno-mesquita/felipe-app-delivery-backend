@@ -12,9 +12,9 @@
     "start": "cross-env NODE_ENV=prod node dist/shared/http/server.js",
     "start:agiota": "cross-env NODE_ENV=prod node dist/agiota-api/http/server.js",
     "test": "cross-env NODE_ENV=test jest",
-    "db:migrate": "sequelize db:migrate",
+    "db:migrate": "yarn generate:migrations && sequelize db:migrate",
     "db:migrate:drop": "sequelize db:migrate:undo:all",
-    "db:seed": "yarn db:migrate:drop && yarn db:migrate && sequelize db:seed:all"
+    "db:seed": "yarn generate:seeds && yarn db:migrate:drop && yarn db:migrate && sequelize db:seed:all"
   },
   "dependencies": {
     "axios": "^0.21.1",

@@ -8,7 +8,6 @@ import imageUpdateValidation from '../validation/update-image.validation';
 export class UpdateImageService {
   async execute(updateImageDto: UpdateImageDto): Promise<ServiceResponse<boolean>> {
     try {
-      console.log(updateImageDto);
       const valid = imageUpdateValidation.isValidSync(updateImageDto);
 
       if (!valid) throw new Error('Dados inválidos');

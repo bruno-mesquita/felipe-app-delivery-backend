@@ -13,6 +13,8 @@ import {
   UpdatePasswordClientService,
   ProfileClientService,
   ListOrdersService,
+  DeleteClientService,
+  DeactiveteClientService
 } from './services';
 
 class ClientController {
@@ -34,7 +36,21 @@ class ClientController {
     try {
       const activeClientService = new ActiveClientService();
 
-      const result = await activeClientService.execute(req.body.code, req.body.id);
+      const result = await activeClientService.execute(req.client.id);
+
+      if (result.err) throw new Error(result.err);
+
+      return res.status(200).json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async deactivate(req: Request, res: Response): Promise<Response> {
+    try {
+      const deactiveteClientService = new DeactiveteClientService();
+
+      const result = await deactiveteClientService.execute(req.client.entity);
 
       if (result.err) throw new Error(result.err);
 
@@ -91,6 +107,20 @@ class ClientController {
       const listOrdersService = new ListOrdersService();
 
       const result = await listOrdersService.execute(req.client.id);
+
+      if (result.err) throw new Error(result.err);
+
+      return res.status(200).json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  }
+
+  async remove(req: Request, res: Response): Promise<Response> {
+    try {
+      const deleteClientService = new DeleteClientService();
+
+      const result = await deleteClientService.execute(req.client.entity);
 
       if (result.err) throw new Error(result.err);
 

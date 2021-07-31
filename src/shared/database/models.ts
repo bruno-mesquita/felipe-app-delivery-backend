@@ -4,7 +4,6 @@ import State from '@core/state';
 import Admin from '@core/admin';
 import Category from '@core/category';
 import Client from '@core/client';
-import ClientActivationCode from '@core/client-activation-code';
 import Establishment from '@core/establishment';
 import EstablishmentCategory from '@core/establishment-category';
 import Evaluation from '@core/evaluation';
@@ -29,7 +28,6 @@ export default [
   Admin,
   Category,
   Client,
-  ClientActivationCode,
   Establishment,
   EstablishmentCategory,
   Evaluation,
