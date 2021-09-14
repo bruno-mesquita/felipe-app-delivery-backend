@@ -62,6 +62,7 @@ class CreateClientService {
 
       return { result: user.id, err: null };
     } catch (err) {
+      console.log(err);
       return { result: null, err: err.message };
     }
   }

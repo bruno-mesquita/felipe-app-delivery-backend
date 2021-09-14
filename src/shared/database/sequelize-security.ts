@@ -1,12 +1,10 @@
-import security from '../utils/security-js';
+import security from '../utils/security';
 
-export function sequelizeSecurity(field: string) {
-  return {
-    get() {
-      return security.decrypt(this.getDataValue(field));
-    },
-    set(value: string) {
-      this.setDataValue(security.encrypt(value))
-    }
+export const sequelizeSecurity = (field: string) => ({
+  get() {
+    return security.decrypt(this.getDataValue(field));
+  },
+  set(value: string) {
+    this.setDataValue(field, security.encrypt(value))
   }
-}
+})

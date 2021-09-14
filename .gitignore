@@ -7,5 +7,5 @@ temp/
 .env
 logs
 dist
-**/migrations
-**/seeds
+**/migrations/**
+**/seeds/**

@@ -9,14 +9,12 @@ export default {
         name: "Felipe",
 	      email: "felipe@gmail.com",
 	      cellphone: "12981315531",
-	      password: hashSync('senhaforte', 8),
+	      password: hashSync('senhaforte/', 8),
         created_at: new Date(),
         updated_at: new Date()
       },
     ], {});
-
   },
-
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.bulkDelete('admins', null, {});
   }

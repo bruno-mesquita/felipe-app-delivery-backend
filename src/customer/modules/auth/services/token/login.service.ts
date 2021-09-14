@@ -22,7 +22,7 @@ class LoginClientService {
       // Procurar pelo e-mail e pegar o avatar desse cliente
       const client = await Client.findOne({
         where: { email: loginDto.email, active: true },
-        attributes: ['id', 'password', 'email']
+        attributes: ['id', 'password', 'email'],
       });
 
       if (!client) throw new Error('[erro]: E-mail ou senha incorreto');
