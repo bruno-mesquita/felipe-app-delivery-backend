@@ -24,8 +24,8 @@ class LoginCityManagerService {
       if (!cityManager.comparePassword(loginDto.password)) throw new Error('Credenciais inválidas');
 
       // Criando token
-      const token = tokenManager.create(cityManager.id);
-      const refreshToken = tokenManager.createRefreshToken(cityManager.id);
+      const token = tokenManager.create(cityManager.getId());
+      const refreshToken = tokenManager.createRefreshToken(cityManager.getId());
 
       const accessToken = { token, refreshToken };
 

@@ -7,7 +7,7 @@ export class ListOwnerService {
   async execute(): Promise<ServiceResponse<EstablishmentOwner[]>> {
     try {
       const owner = await EstablishmentOwner.findAll({
-        attributes: ['id', 'first_name', 'last_name', 'cellphone', 'active'],
+        attributes: ['id', 'first_name', 'last_name', 'cellphone', 'active', 'email'],
         include: [
           {
             model: Establishment,
