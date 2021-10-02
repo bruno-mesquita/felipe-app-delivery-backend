@@ -22,7 +22,7 @@ export class RemoveEstablishmentCategoryService {
       const establishmentCategory = await EstablishmentCategory.findOne({
         where: {
           category_id: categoryId,
-          establishment_id: owner.establishment_id,
+          establishment_id: owner.getEstablishmentId(),
         }
       });
 

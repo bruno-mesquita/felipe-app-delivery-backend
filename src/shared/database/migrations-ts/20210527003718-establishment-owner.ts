@@ -1,9 +1,8 @@
 import { QueryInterface, DataTypes } from 'sequelize';
-import security from '@shared/utils/security-js';
 
 export default {
   up: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
-    await queryInterface.createTable('establishment-owners', {
+    await queryInterface.createTable('establishment-owner', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -13,33 +12,15 @@ export default {
       first_name: {
         type: Sequelize.STRING,
         allowNull: false,
-        get() {
-          return security.decrypt(this.getDataValue('first_name'));
-        },
-        set(value) {
-          this.setDataValue('first_name', security.encrypt(value))
-        }
       },
       last_name: {
         type: Sequelize.STRING,
         allowNull: false,
-        get() {
-          return security.decrypt(this.getDataValue('last_name'));
-        },
-        set(value) {
-          this.setDataValue('last_name', security.encrypt(value))
-        }
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        get() {
-          return security.decrypt(this.getDataValue('email'));
-        },
-        set(value) {
-          this.setDataValue('email', security.encrypt(value))
-        }
       },
       password: {
         type: Sequelize.STRING,
@@ -48,23 +29,11 @@ export default {
       cellphone: {
         type: Sequelize.STRING,
         allowNull: false,
-        get() {
-          return security.decrypt(this.getDataValue('cellphone'));
-        },
-        set(value) {
-          this.setDataValue('cellphone', security.encrypt(value))
-        }
       },
       cpf: {
         type: Sequelize.STRING,
         allowNull: false,
         unique: true,
-        get() {
-          return security.decrypt(this.getDataValue('cpf'));
-        },
-        set(value) {
-          this.setDataValue('cpf', security.encrypt(value))
-        }
       },
       active: {
         type: Sequelize.BOOLEAN,
@@ -73,7 +42,7 @@ export default {
       },
       establishment_id: {
         type: Sequelize.INTEGER,
-        references: { model: 'establishments', key: 'id' },
+        references: { model: 'establishment', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
         allowNull: true,
@@ -90,6 +59,6 @@ export default {
   },
 
   down: async (queryInterface: QueryInterface) => {
-    await queryInterface.dropTable('establishment-owners');
+    await queryInterface.dropTable('establishment-owner');
   }
 };

@@ -23,7 +23,7 @@ export class CreateCodeForgotPasswordService {
       if (!client) throw new Error('E-mail do usuário não encontrado');
 
       // checando o número e o código passados
-      const sendResult = await smsService.send(client.cellphone);
+      const sendResult = await smsService.send(client.getCellphone());
 
       if (!sendResult) {
         throw new Error('Houve um erro ao enviar o codigo, verifique o seu número de telefone e tente novamente');
@@ -36,7 +36,6 @@ export class CreateCodeForgotPasswordService {
       const { password } = forgotPasswordDto;
 
       client.setPassword(password);
-
       client.hashPassword();
 
       await client.save();

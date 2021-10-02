@@ -27,7 +27,7 @@ class Product extends Model {
       price: DataTypes.NUMBER,
       description: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'products', paranoid: true });
+    }, { sequelize, tableName: 'product', paranoid: true });
 
     return this;
   }
@@ -38,31 +38,31 @@ class Product extends Model {
   }
 
   public getName(): string {
-    return this.name;
+    return this.get('name');
   }
 
   public getPrice(): number {
-    return this.price;
+    return this.get('price');
   }
 
   public getDescription(): string {
-    return this.description;
+    return this.get('description');
   }
 
   public updateProduct(name: string, price: number, description: string, menuId: number, active: boolean): void {
-    this.name = name;
-    this.price = price;
-    this.description = description;
-    this.active = active;
-    this.menu_id = menuId;
+    this.set('name', name);
+    this.set('price', price);
+    this.set('description', description);
+    this.set('active', active);
+    this.set('menu_id', menuId);
   }
 
   public isActive(): boolean {
-    return this.active;
+    return this.get('active');
   }
 
   public calcTotal(amount: number): number {
-    return this.price * amount;
+    return this.get('price') * amount;
   }
 }
 

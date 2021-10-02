@@ -10,9 +10,9 @@ export class DeactiveAccountService {
 
       if (!establishment) throw new Error('Estabelecimento não encontrado');
 
-      establishment.active = false;
-
+      establishment.deactivate();
       await establishment.save();
+
       return { result: true, err: null }
     } catch(err) {
       return { result: null, err: err.message };

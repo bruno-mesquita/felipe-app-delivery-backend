@@ -32,7 +32,7 @@ export class Ticket extends Model {
       date_of_expiration: DataTypes.DATE,
       date_last_updated: DataTypes.STRING,
       reference_id: DataTypes.NUMBER,
-    }, { sequelize, tableName: 'tickets' });
+    }, { sequelize, tableName: 'ticket' });
 
     return this;
   }
@@ -42,6 +42,6 @@ export class Ticket extends Model {
   }
 
   cancel() {
-    this.status = 'cancelled'
+    this.set('status','cancelled');
   }
 }

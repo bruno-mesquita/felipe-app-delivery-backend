@@ -32,7 +32,7 @@ export class CreateAddressClientService {
         number,
         neighborhood,
         cep,
-        city_id: city.id,
+        city_id: city.getId(),
         active: false,
       });
 

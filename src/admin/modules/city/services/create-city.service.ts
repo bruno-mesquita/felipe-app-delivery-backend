@@ -1,7 +1,3 @@
-/**
- * @fileoverview Criação de serviço de address City de user customer
- */
-
 import City from '@core/city';
 import State from '@core/state';
 import { ServiceResponse } from '@shared/utils/service-response';
@@ -32,13 +28,13 @@ export class CreateCityService {
       if (!stateExists && !createCityDto.state) throw new Error('[ERRO]: Estado não encontrado/selecionado.');
 
       // criando classe
-      const state = await City.create({
+      const city = await City.create({
         name: createCityDto.name,
-        state_id: stateExists.id,
+        state_id: stateExists.getId(),
         active: true,
       });
 
-      return { result: state.id, err: null };
+      return { result: city.getId(), err: null };
     } catch (err) {
       return { result: 0, err: err.message };
     }

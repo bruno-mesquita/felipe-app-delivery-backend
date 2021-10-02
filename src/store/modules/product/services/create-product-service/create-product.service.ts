@@ -19,7 +19,7 @@ export class CreateProductService {
 
       // Verificando se o Menu existe.
 
-      const menu = await Menu.findByPk(createProductDto.menu);
+      const menu = await Menu.findByPk(createProductDto.menu, { attributes: ['id'] });
 
       if (!menu) throw new Error('Menu não encontrado no sistema.');
 
@@ -27,6 +27,7 @@ export class CreateProductService {
 
       const productExists = await Product.findOne({
         where: { name: createProductDto.name },
+        attributes: [''],
       });
 
       if (productExists) throw new Error('Produto já cadastrado no sistema!');
@@ -37,7 +38,7 @@ export class CreateProductService {
         price: createProductDto.price,
         active: createProductDto.active,
         photo: { encoded: createProductDto.image },
-        menu_id: menu.id,
+        menu_id: menu.getId(),
       }, {
         include: [Product.Photo],
       });

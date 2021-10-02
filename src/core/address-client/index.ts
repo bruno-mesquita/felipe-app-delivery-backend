@@ -30,11 +30,19 @@ class AddressClient extends AddressModel {
   }
 
   public getNickname(): string {
-    return this.nickname;
+    return this.get('nickname');
   }
 
   public setNickname(nickname: string): void {
-    this.nickname = nickname;
+    this.set('nickname', nickname);
+  }
+
+  public deactivate(): void {
+    this.set('active', false);
+  }
+
+  public activate(): void {
+    this.set('active', true);
   }
 }
 

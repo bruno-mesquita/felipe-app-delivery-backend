@@ -14,7 +14,7 @@ class TermsOfUse extends Model {
   }
 
   public setDescription(description: string): void {
-    this.description = description;
+    this.set('description', description);
   }
 }
 

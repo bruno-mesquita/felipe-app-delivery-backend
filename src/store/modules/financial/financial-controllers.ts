@@ -7,7 +7,7 @@ export class FinancialController {
       const generateReportService = new GenerateReportService();
 
       const report = await generateReportService.execute({
-        id: Number(req.client.id),
+        establishmentId: req.client.entity.getEstablishmentId(),
         data_initial: String(req.query.data_initial),
         data_final: String(req.query.data_final)
       });

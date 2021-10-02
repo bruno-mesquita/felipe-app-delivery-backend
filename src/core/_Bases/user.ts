@@ -10,39 +10,51 @@ abstract class User extends Model {
   active: boolean;
 
   public setName(name: string): void {
-    this.name = name;
+    this.set('name', name);
   }
 
   public setEmail(email: string): void {
-    this.email = email;
+    this.set('email',email);
+  }
+
+  public getEmail(): string {
+    return this.get('email');
   }
 
   public setCellphone(cellphone: string): void {
-    this.cellphone = cellphone;
+    this.set('cellphone', cellphone);
+  }
+
+  public getCellphone(): string {
+    return this.get('cellphone');
   }
 
   public getActive(): boolean {
-    return this.active;
+    return this.get('active');
   }
 
   public activate(): void {
-    this.active = true;
+    this.set('active', true);
   }
 
   public deactivate(): void {
-    this.active = false;
+    this.set('active', true);
   }
 
   public hashPassword(): void {
-    this.password = hashSync(this.password, 8);
+    this.set('password', hashSync(this.get('password'), 8));
   }
 
   public comparePassword(comparePassword: string): boolean {
-    return compareSync(comparePassword, this.password);
+    try {
+      return compareSync(comparePassword, this.get('password'));
+    } catch (err) {
+      return false;
+    }
   }
 
   public setPassword(password: string): void {
-    this.password = password;
+    this.set('password', password);
   }
 }
 

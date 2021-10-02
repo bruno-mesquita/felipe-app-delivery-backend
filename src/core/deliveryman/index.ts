@@ -18,4 +18,36 @@ export class Deliveryman extends Model {
 
     return this;
   }
+
+  public getName(): string {
+    return this.get('name');
+  }
+
+  public setName(name: string): void {
+    this.set('name', name);
+  }
+
+  public getCellphone(): string {
+    return this.get('cellphone');
+  }
+
+  public setCellphone(cellphone: string): void {
+    this.set('cellphone', cellphone);
+  }
+
+  public getEntryDate(): string {
+    return this.get('entry_date');
+  }
+
+  public setEntryDate(entryDate: string): void {
+    this.set('entry_date', entryDate);
+  }
+
+  public getDepartureDate(): string {
+    return this.get('departure_date');
+  }
+
+  public setDepartureDate(departureDate: string): void {
+    this.set('departure_date', departureDate);
+  }
 }

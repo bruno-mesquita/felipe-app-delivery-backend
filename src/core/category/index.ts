@@ -1,5 +1,5 @@
 /**
- * @fileoverview Criação da entidade Store
+ * @fileoverview Criação da entidade Category
  *
  * @author Bruno Mesquita
  * @author Jonatas Rosa Moura
@@ -13,7 +13,7 @@ class Category extends Model {
   name: string;
 
   static start(sequelize: Sequelize) {
-    this.init({ name: DataTypes.STRING }, { sequelize, tableName: 'categories' });
+    this.init({ name: DataTypes.STRING }, { sequelize, tableName: 'category' });
 
     return this;
   }
@@ -23,11 +23,11 @@ class Category extends Model {
   }
 
   public getName(): string {
-    return this.name;
+    return this.get('name');
   }
 
   public setName(name: string): void {
-    this.name = name;
+    this.set('name', name);
   }
 }
 

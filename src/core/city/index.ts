@@ -10,7 +10,7 @@ class City extends Model {
     this.init({
       name: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'cities' });
+    }, { sequelize, tableName: 'city' });
 
     return this;
   }
@@ -20,15 +20,15 @@ class City extends Model {
   }
 
   public setName(name: string): void {
-    this.name = name;
+    this.set('name', name);
   }
 
   public setActive(active: boolean): void {
-    this.active = active;
+    this.set('active', active);
   }
 
   public setStateId(stateId: number): void {
-    this.state_id = stateId;
+    this.set('state_id', stateId);
   }
 }
 

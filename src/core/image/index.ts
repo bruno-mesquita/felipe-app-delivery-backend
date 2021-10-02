@@ -16,24 +16,24 @@ class Image extends Model {
     this.init({
       name: DataTypes.STRING,
       encoded: DataTypes.STRING,
-    }, { sequelize, tableName: 'images' });
+    }, { sequelize, tableName: 'image' });
 
     return this;
   }
 
   public setName(name: string): void {
-    this.name = name;
+    this.set('name', name);
   }
 
   public setEncoded(encoded: string): void {
-    this.encoded = encoded;
+    this.set('encoded', encoded);
   }
 
   public getName(): string {
-    return this.name;
+    return this.get('name');
   }
   public getEncoded(): string {
-    return this.encoded;
+    return this.get('encoded');
   }
 }
 

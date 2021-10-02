@@ -16,7 +16,7 @@ export default {
       image_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'images', key: 'id' },
+        references: { model: 'image', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },

@@ -7,16 +7,13 @@ import Order from "@core/order";
 import { EstablishmentOwner } from "@core/establishment-owner";
 
 export class GenerateReportService {
- async execute({ id, data_initial, data_final }: GenerateReportDto): Promise<ServiceResponse<any>> {
+ async execute({ establishmentId, data_initial, data_final }: GenerateReportDto): Promise<ServiceResponse<any>> {
   try {
-    const valid = schema.isValidSync({ id, data_initial, data_final });
+    const valid = schema.isValidSync({ establishmentId, data_initial, data_final });
 
     if (!valid) throw new Error('Dados Inválidos');
 
-    await EstablishmentOwner.findByPk(id);
-
     // Formatar e Converter String para Date
-
     const dataI = data_initial.split('/');
     const dataF = data_final.split('/');
 
@@ -28,6 +25,7 @@ export class GenerateReportService {
 
     const report = await Order.findAll({
       where: {
+        establishment_id: establishmentId,
         createdAt: { [Op.between]: [dataInit, dataFinal] },
         order_status: 'Finalizado',
       },

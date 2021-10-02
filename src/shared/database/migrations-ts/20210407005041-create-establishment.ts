@@ -2,7 +2,7 @@ import { QueryInterface, DataTypes } from 'sequelize';
 
 export default {
   up: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
-    await queryInterface.createTable('establishments', {
+    await queryInterface.createTable('establishment', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -45,7 +45,7 @@ export default {
       image_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'images', key: 'id' },
+        references: { model: 'image', key: 'id' },
         onDelete: 'CASCADE',
       },
       address_id: {
@@ -66,6 +66,6 @@ export default {
   },
 
   down: async (queryInterface: QueryInterface) => {
-    await queryInterface.dropTable('establishments');
+    await queryInterface.dropTable('establishment');
   }
 };

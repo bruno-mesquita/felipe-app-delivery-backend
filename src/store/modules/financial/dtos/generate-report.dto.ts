@@ -1,5 +1,5 @@
 export interface GenerateReportDto {
-  id: number;
+  establishmentId: number;
   data_initial: string;
   data_final: string;
 };

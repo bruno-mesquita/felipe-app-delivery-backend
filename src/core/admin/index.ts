@@ -9,7 +9,7 @@ class Admin extends UserBase {
       email: DataTypes.STRING,
       password: DataTypes.STRING,
       cellphone: DataTypes.STRING,
-    }, { sequelize, tableName: 'admins' });
+    }, { sequelize, tableName: 'admin' });
 
     return this;
   }

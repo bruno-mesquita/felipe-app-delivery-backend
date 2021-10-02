@@ -9,7 +9,7 @@ export class ExistsEstablishmentService {
         attributes: ['establishment_id'],
       });
 
-      return { result: !!owner.establishment_id, err: null };
+      return { result: !!owner.getEstablishmentId(), err: null };
     } catch (err) {
       return { err: 'Erro ao buscar', result: false }
     }

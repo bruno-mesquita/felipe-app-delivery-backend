@@ -15,10 +15,10 @@ export class UpdateDeliverymanService {
 
       if(!deliveryman) throw new Error('Motoboy não encontrado');
 
-      deliveryman.name = model.name;
-      deliveryman.cellphone = model.cellphone;
-      deliveryman.entry_date = model.entry_date;
-      deliveryman.departure_date = model.departure_date;
+      deliveryman.setName(model.name);
+      deliveryman.setCellphone(model.cellphone);
+      deliveryman.setEntryDate(model.entry_date);
+      deliveryman.setDepartureDate(model.departure_date);
 
       await deliveryman.save();
 

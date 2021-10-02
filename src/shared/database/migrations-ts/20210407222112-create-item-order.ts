@@ -22,12 +22,12 @@ export default {
       product_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'products', key: 'id' },
+        references: { model: 'product', key: 'id' },
       },
       order_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'orders', key: 'id' },
+        references: { model: 'order', key: 'id' },
       },
       created_at: {
         type: Sequelize.DATE,

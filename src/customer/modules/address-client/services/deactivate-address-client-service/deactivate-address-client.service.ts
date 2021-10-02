@@ -15,7 +15,7 @@ export class DeactivateAddressClientService {
 
       if(!address) throw new Error('Endereço não encontrado')
 
-      address.active = false;
+      address.deactivate();
       await address.save();
 
       return { err: null, result: true };

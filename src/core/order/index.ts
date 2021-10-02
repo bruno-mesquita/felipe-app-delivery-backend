@@ -32,7 +32,7 @@ class Order extends Model {
       transshipment: DataTypes.DECIMAL,
       note: DataTypes.STRING,
       commission: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'orders' });
+    }, { sequelize, tableName: 'order' });
 
     return this;
   }
@@ -45,31 +45,31 @@ class Order extends Model {
   }
 
   public getClientOrderStatus(): CustomerStatusType {
-    return this.client_order_status;
+    return this.get('client_order_status');
   }
 
   public setOrderStatus(order_status: StatusOrderType): void {
-    this.order_status = order_status;
+    this.set('order_status', order_status);
   }
 
   public setEvaluationId(evaluationId: number): void {
-    this.evaluation_id = evaluationId;
+    this.set('evaluation_id', evaluationId);
   }
 
   public updateOrder(payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
-    this.payment = payment;
-    this.client_order_status = client_order_status;
+    this.set('payment', payment);
+    this.set('client_order_status', client_order_status);
   }
 
   public setTotal(total: number): void {
     if (total > 0) {
-      this.total = total;
+      this.set('total', total);
     }
   }
 
   public open(): void {
-    this.order_status = 'Aberto';
-    this.client_order_status = 'Enviado';
+    this.set('order_status', 'Aberto');
+    this.set('client_order_status', 'Enviado');
   }
 
   private getStatus(): CustomerStatusType[] {
@@ -77,28 +77,28 @@ class Order extends Model {
   }
 
   public nextStatus(): void {
-    if (this.client_order_status !== 'Entregue' && this.client_order_status !== 'Cancelado') {
-      const index = this.getStatus().findIndex((item) => item === this.client_order_status);
+    if (this.get('client_order_status') !== 'Entregue' && this.get('client_order_status') !== 'Cancelado') {
+      const index = this.getStatus().findIndex((item) => item === this.get('client_order_status'));
 
       const status = this.getStatus()[index + 1];
 
       if (status === 'Entregue') {
-        this.order_status = 'Finalizado';
+        this.set('client_order_status', 'Finalizado');
       } else {
-        this.order_status = 'Em andamento';
+        this.set('client_order_status', 'Em andamento');
       }
 
-      this.client_order_status = status;
+      this.set('client_order_status', status);
     }
   }
 
   public calcTotal(): number {
-    return this.total + this.freight_value - this.discount;
+    return this.get('total') + this.get('freight_value') - this.get('discount');
   }
 
   public cancel(): void {
-    this.client_order_status = 'Cancelado';
-    this.order_status = 'Cancelado';
+    this.set('client_order_status', 'Cancelado');
+    this.set('order_status', 'Cancelado');
   }
 }
 

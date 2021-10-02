@@ -12,7 +12,7 @@ export default {
       client_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'clients', key: 'id' },
+        references: { model: 'client', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
@@ -43,7 +43,7 @@ export default {
       city_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'cities', key: 'id' },
+        references: { model: 'city', key: 'id' },
       },
       created_at: {
         type: Sequelize.DATE,

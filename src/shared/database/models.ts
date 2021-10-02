@@ -18,6 +18,7 @@ import { Ticket } from '@core/ticket';
 import { EstablishmentOwner } from '@core/establishment-owner';
 import { Deliveryman } from '@core/deliveryman';
 import { Announcement } from '@core/announcement';
+import CityManager from '@core/city-manager';
 
 export default [
   Image,
@@ -39,7 +40,8 @@ export default [
   Ticket,
   EstablishmentOwner,
   Deliveryman,
-  Announcement
+  Announcement,
+  CityManager
 ]
 
 

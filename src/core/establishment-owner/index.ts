@@ -6,6 +6,7 @@ import { compareSync, hashSync } from 'bcryptjs';
 
 import Establishment from '@core/establishment';
 import Model from '../_Bases/model';
+import CityManager from '@core/city-manager';
 
 export class EstablishmentOwner extends Model {
   first_name: string;
@@ -15,7 +16,9 @@ export class EstablishmentOwner extends Model {
   cellphone: string;
   cpf: string;
   establishment_id: number;
+  created_by_id: number;
 
+  public readonly created_by?: CityManager;
   public readonly establishment?: Establishment;
 
   static start(sequelize: Sequelize) {
@@ -27,17 +30,18 @@ export class EstablishmentOwner extends Model {
       cellphone: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
       cpf: DataTypes.STRING,
-    }, { sequelize, tableName: 'establishment-owners' });
+    }, { sequelize, tableName: 'establishment-owner' });
 
     return this;
   }
 
-  static associate({ Establishment }) {
+  static associate({ Establishment, CityManager }) {
     this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishment' });
+    this.belongsTo(CityManager, { foreignKey: 'created_by_id', as: 'created_by' });
   }
 
   public hashPassword(): void {
-    this.password = hashSync(this.password, 8);
+    this.set('password', hashSync(this.get('password'), 8));
   }
 
   public comparePassword(comparePassword: string): boolean {
@@ -45,22 +49,32 @@ export class EstablishmentOwner extends Model {
   }
 
   public setPassword(password: string): void {
-    this.password = password;
+    this.set('password', password);
   }
 
   public setFirstName(firstName: string): void {
-    this.first_name = firstName;
+    this.set('first_name', firstName);
   }
 
   public setLastName(lastName: string): void {
-    this.last_name = lastName;
+    this.set('last_name', lastName);
   }
 
-  public setEmail(password: string): void {
-    this.password = password;
+  public setEmail(email: string): void {
+    this.set('email', email);
   }
 
   public setCpf(cpf: string): void {
-    this.cpf = cpf;
+    this.set('cpf', cpf);
   }
+
+  public getEstablishmentId(): number {
+    return this.get('establishment_id');
+  }
+
+  public setEstablishmentId(establishmentId: number): void {
+    this.set('establishment_id', establishmentId);
+  }
+
+
 }

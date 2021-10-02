@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { LoginClientService } from './services/login.service';
-import { RefrishTokenService } from './services/refresh-token.service';
+import { RefreshTokenService } from './services/refresh-token.service';
 
 export class AuthController {
   async login(req: Request, res: Response): Promise<Response> {
@@ -20,7 +20,7 @@ export class AuthController {
 
   async refresh(req: Request, res: Response): Promise<Response> {
     try {
-      const refreshToken = new RefrishTokenService();
+      const refreshToken = new RefreshTokenService();
 
       const refresh = await refreshToken.execute(req.body);
 

@@ -27,15 +27,15 @@ export class Announcement extends Model {
   };
 
   public getName(): string {
-    return this.name;
+    return this.get('name');
   }
 
   public updateAnnouncement(name: string, active: boolean): void {
-    this.name = name;
-    this.active = active;
+    this.set('name', name);
+    this.set('active', active);
   }
 
   public isActive(): boolean {
-    return this.active;
+    return this.get('active');
   }
 };

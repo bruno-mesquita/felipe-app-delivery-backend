@@ -26,11 +26,9 @@ class CreateStateService {
 
       // criando classe
 
-      const state = await State.create({
-        ...createStateDto,
-      });
+      const state = await State.create(createStateDto);
 
-      return { result: state.id, err: null };
+      return { result: state.getId(), err: null };
     } catch (err) {
       return { result: 0, err: err.message };
     }

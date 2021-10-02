@@ -45,7 +45,7 @@ class Establishment extends Model {
       freightValue: DataTypes.DECIMAL,
       evaluation: DataTypes.DECIMAL,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'establishments' });
+    }, { sequelize, tableName: 'establishment' });
 
     return this;
   }
@@ -67,35 +67,47 @@ class Establishment extends Model {
   }
 
   public updateProfile({ name, cellphone, closingTime, openingTime, freightValue }: UpdateProfile): void {
-    this.name = name;
-    this.cellphone = cellphone;
-    this.freightValue = freightValue;
-    this.openingTime = openingTime;
-    this.closingTime = closingTime;
+    this.set('name', name);
+    this.set('cellphone', cellphone);
+    this.set('freightValue', freightValue);
+    this.set('openingTime', openingTime);
+    this.set('closingTime', closingTime);
   }
 
   public isOpen(): boolean {
-    const closedDate = setHours(new Date(), this.closingTime);
+    const closedDate = setHours(new Date(), this.get('closingTime'));
 
     if (isPast(closedDate)) return false;
 
     return true;
   }
 
-  public setOpeningTime(value: number): void {
-    this.openingTime = value;
+  public setOpeningTime(openingTime: number): void {
+    this.set('openingTime', openingTime);
   }
 
-  public setClosingTime(value: number): void {
-    this.closingTime = value;
+  public setClosingTime(closingTime: number): void {
+    this.set('closingTime', closingTime);
   }
 
-  public setFreightValue(value: number): void {
-    this.freightValue = value;
+  public setFreightValue(freightValue: number): void {
+    this.set('freightValue', freightValue);
   }
 
   public isActive(): boolean {
-    return this.active;
+    return this.get('active');
+  }
+
+  public getAddressId(): number {
+    return this.get('address_id');
+  }
+
+  public activate(): void {
+    this.set('active', true);
+  }
+
+  public deactivate(): void {
+    this.set('active', true);
   }
 }
 

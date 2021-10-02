@@ -35,14 +35,14 @@ class ListEstablishmentService {
           {
             model: AddressEstablishment,
             as: 'address',
-            where: { city_id: addressClient.city_id },
+            where: { city_id: addressClient.getCityId() },
             attributes: ['city_id'],
           },
           {
             model: EstablishmentCategory,
             as:  'categories',
             attributes: ['category_id'],
-            where: { category_id: category.id }
+            where: { category_id: category.getId() }
           }
         ],
         limit,

@@ -18,7 +18,7 @@ class CreateAvatarClientService {
 
       if (!client) throw new Error('[Avatar]: Usuário não econtrado.');
 
-      if (client.avatar_id) {
+      if (client.getAvatarId()) {
         const clientAvatar = await client.getAvatar({ attributes: ['name', 'encoded', 'id'] });
 
         clientAvatar.setEncoded(createAvatar.encoded);
@@ -30,7 +30,7 @@ class CreateAvatarClientService {
         const avatar = await Image.create(createAvatar);
 
         // Anexar Avatar ao Usuário
-        client.setAvatar(avatar.id);
+        client.setAvatar(avatar.getId());
 
         // Salvando no DB
         client.save();

@@ -12,43 +12,43 @@ abstract class Address extends Model {
   public readonly city: City;
 
   public getStreet(): string {
-    return this.street;
+    return this.get('street');
   }
 
   public getNumber(): string {
-    return this.number;
+    return this.get('number');
   }
 
   public getNeighborhood(): string {
-    return this.neighborhood;
+    return this.get('neighborhood');
   }
 
   public getCep(): string {
-    return this.cep;
+    return this.get('cep');
   }
 
   public getCityId(): number {
-    return this.city_id
+    return this.get('city_id');
   }
 
   public setStreet(street: string): void {
-    this.street = street;
+    this.set('street', street);
   }
 
   public setNumber(number: string): void {
-    this.number = number;
+    this.set('number', number);
   }
 
   public setNeighborhood(neighborhood: string): void {
-    this.neighborhood = neighborhood;
+    this.set('neighborhood', neighborhood);
   }
 
   public setCep(cep: string): void {
-    this.cep = cep;
+    this.set('cep', cep);
   }
 
   public setCityId(city_id: number): void {
-    this.city_id = city_id
+    this.set('city_id', city_id);
   }
 }
 

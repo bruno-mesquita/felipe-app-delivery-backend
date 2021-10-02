@@ -38,7 +38,7 @@ export class CreateEstablishmentService {
 
       const address = await AddressEstablishment.create({
         ...createEstablishmentDto.address,
-        city_id: city.id,
+        city_id: city.getId(),
       });
 
       // Criar a imagem
@@ -52,8 +52,8 @@ export class CreateEstablishmentService {
 
       const establishment = await Establishment.create({
         ...establishmentDto,
-        address_id: address.id,
-        image_id: image.id,
+        address_id: address.getId(),
+        image_id: image.getId(),
       });
 
       // Criar categorias do estabelecimento
@@ -63,8 +63,8 @@ export class CreateEstablishmentService {
         if (!category) throw new Error('Categoria não encontrada');
 
         await EstablishmetCategory.create({
-          category_id: category.id,
-          establishment_id: establishment.id,
+          category_id: category.getId(),
+          establishment_id: establishment.getId(),
         });
       }
 
@@ -72,7 +72,7 @@ export class CreateEstablishmentService {
 
       if(!owner) throw new Error('Dono não encontrado');
 
-      owner.establishment_id = establishment.id;
+      owner.setEstablishmentId(establishment.getId());
 
       await owner.save();
 

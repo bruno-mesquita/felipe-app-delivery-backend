@@ -23,6 +23,7 @@ class UpdatePasswordClientService {
       if (!user.comparePassword(updatePasswordClientDto.currentPassword)) throw new Error('Senha inválida');
 
       user.setPassword(updatePasswordClientDto.newPassword);
+      user.hashPassword();
 
       await user.save();
 

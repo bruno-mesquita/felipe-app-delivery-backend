@@ -47,17 +47,14 @@ export class CreateOrderService {
         },
       });
 
-      if (!addressExists) {
-        throw new Error('Endereço do cliente não encontrado');
-      }
+      if (!addressExists) throw new Error('Endereço do cliente não encontrado');
 
-      // Buscando o pedido
-
+      // Criando o pedido
       const order = new Order({
-        establishment_id: establishmentExists.id,
-        client_id: clientExists.id,
-        address_id: addressExists.id,
-        freight_value: establishmentExists.freightValue,
+        establishment_id: establishmentExists.getId(),
+        client_id: clientExists.getId(),
+        address_id: addressExists.getId(),
+        freight_value: establishmentExists.getFreightValue(),
         transshipment: createOrderDto.transshipment,
         note: createOrderDto.note,
         payment: createOrderDto.payment,
@@ -79,9 +76,9 @@ export class CreateOrderService {
           total += tot;
 
           await ItemOrder.create({
-            product_id: product.id,
+            product_id: product.getId(),
 
-            order_id: order.id,
+            order_id: order.getId(),
 
             quantity: item.amount,
 
@@ -95,7 +92,6 @@ export class CreateOrderService {
       const totalOrder = order.calcTotal();
 
       // Salvando produto no db
-
       await order.save();
 
       return { result: order.id, err: null };

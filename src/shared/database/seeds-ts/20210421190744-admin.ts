@@ -3,11 +3,11 @@ import { hashSync } from 'bcryptjs';
 
 export default {
   up: async (queryInterface: QueryInterface) => {
-    await queryInterface.bulkInsert('admins', [
+    await queryInterface.bulkInsert('admin', [
       {
         id: 1,
         name: "Felipe",
-	      email: "felipe@gmail.com",
+	      email: "felipeflippdelivery@gmail.com",
 	      cellphone: "12981315531",
 	      password: hashSync('senhaforte/', 8),
         created_at: new Date(),
@@ -16,6 +16,6 @@ export default {
     ], {});
   },
   down: async (queryInterface: QueryInterface) => {
-    await queryInterface.bulkDelete('admins', null, {});
+    await queryInterface.bulkDelete('admin', null, {});
   }
 };

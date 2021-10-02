@@ -1,22 +1,22 @@
 import { ServiceResponse } from "@shared/utils/service-response";
 import TokenManager from "@shared/utils/token-manager";
-import Client from '@core/client';
+import Admin from '@core/admin';
 
-class RefrishTokenService {
+export class RefreshTokenService {
   async execute(token: string): Promise<ServiceResponse<string | null>> {
     try {
       const tokenManager = new TokenManager();
 
-      const clientId = tokenManager.check(token);
+      const adminId = tokenManager.check(token);
 
-      const client = await Client.findOne({
-        where: { id: clientId.id },
+      const admin = await Admin.findOne({
+        where: { id: adminId.id },
         attributes: ['id'],
       });
 
-      if (!client) throw new Error('Cliente não encontrado');
+      if (!admin) throw new Error('Usuário não encontrado');
 
-      const accessToken = tokenManager.createRefreshToken(client.id);
+      const accessToken = tokenManager.createRefreshToken(admin.getId());
 
       return { result: accessToken, err: null };
     } catch (err) {
@@ -24,5 +24,3 @@ class RefrishTokenService {
     }
   }
 }
-
-export { RefrishTokenService };

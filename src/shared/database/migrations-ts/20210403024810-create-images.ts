@@ -2,7 +2,7 @@ import { QueryInterface, DataTypes } from 'sequelize';
 
 export default {
   up: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
-    await queryInterface.createTable('images', {
+    await queryInterface.createTable('image', {
       id: {
         type: Sequelize.INTEGER,
         allowNull: false,
@@ -10,7 +10,7 @@ export default {
         primaryKey: true,
       },
       name: {
-        type: Sequelize.STRING(50),
+        type: Sequelize.STRING,
         allowNull: true,
       },
       encoded: {
@@ -29,6 +29,6 @@ export default {
   },
 
   down: async (queryInterface: QueryInterface) => {
-    await queryInterface.dropTable('images');
+    await queryInterface.dropTable('image');
   }
 };

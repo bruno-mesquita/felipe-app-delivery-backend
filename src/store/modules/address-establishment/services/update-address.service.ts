@@ -18,7 +18,7 @@ export class UpdateAdressService {
 
       if (!establishmet) throw new Error('Estabelecimento não encontrado');
 
-      const addressEstablishment = await AddressEstablishment.findByPk(establishmet.address_id);
+      const addressEstablishment = await AddressEstablishment.findByPk(establishmet.getAddressId());
 
       if (!addressEstablishment) throw new Error('Endereço do Estabelecimento não encontrado');
 

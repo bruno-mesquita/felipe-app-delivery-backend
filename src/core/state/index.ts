@@ -9,17 +9,17 @@ class State extends Model {
     this.init({
       name: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'states' });
+    }, { sequelize, tableName: 'state' });
 
     return this;
   }
 
   public setName(name: string): void {
-    this.name = name;
+    this.set('name', name);
   }
 
   public setActive(active: boolean): void {
-    this.active = active;
+    this.set('active', active);
   }
 }
 

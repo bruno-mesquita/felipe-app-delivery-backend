@@ -26,7 +26,7 @@ class Menu extends Model {
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.NUMBER,
-    }, { sequelize, tableName: 'menus', paranoid: true });
+    }, { sequelize, tableName: 'menu', paranoid: true });
 
     return this;
   }
@@ -37,7 +37,7 @@ class Menu extends Model {
   }
 
   public setName(name: string): void {
-    this.name = name;
+    this.set('name', name);
   }
 }
 

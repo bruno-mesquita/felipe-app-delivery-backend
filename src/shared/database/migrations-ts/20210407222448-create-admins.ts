@@ -1,10 +1,8 @@
 import { QueryInterface, DataTypes } from 'sequelize';
 
-import security from '@shared/utils/security-js';
-
 export default {
   up: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
-    await queryInterface.createTable('admins', {
+    await queryInterface.createTable('admin', {
       id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -14,22 +12,10 @@ export default {
       name: {
         type: Sequelize.STRING,
         allowNull: false,
-        get() {
-          return security.decrypt(this.getDataValue('name'));
-        },
-        set(value) {
-          this.setDataValue('name', security.encrypt(value))
-        }
       },
       email: {
         type: Sequelize.STRING,
         allowNull: false,
-        get() {
-          return security.decrypt(this.getDataValue('email'));
-        },
-        set(value) {
-          this.setDataValue('email', security.encrypt(value))
-        }
       },
       password: {
         type: Sequelize.STRING,
@@ -38,12 +24,6 @@ export default {
       cellphone: {
         type: Sequelize.STRING,
         allowNull: false,
-        get() {
-          return security.decrypt(this.getDataValue('cellphone'));
-        },
-        set(value) {
-          this.setDataValue('cellphone', security.encrypt(value))
-        }
       },
       created_at: {
         type: Sequelize.DATE,
@@ -57,6 +37,6 @@ export default {
   },
 
   down: async (queryInterface: QueryInterface) => {
-    await queryInterface.dropTable('admins');
+    await queryInterface.dropTable('admin');
   }
 };

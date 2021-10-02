@@ -35,7 +35,7 @@ class Client extends UserBase {
       cellphone: DataTypes.STRING,
       cpf: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'clients', paranoid: true });
+    }, { sequelize, tableName: 'client', paranoid: true });
 
     return this;
   }
@@ -47,7 +47,11 @@ class Client extends UserBase {
   }
 
   public setAvatar(avatarId: number): void {
-    this.avatar_id = avatarId;
+    this.set('avatar_id', avatarId);
+  }
+
+  public getAvatarId(): number {
+    return this.get('avatar_id');
   }
 }
 

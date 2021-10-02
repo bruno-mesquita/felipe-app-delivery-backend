@@ -15,7 +15,7 @@ class ResendClientActivationCodeService {
 
       if (!client) throw new Error('Cliente não encontrado');
 
-      const result = await smsService.send(client.cellphone);
+      const result = await smsService.send(client.getCellphone());
 
       if (!result) throw new Error('Erro ao enviar o codigo');
 

@@ -18,8 +18,8 @@ class RefrishTokenService {
 
       if (!client) throw new Error('Cliente não encontrado');
 
-      const refreshToken = tokenManager.createRefreshToken(client.id);
-      const accessToken = tokenManager.create(client.id);
+      const refreshToken = tokenManager.createRefreshToken(client.getId());
+      const accessToken = tokenManager.create(client.getId());
 
       return { result: { accessToken, refreshToken  }, err: null };
     } catch (err) {

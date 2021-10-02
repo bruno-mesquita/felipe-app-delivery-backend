@@ -18,6 +18,7 @@ export class UpdatePasswordEstabishmentService {
       if (!user.comparePassword(updatePasswordDto.currentPassword)) throw new Error('Senha inválida');
 
       user.setPassword(updatePasswordDto.newPassword);
+      user.hashPassword();
 
       await user.save();
 

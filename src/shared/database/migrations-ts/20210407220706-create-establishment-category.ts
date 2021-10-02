@@ -12,12 +12,12 @@ export default {
       category_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'categories', key: 'id' },
+        references: { model: 'category', key: 'id' },
       },
       establishment_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'establishments', key: 'id' },
+        references: { model: 'establishment', key: 'id' },
       },
       created_at: {
         type: Sequelize.DATE,

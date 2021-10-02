@@ -12,7 +12,7 @@ export default {
       city_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'cities', key: 'id' },
+        references: { model: 'city', key: 'id' },
       },
       street: {
         type: Sequelize.STRING,

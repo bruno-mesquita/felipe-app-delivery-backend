@@ -1,10 +1,13 @@
 import { Model as SequelizeModel } from 'sequelize';
 
-abstract class Model extends SequelizeModel {
+abstract class Model<
+  TModelAttributes extends {} = any,
+  TCreationAttributes extends {} = TModelAttributes
+  > extends SequelizeModel<TModelAttributes, TCreationAttributes> {
   readonly id!: number;
   readonly createdAt!: Date;
   readonly updatedAt!: Date;
-  deletedAt!: Date;
+  readonly deletedAt!: Date;
 
   public async toRemove() {
     Object.entries(Object.assign({}, this.toJSON())).map(field => {
@@ -18,6 +21,10 @@ abstract class Model extends SequelizeModel {
     });
 
     await this.destroy();
+  }
+
+  public getId(): number {
+    return this.get('id');
   }
 }
 

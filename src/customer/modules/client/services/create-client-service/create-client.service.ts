@@ -51,7 +51,7 @@ class CreateClientService {
       if (!city) throw new Error('Cidade não encontrada');
 
       await user.createAdress({
-        city_id: city.id,
+        city_id: city.getId(),
         neighborhood: UNINFORMED,
         cep: UNINFORMED,
         street: UNINFORMED,
@@ -60,9 +60,8 @@ class CreateClientService {
         active: true,
       });
 
-      return { result: user.id, err: null };
+      return { result: user.getId(), err: null };
     } catch (err) {
-      console.log(err);
       return { result: null, err: err.message };
     }
   }

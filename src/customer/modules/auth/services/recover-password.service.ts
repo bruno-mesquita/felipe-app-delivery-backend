@@ -10,7 +10,7 @@ export class RecoverPasswordService {
 
       if (!user) throw new Error('Usuário não encontrado');
 
-      await smsService.send(user.cellphone);
+      await smsService.send(user.getCellphone());
 
       return { err: null, result: true };
     } catch (err) {

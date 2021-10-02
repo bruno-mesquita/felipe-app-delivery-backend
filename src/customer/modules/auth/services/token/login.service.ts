@@ -34,9 +34,9 @@ class LoginClientService {
       }
 
       // Criando token
-      const token = tokenManager.create(client.id);
+      const token = tokenManager.create(client.getId());
 
-      const refreshToken = tokenManager.createRefreshToken(client.id);
+      const refreshToken = tokenManager.createRefreshToken(client.getId());
 
       const accessToken = { token, refreshToken };
 

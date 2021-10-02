@@ -18,10 +18,10 @@ export class ActiveAddressClientService {
 
       if(!address) throw new Error('Endereço não encontrado')
 
-      addressActive.active = false;
-      await addressActive.save();
+      addressActive.deactivate();
+      address.activate();
 
-      address.active = true;
+      await addressActive.save();
       await address.save();
 
       return { err: null, result: true };

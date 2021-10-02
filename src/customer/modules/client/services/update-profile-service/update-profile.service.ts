@@ -30,9 +30,9 @@ class UpdateProfileService {
       const userExists = await Client.findOne({
         where: {
           [Op.or]: [
-            { [Op.not]: { email: user.email } },
+            { [Op.not]: { email: user.getEmail() } },
             { email: updateClientDto.email },
-            { [Op.not]: { cellphone: user.cellphone } },
+            { [Op.not]: { cellphone: user.getCellphone() } },
             { cellphone: updateClientDto.cellphone },
           ]
         }
