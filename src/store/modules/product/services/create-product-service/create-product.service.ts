@@ -27,7 +27,7 @@ export class CreateProductService {
 
       const productExists = await Product.findOne({
         where: { name: createProductDto.name },
-        attributes: [''],
+        attributes: ['id'],
       });
 
       if (productExists) throw new Error('Produto já cadastrado no sistema!');
