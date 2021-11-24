@@ -17,15 +17,6 @@ export class CreateProductService {
 
       if (!menu) throw new Error('Menu não encontrado no sistema.');
 
-      // Verificando se já existe esse produto
-
-      const productExists = await Product.findOne({
-        where: { name: createProductDto.name },
-        attributes: ['id'],
-      });
-
-      if (productExists) throw new Error('Produto já cadastrado no sistema!');
-
       await Product.create({
         name: createProductDto.name,
         description: createProductDto.description,
