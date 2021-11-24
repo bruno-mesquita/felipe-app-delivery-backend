@@ -1,9 +1,3 @@
-/**
- * @fileoverview Casos de testes para a criação do produto
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
- */
 import Menu from '@core/menu';
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';

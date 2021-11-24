@@ -5,6 +5,7 @@ build/
 tmp/
 temp/
 .env
+.env.production
 logs
 dist
 **/migrations/**
