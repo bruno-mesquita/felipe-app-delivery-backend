@@ -45,7 +45,7 @@ export class EstablishmentOwner extends Model {
   }
 
   public comparePassword(comparePassword: string): boolean {
-    return compareSync(comparePassword, this.password);
+    return compareSync(comparePassword, this.get('password'));
   }
 
   public setPassword(password: string): void {

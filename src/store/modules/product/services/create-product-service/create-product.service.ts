@@ -12,7 +12,6 @@ export class CreateProductService {
       if (!valid) throw new Error('Por favor reveja seus dados.');
 
       // Verificando se o Menu existe.
-
       const menu = await Menu.findByPk(createProductDto.menu, { attributes: ['id'] });
 
       if (!menu) throw new Error('Menu não encontrado no sistema.');
