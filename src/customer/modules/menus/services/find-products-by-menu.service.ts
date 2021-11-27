@@ -1,5 +1,6 @@
 import Image from '@core/image';
 import Menu from '@core/menu';
+import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { usePage } from '@shared/utils/use-page';
 
@@ -12,7 +13,8 @@ export class FindProductsByMenuService {
 
       if(!menu) throw new Error('Menu não encontrado');
 
-      const products = await menu.getProducts({
+      const products = await Product.findAll({
+        where: { menu_id: menuId },
         attributes: ['id', 'name', 'price', 'description'],
         include: [
           {
