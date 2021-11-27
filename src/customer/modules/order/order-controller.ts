@@ -11,9 +11,9 @@ import { VerifyStatusOrderService } from './services/verify-status-order-service
 import { RateOrderService } from './services/rate-order.service';
 
 export class OrderController {
-  async verify(req: Request, res: Response): Promise<Response> {
+  async verify({ params }: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const { id } = params;
       const verifyStatusOrderService = new VerifyStatusOrderService();
 
       const order = await verifyStatusOrderService.execute(Number(id));
@@ -26,9 +26,9 @@ export class OrderController {
     }
   }
 
-  async show(req: Request, res: Response): Promise<Response> {
+  async show({ params }: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const { id } = params;
       const showOrderService = new ShowOrderService();
 
       const order = await showOrderService.execute(Number(id));
@@ -41,11 +41,11 @@ export class OrderController {
     }
   }
 
-  async create(req: Request, res: Response): Promise<Response> {
+  async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
       const createOrderService = new CreateOrderService();
 
-      const order = await createOrderService.execute({ ...req.body, client_id: req.client.id });
+      const order = await createOrderService.execute({ ...body, client_id: client.id });
 
       if (order.err) throw new Error(order.err);
 
@@ -55,13 +55,13 @@ export class OrderController {
     }
   }
 
-  async rateOrder(req: Request, res: Response): Promise<Response> {
+  async rateOrder({ body, client, params }: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const { id } = params;
 
       const rateOrderService = new RateOrderService();
 
-      const order = await rateOrderService.execute({ ...req.body, clientId: req.client.id, orderId: Number(id) });
+      const order = await rateOrderService.execute({ ...body, clientId: client.id, orderId: Number(id) });
 
       if (order.err) throw new Error(order.err);
 

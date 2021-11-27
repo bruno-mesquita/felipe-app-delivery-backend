@@ -2,10 +2,10 @@ import Menu from '@core/menu';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class ListMenuService {
-  async execute(EstablishmentId: number): Promise<ServiceResponse<Menu[]>> {
+  async execute(establishmentId: number): Promise<ServiceResponse<Menu[]>> {
     try {
       const menus = await Menu.findAll({
-        where: { establishment_id: EstablishmentId },
+        where: { establishment_id: establishmentId },
         attributes: ['id', 'name']
       });
 

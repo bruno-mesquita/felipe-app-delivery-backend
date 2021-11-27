@@ -11,11 +11,11 @@ import {
 } from './services';
 
 class ClientAddressController {
-  async create(req: Request, res: Response): Promise<Response> {
+  async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
       const clientAddressService = new CreateAddressClientService();
 
-      const clientAddress = await clientAddressService.execute({ ...req.body, userId: req.client.id });
+      const clientAddress = await clientAddressService.execute({ ...body, userId: client.id });
 
       if (clientAddress.err) throw new Error(clientAddress.err);
 
@@ -25,11 +25,11 @@ class ClientAddressController {
     }
   }
 
-  async list(req: Request, res: Response): Promise<Response> {
+  async list({ client, query }: Request, res: Response): Promise<Response> {
     try {
       const listAddressClientService = new ListAddressClientService();
 
-      const clientAddress = await listAddressClientService.execute(req.client.id, Number(req.query.page || 0));
+      const clientAddress = await listAddressClientService.execute(client.id, Number(query.page || 0));
 
       if (clientAddress.err) throw new Error(clientAddress.err);
 
@@ -39,11 +39,11 @@ class ClientAddressController {
     }
   }
 
-  async findOne(req: Request, res: Response): Promise<Response> {
+  async findOne({ params, client }: Request, res: Response): Promise<Response> {
     try {
       const findOneAddressClientService = new FindOneAddressClientService();
 
-      const result = await findOneAddressClientService.execute(Number(req.params.id), req.client.id);
+      const result = await findOneAddressClientService.execute(Number(params.id), client.id);
 
       if (result.err) throw new Error(result.err);
 
@@ -53,11 +53,11 @@ class ClientAddressController {
     }
   }
 
-  async deactivate(req: Request, res: Response): Promise<Response> {
+  async deactivate({ params, client }: Request, res: Response): Promise<Response> {
     try {
       const deactivateAddressClientService = new DeactivateAddressClientService();
 
-      const result = await deactivateAddressClientService.execute(Number(req.params.id), req.client.id);
+      const result = await deactivateAddressClientService.execute(Number(params.id), client.id);
 
       if (result.err) throw new Error(result.err);
 
@@ -67,11 +67,11 @@ class ClientAddressController {
     }
   }
 
-  async active(req: Request, res: Response): Promise<Response> {
+  async active({ params, client }: Request, res: Response): Promise<Response> {
     try {
       const activeAddressClientService = new ActiveAddressClientService();
 
-      const result = await activeAddressClientService.execute(Number(req.params.id), req.client.id);
+      const result = await activeAddressClientService.execute(Number(params.id), client.id);
 
       if (result.err) throw new Error(result.err);
 
@@ -81,11 +81,11 @@ class ClientAddressController {
     }
   }
 
-  async update(req: Request, res: Response): Promise<Response> {
+  async update({ body, params }: Request, res: Response): Promise<Response> {
     try {
       const updateAddressClientService = new UpdateAddressClientService();
 
-      const clientAddress = await updateAddressClientService.execute({ ...req.body, id: req.params.id });
+      const clientAddress = await updateAddressClientService.execute({ ...body, id: params.id });
 
       if (clientAddress.err) throw new Error(clientAddress.err);
 
@@ -95,9 +95,9 @@ class ClientAddressController {
     }
   }
 
-  async delete(req: Request, res: Response): Promise<Response> {
+  async delete({ params }: Request, res: Response): Promise<Response> {
     try {
-      const { addressClientId } = req.params;
+      const { addressClientId } = params;
       const deleteAddressClientService = new DeleteAddressClientService();
 
       const clientAddress = await deleteAddressClientService.execute(Number(addressClientId));

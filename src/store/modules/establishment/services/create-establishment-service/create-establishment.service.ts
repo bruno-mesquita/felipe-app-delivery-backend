@@ -1,10 +1,3 @@
-/**
- * @fileoverview Casos de testes para a criação do estabelecimento
- *
- * @author Bruno Mesquita
- * @author Jonatas Rosa Moura
- */
-
 import Establishment from '@core/establishment';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateEstablishmentDto } from '../../dtos/create-establishment-dto';
@@ -25,11 +18,11 @@ export class CreateEstablishmentService {
       if (!valid) throw new Error('Dados invalidos');
 
       // Verificando se o celular já existe
-      const cellphone = await Establishment.findOne({
+      const establishmentExists = await Establishment.findOne({
         where: { cellphone: createEstablishmentDto.cellphone },
       });
 
-      if (cellphone) throw new Error('Celular já cadastrado no sistema');
+      if (establishmentExists) throw new Error('Celular já cadastrado no sistema');
 
       // Criar o endereço
       const city = await City.findByPk(createEstablishmentDto.address.city);

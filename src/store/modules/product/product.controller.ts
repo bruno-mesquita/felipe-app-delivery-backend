@@ -16,12 +16,14 @@ import {
 } from './services';
 
 class ProductController {
-  async searchName(req: Request, res: Response): Promise<Response> {
+  async searchName({ client, query }: Request, res: Response): Promise<Response> {
     try {
       const searchNameProductsService = new SearchNameProductsService();
-      const { search } = req.query;
+      const { search } = query;
 
-      const products = await searchNameProductsService.execute(search as string, req.client.entity.establishment_id);
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const products = await searchNameProductsService.execute(search as string, establishmentId);
 
       if (products.err) throw new Error(products.err);
 
@@ -31,13 +33,15 @@ class ProductController {
     }
   }
 
-  async list(req: Request, res: Response): Promise<Response> {
+  async list({ query, client }: Request, res: Response): Promise<Response> {
     try {
-      const { page = 0, menuId } = req.query;
+      const { page = 0, menuId } = query;
 
       const listProductsService = new ListProductsService();
 
-      const products = await listProductsService.execute(req.client.entity.establishment_id, Number(page), menuId ? Number(menuId) : undefined);
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const products = await listProductsService.execute(establishmentId, Number(page), menuId ? Number(menuId) : undefined);
 
       if (products.err) throw new Error(products.err);
 
@@ -47,13 +51,15 @@ class ProductController {
     }
   }
 
-  async show(req: Request, res: Response): Promise<Response> {
+  async show({ params, client }: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const { id } = params;
 
       const productService = new ShowProductService();
 
-      const product = await productService.execute(Number(id), req.client.entity.establishment_id);
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const product = await productService.execute(Number(id), establishmentId);
 
       if (product.err) throw new Error(product.err);
 
@@ -63,11 +69,11 @@ class ProductController {
     }
   }
 
-  async create(req: Request, res: Response): Promise<Response> {
+  async create({ body }: Request, res: Response): Promise<Response> {
     try {
       const createProductService = new CreateProductService();
 
-      const product = await createProductService.execute(req.body);
+      const product = await createProductService.execute(body);
 
       if (product.err) throw new Error(product.err);
 
@@ -77,13 +83,13 @@ class ProductController {
     }
   }
 
-  async update(req: Request, res: Response) {
+  async update({ params, body }: Request, res: Response) {
     try {
-      const { id } = req.params;
+      const { id } = params;
       const updateProductService = new UpdateProductService();
 
       const updateProduct = await updateProductService.execute({
-        ...req.body,
+        ...body,
         id,
       });
 
@@ -95,15 +101,17 @@ class ProductController {
     }
   }
 
-  async delete(req: Request, res: Response) {
+  async delete({ params, client }: Request, res: Response) {
     try {
-      const { menu_id, product_id } = req.params;
+      const { menu_id, product_id } = params;
       const deleteProductService = new DeleteProductService();
+
+      const establishmentId = client.entity.getEstablishmentId();
 
       const result = await deleteProductService.execute({
         menuId: Number(menu_id),
         productId: Number(product_id),
-        establishmentId: req.client.entity.establishment_id
+        establishmentId: establishmentId
       });
 
       if (result.err) throw new Error(result.err);

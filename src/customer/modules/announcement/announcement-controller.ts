@@ -2,7 +2,7 @@ import { Request, Response } from 'express';
 import { ListAnnouncementService } from './services';
 
 export class AnnouncementController {
-  async list(req: Request, res: Response): Promise<Response> {
+  async list(_: Request, res: Response): Promise<Response> {
     try {
       const listAnnouncement = new ListAnnouncementService();
 

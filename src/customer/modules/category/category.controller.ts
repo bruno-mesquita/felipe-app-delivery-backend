@@ -3,7 +3,7 @@ import { Request, Response } from 'express';
 import { ListCategoryService } from './services';
 
 class CategoryController {
-  async getAll(req: Request, res: Response): Promise<Response> {
+  async getAll(_: Request, res: Response): Promise<Response> {
     try {
       const listCategoryService = new ListCategoryService();
 

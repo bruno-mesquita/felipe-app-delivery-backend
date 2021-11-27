@@ -4,11 +4,11 @@ import { LoginCityManagerService } from './services/login.service';
 import { RefreshTokenService } from './services/refresh-token.service';
 
 export class AuthController {
-  async login(req: Request, res: Response): Promise<Response> {
+  async login({ body }: Request, res: Response): Promise<Response> {
     try {
       const loginService = new LoginCityManagerService();
 
-      const result = await loginService.execute(req.body);
+      const result = await loginService.execute(body);
 
       if (result.err) throw new Error(result.err);
 
@@ -18,11 +18,11 @@ export class AuthController {
     }
   }
 
-  async refresh(req: Request, res: Response): Promise<Response> {
+  async refresh({ body }: Request, res: Response): Promise<Response> {
     try {
       const refreshToken = new RefreshTokenService();
 
-      const refresh = await refreshToken.execute(req.body);
+      const refresh = await refreshToken.execute(body);
 
       if (refresh.err) throw new Error(refresh.err);
 

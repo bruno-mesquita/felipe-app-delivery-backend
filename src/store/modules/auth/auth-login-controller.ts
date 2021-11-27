@@ -9,11 +9,11 @@ import { LoginEstablishmentOwnerService } from './services/login-service/login-e
 import { RefrishTokenService } from './services/refresh-token.service';
 
 export class AuthEstablishmentController {
-  async login(req: Request, res: Response): Promise<Response> {
+  async login({ body }: Request, res: Response): Promise<Response> {
     try {
       const loginService = new LoginEstablishmentOwnerService();
 
-      const result = await loginService.execute(req.body);
+      const result = await loginService.execute(body);
 
       if (result.err) throw new Error(result.err);
 
@@ -23,11 +23,11 @@ export class AuthEstablishmentController {
     }
   }
 
-  async refresh(req: Request, res: Response): Promise<Response> {
+  async refresh({ body }: Request, res: Response): Promise<Response> {
     try {
       const refreshToken = new RefrishTokenService();
 
-      const refresh = await refreshToken.execute(req.body.token);
+      const refresh = await refreshToken.execute(body.token);
 
       if (refresh.err) throw new Error(refresh.err);
 

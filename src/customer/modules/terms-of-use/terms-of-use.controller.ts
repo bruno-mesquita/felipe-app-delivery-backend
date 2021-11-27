@@ -2,7 +2,7 @@ import { Request, Response } from "express";
 import { ShowTermsOfUseService } from "./services/show-terms-of-use.service";
 
 export class TermsOfUseController {
-  async show(req: Request, res: Response): Promise<Response> {
+  async show(_: Request, res: Response): Promise<Response> {
     try {
       const showTermsOfUseService = new ShowTermsOfUseService();
 

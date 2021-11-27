@@ -7,7 +7,7 @@ import {
 } from './services';
 
 export class EstablishmentOwnerController {
-  async list(req: Request, res: Response): Promise<Response> {
+  async list(_: Request, res: Response): Promise<Response> {
     try {
       const listOwnerService = new ListOwnerService();
 
@@ -21,9 +21,9 @@ export class EstablishmentOwnerController {
     }
   };
 
-  async show(req: Request, res: Response): Promise<Response> {
+  async show({ params }: Request, res: Response): Promise<Response> {
     try {
-      const { id } = req.params;
+      const { id } = params;
       const showOwnerEstablishment = new ShowOwnerEstablishmentService();
 
       const result = await showOwnerEstablishment.execute(Number(id));
@@ -36,11 +36,11 @@ export class EstablishmentOwnerController {
     }
   };
 
-  async create(req: Request, res: Response): Promise<Response> {
+  async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
       const createOwnerService = new CreateOwnerService();
 
-      const result = await createOwnerService.execute({ ...req.body, created_by_id: req.client.id });
+      const result = await createOwnerService.execute({ ...body, created_by_id: client.id });
 
       if(result.err) throw new Error(result.err);
 

@@ -3,11 +3,11 @@ import { Request, Response } from 'express';
 import { ProfileCityManagerService } from './services';
 
 export class CityManagerController {
-  async me(req: Request, res: Response): Promise<Response> {
+  async me({ client, body }: Request, res: Response): Promise<Response> {
     try {
       const profileCityManagerService = new ProfileCityManagerService();
 
-      const result = await profileCityManagerService.execute(req.client.id, req.body.selects);
+      const result = await profileCityManagerService.execute(client.id, body.selects);
 
       return res.json(result);
     } catch (err) {

@@ -13,9 +13,9 @@ export class NewBoletoService {
 
       if (!boleto) throw new Error ('Boleto não encontrado');
 
-      const { data } = await agiotaApi.post(`/tickets/${boleto.id}/new`, {
-        ownerId: owner.id,
-        total: boleto.price
+      const { data } = await agiotaApi.post(`/tickets/${boleto.getId()}/new`, {
+        ownerId: owner.getId(),
+        total: boleto.get('price')
       });
 
       return { result: data.result, err: null }

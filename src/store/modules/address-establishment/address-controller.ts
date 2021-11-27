@@ -2,11 +2,11 @@ import { Request, Response } from "express";
 import { UpdateAdressService } from "./services/update-address.service";
 
 export class AddressEstablishmentController {
-  async update(req: Request, res: Response): Promise<Response> {
+  async update({ body, client }: Request, res: Response): Promise<Response> {
     try {
       const updateAdressService = new UpdateAdressService();
 
-      const addressEstablishment = await updateAdressService.execute({ ...req.body, id: req.client.id });
+      const addressEstablishment = await updateAdressService.execute({ ...body, id: client.id });
 
       if (addressEstablishment.err) throw new Error(addressEstablishment.err);
 

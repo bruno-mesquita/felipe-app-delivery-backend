@@ -3,10 +3,10 @@ import { Request, Response } from 'express';
 import { FindProductsByMenuService } from './services';
 
 export class MenuController {
-  async findProductsByMenu(req: Request, res: Response): Promise<Response> {
+  async findProductsByMenu({ query, params }: Request, res: Response): Promise<Response> {
     try {
-      const { page = 0 } = req.query;
-      const { id } = req.params;
+      const { page = 0 } = query;
+      const { id } = params;
 
       const findProductsByMenuService = new FindProductsByMenuService();
 

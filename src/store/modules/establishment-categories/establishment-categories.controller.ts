@@ -3,11 +3,11 @@ import { Response, Request } from 'express';
 import { AddEstablishmentCategoryService, RemoveEstablishmentCategoryService } from './services';
 
 export class EstablishmentCategoriesController {
-  async add(req: Request, res: Response): Promise<Response> {
+  async add({ client, params }: Request, res: Response): Promise<Response> {
     try {
       const addEstablishmentCategoryService = new AddEstablishmentCategoryService();
 
-      const result = await addEstablishmentCategoryService.execute(req.client.id, Number(req.params.categoryId));
+      const result = await addEstablishmentCategoryService.execute(client.id, Number(params.categoryId));
 
       if(result.err) throw new Error(result.err);
 
@@ -17,11 +17,11 @@ export class EstablishmentCategoriesController {
     }
   }
 
-  async remove(req: Request, res: Response): Promise<Response> {
+  async remove({ client, params }: Request, res: Response): Promise<Response> {
     try {
       const removeEstablishmentCategoryService = new RemoveEstablishmentCategoryService();
 
-      const result = await removeEstablishmentCategoryService.execute(req.client.id, Number(req.params.categoryId));
+      const result = await removeEstablishmentCategoryService.execute(client.id, Number(params.categoryId));
 
       if(result.err) throw new Error(result.err);
 

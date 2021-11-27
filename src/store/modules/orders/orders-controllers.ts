@@ -5,11 +5,13 @@ import { UpdateOrderStatusServices } from "./services/update-order-status/update
 import { CancelOrderService } from "./services/cancel-order/cancel-order.service";
 
 export class OrdersController {
-  async showOrder(req: Request, res: Response): Promise<Response> {
+  async showOrder({ params, client }: Request, res: Response): Promise<Response> {
     try {
       const showOrderService = new ShowOrderService();
 
-      const showOrder = await showOrderService.execute({ id: Number(req.params.id), establishmentId: req.client.entity.establishment_id });
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const showOrder = await showOrderService.execute({ id: Number(params.id), establishmentId: establishmentId });
 
       if (showOrder.err) throw new Error(showOrder.err);
 
@@ -19,13 +21,15 @@ export class OrdersController {
     }
   }
 
-  async listFotTypes(req: Request, res: Response): Promise<Response> {
+  async listFotTypes({ client, query }: Request, res: Response): Promise<Response> {
     try {
-      const { page = 0, type } = req.query;
+      const { page = 0, type } = query;
 
       const listOrdersForTypesServices = new ListOrdersForTypesServices();
 
-      const listOrders = await listOrdersForTypesServices.execute({ id: req.client.entity.establishment_id, type: type as any, page: Number(page) });
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const listOrders = await listOrdersForTypesServices.execute({ id: establishmentId, type: type as any, page: Number(page) });
 
       if (listOrders.err) throw new Error(listOrders.err);
 
@@ -35,11 +39,13 @@ export class OrdersController {
     }
   }
 
-  async cancelOrder(req: Request, res: Response): Promise<Response> {
+  async cancelOrder({ params, client }: Request, res: Response): Promise<Response> {
     try {
       const cancelOrderService = new CancelOrderService();
 
-      const order = await cancelOrderService.execute({ id: Number(req.params.id), establishmentId: req.client.entity.establishment_id });
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const order = await cancelOrderService.execute({ id: Number(params.id), establishmentId: establishmentId });
 
       if (order.err) throw new Error(order.err);
 
@@ -49,11 +55,13 @@ export class OrdersController {
     }
   }
 
-  async updateOrderStatus(req: Request, res: Response): Promise<Response> {
+  async updateOrderStatus({ client, params }: Request, res: Response): Promise<Response> {
     try {
       const updateOrderService = new UpdateOrderStatusServices();
 
-      const order = await updateOrderService.execute({ id: Number(req.params.id), establishmentId: req.client.entity.establishment_id });
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const order = await updateOrderService.execute({ id: Number(params.id), establishmentId: establishmentId });
 
       if (order.err) throw new Error(order.err);
 

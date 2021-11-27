@@ -21,7 +21,11 @@ export class MenuController {
     try {
       const menuService = new ListMenuService();
 
-      const menu = await menuService.execute(req.client.entity.establishment_id);
+      const establishmentId = req.client.entity.getEstablishmentId();
+
+      if(!establishmentId) throw new Error('Id invalido ou inexistente');
+
+      const menu = await menuService.execute(establishmentId);
 
       if (menu.err) throw new Error(menu.err);
 
@@ -35,7 +39,12 @@ export class MenuController {
     try {
       const menuService = new GetMenuService();
 
-      const menu = await menuService.execute(req.client.entity.establishment_id, req.params.id);
+      const establishmentId = req.client.entity.getEstablishmentId();
+      const { id } = req.params;
+
+      if(!establishmentId) throw new Error('Id invalido ou inexistente');
+
+      const menu = await menuService.execute(establishmentId, id);
 
       if (menu.err) throw new Error(menu.err);
 
@@ -45,11 +54,13 @@ export class MenuController {
     }
   }
 
-  async update(req: Request, res: Response): Promise<Response> {
+  async update({ params, body, client }: Request, res: Response): Promise<Response> {
     try {
       const menuService = new UpdateMenuService();
 
-      const menu = await menuService.execute({ id: Number(req.params.id), name: req.body.name, establishmentId: req.client.entity.establishment_id });
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const menu = await menuService.execute({ id: Number(params.id), name: body.name, establishmentId: establishmentId });
 
       if (menu.err) throw new Error(menu.err);
 
@@ -59,11 +70,13 @@ export class MenuController {
     }
   }
 
-  async delete(req: Request, res: Response): Promise<Response> {
+  async delete({ params, client }: Request, res: Response): Promise<Response> {
     try {
       const menuService = new DeleteMenuService();
 
-      const menu = await menuService.execute({ id: Number(req.params.id), establishmentId: req.client.entity.establishment_id });
+      const establishmentId = client.entity.getEstablishmentId();
+
+      const menu = await menuService.execute({ id: Number(params.id), establishmentId: establishmentId });
 
       if (menu.err) throw new Error(menu.err);
 

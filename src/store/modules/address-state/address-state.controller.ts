@@ -3,8 +3,8 @@ import { ListCitiesByStatesService } from './services/list-cities-by-state-servi
 import { ListStatesService } from './services/list-state-service';
 
 export class AddressStateController {
-  async listCitiesByState(req: Request, res: Response): Promise<Response> {
-    const { state_id } = req.params;
+  async listCitiesByState({ params }: Request, res: Response): Promise<Response> {
+    const { state_id } = params;
 
     const listCitiesByState = new ListCitiesByStatesService();
 
@@ -13,7 +13,7 @@ export class AddressStateController {
     return res.json(state);
   }
 
-  async listState(req: Request, res: Response): Promise<Response> {
+  async listState(_: Request, res: Response): Promise<Response> {
     try {
       const listStates = new ListStatesService();
 
