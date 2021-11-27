@@ -1,5 +1,6 @@
 import Menu from '@core/menu';
 import Product from '@core/product';
+import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateProductDto } from '../../dtos/create-product-dto';
 import createProductSchema from '../../validation/create-product.validation';
@@ -16,15 +17,17 @@ export class CreateProductService {
 
       if (!menu) throw new Error('Menu não encontrado no sistema.');
 
+      const image = await Image.create({
+        encoded:  createProductDto.image,
+      });
+
       await Product.create({
         name: createProductDto.name,
         description: createProductDto.description,
         price: createProductDto.price,
         active: createProductDto.active,
-        photo: { encoded: createProductDto.image },
+        image_id: image.getId(),
         menu_id: menu.getId(),
-      }, {
-        include: [Product.Photo],
       });
 
       return { result: true, err: null };
