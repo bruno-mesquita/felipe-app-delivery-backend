@@ -9,6 +9,6 @@ temp/
 logs
 dist
 yarn-error.log
-.yarn
+.yarn/cache
 **/migrations/**
 **/seeds/**
