@@ -1,9 +1,6 @@
 /**
-
  * @fileoverview Casos serviços para a criação do pedido
-
  * @author Jonatas Rosa Moura
-
  */
 import { Op } from 'sequelize';
 import AddressClient from '@core/address-client';
@@ -50,7 +47,7 @@ export class CreateOrderService {
       if (!addressExists) throw new Error('Endereço do cliente não encontrado');
 
       // Criando o pedido
-      const order = new Order({
+      const order = Order.build({
         establishment_id: establishmentExists.getId(),
         client_id: clientExists.getId(),
         address_id: addressExists.getId(),
@@ -88,8 +85,6 @@ export class CreateOrderService {
       });
 
       order.setTotal(total);
-
-      const totalOrder = order.calcTotal();
 
       // Salvando produto no db
       await order.save();

@@ -40,7 +40,7 @@ class CreateClientService {
       if(userExists) throw new Error('Já existe um usuário cadastrado com esses dados');
 
       // Criando a classe
-      const user = new Client(createClientDto);
+      const user = Client.build(createClientDto);
 
       user.hashPassword();
 

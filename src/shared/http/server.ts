@@ -6,14 +6,12 @@ import helmet from 'helmet';
 import '@shared/database';
 
 // routas
-import adminRoutes from '@admin/http/routes';
 import customerRoutes from '@customer/http/routes';
 import storeRoutes from '@store/http/routes';
 import cityManagerRoutes from '../../city-manager/http/routes';
 
 const routes = Router();
 
-routes.use('/admin', adminRoutes);
 routes.use('/city-manager', cityManagerRoutes);
 routes.use('/app', customerRoutes);
 routes.use('/app-store', storeRoutes);
