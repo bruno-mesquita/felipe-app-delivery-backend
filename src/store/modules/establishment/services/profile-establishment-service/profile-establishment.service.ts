@@ -75,7 +75,7 @@ export class ProfileEstablishmentService {
 
       if(!owner) throw new Error('Estabelecimento não encontrado');
 
-      const result: any = owner.establishment.toJSON()
+      const result: any = owner.get('establishment').toJSON()
 
       if (includeAvatar) result.image = owner.establishment?.image?.encoded || null
       if (includeCategories) result.categories = result.categories.map(e => e.category_id)
