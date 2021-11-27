@@ -4,6 +4,7 @@ import cors from 'cors';
 import compression from 'compression';
 import helmet from 'helmet';
 import '@shared/database';
+import '@shared/utils/yup-helpers';
 
 // routas
 import customerRoutes from '@customer/http/routes';

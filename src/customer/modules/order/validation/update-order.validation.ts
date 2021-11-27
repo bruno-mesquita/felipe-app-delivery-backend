@@ -10,9 +10,9 @@ import { UpdateOrderDto } from '../dtos/update-order.dto';
 const REQUIRED = 'Campo obrigátorio';
 
 export const schema: SchemaOf<UpdateOrderDto> = object({
-  id: string().required(REQUIRED),
+  id: string().required(),
 
-  form_of_payment: mixed<FormOfPaymentType>().required(REQUIRED),
+  form_of_payment: mixed<FormOfPaymentType>().required(),
 
-  client_order_status: mixed<CustomerStatusType>().required(REQUIRED),
+  client_order_status: mixed<CustomerStatusType>().required(),
 });

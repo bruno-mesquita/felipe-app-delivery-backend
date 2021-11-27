@@ -11,10 +11,10 @@ import { UpdateClientDto } from '../dtos/update-client-dto';
 const REQUIRED = 'Campo obrigátorio';
 
 const schema: SchemaOf<UpdateClientDto> = object({
-  id: number().integer().positive().required(REQUIRED),
-  name: string().required(REQUIRED),
-  email: string().email('Email inválido').required(REQUIRED),
-  cellphone: string().required(REQUIRED),
+  id: number().integer().positive().required(),
+  name: string().required(),
+  email: string().email().required(),
+  cellphone: string().required(),
 });
 
 export default schema;

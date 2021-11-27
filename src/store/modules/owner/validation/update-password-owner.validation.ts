@@ -11,10 +11,10 @@ import { UpdatePasswordEstablishmentDto } from '../dtos/update-password-owner-dt
 const REQUIRED = 'Campo obrigátorio';
 
 const schema: SchemaOf<UpdatePasswordEstablishmentDto> = object({
-  id: number().integer().required(REQUIRED),
-  currentPassword: string().required(REQUIRED),
-  newPassword: string().required(REQUIRED),
-  confirmNewPassword: string().required(REQUIRED),
+  id: number().integer().required(),
+  currentPassword: string().required(),
+  newPassword: string().required(),
+  confirmNewPassword: string().required(),
 });
 
 export default schema;

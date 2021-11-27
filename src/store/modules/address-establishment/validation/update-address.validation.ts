@@ -5,17 +5,17 @@ import { UpdateAddressDto } from '../dtos/update-address.dto';
 const REQUIRED = 'Campo obrigátorio';
 
 const schema: SchemaOf<UpdateAddressDto> = object({
-  id: number().integer().required(REQUIRED),
+  id: number().integer().required(),
 
-  street: string().required(REQUIRED),
+  street: string().required(),
 
-  number: string().required(REQUIRED),
+  number: string().required(),
 
-  neighborhood: string().required(REQUIRED),
+  neighborhood: string().required(),
 
-  cep: string().required(REQUIRED),
+  cep: string().required(),
 
-  city: number().integer().required(REQUIRED)
+  city: number().integer().required()
 });
 
 export default schema;

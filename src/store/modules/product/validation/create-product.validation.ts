@@ -15,12 +15,12 @@ import { CreateProductDto } from '../dtos/create-product-dto';
 const REQUIRED = 'Campo obrigatório';
 
 const schema: SchemaOf<CreateProductDto> = object({
-  name: string().required(REQUIRED),
-  price: number().required(REQUIRED),
-  description: string().max(150).required(REQUIRED),
-  menu: number().integer().required(REQUIRED),
-  image: string().required(REQUIRED),
-  active: boolean().required(REQUIRED),
+  name: string().required(),
+  price: number().required(),
+  description: string().max(150).required(),
+  menu: number().integer().required(),
+  image: string().required(),
+  active: boolean().required(),
 });
 
 export default schema;

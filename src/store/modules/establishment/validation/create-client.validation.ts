@@ -14,20 +14,20 @@ const REQUIRED = 'Campo obrigátorio';
 const phoneRegxp = /^(?:(?:\+|00)?(55)\s?)?(?:\(?([1-9][0-9])\)?\s?)?(?:((?:9\d|[2-9])\d{3})-?(\d{4}))$/;
 
 const schema: SchemaOf<CreateEstablishmentDto> = object({
-  name: string().required(REQUIRED),
-  cellphone: string().required(REQUIRED).matches(phoneRegxp, 'Telefone inválido'),
-  openingTime: number().min(0).max(23).required(REQUIRED),
-  closingTime: number().required(REQUIRED),
-  freightValue: number().required(REQUIRED),
-  image: string().required(REQUIRED),
-  categories: array().of(number().integer().required(REQUIRED)),
-  userId: number().required(REQUIRED),
+  name: string().required(),
+  cellphone: string().required().matches(phoneRegxp, 'Telefone inválido'),
+  openingTime: number().min(0).max(23).required(),
+  closingTime: number().required(),
+  freightValue: number().required(),
+  image: string().required(),
+  categories: array().of(number().integer().required()),
+  userId: number().required(),
   address: object({
-    street: string().required(REQUIRED),
-    number: string().required(REQUIRED),
-    neighborhood: string().required(REQUIRED),
-    cep: string().required(REQUIRED),
-    city: number().integer().required(REQUIRED),
+    street: string().required(),
+    number: string().required(),
+    neighborhood: string().required(),
+    cep: string().required(),
+    city: number().integer().required(),
   }),
 });
 

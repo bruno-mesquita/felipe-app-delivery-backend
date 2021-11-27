@@ -4,9 +4,9 @@ import { GenerateReportDto } from '../dtos/generate-report.dto';
 const REQUIRED = 'Campo obrigatório';
 
 const schema: SchemaOf<GenerateReportDto> = object({
-  id: number().integer().required(REQUIRED),
-  data_initial: string().required(REQUIRED),
-  data_final: string().required(REQUIRED),
+  id: number().integer().required(),
+  data_initial: string().required(),
+  data_final: string().required(),
 });
 
 export { schema };

@@ -5,9 +5,9 @@ import { UpdateMenuStablishmentDto } from '../dtos/update-menu.dto';
 const REQUIRED = 'Campo obrigátorio';
 
 const schema: SchemaOf<UpdateMenuStablishmentDto> = object({
-  id: number().required(REQUIRED),
-  name: string().required(REQUIRED),
-  establishmentId: number().integer().required(REQUIRED),
+  id: number().required(),
+  name: string().required(),
+  establishmentId: number().integer().required(),
 });
 
 export default schema;

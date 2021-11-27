@@ -10,23 +10,23 @@ import { CreateOrderDto } from '../dtos/create-order.dto';
 const REQUIRED = 'Campo obrigátorio';
 
 export const schema: SchemaOf<CreateOrderDto> = object({
-  establishment_id: number().integer().required(REQUIRED),
-  client_id: number().integer().required(REQUIRED),
-  address_id: number().integer().required(REQUIRED),
+  establishment_id: number().integer().required(),
+  client_id: number().integer().required(),
+  address_id: number().integer().required(),
   items: array()
     .of<any>(
       object({
-        amount: number().required(REQUIRED),
-        price: number().required(REQUIRED),
-        itemId: number().integer().required(REQUIRED),
-        total: number().required(REQUIRED),
+        amount: number().required(),
+        price: number().required(),
+        itemId: number().integer().required(),
+        total: number().required(),
       })
     )
-    .required(REQUIRED),
-  total: number().required(REQUIRED),
+    .required(),
+  total: number().required(),
   note: string(),
   transshipment: number(),
   payment: mixed()
     .oneOf<FormOfPaymentType>(['Dinheiro', 'Cartão de débidto', 'Cartão de crédito'])
-    .required(REQUIRED),
+    .required(),
 });

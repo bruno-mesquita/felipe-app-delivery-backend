@@ -5,6 +5,7 @@
  */
 
 import { Request, Response } from 'express';
+import * as Yup from 'yup';
 
 import {
   CreateProductService,
@@ -18,12 +19,15 @@ import {
 class ProductController {
   async searchName({ client, query }: Request, res: Response): Promise<Response> {
     try {
-      const searchNameProductsService = new SearchNameProductsService();
       const { search } = query;
+
+      if(!Yup.string().required().isValidSync(search)) throw new Error('Parametro invalido');
+
+      const searchNameProductsService = new SearchNameProductsService();
 
       const establishmentId = client.entity.getEstablishmentId();
 
-      const products = await searchNameProductsService.execute(search as string, establishmentId);
+      const products = await searchNameProductsService.execute(search, establishmentId);
 
       if (products.err) throw new Error(products.err);
 
