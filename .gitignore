@@ -8,5 +8,7 @@ temp/
 .env.production
 logs
 dist
+yarn-error.log
+.yarn
 **/migrations/**
 **/seeds/**
