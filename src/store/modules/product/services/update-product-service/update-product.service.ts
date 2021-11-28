@@ -4,6 +4,7 @@
  * @author Jonatas Rosa Moura
 */
 
+import Image from '@core/image';
 import Menu from '@core/menu';
 import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
@@ -35,7 +36,7 @@ export class UpdateProductService {
 
       product.updateProduct(name, price, description, menuExists.id, active);
 
-      const photo = await product.getPhoto();
+      const photo = await Image.findOne({ where: { id: product.get('image_id') } });
 
       photo.setEncoded(image);
 
