@@ -11,7 +11,6 @@ export class CreateMenuService {
 
       if (!valid) throw new Error('Dados inválidos.');
 
-      // Criando Classe
       await Menu.create({
         ...createMenuDto,
         establishment_id: createMenuDto.establishmentId

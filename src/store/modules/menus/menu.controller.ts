@@ -7,7 +7,7 @@ export class MenuController {
     try {
       const menuService = new CreateMenuService();
 
-      const menu = await menuService.execute({ ...req.body, establishmentId: req.client.entity.establishment_id });
+      const menu = await menuService.execute({ ...req.body, establishmentId: req.client.entity.getEstablishmentId() });
 
       if (menu.err) throw new Error(menu.err);
 
