@@ -12,6 +12,8 @@ import Product from '@core/product';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateOrderDto } from '../../dtos/create-order.dto';
 import { schema } from '../../validation/create-order.validation';
+import Notification from '@shared/utils/Notification';
+import { EstablishmentOwner } from '@core/establishment-owner';
 
 export class CreateOrderService {
   async execute(createOrderDto: CreateOrderDto): Promise<ServiceResponse<any>> {
@@ -22,10 +24,13 @@ export class CreateOrderService {
       if (!valid) throw new Error('Campos inválidos');
 
      // Verificando Estabelecimento
+      const establishmentOwner = await EstablishmentOwner.findOne({
+        where: {
+          establishment_id: createOrderDto.establishment_id,
+        },
+      });
 
-      const establishmentExists = await Establishment.findByPk(createOrderDto.establishment_id);
-
-      if (!establishmentExists) throw new Error('Estabelecimento não encontrado');
+      if (!establishmentOwner) throw new Error('Estabelecimento não encontrado');
 
       // verificando cliente
 
@@ -46,12 +51,14 @@ export class CreateOrderService {
 
       if (!addressExists) throw new Error('Endereço do cliente não encontrado');
 
+      const ownerJson = establishmentOwner.toJSON() as any;
+
       // Criando o pedido
       const order = Order.build({
-        establishment_id: establishmentExists.getId(),
+        establishment_id: ownerJson.establishment_id,
         client_id: clientExists.getId(),
         address_id: addressExists.getId(),
-        freight_value: establishmentExists.getFreightValue(),
+        freight_value: ownerJson.establishment.freightValue,
         transshipment: createOrderDto.transshipment,
         note: createOrderDto.note,
         payment: createOrderDto.payment,
@@ -88,6 +95,18 @@ export class CreateOrderService {
 
       // Salvando produto no db
       await order.save();
+
+      const notification = new Notification();
+
+      await notification.send({
+        targetId: establishmentOwner.getId(),
+        type: 'Partner',
+        data: {
+          title: 'Chegou um novo pedido para você!',
+          body: '',
+          data: {},
+        }
+      });
 
       return { result: order.id, err: null };
     } catch (err) {

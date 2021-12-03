@@ -7,7 +7,7 @@ export class BoletoController {
     try {
       const listBoletosService = new ListBoletosService();
 
-      const result = await listBoletosService.execute(req.client.entity.establishment_id, Number(req.query.page || 0));
+      const result = await listBoletosService.execute(req.client.entity.getId(), Number(req.query.page || 0));
 
       if(result.err) throw new Error(result.err);
 

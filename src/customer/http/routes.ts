@@ -14,6 +14,7 @@ import { AddressStateController } from '../modules/address-state';
 import { OrderController } from '../modules/order';
 import { MenuController } from '../modules/menus';
 import { RateController } from '../modules/rate';
+import { notificationsRoutes } from '../modules/notifications';
 import { TermsOfUseController } from '@customer/modules/terms-of-use/terms-of-use.controller';
 import { DeliverymanController } from '@customer/modules/deliveryman/deliveryman.controller';
 import { AnnouncementController } from '@customer/modules/announcement/announcement-controller';
@@ -103,5 +104,7 @@ routes.get('/rates/:id', isAuthenticated, accessClient, rateController.findOne);
 routes.get('/deliveryman', isAuthenticated, accessClient, deliverymanController.list);
 
 routes.get('/announcement', isAuthenticated, accessClient, announcementController.list);
+
+routes.use(notificationsRoutes);
 
 export default routes;

@@ -63,7 +63,7 @@ class Establishment extends Model {
   }
 
   public getFreightValue(): number {
-    return this.freightValue;
+    return this.get('freightValue');
   }
 
   public updateProfile({ name, cellphone, closingTime, openingTime, freightValue }: UpdateProfile): void {

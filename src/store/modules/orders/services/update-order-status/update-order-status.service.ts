@@ -1,4 +1,5 @@
 import Order from "@core/order";
+import Notification from "@shared/utils/Notification";
 import { ServiceResponse } from "@shared/utils/service-response";
 import { UpdateOrderStatusDto } from '../../dtos/update-order.dto';
 import { schema } from '../../validations/update-order-status.validation';
@@ -19,6 +20,17 @@ export class UpdateOrderStatusServices {
       order.nextStatus();
 
       await order.save();
+
+      const notification = new Notification();
+
+      await notification.send({
+        targetId: order.get('client_id'),
+        type: 'Client',
+        data: {
+          title: 'Sobre o seu pedido',
+          body: 'O Status do seu pedido mudou'
+        }
+      });
 
       return { result: true, err: null };
     } catch(err) {
