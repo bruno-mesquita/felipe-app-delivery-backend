@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 
 import { LoginClientService } from '../services/token/login.service';
-import { RefrishTokenService } from '../services/token/refresh-token.service';
+import { RefreshTokenService } from '../services/token/refresh-token.service';
 
 export class AuthController {
   async login({ body }: Request, res: Response): Promise<Response> {
@@ -20,15 +20,15 @@ export class AuthController {
 
   async refresh({ body }: Request, res: Response): Promise<Response> {
     try {
-      const refreshToken = new RefrishTokenService();
+      const refreshTokenService = new RefreshTokenService();
 
-      const refresh = await refreshToken.execute(body);
+      const response = await refreshTokenService.execute(body.refreshToken);
 
-      if (refresh.err) throw new Error(refresh.err);
+      if (response.err) throw new Error(response.err);
 
-      return res.status(200).json(refresh);
+      return res.json(response);
     } catch (err) {
-      return res.status(403).json({ err: err.message });
+      return res.status(401).json({ err: err.message });
     }
   }
 }
