@@ -6,6 +6,8 @@
 
 import { Request, Response } from 'express';
 
+import ApiError from '@shared/utils/ApiError';
+
 import {
   ActiveClientService,
   CreateClientService,
@@ -17,18 +19,28 @@ import {
   DeactiveteClientService
 } from './services';
 
+import {
+  createClientValidate,
+  updateClientValidate,
+  updatePasswordClientValidate,
+  profileClientValidate,
+} from './validation/';
+
 class ClientController {
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
+      const sanitizedBody = createClientValidate(body);
+
       const createClientService = new CreateClientService();
 
-      const result = await createClientService.execute(body);
-
-      if (result.err) throw new Error(result.err);
+      const result = await createClientService.execute(sanitizedBody);
 
       return res.status(201).json(result);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      if(err instanceof ApiError) {
+        return res.status(err.statusCode).json(err);
+      }
+      return res.status(500).json({ message: 'Erro no servidor' });
     }
   }
 
@@ -62,9 +74,11 @@ class ClientController {
 
   async updateProfile({ body, client }: Request, res: Response): Promise<Response> {
     try {
+      const sanitizedValues = updateClientValidate({ ...body, id: client.id });
+
       const updateProfileService = new UpdateProfileService();
 
-      const result = await updateProfileService.execute({ ...body, id: client.id });
+      const result = await updateProfileService.execute(sanitizedValues);
 
       if (result.err) throw new Error(result.err);
 
@@ -76,9 +90,11 @@ class ClientController {
 
   async updatePassword({ body, client }: Request, res: Response): Promise<Response> {
     try {
+      const sanitizedValues = updatePasswordClientValidate({ ...body, id: client.id });
+
       const updatePasswordClientService = new UpdatePasswordClientService();
 
-      const result = await updatePasswordClientService.execute({ ...body, id: client.id });
+      const result = await updatePasswordClientService.execute(sanitizedValues);
 
       if (result.err) throw new Error(result.err);
 
@@ -90,9 +106,11 @@ class ClientController {
 
   async profile({ client, body }: Request, res: Response): Promise<Response> {
     try {
+      const sanitizedValues = profileClientValidate({ id: client.id, selects: body.selects });
+
       const profileClientService = new ProfileClientService();
 
-      const profile = await profileClientService.execute(client.id, body.selects);
+      const profile = await profileClientService.execute(sanitizedValues);
 
       if (profile.err) throw new Error(profile.err);
 

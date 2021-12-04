@@ -1,5 +1,8 @@
-require('dotenv/config');
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV}`
+});
 
+/** @type {import('sequelize/types').Options} */
 module.exports = {
   dialect: process.env.DB_TYPE,
   host: process.env.DB_HOST,
@@ -11,4 +14,5 @@ module.exports = {
     timestamps: true,
     underscored: true,
   },
+  logging: process.env.NODE_ENV === 'development',
 };

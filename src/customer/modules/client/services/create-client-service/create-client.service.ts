@@ -6,24 +6,20 @@
 
 import { Op } from 'sequelize';
 
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateClientDto } from '../../dtos/create-client-dto';
-import createClientSchema from '../../validation/create-client.validation';
 import Client from '@core/client';
 import City from '@core/city';
+import AddressClient from '@core/address-client';
 
 const UNINFORMED = 'Não informado';
 
 class CreateClientService {
-  async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<number | null>> {
+  async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<{ userId: number } | null>> {
     try {
-      // Fazendo Validação do DTO
-      const valid = createClientSchema.isValidSync(createClientDto);
-
-      if (!valid) throw new Error('Por favor reveja seus dados');
-
       // Verificando se as senhas são iguais
-      if (createClientDto.confirmPassword !== createClientDto.password) throw new Error('Senhas não são iguais');
+      if (createClientDto.confirmPassword !== createClientDto.password) throw new ApiError('Senhas não são iguais', 'validate');
 
       // Verificando se já existe um cliente com esse cpf
       const userExists = await Client.findOne({
@@ -37,7 +33,7 @@ class CreateClientService {
         attributes: { exclude: ['password'] },
       });
 
-      if(userExists) throw new Error('Já existe um usuário cadastrado com esses dados');
+      if(userExists) throw new ApiError('Já existe um usuário cadastrado com esses dados');
 
       // Criando a classe
       const user = Client.build(createClientDto);
@@ -48,10 +44,11 @@ class CreateClientService {
 
       const city = await City.findOne({ where: { id: createClientDto.city } });
 
-      if (!city) throw new Error('Cidade não encontrada');
+      if (!city) throw new ApiError('Cidade não encontrada');
 
-      await user.createAdress({
+      await AddressClient.create({
         city_id: city.getId(),
+        client_id: user.getId(),
         neighborhood: UNINFORMED,
         cep: UNINFORMED,
         street: UNINFORMED,
@@ -60,9 +57,13 @@ class CreateClientService {
         active: true,
       });
 
-      return { result: user.getId(), err: null };
+      return { result: { userId: user.getId() }, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      if(err instanceof ApiError) {
+        throw err;
+      }
+
+      throw new ApiError('Erro desconhecido', 'unknown', 500);
     }
   }
 }

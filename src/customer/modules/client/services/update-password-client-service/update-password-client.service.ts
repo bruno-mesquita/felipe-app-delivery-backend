@@ -6,14 +6,10 @@
 import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdatePasswordClientDto } from '../../dtos/update-password-client-dto';
-import updatePasswordClientValidation from '../../validation/update-password-client.validation';
 
 class UpdatePasswordClientService {
   async execute(updatePasswordClientDto: UpdatePasswordClientDto): Promise<ServiceResponse<boolean>> {
     try {
-      // validando dados
-      if (!updatePasswordClientValidation.isValidSync(updatePasswordClientDto)) throw new Error('Dados inválidos');
-
       // Verificando se o usuário existe
       const user = await Client.findOne({where: { id: updatePasswordClientDto.id, active: true } });
 

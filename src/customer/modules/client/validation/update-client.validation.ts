@@ -8,13 +8,14 @@ import { object, SchemaOf, string, number } from 'yup';
 
 import { UpdateClientDto } from '../dtos/update-client-dto';
 
-const REQUIRED = 'Campo obrigátorio';
-
 const schema: SchemaOf<UpdateClientDto> = object({
   id: number().integer().positive().required(),
-  name: string().required(),
-  email: string().email().required(),
-  cellphone: string().required(),
+  name: string().trim().required(),
+  email: string().trim().email().required(),
+  cellphone: string().trim().required(),
 });
 
-export default schema;
+
+const updateClientValidate = (values: UpdateClientDto) => schema.validateSync(values, { stripUnknown: true });
+
+export default updateClientValidate;

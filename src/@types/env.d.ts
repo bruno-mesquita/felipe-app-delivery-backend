@@ -3,7 +3,7 @@ import { Dialect } from 'sequelize';
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      NODE_ENV: 'dev' | 'prod' | 'test';
+      NODE_ENV: 'development' | 'production' | 'test';
 
       API_PORT: number;
       PORT_AGIOTA: number;

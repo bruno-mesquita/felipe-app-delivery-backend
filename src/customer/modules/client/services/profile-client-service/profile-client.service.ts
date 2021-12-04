@@ -2,8 +2,10 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import Client from '@core/client';
 import Image from '@core/image';
 
+import type { IProfileClientDto } from '../../dtos/profile-client.dto';
+
 export default class ProfileClientService {
-  async execute(id: number, selects: string[]): Promise<ServiceResponse<any>> {
+  async execute({ selects, id }: IProfileClientDto): Promise<ServiceResponse<any>> {
     try {
       const include = [];
 

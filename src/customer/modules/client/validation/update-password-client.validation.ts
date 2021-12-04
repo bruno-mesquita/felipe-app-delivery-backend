@@ -8,8 +8,6 @@ import { object, SchemaOf, string, number } from 'yup';
 
 import { UpdatePasswordClientDto } from '../dtos/update-password-client-dto';
 
-const REQUIRED = 'Campo obrigátorio';
-
 const schema: SchemaOf<UpdatePasswordClientDto> = object({
   id: number().integer().positive().required(),
   currentPassword: string().required(),
@@ -17,4 +15,6 @@ const schema: SchemaOf<UpdatePasswordClientDto> = object({
   confirmNewPassword: string().required(),
 });
 
-export default schema;
+const updatePasswordValidate = (values: UpdatePasswordClientDto) => schema.validateSync(values, { stripUnknown: true });
+
+export default updatePasswordValidate;
