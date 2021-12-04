@@ -1,6 +1,7 @@
 import Image from '@core/image';
 import Menu from '@core/menu';
 import Product from '@core/product';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { usePage } from '@shared/utils/use-page';
 
@@ -34,7 +35,9 @@ export class ListProductsService {
 
       return { result: products, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw new ApiError('Erro ao listar produto', 'unknown', 500);
     }
   }
 }

@@ -3,19 +3,15 @@ import Product from '@core/product';
 import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateProductDto } from '../../dtos/create-product-dto';
-import createProductSchema from '../../validation/create-product.validation';
+import ApiError from '@shared/utils/ApiError';
 
 export class CreateProductService {
   public async execute(createProductDto: CreateProductDto): Promise<ServiceResponse<boolean>> {
     try {
-      const valid = createProductSchema.isValidSync(createProductDto);
-
-      if (!valid) throw new Error('Por favor reveja seus dados.');
-
       // Verificando se o Menu existe.
       const menu = await Menu.findByPk(createProductDto.menu, { attributes: ['id'] });
 
-      if (!menu) throw new Error('Menu não encontrado no sistema.');
+      if (!menu) throw new ApiError('Menu não encontrado no sistema.');
 
       const image = await Image.create({
         encoded:  createProductDto.image,
@@ -32,7 +28,9 @@ export class CreateProductService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw new ApiError('Erro ao criar produto', 'unknown', 500);
     }
   }
 }

@@ -10,6 +10,10 @@ class ApiError {
     this.type = type;
     this.statusCode = statusCode;
   }
+
+  static verifyType(err: any) {
+    if(err instanceof ApiError) throw err;
+  }
 }
 
 export default ApiError;

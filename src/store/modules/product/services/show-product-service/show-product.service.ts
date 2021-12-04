@@ -1,15 +1,13 @@
-/**
- * @fileoverview serviço de exibição de um estabelecimento
- * @author Jonatas Rosa Moura
- */
-
 import Image from '@core/image';
 import Menu from '@core/menu';
 import Product from '@core/product';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 
+import { ShowProductDto } from '../../dtos/show-product-dto';
+
 export class ShowProductService {
-  async execute(id: number, establishmentId: number): Promise<ServiceResponse<Product | null>> {
+  async execute({ establishmentId, id }: ShowProductDto): Promise<ServiceResponse<Product | null>> {
     try {
       const product = await Product.findOne({
         where: { id },
@@ -28,9 +26,13 @@ export class ShowProductService {
         ]
       });
 
+      if(product) throw new ApiError('Procuro não encontrado');
+
       return { result: product, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw new ApiError('Erro ao procurar produto', 'unknown', 500);
     }
   }
 }

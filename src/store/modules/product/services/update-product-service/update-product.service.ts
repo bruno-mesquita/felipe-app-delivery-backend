@@ -1,35 +1,24 @@
-/**
- * @fileoverview Criação do serviço para atualização de Produto
- *
- * @author Jonatas Rosa Moura
-*/
-
 import Image from '@core/image';
 import Menu from '@core/menu';
 import Product from '@core/product';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateProductDto } from '../../dtos/update-product-dto';
-import updateProductValidation from '../../validation/update-product.validation';
 
 export class UpdateProductService {
   async execute(updateProductDto: UpdateProductDto): Promise<ServiceResponse<boolean>> {
     try {
-      // validando dto
-      const valid = updateProductValidation.isValidSync(updateProductDto);
-
-      if (!valid) throw new Error('Dados inválidos');
-
       // Verificando se o produto existe
 
       const product = await Product.findByPk(updateProductDto.id);
 
-      if (!product) throw new Error('Produto não encontrado.');
+      if (!product) throw new ApiError('Produto não encontrado.');
 
       // Verificando se o Menu existe
 
       const menuExists = await Menu.findByPk(updateProductDto.menu);
 
-      if (!menuExists) throw new Error('Menu não encontrado.');
+      if (!menuExists) throw new ApiError('Menu não encontrado.');
 
       // Editando classe e Salvando no DB
       const { name, price, description, image, active } = updateProductDto;
@@ -45,7 +34,9 @@ export class UpdateProductService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { err: err.message, result: null };
+      ApiError.verifyType(err);
+
+      throw new ApiError('Erro ao procurar produto', 'unknown', 500);
     }
   }
 }

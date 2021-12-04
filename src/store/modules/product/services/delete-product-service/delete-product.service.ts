@@ -1,6 +1,7 @@
 import Establishment from '@core/establishment';
 import Menu from '@core/menu';
 import Product from '@core/product';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { DeleteProductDto } from '../../dtos/delete-product-dto';
 
@@ -22,13 +23,15 @@ export class DeleteProductService {
         }]
       });
 
-      if (!product) throw new Error('Produto não encontrado.');
+      if (!product) throw new ApiError('Produto não encontrado.');
 
       await product.destroy();
 
       return { result: true, err: null };
     } catch (err) {
-      return { err: err.message, result: false };
+      ApiError.verifyType(err);
+
+      throw new ApiError('Erro ao deletar produto', 'unknown', 500);
     }
   }
 }

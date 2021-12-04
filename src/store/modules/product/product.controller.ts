@@ -1,11 +1,6 @@
-/**
- * @fileoverview Controller do produto
-
- * @author Jonatas Rosa Moura
- */
-
 import { Request, Response } from 'express';
-import * as Yup from 'yup';
+
+import ApiError from '@shared/utils/ApiError';
 
 import {
   CreateProductService,
@@ -16,24 +11,33 @@ import {
   SearchNameProductsService
 } from './services';
 
+import {
+  createProductValidate,
+  updateProductValidate,
+  deleteProductValidate,
+  searchNameProductValidate,
+  showProductValidate,
+} from './validation';
+
 class ProductController {
   async searchName({ client, query }: Request, res: Response): Promise<Response> {
     try {
-      const { search } = query;
-
-      if(!Yup.string().required().isValidSync(search)) throw new Error('Parametro invalido');
+      const sanitizedValues = searchNameProductValidate({
+        establishmentId: client.entity.getEstablishmentId(),
+        search: query.search as string,
+      });
 
       const searchNameProductsService = new SearchNameProductsService();
 
-      const establishmentId = client.entity.getEstablishmentId();
+      const products = await searchNameProductsService.execute(sanitizedValues as any);
 
-      const products = await searchNameProductsService.execute(search, establishmentId);
-
-      if (products.err) throw new Error(products.err);
-
-      return res.status(200).json(products);
+      return res.json(products);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      if(err instanceof ApiError) {
+        return res.status(err.statusCode).json(err);
+      }
+
+      return res.status(500).json({ message: 'Erro no servidor' });
     }
   }
 
@@ -47,11 +51,13 @@ class ProductController {
 
       const products = await listProductsService.execute(establishmentId, Number(page), menuId ? Number(menuId) : undefined);
 
-      if (products.err) throw new Error(products.err);
-
       return res.status(200).json(products);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      if(err instanceof ApiError) {
+        return res.status(err.statusCode).json(err);
+      }
+
+      return res.status(500).json({ message: 'Erro no servidor' });
     }
   }
 
@@ -59,70 +65,82 @@ class ProductController {
     try {
       const { id } = params;
 
+      const sanitizedValues = showProductValidate({
+        id: Number(id),
+        establishmentId:client.entity.getEstablishmentId()
+      });
+
       const productService = new ShowProductService();
 
-      const establishmentId = client.entity.getEstablishmentId();
+      const product = await productService.execute(sanitizedValues as any);
 
-      const product = await productService.execute(Number(id), establishmentId);
-
-      if (product.err) throw new Error(product.err);
-
-      return res.status(200).json(product);
+      return res.json(product);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      if(err instanceof ApiError) {
+        return res.status(err.statusCode).json(err);
+      }
+
+      return res.status(500).json({ message: 'Erro no servidor' });
     }
   }
 
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
+      const sanitizedValues = createProductValidate(body);
+
       const createProductService = new CreateProductService();
 
-      const product = await createProductService.execute(body);
-
-      if (product.err) throw new Error(product.err);
+      const product = await createProductService.execute(sanitizedValues as any);
 
       return res.status(201).json(product);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      if(err instanceof ApiError) {
+        return res.status(err.statusCode).json(err);
+      }
+
+      return res.status(500).json({ message: 'Erro no servidor' });
     }
   }
 
   async update({ params, body }: Request, res: Response) {
     try {
       const { id } = params;
+      const sanitizedValues = updateProductValidate({ id, ...body });
+
       const updateProductService = new UpdateProductService();
 
-      const updateProduct = await updateProductService.execute({
-        ...body,
-        id,
-      });
+      const updateProduct = await updateProductService.execute(sanitizedValues as any);
 
-      if (updateProduct.err) throw new Error(updateProduct.err);
-
-      return res.status(200).json(updateProduct);
+      return res.json(updateProduct);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      if(err instanceof ApiError) {
+        return res.status(err.statusCode).json(err);
+      }
+
+      return res.status(500).json({ message: 'Erro no servidor' });
     }
   }
 
   async delete({ params, client }: Request, res: Response) {
     try {
       const { menu_id, product_id } = params;
-      const deleteProductService = new DeleteProductService();
 
-      const establishmentId = client.entity.getEstablishmentId();
-
-      const result = await deleteProductService.execute({
+      const sanitizedValues = deleteProductValidate({
+        establishmentId: client.entity.getEstablishmentId(),
         menuId: Number(menu_id),
         productId: Number(product_id),
-        establishmentId: establishmentId
       });
+      const deleteProductService = new DeleteProductService();
 
-      if (result.err) throw new Error(result.err);
+      const result = await deleteProductService.execute(sanitizedValues as any);
 
       return res.json(result);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      if(err instanceof ApiError) {
+        return res.status(err.statusCode).json(err);
+      }
+
+      return res.status(500).json({ message: 'Erro no servidor' });
     }
   }
 }
