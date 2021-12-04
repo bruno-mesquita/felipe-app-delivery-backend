@@ -1,20 +1,13 @@
 import { object, SchemaOf, string, number } from 'yup';
 
-import { UpdateAddressDto } from '../dtos/update-address.dto';
-
-const REQUIRED = 'Campo obrigátorio';
+import type { UpdateAddressDto } from '../dtos/update-address.dto';
 
 const schema: SchemaOf<UpdateAddressDto> = object({
   id: number().integer().required(),
-
-  street: string().required(),
-
-  number: string().required(),
-
-  neighborhood: string().required(),
-
-  cep: string().required(),
-
+  street: string().trim().required(),
+  number: string().trim().required(),
+  neighborhood: string().trim().required(),
+  cep: string().trim().required(),
   city: number().integer().required()
 });
 

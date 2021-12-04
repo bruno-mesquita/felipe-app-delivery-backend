@@ -1,14 +1,12 @@
 import { object, SchemaOf, string, number } from 'yup';
 import { ClientAddressDto } from '../dtos/create-address-client';
 
-const REQUIRED = 'Campo obrigátorio';
-
 const schema: SchemaOf<ClientAddressDto> = object({
-  nickname: string().required(),
-  cep: string().required(),
-  street: string().required(),
-  number: string().required(),
-  neighborhood: string().required(),
+  nickname: string().trim().required(),
+  cep: string().trim().required(),
+  street: string().trim().required(),
+  number: string().trim().required(),
+  neighborhood: string().trim().required(),
   city: number().required(),
   userId: number().required(),
 });

@@ -10,9 +10,9 @@ import { UpdatePasswordClientDto } from '../dtos/update-password-client-dto';
 
 const schema: SchemaOf<UpdatePasswordClientDto> = object({
   id: number().integer().positive().required(),
-  currentPassword: string().required(),
-  newPassword: string().required(),
-  confirmNewPassword: string().required(),
+  currentPassword: string().trim().required(),
+  newPassword: string().trim().required(),
+  confirmNewPassword: string().trim().required(),
 });
 
 const updatePasswordValidate = (values: UpdatePasswordClientDto) => schema.validateSync(values, { stripUnknown: true });

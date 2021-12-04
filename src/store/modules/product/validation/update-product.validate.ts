@@ -5,10 +5,10 @@ import yupWrapper from '@shared/utils/yup-wrapper';
 
 export const updateProductValidate = yupWrapper<UpdateProductDto>(object({
   id: number().integer().required(),
-  name: string().required(),
+  name: string().trim().required(),
   price: number().required(),
-  description: string().required(),
+  description: string().trim().required(),
   menu: number().integer().required(),
-  image: string().required(),
+  image: string().trim().required(),
   active: boolean().required(),
 }));
