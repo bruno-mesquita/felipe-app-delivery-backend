@@ -14,5 +14,5 @@ module.exports = {
     timestamps: true,
     underscored: true,
   },
-  logging: process.env.NODE_ENV === 'development',
+  logging: process.env.NODE_ENV === 'development' ? console.log : false,
 };
