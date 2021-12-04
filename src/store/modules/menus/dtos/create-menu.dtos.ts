@@ -1,4 +1,4 @@
-export interface createMenuStablishmentDto {
+export interface CreateMenuDto {
   name: string;
   establishmentId: number;
 }

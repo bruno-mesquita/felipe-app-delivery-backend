@@ -1,15 +1,14 @@
-import { object, SchemaOf, string, number } from 'yup';
+import { object, SchemaOf, number } from 'yup';
 
 import ApiError from '@shared/utils/ApiError';
-import { UpdateMenuDto } from '../dtos/update-menu.dto';
+import { DeleteMenuDto } from '../dtos/delete-menu.dto';
 
-const schema: SchemaOf<UpdateMenuDto> = object({
+const schema: SchemaOf<DeleteMenuDto> = object({
   id: number().integer().min(1).required(),
-  name: string().trim().required(),
   establishmentId: number().integer().min(1).required(),
 });
 
-export const updateMenuValidate = (values: UpdateMenuDto) => {
+export const deleteMenuValidate = (values: DeleteMenuDto) => {
   try {
     return schema.validateSync(values, { stripUnknown: true });
   } catch (err) {

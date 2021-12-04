@@ -1,16 +1,11 @@
 import Menu from '@core/menu';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { createMenuStablishmentDto } from '../dtos/create-menu.dtos';
-import validateMenuCreation from '../validations/create-menu.validation';
+import { CreateMenuDto } from '../dtos/create-menu.dtos';
 
 export class CreateMenuService {
-  async execute(createMenuDto: createMenuStablishmentDto): Promise<ServiceResponse<boolean | null>> {
+  async execute(createMenuDto: CreateMenuDto): Promise<ServiceResponse<boolean | null>> {
     try {
-      // Validandos os dados
-      const valid = validateMenuCreation.isValidSync(createMenuDto);
-
-      if (!valid) throw new Error('Dados inválidos.');
-
       await Menu.create({
         ...createMenuDto,
         establishment_id: createMenuDto.establishmentId
@@ -18,7 +13,7 @@ export class CreateMenuService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      throw new ApiError('Erro ao criar menu');
     }
   }
 }

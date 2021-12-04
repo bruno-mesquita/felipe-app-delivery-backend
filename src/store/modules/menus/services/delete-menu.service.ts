@@ -1,5 +1,5 @@
-import { EstablishmentOwner } from '@core/establishment-owner';
 import Menu from '@core/menu';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { DeleteMenuDto } from '../dtos/delete-menu.dto';
 
@@ -11,13 +11,15 @@ export class DeleteMenuService {
         where: { id, establishment_id: establishmentId },
       });
 
-      if (!menu) throw new Error('Menu não encontrado');
+      if (!menu) throw new ApiError('Menu não encontrado');
 
       await menu.destroy();
 
       return { result: true, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      if(err instanceof ApiError) throw err;
+
+      throw new ApiError('Erro ao buscar o menu', 'unknown');
     }
   }
 }

@@ -1,16 +1,21 @@
 import Menu from '@core/menu';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 
-export class GetMenuService {
-  async execute(establishmentId: number, menuId: string): Promise<ServiceResponse<Menu | null>> {
-    try {
-      const menu = await Menu.findOne({ where: { id: menuId, establishment_id: establishmentId } });
+import { FindOneMenuDto } from '../dtos/find-one-menu.dto';
 
-      if (!menu) throw new Error('Menu não encontrado.');
+export class GetMenuService {
+  async execute({ establishmentId, id }: FindOneMenuDto): Promise<ServiceResponse<Menu | null>> {
+    try {
+      const menu = await Menu.findOne({ where: { id: id, establishment_id: establishmentId } });
+
+      if (!menu) throw new ApiError('Menu não encontrado.');
 
       return { result: menu, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      if(err instanceof ApiError) throw err;
+
+      throw new ApiError('Erro ao buscar o menu', 'unknown');
     }
   }
 }
