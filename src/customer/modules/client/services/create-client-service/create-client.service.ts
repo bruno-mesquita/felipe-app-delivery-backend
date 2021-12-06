@@ -46,7 +46,7 @@ class CreateClientService {
 
       if (!city) throw new ApiError('Cidade não encontrada');
 
-      await AddressClient.create({
+      const address = await AddressClient.create({
         city_id: city.getId(),
         client_id: user.getId(),
         neighborhood: UNINFORMED,

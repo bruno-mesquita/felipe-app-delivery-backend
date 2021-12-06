@@ -9,7 +9,6 @@ export class UpdateProductService {
   async execute(updateProductDto: UpdateProductDto): Promise<ServiceResponse<boolean>> {
     try {
       // Verificando se o produto existe
-
       const product = await Product.findByPk(updateProductDto.id);
 
       if (!product) throw new ApiError('Produto não encontrado.');

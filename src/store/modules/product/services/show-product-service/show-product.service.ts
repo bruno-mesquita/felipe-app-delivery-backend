@@ -26,7 +26,7 @@ export class ShowProductService {
         ]
       });
 
-      if(product) throw new ApiError('Procuro não encontrado');
+      if (!product) throw new ApiError('Procuro não encontrado');
 
       return { result: product, err: null };
     } catch (err) {

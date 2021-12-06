@@ -4,6 +4,7 @@ import {
   HasManyGetAssociationsMixin,
   HasManyCreateAssociationMixin,
   BelongsToGetAssociationMixin,
+  HasMany,
 } from 'sequelize';
 
 import UserBase from '../_Bases/user';
@@ -18,6 +19,8 @@ class Client extends UserBase {
   public readonly avatar?: Image;
   public readonly orders?: Order[];
   public readonly adresses?: AddressClient[];
+
+  static Addresses: HasMany<Client>;
 
   public createOrder!: HasManyCreateAssociationMixin<Order>;
   public getOrders!: HasManyGetAssociationsMixin<Order>;
@@ -42,7 +45,7 @@ class Client extends UserBase {
 
   static associate({ Image, AddressClient, Order }) {
     this.belongsTo(Image, { foreignKey: 'avatar_id', as: 'avatar' });
-    this.hasMany(AddressClient, { foreignKey: 'client_id', as: 'adresses', sourceKey: 'id' })
+    this.Addresses = this.hasMany(AddressClient, { foreignKey: 'client_id', as: 'addresses', sourceKey: 'id' })
     this.hasMany(Order, { foreignKey: 'client_id', as: 'orders', sourceKey: 'id' })
   }
 
