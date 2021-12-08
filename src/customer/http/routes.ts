@@ -4,8 +4,7 @@ import isAuthenticated from '@shared/middlewares/is-authenticated';
 import { accessClient } from '@shared/middlewares/access-client';
 
 import { ClientController } from '../modules/client';
-import { AuthController } from '../modules/auth/controllers';
-import { ForgotPasswordController } from '../modules/auth/controllers/forgot-password-controller';
+import { AuthController } from '../modules/auth/auth.controller';
 import { AvatarController } from '../modules/avatar';
 import { CategoryController } from '../modules/category';
 import { EstablishmentController } from '../modules/establishment';
@@ -22,7 +21,6 @@ import { AnnouncementController } from '@customer/modules/announcement/announcem
 // Controllers
 const authController = new AuthController();
 const clientController = new ClientController();
-const forgotPassword = new ForgotPasswordController();
 const addressStateController = new AddressStateController();
 const clientAddressController = new ClientAddressController();
 const avatarController = new AvatarController();
@@ -41,9 +39,7 @@ const routes = Router();
 
 // Clients
 routes.post('/clients', clientController.create);
-routes.put('/clients/forgot-password', forgotPassword.setPassword);
-
-// Rotas autenticadas
+routes.put('/clients/forgot-password', authController.setPassword);
 
 // Auth
 routes.post('/auth/login', authController.login);

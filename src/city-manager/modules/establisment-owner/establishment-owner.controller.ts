@@ -4,6 +4,7 @@ import {
   CreateOwnerService,
   ListOwnerService,
   ShowOwnerEstablishmentService,
+  UpdateOwnerService,
 } from './services';
 
 export class EstablishmentOwnerController {
@@ -45,6 +46,18 @@ export class EstablishmentOwnerController {
       if(result.err) throw new Error(result.err);
 
       return res.status(201).json(result);
+    } catch (err) {
+      return res.status(400).json({ err: err.message });
+    }
+  };
+
+  async update({ body }: Request, res: Response): Promise<Response> {
+    try {
+      const updateOwnerService = new UpdateOwnerService();
+
+      await updateOwnerService.execute(body);
+
+      return res.status(204).json();
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

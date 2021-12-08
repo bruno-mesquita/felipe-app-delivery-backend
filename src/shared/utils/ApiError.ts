@@ -1,4 +1,4 @@
-type ApiErrorType = 'validate' | 'internal' | 'unknown';
+type ApiErrorType = 'validate' | 'internal' | 'unknown' | 'auth';
 
 class ApiError {
   message: string;
