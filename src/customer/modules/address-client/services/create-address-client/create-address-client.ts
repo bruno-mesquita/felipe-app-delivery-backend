@@ -1,3 +1,4 @@
+import AddressClient from '@core/address-client';
 import City from '@core/city';
 import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
@@ -26,7 +27,7 @@ export class CreateAddressClientService {
 
       const { cep, neighborhood, nickname, number, street } = createAddressDto;
 
-      await client.createAdress({
+      await AddressClient.create({
         nickname,
         street,
         number,
@@ -34,6 +35,7 @@ export class CreateAddressClientService {
         cep,
         city_id: city.getId(),
         active: false,
+        client_id: createAddressDto.userId
       });
 
       return { result: true, err: null };
