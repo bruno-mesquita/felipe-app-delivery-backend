@@ -9,8 +9,6 @@ export class ActiveAddressClientService {
         attributes: ['id'],
       });
 
-      if(!addressActive) throw new Error('Endereço não encontrado')
-
       const address = await AddressClient.findOne({
         where: { id, active: false, client_id: userId },
         attributes: ['id', 'active'],
@@ -18,13 +16,13 @@ export class ActiveAddressClientService {
 
       if(!address) throw new Error('Endereço não encontrado')
 
-      if(address.getId() !== addressActive.getId()) {
+      if(addressActive) {
         addressActive.deactivate();
-        address.activate();
-
         await addressActive.save();
-        await address.save();
-      } else throw new Error('Erro ao desativar o endereço')
+      }
+
+      address.activate();
+      await address.save();
 
       return { err: null, result: true };
     } catch (err) {
