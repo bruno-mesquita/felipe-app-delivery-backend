@@ -3,15 +3,13 @@
  * @author Bruno Mesquita
  */
 
-import { object, SchemaOf, mixed, number, array } from 'yup';
+import { object, mixed, number, array } from 'yup';
+
+import yupWrapper from '@shared/utils/yup-wrapper';
 
 import type { IProfileClientDto, Select } from '../dtos/profile-client.dto';
 
-const schema: SchemaOf<IProfileClientDto> = object({
+export const profileClientValidate = yupWrapper<IProfileClientDto>(object({
   id: number().integer().min(1).required(),
   selects: array().of(mixed().oneOf<Select>(['active', 'avatar', 'cpf', 'email', 'name']))
-});
-
-const profileClientValidate = (values: IProfileClientDto) => schema.validateSync(values, { stripUnknown: true });
-
-export default profileClientValidate;
+}))

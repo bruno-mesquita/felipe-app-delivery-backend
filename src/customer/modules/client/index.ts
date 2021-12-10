@@ -1,1 +1,1 @@
-export { default as ClientController } from './client.controller';
+export { default as clientRoutes } from './client.routes';

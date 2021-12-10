@@ -1,4 +1,5 @@
-export { default as createClientValidate } from './create-client.validation';
-export { default as updatePasswordClientValidate } from './update-password-client.validation';
-export { default as updateClientValidate } from './update-client.validation';
-export { default as profileClientValidate } from './profile-client.validate';
+export { createClientValidate } from './create-client.validate';
+export { updatePasswordValidate } from './update-password-client.validate';
+export { updateClientValidate } from './update-client.validate';
+export { profileClientValidate } from './profile-client.validate';
+export { activateClientValidate } from './activete-client.validate';

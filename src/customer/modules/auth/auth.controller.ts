@@ -1,32 +1,48 @@
-import ApiError from '@shared/utils/ApiError';
 import { Request, Response } from 'express';
+
+import Controller from '@shared/utils/controller';
 
 import {
   LoginClientService,
-  RecoverPasswordService,
   RefreshTokenService,
+  ResetPasswordService,
+  ResendCodeService,
   ForgotPasswordService,
 } from './services';
 
-import { loginValidate, forgotPasswordValidate } from './validation';
-export class AuthController {
+import {
+  loginValidate,
+  resetPasswordValidate,
+  resendCodeValidate,
+  forgotPasswordValidate,
+ } from './validation';
+
+class AuthController extends Controller {
+  constructor() {
+    super();
+
+    this.login = this.login.bind(this);
+    this.refreshToken = this.refreshToken.bind(this);
+    this.forgotPassword = this.forgotPassword.bind(this);
+    this.resetPassword = this.resetPassword.bind(this);
+    this.resendCode = this.resendCode.bind(this);
+  }
+
   async login({ body }: Request, res: Response): Promise<Response> {
     try {
       const sanitizedValues = loginValidate(body);
 
       const loginService = new LoginClientService();
 
-      const result = await loginService.execute(sanitizedValues as any);
+      const response = await loginService.execute(sanitizedValues as any);
 
-      return res.json(result.result);
+      return res.json(response);
     } catch (err) {
-      if(err instanceof ApiError) return res.status(err.statusCode).json(err);
-
-      return res.status(401).json({ message: 'Não autorizado', type: 'auth' });
+      return this.requestError(err, res);
     }
   }
 
-  async refresh({ body }: Request, res: Response): Promise<Response> {
+  async refreshToken({ body }: Request, res: Response): Promise<Response> {
     try {
       const refreshTokenService = new RefreshTokenService();
 
@@ -36,23 +52,51 @@ export class AuthController {
 
       return res.json(response);
     } catch (err) {
-      return res.status(401).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
-  async setPassword({ body }: Request, res: Response): Promise<Response> {
+  async forgotPassword({ body }: Request, res: Response): Promise<Response> {
     try {
       const sanitizedValues = forgotPasswordValidate(body);
 
       const forgotPasswordService = new ForgotPasswordService();
 
-      const response = await forgotPasswordService.execute(sanitizedValues as any);
+      await forgotPasswordService.execute(sanitizedValues);
 
-      return res.json(response);
+      return res.status(204).json();
     } catch (err) {
-      if(err instanceof ApiError) return res.status(err.statusCode).json(err);
+      return this.requestError(err, res);
+    }
+  }
 
-      return res.status(400).json({ message: 'Erro ao resetar a senha' });
+  async resetPassword({ body }: Request, res: Response): Promise<Response> {
+    try {
+      const sanitizedValues = resetPasswordValidate(body);
+
+      const resetPasswordService = new ResetPasswordService();
+
+      await resetPasswordService.execute(sanitizedValues);
+
+      return res.status(204).json();
+    } catch (err) {
+      return this.requestError(err, res);
+    }
+  }
+
+  async resendCode({ body }: Request, res: Response): Promise<Response> {
+    try {
+      const sanitizedValues = resendCodeValidate(body);
+
+      const resendCodeService = new ResendCodeService();
+
+      await resendCodeService.execute(sanitizedValues);
+
+      return res.status(204).json();
+    } catch (err) {
+      return this.requestError(err, res);
     }
   }
 }
+
+export default new AuthController();

@@ -1,43 +1,27 @@
 import Client from '@core/client';
 import ApiError from '@shared/utils/ApiError';
-import { ServiceResponse } from '@shared/utils/service-response';
 import SmsService from '@shared/utils/sms';
-import { EmailToForgotPasswordDto } from '../dtos/email-forgot-password.dto';
+
+import { IForgotPasswordDto } from '../dtos/forgot-password.dto';
 
 export class ForgotPasswordService {
-  async execute(forgotPasswordDto: EmailToForgotPasswordDto): Promise<ServiceResponse<boolean>> {
+  async execute({ cellphone }: IForgotPasswordDto): Promise<void> {
     try {
-      const smsService = new SmsService();
 
-      // pegando e verificando se o e-mail existe
       const client = await Client.findOne({
-        where: { email: forgotPasswordDto.email },
+        where: { cellphone },
         attributes: ['id', 'cellphone'],
       });
 
-      if (!client) throw new ApiError('E-mail do usuário não encontrado');
+      if (!client) throw new ApiError('usuário não encontrado');
 
-      // checando o número e o código passados
-      const sendResult = await smsService.send(client.getCellphone());
+      const smsService = new SmsService();
 
-      if (!sendResult) {
-        throw new ApiError('Houve um erro ao enviar o codigo, verifique o seu número de telefone e tente novamente');
-      }
-
-      if (forgotPasswordDto.password !== forgotPasswordDto.confirmPassword) {
-        throw new ApiError('Senhas não são iguais');
-      }
-
-      client.setPassword(forgotPasswordDto.password);
-      client.hashPassword();
-
-      await client.save();
-
-      return { result: true, err: null };
+      await smsService.sendCode(client.getCellphone());
     } catch (err) {
       ApiError.verifyType(err)
 
-      throw new ApiError('Erro ao recuperar senha', 'unknown');
+      throw ApiError.generateErrorUnknown();
     }
   };
 }

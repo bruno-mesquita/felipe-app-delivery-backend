@@ -3,8 +3,8 @@ import { Router } from 'express';
 import isAuthenticated from '@shared/middlewares/is-authenticated';
 import { accessClient } from '@shared/middlewares/access-client';
 
-import { ClientController } from '../modules/client';
-import { AuthController } from '../modules/auth/auth.controller';
+import { clientRoutes } from '../modules/client';
+import { authRoutes } from '../modules/auth';
 import { AvatarController } from '../modules/avatar';
 import { CategoryController } from '../modules/category';
 import { EstablishmentController } from '../modules/establishment';
@@ -19,8 +19,6 @@ import { DeliverymanController } from '@customer/modules/deliveryman/deliveryman
 import { AnnouncementController } from '@customer/modules/announcement/announcement-controller';
 
 // Controllers
-const authController = new AuthController();
-const clientController = new ClientController();
 const addressStateController = new AddressStateController();
 const clientAddressController = new ClientAddressController();
 const avatarController = new AvatarController();
@@ -35,15 +33,11 @@ const announcementController = new AnnouncementController();
 
 const routes = Router();
 
-// Rotas não autenticadas
+routes.use(clientRoutes);
+routes.use(authRoutes);
 
-// Clients
-routes.post('/clients', clientController.create);
-routes.put('/clients/forgot-password', authController.setPassword);
+routes.use(notificationsRoutes);
 
-// Auth
-routes.post('/auth/login', authController.login);
-routes.post('/auth/refresh', authController.refresh);
 
 routes.get('/terms-of-use', termsOfUseController.show);
 
@@ -51,18 +45,7 @@ routes.get('/terms-of-use', termsOfUseController.show);
 routes.get('/states', addressStateController.listState);
 routes.get('/cities/:state_id', addressStateController.listCitiesByState);
 
-// Client
-routes.put('/clients/activate', isAuthenticated, clientController.activate);
-
 // Rotas autenticadas
-
-// Clients
-routes.put('/clients', isAuthenticated, accessClient, clientController.updateProfile);
-routes.put('/clients/update-password', isAuthenticated, accessClient, clientController.updatePassword);
-routes.get('/clients/orders', isAuthenticated, accessClient, clientController.listOrdersByClient);
-routes.post('/clients/me', isAuthenticated, clientController.profile);
-routes.delete('/clients', isAuthenticated, accessClient, clientController.remove);
-routes.put('/clients/deactivate', isAuthenticated, accessClient, clientController.deactivate);
 
 // Avatar
 routes.post('/avatar', isAuthenticated, accessClient,  avatarController.create);
@@ -101,6 +84,5 @@ routes.get('/deliveryman', isAuthenticated, accessClient, deliverymanController.
 
 routes.get('/announcement', isAuthenticated, accessClient, announcementController.list);
 
-routes.use(notificationsRoutes);
 
 export default routes;

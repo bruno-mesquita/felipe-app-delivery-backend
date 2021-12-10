@@ -1,9 +1,15 @@
 import { ServiceResponse } from "@shared/utils/service-response";
 import TokenManager from "@shared/utils/token-manager";
 import Client from '@core/client';
+import ApiError from "@shared/utils/ApiError";
+
+interface Response {
+  accessToken: string;
+  refreshToken: string;
+}
 
 export class RefreshTokenService {
-  async execute(token: string): Promise<ServiceResponse<any>> {
+  async execute(token: string): Promise<ServiceResponse<Response>> {
     try {
       const tokenManager = new TokenManager();
 
@@ -23,7 +29,9 @@ export class RefreshTokenService {
 
       return { result: { accessToken, refreshToken  }, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw new ApiError('Erro interno', 'auth', 401);
     }
   }
 }

@@ -22,10 +22,8 @@ declare global {
       SECURITY_ALGORITHM: string;
       SECURITY_KEY: string;
 
-      MERCADO_PAGO_KEY: string;
-      MERCADO_PAGO_TOKEN: string;
-
-      AGIOTA_API: string;
+      SMS_KEY: string;
+      SMS_API_URL: string;
     }
   }
 }

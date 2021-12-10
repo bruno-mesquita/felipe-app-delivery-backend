@@ -6,7 +6,7 @@
 
 import { Request, Response } from 'express';
 
-import ApiError from '@shared/utils/ApiError';
+import Controller from '@shared/utils/controller';
 
 import {
   ActiveClientService,
@@ -16,17 +16,30 @@ import {
   ProfileClientService,
   ListOrdersService,
   DeleteClientService,
-  DeactiveteClientService
+  DeactiveteClientService,
 } from './services';
 
 import {
   createClientValidate,
   updateClientValidate,
-  updatePasswordClientValidate,
+  updatePasswordValidate,
   profileClientValidate,
-} from './validation/';
+  activateClientValidate,
+} from './validation';
 
-class ClientController {
+class ClientController extends Controller {
+  constructor() {
+    super();
+    this.create = this.create.bind(this);
+    this.activate = this.activate.bind(this);
+    this.deactivate = this.deactivate.bind(this);
+    this.updateProfile = this.updateProfile.bind(this);
+    this.updatePassword = this.updatePassword.bind(this);
+    this.profile = this.profile.bind(this);
+    this.listOrdersByClient = this.listOrdersByClient.bind(this);
+    this.remove = this.remove.bind(this);
+  }
+
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
       const sanitizedBody = createClientValidate(body);
@@ -37,24 +50,21 @@ class ClientController {
 
       return res.status(201).json(result);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
-  async activate({ client }: Request, res: Response): Promise<Response> {
+  async activate({ body }: Request, res: Response): Promise<Response> {
     try {
+      const sanitizedBody = activateClientValidate(body);
+
       const activeClientService = new ActiveClientService();
 
-      const result = await activeClientService.execute(client.id);
+      await activeClientService.execute(sanitizedBody);
 
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.status(204).json();
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -68,7 +78,7 @@ class ClientController {
 
       return res.status(200).json(result);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -84,13 +94,13 @@ class ClientController {
 
       return res.status(200).json(result);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async updatePassword({ body, client }: Request, res: Response): Promise<Response> {
     try {
-      const sanitizedValues = updatePasswordClientValidate({ ...body, id: client.id });
+      const sanitizedValues = updatePasswordValidate({ ...body, id: client.id });
 
       const updatePasswordClientService = new UpdatePasswordClientService();
 
@@ -100,7 +110,7 @@ class ClientController {
 
       return res.status(200).json(result);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -116,7 +126,7 @@ class ClientController {
 
       return res.status(200).json(profile);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -130,7 +140,7 @@ class ClientController {
 
       return res.status(200).json(result);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -144,9 +154,9 @@ class ClientController {
 
       return res.status(200).json(result);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }
 
-export default ClientController;
+export default new ClientController();

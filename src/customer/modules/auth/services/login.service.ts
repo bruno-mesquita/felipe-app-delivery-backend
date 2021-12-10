@@ -11,8 +11,13 @@ import ApiError from '@shared/utils/ApiError';
 
 import { LoginClientDto } from '../dtos/login-client.dto';
 
+interface Response {
+  token: string;
+  refreshToken: string;
+}
+
 export class LoginClientService {
-  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<{ token: string; refreshToken: string; }>> {
+  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<Response>> {
     try {
       const tokenManager = new TokenManager();
 

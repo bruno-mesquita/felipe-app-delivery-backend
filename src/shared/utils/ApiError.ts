@@ -14,6 +14,10 @@ class ApiError {
   static verifyType(err: any) {
     if(err instanceof ApiError) throw err;
   }
+
+  static generateErrorUnknown() {
+    return new ApiError('Erro desconhecido', 'unknown', 500);
+  }
 }
 
 export default ApiError;
