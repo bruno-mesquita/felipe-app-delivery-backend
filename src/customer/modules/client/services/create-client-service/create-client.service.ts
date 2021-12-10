@@ -64,7 +64,7 @@ class CreateClientService {
 
       const smsService = new SmsService();
 
-      await smsService.sendCode(user.getCellphone());
+      if(process.env.NODE_ENV !== 'test') await smsService.sendCode(user.getCellphone());
 
       return { result: { userId: user.getId() }, err: null };
     } catch (err) {

@@ -110,7 +110,7 @@ describe('Testes para criação de um usuário', () => {
 
     expect(statusCode).toBe(400);
     expect(body.type).toBe('validate');
-    expect(body.message).toBe('Dados invalidos!');
+    expect(body.message).toBe('Erro de validação!');
   });
 
   it('Deveria falhar ao tentar criar um usuário faltando campos obrigatórios', async () => {
@@ -126,6 +126,6 @@ describe('Testes para criação de um usuário', () => {
 
     expect(statusCode).toBe(400);
     expect(body.type).toBe('validate');
-    expect(body.message).toBe('Dados invalidos!');
+    expect(body.message).toBe('Erro de validação!');
   });
 });

@@ -15,8 +15,6 @@ class SmsService {
   constructor() {
     const { SMS_API_URL, SMS_KEY } = process.env;
 
-    console.log(SMS_API_URL, SMS_KEY);
-
     this.api = axios.create({
       baseURL: SMS_API_URL,
       headers: {

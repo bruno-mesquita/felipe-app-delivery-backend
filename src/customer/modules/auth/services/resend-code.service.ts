@@ -26,7 +26,7 @@ export class ResendCodeService {
 
       const smsService = new SmsService();
 
-      await smsService.sendCode(client.getCellphone());
+      if(process.env.NODE_ENV !== 'test') await smsService.sendCode(client.getCellphone());
 
     } catch (err) {
       ApiError.verifyType(err);
