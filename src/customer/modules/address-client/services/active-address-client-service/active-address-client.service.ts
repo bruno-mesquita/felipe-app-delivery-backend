@@ -18,11 +18,13 @@ export class ActiveAddressClientService {
 
       if(!address) throw new Error('Endereço não encontrado')
 
-      addressActive.deactivate();
-      address.activate();
+      if(address.getId() !== addressActive.getId()) {
+        addressActive.deactivate();
+        address.activate();
 
-      await addressActive.save();
-      await address.save();
+        await addressActive.save();
+        await address.save();
+      } else throw new Error('Erro ao desativar o endereço')
 
       return { err: null, result: true };
     } catch (err) {
