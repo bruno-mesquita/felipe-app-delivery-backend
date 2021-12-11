@@ -28,6 +28,10 @@ export class CreateOrderService {
         where: {
           establishment_id: createOrderDto.establishment_id,
         },
+        include: [{
+          model: Establishment,
+          as: 'establishment',
+        }]
       });
 
       if (!establishmentOwner) throw new Error('Estabelecimento não encontrado');
