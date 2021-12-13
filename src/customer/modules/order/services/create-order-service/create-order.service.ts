@@ -47,9 +47,6 @@ export class CreateOrderService {
       const addressExists = await AddressClient.findOne({
         where: {
           id: createOrderDto.address_id,
-          street: { [Op.notIn]: ['Não informado', ''] },
-          neighborhood: { [Op.notIn]: ['Não informado', ''] },
-          number: { [Op.notIn]: ['Não informado', ''] },
         },
       });
 
@@ -114,6 +111,8 @@ export class CreateOrderService {
 
       return { result: order.id, err: null };
     } catch (err) {
+      console.log(err);
+
       return { result: null, err: err.message };
     }
   }
