@@ -24,6 +24,8 @@ declare global {
 
       SMS_KEY: string;
       SMS_API_URL: string;
+
+      API_NOTIFCATIONS: string;
     }
   }
 }

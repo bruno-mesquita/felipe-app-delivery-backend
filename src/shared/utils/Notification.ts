@@ -21,7 +21,7 @@ class Notification {
   private api: AxiosInstance;
 
   constructor() {
-    this.api = axios.create({ baseURL: 'http://localhost:4040/api' });
+    this.api = axios.create({ baseURL: process.env.API_NOTIFCATIONS });
   }
 
   async addListener(addListenerData: AddListenerData) {

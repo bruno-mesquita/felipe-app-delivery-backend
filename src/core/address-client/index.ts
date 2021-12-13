@@ -37,12 +37,8 @@ class AddressClient extends AddressModel {
     this.set('nickname', nickname);
   }
 
-  public deactivate(): void {
-    this.set('active', false);
-  }
-
-  public activate(): void {
-    this.set('active', true);
+  public setActive(active: boolean): void {
+    this.set('active', active);
   }
 }
 

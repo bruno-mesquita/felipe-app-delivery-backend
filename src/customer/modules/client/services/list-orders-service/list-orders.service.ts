@@ -4,15 +4,17 @@ import Client from '@core/client';
 import Evaluation from '@core/evaluation';
 import Establishment from '@core/establishment';
 import { usePage } from '@shared/utils/use-page';
+import ApiError from '@shared/utils/ApiError';
 
+import { IListOrdersClient } from '../../dtos';
 export class ListOrdersService {
-  async execute(userId: number, page = 0): Promise<ServiceResponse<Order[]>> {
+  async execute({ page, clientId }: IListOrdersClient): Promise<ServiceResponse<Order[]>> {
     try {
       const { limit, offset } = usePage(page);
 
-      const client = await Client.findOne({ where: { id: userId, active: true } });
+      const client = await Client.findOne({ where: { id: clientId, active: true } });
 
-      if(!client) throw new Error('Cliente não encontrado');
+      if(!client) throw new ApiError('Cliente não encontrado');
 
       const orders = await Order.findAll({
         where: { client_id: client.getId() },
@@ -36,7 +38,9 @@ export class ListOrdersService {
 
       return { err: null, result: orders };
     } catch (err) {
-      return { err: err.message, result: [] };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

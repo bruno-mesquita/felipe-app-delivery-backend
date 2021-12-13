@@ -7,7 +7,7 @@ import { object, mixed, number, array } from 'yup';
 
 import yupWrapper from '@shared/utils/yup-wrapper';
 
-import type { IProfileClientDto, Select } from '../dtos/profile-client.dto';
+import type { IProfileClientDto, Select } from '../dtos';
 
 export const profileClientValidate = yupWrapper<IProfileClientDto>(object({
   id: number().integer().min(1).required(),

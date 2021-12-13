@@ -1,1 +1,1 @@
-export { ClientAddressController } from './ClientAddressController';
+export { default as clientAddressRoutes } from './client-address.routes';

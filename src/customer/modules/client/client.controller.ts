@@ -25,6 +25,7 @@ import {
   updatePasswordValidate,
   profileClientValidate,
   activateClientValidate,
+  listOrdersClientValidate,
 } from './validation';
 
 class ClientController extends Controller {
@@ -130,15 +131,15 @@ class ClientController extends Controller {
     }
   }
 
-  async listOrdersByClient({ client }: Request, res: Response): Promise<Response> {
+  async listOrdersByClient({ client, query }: Request, res: Response): Promise<Response> {
     try {
+      const values = listOrdersClientValidate({ clientId: client.id, page: Number(query.page) });
+
       const listOrdersService = new ListOrdersService();
 
-      const result = await listOrdersService.execute(client.id);
+      const result = await listOrdersService.execute(values);
 
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(result);
     } catch (err) {
       return this.requestError(err, res);
     }

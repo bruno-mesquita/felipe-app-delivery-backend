@@ -5,10 +5,10 @@
  */
 import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { UpdatePasswordClientDto } from '../../dtos/update-password-client-dto';
+import { IUpdatePasswordClientDto } from '../../dtos';
 
 class UpdatePasswordClientService {
-  async execute(updatePasswordClientDto: UpdatePasswordClientDto): Promise<ServiceResponse<boolean>> {
+  async execute(updatePasswordClientDto: IUpdatePasswordClientDto): Promise<ServiceResponse<boolean>> {
     try {
       // Verificando se o usuário existe
       const user = await Client.findOne({where: { id: updatePasswordClientDto.id, active: true } });

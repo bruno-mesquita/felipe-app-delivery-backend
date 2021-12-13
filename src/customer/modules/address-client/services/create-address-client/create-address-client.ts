@@ -1,31 +1,25 @@
 import AddressClient from '@core/address-client';
 import City from '@core/city';
 import Client from '@core/client';
-import { ServiceResponse } from '@shared/utils/service-response';
-import { ClientAddressDto } from '../../dtos/create-address-client';
-import { schema } from '../../validations/create-address-client';
+import ApiError from '@shared/utils/ApiError';
+import type { IClientAddressDto } from '../../dtos';
 
 export class CreateAddressClientService {
-  async execute(createAddressDto: ClientAddressDto): Promise<ServiceResponse<any>> {
+  async execute(createAddressDto: IClientAddressDto): Promise<void> {
     try {
-      const valid = schema.isValidSync(createAddressDto);
-
-      if (!valid) throw new Error('[Erro: Endereço] Por favor reveja seus dados');
-
       // Verificando se a cidade existe no banco
-
       const city = await City.findByPk(createAddressDto.city);
 
-      if (!city) throw new Error('[ERRO: Endereço] Cidade selecionada não existe no sistema');
+      if (!city) throw new ApiError('[ERRO: Endereço] Cidade selecionada não existe no sistema');
 
       const client = await Client.findOne({
         where: { id: createAddressDto.userId },
         attributes: ['id', 'name'],
       });
 
-      if(!client) throw new Error('Cliente não encontrado');
+      if(!client) throw new ApiError('Cliente não encontrado');
 
-      const { cep, neighborhood, nickname, number, street } = createAddressDto;
+      const { cep, neighborhood, nickname, number, street,  userId } = createAddressDto;
 
       await AddressClient.create({
         nickname,
@@ -35,12 +29,13 @@ export class CreateAddressClientService {
         cep,
         city_id: city.getId(),
         active: false,
-        client_id: createAddressDto.userId
+        client_id: userId
       });
 
-      return { result: true, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw new ApiError('Erro desconhecido', 'unknown', 500);
     }
   }
 }

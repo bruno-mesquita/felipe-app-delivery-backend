@@ -1,43 +1,31 @@
 import AddressClient from '@core/address-client';
 import City from '@core/city';
-import { ServiceResponse } from '@shared/utils/service-response';
-import { UpdateClientAddressDto } from '../../dtos/update-address-client';
+import ApiError from '@shared/utils/ApiError';
+import type { IUpdateClientAddressDto } from '../../dtos';
 
 export class UpdateAddressClientService {
-  async execute({
-    nickname,
-    cep,
-    number,
-    street,
-    neighborhood,
-    id,
-    city,
-  }: UpdateClientAddressDto): Promise<ServiceResponse<boolean>> {
+  async execute(updateClientAddressDto: IUpdateClientAddressDto): Promise<void> {
     try {
-
-      const addressClient = await AddressClient.findOne({
-        where: { id },
+      const addressClient = await AddressClient.findByPk(updateClientAddressDto.id, {
+        attributes: ['id']
       });
 
-      if (!addressClient) throw new Error('Endereço não encontrado');
+      if (!addressClient) throw new ApiError('Endereço não encontrado');
 
-      addressClient.setNickname(nickname);
+      if(updateClientAddressDto.city) {
+        const cityExists = await City.findByPk(updateClientAddressDto.city, { attributes: ['id'] });
 
-      const cityExists = await City.findByPk(city);
+        if (!cityExists) throw new ApiError('Cidade não encontrada');
+      }
 
-      if (!cityExists) throw new Error('Cidade não encontrada');
-
-      addressClient.setCep(cep);
-      addressClient.setCityId(city);
-      addressClient.setNeighborhood(neighborhood);
-      addressClient.setNumber(number);
-      addressClient.setStreet(street);
+      await addressClient.update(updateClientAddressDto);
 
       await addressClient.save();
 
-      return { err: null, result: true };
     } catch (err) {
-      return { err: err.message, result: false };
+      ApiError.verifyType(err);
+
+      throw new ApiError('Erro desconhecido', 'unknown', 500);
     }
   }
 }

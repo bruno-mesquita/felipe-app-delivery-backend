@@ -13,12 +13,12 @@ import City from '@core/city';
 import AddressClient from '@core/address-client';
 import SmsService from '@shared/utils/sms';
 
-import { CreateClientDto } from '../../dtos/create-client-dto';
+import { ICreateClientDto } from '../../dtos';
 
 const UNINFORMED = 'Não informado';
 
 class CreateClientService {
-  async execute(createClientDto: CreateClientDto): Promise<ServiceResponse<{ userId: number } | null>> {
+  async execute(createClientDto: ICreateClientDto): Promise<ServiceResponse<{ userId: number } | null>> {
     try {
       // Verificando se as senhas são iguais
       if (createClientDto.confirmPassword !== createClientDto.password) throw new ApiError('Senhas não são iguais', 'validate');

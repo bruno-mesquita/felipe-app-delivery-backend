@@ -7,9 +7,9 @@ import { object, string, number } from 'yup';
 
 import yupWrapper from '@shared/utils/yup-wrapper';
 
-import { CreateClientDto } from '../dtos/create-client-dto';
+import { ICreateClientDto } from '../dtos';
 
-export const createClientValidate = yupWrapper<CreateClientDto>(object({
+export const createClientValidate = yupWrapper<ICreateClientDto>(object({
   name: string().trim().required(),
   email: string().trim().email().required(),
   password: string().trim().required(),

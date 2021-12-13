@@ -17,7 +17,7 @@ export class RateOrderService {
         message,
       });
 
-      order.setEvaluationId(evaluation.id);
+      order.setEvaluationId(evaluation.getId());
 
       await order.save();
 

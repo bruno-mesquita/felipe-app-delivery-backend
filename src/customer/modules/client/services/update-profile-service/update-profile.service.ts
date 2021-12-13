@@ -7,10 +7,10 @@ import { Op } from 'sequelize';
 
 import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { UpdateClientDto } from '../../dtos/update-client-dto';
+import { IUpdateClientDto } from '../../dtos';
 
 class UpdateProfileService {
-  async execute(updateClientDto: UpdateClientDto): Promise<ServiceResponse<boolean>> {
+  async execute(updateClientDto: IUpdateClientDto): Promise<ServiceResponse<boolean>> {
     try {
       // verificando se o usuário existe
       const user = await Client.findOne({

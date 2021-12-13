@@ -6,20 +6,20 @@ import {
   DeleteAddressClientService,
   UpdateAddressClientService,
   FindOneAddressClientService,
-  ActiveAddressClientService,
-  DeactivateAddressClientService
 } from './services';
+
+import { createAddressClientValidate, updateAddressClientValidate } from './validations';
 
 class ClientAddressController {
   async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
+      const values = createAddressClientValidate({ ...body, userId: client.id });
+
       const clientAddressService = new CreateAddressClientService();
 
-      const clientAddress = await clientAddressService.execute({ ...body, userId: client.id });
+      await clientAddressService.execute(values);
 
-      if (clientAddress.err) throw new Error(clientAddress.err);
-
-      return res.status(201).json(clientAddress);
+      return res.status(201).json();
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
@@ -53,43 +53,15 @@ class ClientAddressController {
     }
   }
 
-  async deactivate({ params, client }: Request, res: Response): Promise<Response> {
-    try {
-      const deactivateAddressClientService = new DeactivateAddressClientService();
-
-      const result = await deactivateAddressClientService.execute(Number(params.id), client.id);
-
-      if (result.err) throw new Error(result.err);
-
-      return res.json(result);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
-  async active({ params, client }: Request, res: Response): Promise<Response> {
-    try {
-      const activeAddressClientService = new ActiveAddressClientService();
-
-      const result = await activeAddressClientService.execute(Number(params.id), client.id);
-
-      if (result.err) throw new Error(result.err);
-
-      return res.json(result);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
   async update({ body, params }: Request, res: Response): Promise<Response> {
     try {
+      const values = updateAddressClientValidate({ ...body, id: params.id });
+
       const updateAddressClientService = new UpdateAddressClientService();
 
-      const clientAddress = await updateAddressClientService.execute({ ...body, id: params.id });
+      await updateAddressClientService.execute(values);
 
-      if (clientAddress.err) throw new Error(clientAddress.err);
-
-      return res.json(clientAddress);
+      return res.status(204).json();
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
@@ -111,4 +83,4 @@ class ClientAddressController {
   }
 }
 
-export { ClientAddressController };
+export default ClientAddressController;

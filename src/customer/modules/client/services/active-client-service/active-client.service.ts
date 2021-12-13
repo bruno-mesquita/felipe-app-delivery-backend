@@ -7,10 +7,10 @@ import Client from '@core/client';
 import ApiError from '@shared/utils/ApiError';
 import SmsService from '@shared/utils/sms';
 
-import { ActiveClientDto } from '../../dtos/active-client.dto';
+import { IActiveClientDto } from '../../dtos';
 
 class ActiveClientService {
-  async execute({ code, userId }: ActiveClientDto): Promise<void> {
+  async execute({ code, userId }: IActiveClientDto): Promise<void> {
     try {
       // verificar se o usuário existe
       const user = await Client.findOne({ where: { id: userId, active: false } });

@@ -8,7 +8,7 @@ import { authRoutes } from '../modules/auth';
 import { AvatarController } from '../modules/avatar';
 import { CategoryController } from '../modules/category';
 import { EstablishmentController } from '../modules/establishment';
-import { ClientAddressController } from '../modules/address-client';
+import { clientAddressRoutes } from '../modules/address-client';
 import { AddressStateController } from '../modules/address-state';
 import { OrderController } from '../modules/order';
 import { MenuController } from '../modules/menus';
@@ -20,7 +20,6 @@ import { AnnouncementController } from '@customer/modules/announcement/announcem
 
 // Controllers
 const addressStateController = new AddressStateController();
-const clientAddressController = new ClientAddressController();
 const avatarController = new AvatarController();
 const categoryController = new CategoryController();
 const establishmentController = new EstablishmentController();
@@ -33,8 +32,9 @@ const announcementController = new AnnouncementController();
 
 const routes = Router();
 
-routes.use(clientRoutes);
 routes.use(authRoutes);
+routes.use(clientRoutes);
+routes.use(clientAddressRoutes);
 
 routes.use(notificationsRoutes);
 
@@ -50,15 +50,6 @@ routes.get('/cities/:state_id', addressStateController.listCitiesByState);
 // Avatar
 routes.post('/avatar', isAuthenticated, accessClient,  avatarController.create);
 routes.get('/avatar', isAuthenticated, accessClient, avatarController.findOneAvatarByUserId);
-
-// Endereços do cliente
-routes.get('/adresses-client', isAuthenticated, accessClient, clientAddressController.list);
-routes.get('/adresses-client/:id', isAuthenticated, accessClient, clientAddressController.findOne);
-routes.post('/adresses-client', isAuthenticated, accessClient, clientAddressController.create);
-routes.put('/adresses-client/:id', isAuthenticated, accessClient, clientAddressController.update);
-routes.put('/adresses-client/:id/active', isAuthenticated, accessClient, clientAddressController.active);
-routes.put('/adresses-client/:id/deactivate', isAuthenticated, accessClient, clientAddressController.deactivate);
-routes.delete('/adresses-client/:addressClientId', isAuthenticated, accessClient, clientAddressController.delete);
 
 // Categoria
 routes.get('/categories', isAuthenticated, accessClient, categoryController.getAll);
