@@ -7,6 +7,7 @@ import City from "@core/city";
 import Client from "@core/client";
 import { schema } from '../../validations/list-orders-types.validation';
 import { usePage } from "@shared/utils/use-page";
+import ApiError from "@shared/utils/ApiError";
 
 export class ListOrdersForTypesServices {
   async execute({ page = 0, id, type }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
@@ -15,7 +16,7 @@ export class ListOrdersForTypesServices {
 
       const valid = schema.isValidSync({ page, id, type });
 
-      if (!valid) throw new Error('Dados inválidos');
+      if (!valid) throw new ApiError('Dados inválidos');
 
       const orders = await Order.findAll({
         where: {
@@ -56,7 +57,9 @@ export class ListOrdersForTypesServices {
 
       return { result: orders, err: null };
     } catch(err) {
-      return { result: [], err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

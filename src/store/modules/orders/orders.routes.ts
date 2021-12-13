@@ -9,9 +9,9 @@ const ordersController = new OrdersController();
 
 const middlewares = [isAuthenticated, accessEstablishmentOwner];
 
-routesOrders.get('/list-orders-types', ...middlewares, ordersController.listFotTypes);
-routesOrders.get('/show-order/:id', ...middlewares, ordersController.showOrder);
-routesOrders.put('/update-status-order/:id', ...middlewares, ordersController.updateOrderStatus);
-routesOrders.put('/cancel-order/:id', ...middlewares, ordersController.cancelOrder);
+routesOrders.get('/orders', ...middlewares, ordersController.list);
+routesOrders.get('/orders/:id', ...middlewares, ordersController.show);
+routesOrders.put('/orders/:id', ...middlewares, ordersController.update);
+routesOrders.put('/orders/:id/cancel', ...middlewares, ordersController.cancel);
 
 export { routesOrders };

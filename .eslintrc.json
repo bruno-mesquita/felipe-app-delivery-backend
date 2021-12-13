@@ -14,17 +14,8 @@
     "sourceType": "module"
   },
   "plugins": [
-    "@typescript-eslint",
     "prettier"
   ],
-  "settings": {
-    "import/resolver": {
-      "typescript": {},
-      "node": {
-        "extensions": [".ts"]
-      }
-    }
-  },
   "rules": {
     "prettier/prettier": "error",
     "no-useless-constructor":"off",
@@ -32,11 +23,6 @@
     "no-unused-vars":"off",
     "class-methods-use-this":"off",
     "import/prefer-default-export": "off",
-    "camelcase":"off",
-    "import/extensions": [
-      "error",
-      "ignorePackages",
-      { "ts": "never" }
-    ]
+    "camelcase":"off"
   }
 }

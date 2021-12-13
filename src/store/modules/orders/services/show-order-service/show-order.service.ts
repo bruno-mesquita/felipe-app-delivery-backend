@@ -2,6 +2,7 @@ import Evaluation from "@core/evaluation";
 import ItemOrder from "@core/item-order";
 import Order from "@core/order";
 import Product from "@core/product";
+import ApiError from "@shared/utils/ApiError";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 export interface IRequest {
@@ -24,7 +25,7 @@ export class ShowOrderService {
         ],
       });
 
-      if (!order) throw new Error('Pedido não encontrado');
+      if (!order) throw new ApiError('Pedido não encontrado');
 
       const itemsOrder = await ItemOrder.findAll({
         where: { order_id: id },
@@ -40,7 +41,9 @@ export class ShowOrderService {
 
       return { result: { order, items: itemsOrder }, err: null };
     } catch(err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
