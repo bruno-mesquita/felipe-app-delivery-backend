@@ -17,8 +17,8 @@ export class ListOrdersService {
       if(!client) throw new ApiError('Cliente não encontrado');
 
       const orders = await Order.findAll({
-        where: { client_id: client.getId() },
-        attributes: ['id', 'total', 'order_status', 'createdAt'],
+        where: { client_id: clientId },
+        attributes: ['id', 'total', 'client_order_status', 'createdAt'],
         include: [
           {
             model: Establishment,

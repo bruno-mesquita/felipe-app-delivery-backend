@@ -6,6 +6,6 @@ import { IListOrdersClient } from '../dtos';
 
 export const listOrdersClientValidate = yupWrapper<IListOrdersClient>(object({
   clientId: number().integer().positive().required(),
-  page: number().integer().positive().required(),
+  page: number().integer().required(),
 }))
 
