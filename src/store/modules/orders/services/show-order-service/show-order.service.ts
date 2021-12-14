@@ -1,7 +1,11 @@
+import AddressClient from "@core/address-client";
+import City from "@core/city";
+import Client from "@core/client";
 import Evaluation from "@core/evaluation";
 import ItemOrder from "@core/item-order";
 import Order from "@core/order";
 import Product from "@core/product";
+import State from "@core/state";
 import ApiError from "@shared/utils/ApiError";
 import { ServiceResponse } from "@shared/utils/service-response";
 
@@ -15,13 +19,36 @@ export class ShowOrderService {
     try {
       const order = await Order.findOne({
         where: { id, establishment_id: establishmentId },
-        attributes: ['id', 'payment', 'total', 'discount', 'order_status', 'transshipment', 'note', 'createdAt'],
+        attributes: ['id', 'payment', 'total', 'discount', 'transshipment', 'note', 'createdAt', 'client_order_status', 'address_id'],
         include: [
           {
             model: Evaluation,
             as: 'evaluation',
             attributes: ['id', 'value', 'message'],
           },
+          {
+            model: AddressClient,
+            as: 'address_client',
+            attributes: ['number', 'street', 'neighborhood', 'cep', 'id'],
+            paranoid: false,
+            include: [
+              {
+                model: City,
+                as: 'city',
+                attributes: ['id','name'],
+                include: [{
+                  model: State,
+                  as: 'state',
+                  attributes: ['id', 'name']
+                }]
+              },
+              {
+                model: Client,
+                as: 'client',
+                attributes: ['id', 'name', 'cellphone']
+              }
+            ]
+          }
         ],
       });
 
@@ -35,6 +62,7 @@ export class ShowOrderService {
             model: Product,
             as: 'product',
             attributes: ['name'],
+            paranoid: false,
           },
         ],
       });

@@ -5,7 +5,7 @@ import { UpdateOrderStatusServices } from "./services/update-order-status/update
 import { CancelOrderService } from "./services/cancel-order/cancel-order.service";
 import Controller from "@shared/utils/controller";
 
-export class OrdersController extends Controller {
+class OrderController extends Controller {
   constructor() {
     super();
 
@@ -17,9 +17,9 @@ export class OrdersController extends Controller {
 
   async show({ params, client }: Request, res: Response): Promise<Response> {
     try {
-      const showOrderService = new ShowOrderService();
-
       const establishmentId = client.entity.getEstablishmentId();
+
+      const showOrderService = new ShowOrderService();
 
       const showOrder = await showOrderService.execute({ id: Number(params.id), establishmentId: establishmentId });
 
@@ -31,13 +31,13 @@ export class OrdersController extends Controller {
 
   async list({ client, query }: Request, res: Response): Promise<Response> {
     try {
-      const { page = 0, type } = query;
+      const { page = 0, types } = query;
 
       const listOrdersForTypesServices = new ListOrdersForTypesServices();
 
       const establishmentId = client.entity.getEstablishmentId();
 
-      const listOrders = await listOrdersForTypesServices.execute({ id: establishmentId, type: type as any, page: Number(page) });
+      const listOrders = await listOrdersForTypesServices.execute({ id: establishmentId, types: types as any, page: Number(page) });
 
       return res.status(200).json(listOrders);
     } catch(err) {
@@ -73,3 +73,5 @@ export class OrdersController extends Controller {
     }
   }
 }
+
+export default OrderController;

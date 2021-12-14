@@ -9,7 +9,7 @@ import { addressRoutes } from '../modules/address-establishment/address.routes';
 import { imagesRoutes } from '../modules/image/image.routes';
 import listRatesRoutes from '../modules/rate/rate.routes';
 import { addressStateRoutes } from '../modules/address-state';
-import { routesOrders } from '../modules/orders/orders.routes';
+import { ordersRoutes } from '../modules/orders';
 import { routesFinancial } from '../modules/financial/financial.routes';
 import { categoryRoutes } from '../modules/category';
 import { establishmentCategoriesRoutes } from '../modules/establishment-categories';
@@ -35,9 +35,9 @@ routes.use([
   addressRoutes,
   imagesRoutes,
   listRatesRoutes,
-  routesOrders,
   routesFinancial,
-  notificationsRoutes
+  notificationsRoutes,
+  ordersRoutes
 ]);
 
 export default routes;

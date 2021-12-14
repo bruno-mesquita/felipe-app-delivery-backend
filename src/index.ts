@@ -8,8 +8,8 @@ const { API_PORT, NODE_ENV } = process.env;
 
   await database.init();
 
-  server.listen(process.env.API_PORT || 3030, () => {
-    console.log(`Server started ON! ${process.env.API_PORT || 3030}`);
+  server.listen(API_PORT || 3030, () => {
+    console.log(`Server started ON! ${API_PORT || 3030}`);
     console.log(`mode: ${NODE_ENV}`);
   });
 })()

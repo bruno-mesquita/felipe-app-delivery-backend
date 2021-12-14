@@ -2,16 +2,16 @@ import { Router } from 'express';
 
 import isAuthenticated from '@shared/middlewares/is-authenticated';
 import { accessEstablishmentOwner } from '@shared/middlewares/access-establishment-owner';
-import { OrdersController } from './orders-controllers';
+import OrderController from './orders.controller';
 
-const routesOrders = Router();
-const ordersController = new OrdersController();
+const routes = Router();
+const orderController = new OrderController();
 
 const middlewares = [isAuthenticated, accessEstablishmentOwner];
 
-routesOrders.get('/orders', ...middlewares, ordersController.list);
-routesOrders.get('/orders/:id', ...middlewares, ordersController.show);
-routesOrders.put('/orders/:id', ...middlewares, ordersController.update);
-routesOrders.put('/orders/:id/cancel', ...middlewares, ordersController.cancel);
+routes.get('/orders', ...middlewares, orderController.list);
+routes.get('/orders/:id', ...middlewares, orderController.show);
+routes.put('/orders/:id', ...middlewares, orderController.update);
+routes.put('/orders/:id/cancel', ...middlewares, orderController.cancel);
 
-export { routesOrders };
+export default routes;

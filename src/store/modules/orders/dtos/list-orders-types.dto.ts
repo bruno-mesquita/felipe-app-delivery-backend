@@ -1,7 +1,7 @@
-import { StatusOrderType } from '@core/order/order.types';
+import { CustomerStatusType } from '@core/order/order.types';
 
 export interface ListOrdersDto {
   id: number;
   page?: number;
-  type: StatusOrderType;
+  types: CustomerStatusType[];
 }

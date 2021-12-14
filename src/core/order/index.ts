@@ -69,11 +69,11 @@ class Order extends Model {
 
   public open(): void {
     this.set('order_status', 'Aberto');
-    this.set('client_order_status', 'Enviado');
+    this.set('client_order_status', 'Novo');
   }
 
   private getStatus(): CustomerStatusType[] {
-    return ['Enviado', 'Aceito', 'Em preparo', 'Saiu para entrega', 'Entregue', 'Cancelado'];
+    return ['Novo', 'Aceito', 'Em preparo', 'Saiu para entrega', 'Entregue', 'Cancelado'];
   }
 
   public nextStatus(): void {

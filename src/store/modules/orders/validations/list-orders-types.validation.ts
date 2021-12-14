@@ -1,12 +1,12 @@
-import { object, SchemaOf, number, mixed } from 'yup';
+import { object, SchemaOf, number, mixed, array } from 'yup';
 
 import { ListOrdersDto } from '../dtos/list-orders-types.dto';
-import { StatusOrderType } from '@core/order/order.types';
+import { CustomerStatusType } from '@core/order/order.types';
 
 const schema: SchemaOf<ListOrdersDto> = object({
   id: number().integer().required(),
   page: number(),
-  type: mixed<StatusOrderType>().oneOf(['Aberto', 'Em andamento', 'Finalizado', 'Cancelado']).required(),
+  types: array().of(mixed<CustomerStatusType>().oneOf(['Novo', 'Aceito', 'Cancelado', 'Em preparo', 'Entregue', 'Saiu para entrega'])),
 });
 
 export { schema };
