@@ -1,1 +1,1 @@
-export { RateController } from './rate.controller';
+export { default as rateRoutes } from './rate.routes';

@@ -1,79 +1,33 @@
 import { Router } from 'express';
 
-import isAuthenticated from '@shared/middlewares/is-authenticated';
-import { accessClient } from '@shared/middlewares/access-client';
-
 import { clientRoutes } from '../modules/client';
 import { authRoutes } from '../modules/auth';
-import { AvatarController } from '../modules/avatar';
-import { CategoryController } from '../modules/category';
-import { EstablishmentController } from '../modules/establishment';
+import { avatarRoutes } from '../modules/avatar';
+import { categoryRoutes } from '../modules/category';
+import { establishmentRoutes } from '../modules/establishment';
 import { clientAddressRoutes } from '../modules/address-client';
-import { AddressStateController } from '../modules/address-state';
-import { OrderController } from '../modules/order';
-import { MenuController } from '../modules/menus';
-import { RateController } from '../modules/rate';
+import { stateRoutes } from '../modules/state';
+import { orderRoutes } from '../modules/order';
+import { menuRoutes } from '../modules/menus';
+import { rateRoutes } from '../modules/rate';
 import { notificationsRoutes } from '../modules/notifications';
-import { TermsOfUseController } from '@customer/modules/terms-of-use/terms-of-use.controller';
-import { DeliverymanController } from '@customer/modules/deliveryman/deliveryman.controller';
-import { AnnouncementController } from '@customer/modules/announcement/announcement-controller';
-
-// Controllers
-const addressStateController = new AddressStateController();
-const avatarController = new AvatarController();
-const categoryController = new CategoryController();
-const establishmentController = new EstablishmentController();
-const menuController = new MenuController();
-const orderController = new OrderController();
-const termsOfUseController = new TermsOfUseController();
-const rateController = new RateController();
-const deliverymanController = new DeliverymanController();
-const announcementController = new AnnouncementController();
+import { announcementRoutes } from '../modules/announcement';
 
 const routes = Router();
 
-routes.use(authRoutes);
-routes.use(clientRoutes);
-routes.use(clientAddressRoutes);
-
-routes.use(notificationsRoutes);
-
-
-routes.get('/terms-of-use', termsOfUseController.show);
-
-// State
-routes.get('/states', addressStateController.listState);
-routes.get('/cities/:state_id', addressStateController.listCitiesByState);
-
-// Rotas autenticadas
-
-// Avatar
-routes.post('/avatar', isAuthenticated, accessClient,  avatarController.create);
-routes.get('/avatar', isAuthenticated, accessClient, avatarController.findOneAvatarByUserId);
-
-// Categoria
-routes.get('/categories', isAuthenticated, accessClient, categoryController.getAll);
-
-// Estabelecimento
-routes.get('/establishments/:id', isAuthenticated, accessClient, establishmentController.findOne);
-routes.get('/establishments-by-name', isAuthenticated, accessClient, establishmentController.searchByName);
-routes.get('/establishments', isAuthenticated, accessClient, establishmentController.list);
-routes.get('/establishments/:id/menus', isAuthenticated, accessClient, establishmentController.listMenus);
-
-// menu
-routes.get('/menus/:id/products', isAuthenticated, accessClient, menuController.findProductsByMenu);
-
-// Orders
-routes.post('/orders', isAuthenticated, accessClient, orderController.create);
-routes.get('/orders/:id', isAuthenticated, accessClient, orderController.show);
-routes.get('/orders/:id/verify', isAuthenticated, accessClient, orderController.verify);
-routes.post('/orders/:id/rate', isAuthenticated, accessClient, orderController.rateOrder);
-
-routes.get('/rates/:id', isAuthenticated, accessClient, rateController.findOne);
-
-routes.get('/deliveryman', isAuthenticated, accessClient, deliverymanController.list);
-
-routes.get('/announcement', isAuthenticated, accessClient, announcementController.list);
-
+routes.use([
+  authRoutes,
+  clientRoutes,
+  clientAddressRoutes,
+  categoryRoutes,
+  menuRoutes,
+  stateRoutes,
+  rateRoutes,
+  orderRoutes,
+  announcementRoutes,
+  avatarRoutes,
+  establishmentRoutes,
+  notificationsRoutes,
+])
 
 export default routes;

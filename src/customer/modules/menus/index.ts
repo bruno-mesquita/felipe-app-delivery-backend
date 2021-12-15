@@ -1,1 +1,1 @@
-export { MenuController } from './menu.controller';
+export { default as menuRoutes } from './menu.routes';

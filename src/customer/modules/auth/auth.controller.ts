@@ -34,7 +34,7 @@ class AuthController extends Controller {
 
       const loginService = new LoginClientService();
 
-      const response = await loginService.execute(sanitizedValues as any);
+      const response = await loginService.execute(sanitizedValues);
 
       return res.json(response);
     } catch (err) {

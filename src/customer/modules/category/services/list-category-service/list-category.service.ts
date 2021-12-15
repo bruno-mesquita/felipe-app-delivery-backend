@@ -1,4 +1,5 @@
 import Category from '@core/category';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class ListCategoryService {
@@ -8,7 +9,9 @@ export class ListCategoryService {
 
       return { result, err: null };
     } catch (err) {
-      return { err: err.message, result: [] };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

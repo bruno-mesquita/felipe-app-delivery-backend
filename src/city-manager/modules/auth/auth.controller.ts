@@ -12,7 +12,7 @@ export class AuthController {
 
       if (result.err) throw new Error(result.err);
 
-      return res.status(200).json(result.result);
+      return res.json(result.result);
     } catch (err) {
       return res.status(401).json({ err: err.message });
     }
@@ -26,7 +26,7 @@ export class AuthController {
 
       if (refresh.err) throw new Error(refresh.err);
 
-      return res.status(200).json(refresh);
+      return res.json(refresh);
     } catch (err) {
       return res.status(403).json({ err: err.message });
     }

@@ -1,1 +1,1 @@
-export { default as EstablishmentController } from './establishment.controller';
+export { default as establishmentRoutes } from './establishment.routes';

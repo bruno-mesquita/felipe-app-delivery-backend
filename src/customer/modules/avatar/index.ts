@@ -1,1 +1,1 @@
-export { AvatarController } from './avatar-controller';
+export { default as avatarRoutes } from './avatar.routes';

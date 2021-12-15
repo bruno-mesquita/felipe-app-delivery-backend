@@ -1,4 +1,5 @@
 import axios, { AxiosInstance } from 'axios';
+import ApiError from './ApiError';
 
 type SendData = {
   targetId: number;
@@ -26,19 +27,17 @@ class Notification {
 
   async addListener(addListenerData: AddListenerData) {
     try {
-      await this.api.post('/push-tokens', addListenerData)
-      return true;
+      await this.api.post<AddListenerData>('/push-tokens', addListenerData)
     } catch (err) {
-      return false;
+      throw new ApiError('Erro ao cadastrar notificações');
     }
   }
 
   async send(data: SendData) {
     try {
-      await this.api.post('/notifications', data)
-      return true;
+      await this.api.post<SendData>('/notifications', data)
     } catch (err) {
-      return false;
+      throw new ApiError('Erro ao enviar notificação');
     }
   }
 }

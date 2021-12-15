@@ -8,9 +8,17 @@ import { Request, Response } from 'express';
 import { CreateOrderService } from './services/create-order-service/create-order.service';
 import { ShowOrderService } from './services/show-order-service/show-order.service';
 import { VerifyStatusOrderService } from './services/verify-status-order-service/verify-status-order.service';
-import { RateOrderService } from './services/rate-order.service';
+import Controller from '@shared/utils/controller';
 
-export class OrderController {
+class OrderController extends Controller {
+  constructor() {
+    super();
+
+    this.verify = this.verify.bind(this);
+    this.show = this.show.bind(this);
+    this.create = this.create.bind(this);
+  }
+
   async verify({ params }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
@@ -20,9 +28,9 @@ export class OrderController {
 
       if (!order) throw new Error(order.err);
 
-      return res.status(200).json(order);
+      return res.json(order);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -35,9 +43,9 @@ export class OrderController {
 
       if (order.err) throw new Error(order.err);
 
-      return res.status(200).json(order);
+      return res.json(order);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -51,23 +59,9 @@ export class OrderController {
 
       return res.status(201).json(order);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
-  }
-
-  async rateOrder({ body, client, params }: Request, res: Response): Promise<Response> {
-    try {
-      const { id } = params;
-
-      const rateOrderService = new RateOrderService();
-
-      const order = await rateOrderService.execute({ ...body, clientId: client.id, orderId: Number(id) });
-
-      if (order.err) throw new Error(order.err);
-
-      return res.json(order);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }
+
+export default OrderController;

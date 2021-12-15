@@ -1,1 +1,1 @@
-export { OrderController } from './order-controller';
+export { default as orderRoutes } from './order.routes';

@@ -1,8 +1,9 @@
 import { ServiceResponse } from '@shared/utils/service-response';
 import Client from '@core/client';
 import Image from '@core/image';
+import ApiError from '@shared/utils/ApiError';
 
-class FindOneAvatarClientClientService {
+export class FindOneAvatarClientService {
   async execute(userId: number): Promise<ServiceResponse<string | null>> {
     try {
       const client = await Client.findOne({
@@ -19,9 +20,9 @@ class FindOneAvatarClientClientService {
 
       return { result: client.avatar.getEncoded(), err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
-
-export { FindOneAvatarClientClientService };

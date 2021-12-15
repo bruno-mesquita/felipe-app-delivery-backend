@@ -1,22 +1,16 @@
 import Client from '@core/client';
 import Image from '@core/image';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { CreateAvatarDto } from '../create-avatar-dto';
-import { schema } from '../create-avatar-validation';
+import { ICreateAvatarDto } from '../dtos';
 
-class CreateAvatarClientService {
-  async execute(createAvatar: CreateAvatarDto): Promise<ServiceResponse<boolean | null>> {
+export class CreateAvatarClientService {
+  async execute(createAvatar: ICreateAvatarDto): Promise<ServiceResponse<boolean | null>> {
     try {
-      // Validar dados
-      const valid = schema.isValidSync(createAvatar);
-
-      if (!valid) throw new Error('[Avatar]: Parâmetros incompletos, verifique-os');
-
       // Verificando se o usuário existe
+      const client = await Client.findOne({ where: { id: createAvatar.clientId, active: true } });
 
-      const client = await Client.findOne({ where: { id: createAvatar.client_id, active: true } });
-
-      if (!client) throw new Error('[Avatar]: Usuário não econtrado.');
+      if (!client) throw new ApiError('Usuário não econtrado.');
 
       if (client.getAvatarId()) {
         const clientAvatar = await client.getAvatar({ attributes: ['name', 'encoded', 'id'] });
@@ -38,9 +32,9 @@ class CreateAvatarClientService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
-
-export { CreateAvatarClientService };

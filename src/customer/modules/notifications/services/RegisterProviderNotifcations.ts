@@ -1,8 +1,8 @@
+import ApiError from '@shared/utils/ApiError';
 import Notification from '@shared/utils/Notification';
-import { ServiceResponse } from '@shared/utils/service-response';
 
 export class RegisterProviderNotification {
-  async execute(pushToken: string, clientId: number): Promise<ServiceResponse<boolean>> {
+  async execute(pushToken: string, clientId: number): Promise<void> {
     try {
       const notification = new Notification();
 
@@ -11,10 +11,10 @@ export class RegisterProviderNotification {
         token: pushToken,
         type: 'Client'
       });
-
-      return { result: true, err: null };
     } catch (err) {
-      return { err: 'Erro ao registrar push notification', result: false }
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 };

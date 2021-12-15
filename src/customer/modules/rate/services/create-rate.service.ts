@@ -1,10 +1,11 @@
 import Evaluation from '@core/evaluation';
 import Order from '@core/order';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { RateOrderDto } from '../dtos/rate-order.dto';
+import { ICreateRateDto } from '../dtos';
 
-export class RateOrderService {
-  async execute({ value, message, orderId, clientId }: RateOrderDto): Promise<ServiceResponse<boolean>> {
+export class CreateRateService {
+  async execute({ value, message, orderId, clientId }: ICreateRateDto): Promise<ServiceResponse<boolean>> {
     try {
       const order = await Order.findOne({
         where: { id: orderId, client_id: clientId },
@@ -23,7 +24,9 @@ export class RateOrderService {
 
       return { err: null, result: true };
     } catch (err) {
-      return { err: err.message, result: false };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
