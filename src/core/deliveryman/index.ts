@@ -7,6 +7,7 @@ export class Deliveryman extends Model {
   cellphone: string;
   entry_date: string;
   departure_date: string;
+  city_id: number;
 
   static start(sequelize: Sequelize) {
     this.init({
@@ -17,6 +18,10 @@ export class Deliveryman extends Model {
     }, { sequelize, tableName: 'deliveryman' });
 
     return this;
+  }
+
+  static associate({ City }) {
+    this.belongsTo(City, { foreignKey: 'city_id', as: 'city' });
   }
 
   public getName(): string {
@@ -49,5 +54,9 @@ export class Deliveryman extends Model {
 
   public setDepartureDate(departureDate: string): void {
     this.set('departure_date', departureDate);
+  }
+
+  public setCityId(cityId: number): void {
+    this.set('city_id', cityId);
   }
 }
