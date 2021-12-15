@@ -30,9 +30,9 @@ export class DeliverymanController extends Controller  {
 
       const createDeliverymanService = new CreateDeliverymanService();
 
-      await createDeliverymanService.execute(values);
+      const response = await createDeliverymanService.execute(values);
 
-      return res.status(201).json({});
+      return res.status(201).json(response);
     } catch (err) {
       return this.requestError(err, res);
     }
