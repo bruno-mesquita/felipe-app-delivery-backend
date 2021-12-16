@@ -133,7 +133,7 @@ class ClientController extends Controller {
 
   async listOrdersByClient({ client, query }: Request, res: Response): Promise<Response> {
     try {
-      const values = listOrdersClientValidate({ clientId: client.id, page: Number(query.page) });
+      const values = listOrdersClientValidate({ clientId: client.id, page: Number(query.page) || 0 });
 
       const listOrdersService = new ListOrdersService();
 

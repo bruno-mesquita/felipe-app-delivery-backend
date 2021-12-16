@@ -29,7 +29,7 @@ class Notification {
     try {
       await this.api.post<AddListenerData>('/push-tokens', addListenerData)
     } catch (err) {
-      throw new ApiError('Erro ao cadastrar notificações');
+      // throw new ApiError('Erro ao cadastrar notificações');
     }
   }
 
@@ -37,7 +37,7 @@ class Notification {
     try {
       await this.api.post<SendData>('/notifications', data)
     } catch (err) {
-      throw new ApiError('Erro ao enviar notificação');
+      // throw new ApiError('Erro ao enviar notificação');
     }
   }
 }

@@ -53,11 +53,9 @@ class OrderController extends Controller {
     try {
       const createOrderService = new CreateOrderService();
 
-      const order = await createOrderService.execute({ ...body, client_id: client.id });
+      const response = await createOrderService.execute({ ...body, client_id: client.id });
 
-      if (order.err) throw new Error(order.err);
-
-      return res.status(201).json(order);
+      return res.status(201).json(response);
     } catch (err) {
       return this.requestError(err, res);
     }

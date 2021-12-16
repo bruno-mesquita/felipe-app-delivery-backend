@@ -109,10 +109,8 @@ export class CreateOrderService {
         }
       });
 
-      return { result: order.id, err: null };
+      return { result: order.getId(), err: null };
     } catch (err) {
-      console.log(err);
-
       return { result: null, err: err.message };
     }
   }
