@@ -4,9 +4,10 @@ import Establishment from "@core/establishment";
 import AddressEstablishment from "@core/address-establishment";
 import City from "@core/city";
 import State from "@core/state";
+import ApiError from "@shared/utils/ApiError";
 
 export class ShowOwnerEstablishmentService {
-  async execute(establishmentId: number): Promise<ServiceResponse<EstablishmentOwner>> {
+  async execute(establishmentId: number): Promise<EstablishmentOwner> {
     try {
       const ownerEstablishment = await EstablishmentOwner.findOne({
         attributes: ['id', 'first_name', 'last_name'],
@@ -41,11 +42,13 @@ export class ShowOwnerEstablishmentService {
         ],
       });
 
-      if (!ownerEstablishment) throw new Error('Estabelecimento não encontrado');
+      if (!ownerEstablishment) throw new ApiError('Estabelecimento não encontrado');
 
-      return { result: ownerEstablishment, err: null };
+      return ownerEstablishment;
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     };
   };
 };

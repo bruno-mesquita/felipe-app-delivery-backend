@@ -1,15 +1,14 @@
 import { Router } from 'express';
 
-import isAuthenticated from '@shared/middlewares/is-authenticated';
-import { accessCityManager } from '@shared/middlewares/access-city-manager';
+import middlewares from '../../http/middlewares';
 import { EstablishmentOwnerController } from './establishment-owner.controller';
 
 const routes = Router();
 const establishmentOwnerController = new EstablishmentOwnerController();
 
-routes.post('/establishment-owners', isAuthenticated, accessCityManager, establishmentOwnerController.create);
-routes.get('/establishment-owners', isAuthenticated, accessCityManager, establishmentOwnerController.list);
-routes.get('/establishment-owners/:id', isAuthenticated, accessCityManager, establishmentOwnerController.show);
-routes.put('/establishment-owners/:id', isAuthenticated, accessCityManager, establishmentOwnerController.update);
+routes.post('/establishment-owners', ...middlewares, establishmentOwnerController.create);
+routes.get('/establishment-owners', ...middlewares, establishmentOwnerController.list);
+routes.get('/establishment-owners/:id', ...middlewares, establishmentOwnerController.show);
+routes.put('/establishment-owners/:id', ...middlewares, establishmentOwnerController.update);
 
 export default routes;

@@ -1,16 +1,16 @@
 import { Op } from 'sequelize';
 
 import { EstablishmentOwner } from '@core/establishment-owner';
-import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateOwnerDto } from '../dtos/create-owner-dtos';
 import { schema } from '../validations/create-owner.validation';
+import ApiError from '@shared/utils/ApiError';
 
 export class CreateOwnerService {
-  async execute(createOwnerDto: CreateOwnerDto): Promise<ServiceResponse<boolean>> {
+  async execute(createOwnerDto: CreateOwnerDto): Promise<void> {
     try {
       const validation = schema.isValidSync(createOwnerDto);
 
-      if (!validation) throw new Error('Dados inválidos');
+      if (!validation) throw new ApiError('Dados inválidos');
 
       const ownerExist = await EstablishmentOwner.findOne({
         where: {
@@ -21,7 +21,7 @@ export class CreateOwnerService {
         },
       });
 
-      if (ownerExist) throw new Error('Usuário já existente no sistema');
+      if (ownerExist) throw new ApiError('Usuário já existente no sistema');
 
       const owner = new EstablishmentOwner({
         ...createOwnerDto,
@@ -32,10 +32,10 @@ export class CreateOwnerService {
       owner.hashPassword();
 
       await owner.save();
-
-      return { result: true, err: null };
     } catch (err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     };
   };
 };

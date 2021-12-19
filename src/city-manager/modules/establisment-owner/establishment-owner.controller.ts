@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 
+import Controller from '@shared/utils/controller';
 import {
   CreateOwnerService,
   ListOwnerService,
@@ -7,59 +8,47 @@ import {
   UpdateOwnerService,
 } from './services';
 
-export class EstablishmentOwnerController {
-  async list(_: Request, res: Response): Promise<Response> {
-    try {
-      const listOwnerService = new ListOwnerService();
+export class EstablishmentOwnerController extends Controller {
+  private listOwnerService: ListOwnerService;
+  private showOwnerEstablishmentService: ShowOwnerEstablishmentService;
+  private createOwnerService: CreateOwnerService;
+  private updateOwnerService: UpdateOwnerService;
 
-      const result = await listOwnerService.execute();
+  constructor() {
+    super();
 
-      if(result.err) throw new Error(result.err);
+    this.listOwnerService = new ListOwnerService();
+    this.showOwnerEstablishmentService = new ShowOwnerEstablishmentService();
+    this.createOwnerService = new CreateOwnerService();
+    this.updateOwnerService = new UpdateOwnerService();
 
-      return res.status(200).json(result);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
+    this.list = this.list.bind(this);
+    this.show = this.show.bind(this);
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+  }
+
+  list(_: Request, res: Response): Promise<Response> {
+    return this.listOwnerService.execute()
+      .then(response => res.json(response))
+      .catch(err => this.requestError(err, res));
   };
 
-  async show({ params }: Request, res: Response): Promise<Response> {
-    try {
-      const { id } = params;
-      const showOwnerEstablishment = new ShowOwnerEstablishmentService();
-
-      const result = await showOwnerEstablishment.execute(Number(id));
-
-      if(result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
+  show({ params }: Request, res: Response): Promise<Response> {
+    return this.showOwnerEstablishmentService.execute(Number(params.id))
+      .then(response => res.json(response))
+      .catch(err => this.requestError(err, res));
   };
 
-  async create({ body, client }: Request, res: Response): Promise<Response> {
-    try {
-      const createOwnerService = new CreateOwnerService();
-
-      const result = await createOwnerService.execute({ ...body, created_by_id: client.id });
-
-      if(result.err) throw new Error(result.err);
-
-      return res.status(201).json(result);
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
+  create({ body, client }: Request, res: Response): Promise<Response> {
+    return this.createOwnerService.execute({ ...body, created_by_id: client.id })
+      .then(response => res.status(201).json(response))
+      .catch(err => this.requestError(err, res));
   };
 
-  async update({ body }: Request, res: Response): Promise<Response> {
-    try {
-      const updateOwnerService = new UpdateOwnerService();
-
-      await updateOwnerService.execute(body);
-
-      return res.status(204).json();
-    } catch (err) {
-      return res.status(400).json({ err: err.message });
-    }
+  update({ body }: Request, res: Response): Promise<Response> {
+    return this.updateOwnerService.execute(body)
+      .then(response => res.status(201).json(response))
+      .catch(err => this.requestError(err, res));
   };
 };

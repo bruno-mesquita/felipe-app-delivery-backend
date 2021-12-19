@@ -1,12 +1,11 @@
-import { ServiceResponse } from "@shared/utils/service-response";
 import { EstablishmentOwner } from "@core/establishment-owner";
 import Establishment from "@core/establishment";
-import AddressEstablishment from "@core/address-establishment";
+import ApiError from "@shared/utils/ApiError";
 
 export class ListOwnerService {
-  async execute(): Promise<ServiceResponse<EstablishmentOwner[]>> {
+  async execute(): Promise<EstablishmentOwner[]> {
     try {
-      const owner = await EstablishmentOwner.findAll({
+      return await EstablishmentOwner.findAll({
         attributes: ['id', 'first_name', 'last_name', 'cellphone', 'active', 'email'],
         include: [
           {
@@ -16,10 +15,10 @@ export class ListOwnerService {
           },
         ],
       });
-
-      return { result: owner, err: null };
     } catch (err) {
-      return { result: [], err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     };
   };
 };

@@ -1,26 +1,32 @@
-import { ServiceResponse } from "@shared/utils/service-response";
 import TokenManager from "@shared/utils/token-manager";
 import CityManager from '@core/city-manager';
+import ApiError from "@shared/utils/ApiError";
+
+import { IRefreshTokenDto } from '../dtos';
 
 export class RefreshTokenService {
-  async execute(token: string): Promise<ServiceResponse<string | null>> {
-    try {
-      const tokenManager = new TokenManager();
+  private tokenManager: TokenManager;
 
-      const clientId = tokenManager.check(token);
+  constructor() {
+    this.tokenManager = new TokenManager();
+  }
+
+  async execute({ token }: IRefreshTokenDto): Promise<string> {
+    try {
+      const payload = this.tokenManager.check(token);
 
       const cityManager = await CityManager.findOne({
-        where: { id: clientId.id },
+        where: { id: payload.id },
         attributes: ['id'],
       });
 
-      if (!cityManager) throw new Error('Cliente não encontrado');
+      if (!cityManager) throw new ApiError('Cliente não encontrado', 'auth', 401);
 
-      const accessToken = tokenManager.createRefreshToken(cityManager.id);
-
-      return { result: accessToken, err: null };
+      return this.tokenManager.createRefreshToken(cityManager.getId());
     } catch (err) {
-      return { result: null, err: "Token inválido" };
+      ApiError.verifyType(err)
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

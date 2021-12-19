@@ -1,5 +1,3 @@
-import { ServiceResponse } from "@shared/utils/service-response";
-import { EstablishmentOwner } from "@core/establishment-owner";
 import Establishment from "@core/establishment";
 import ApiError from "@shared/utils/ApiError";
 
@@ -32,7 +30,7 @@ export class UpdateOwnerService {
     } catch (err) {
       ApiError.verifyType(err);
 
-      throw new ApiError('Erro desconhecido', 'unknown');
+      throw ApiError.generateErrorUnknown();
     };
   };
 };

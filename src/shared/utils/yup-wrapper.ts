@@ -1,4 +1,5 @@
 import type { SchemaOf } from 'yup';
+
 import ApiError from './ApiError';
 
 const yupWrapper = <T>(schema: SchemaOf<T>) => (values: T): T => {
