@@ -1,19 +1,18 @@
-import { ServiceResponse } from "@shared/utils/service-response";
 import TokenManager from "@shared/utils/token-manager";
-import Establishment from "@core/establishment";
 import ApiError from "@shared/utils/ApiError";
+import { EstablishmentOwner } from "@core/establishment-owner";
 
-export class RefrishTokenService {
-  async execute(token: string): Promise<ServiceResponse<any>> {
+export class RefreshTokenService {
+  async execute(token: string): Promise<{ token: string; refreshToken: string }> {
     try {
       const tokenManager = new TokenManager();
 
-      const clientId = tokenManager.check(token);
+      const payload = tokenManager.check(token);
 
-      if(!clientId) throw new ApiError('Token invalido');
+      if(!payload) throw new ApiError('Token invalido');
 
-      const client = await Establishment.findOne({
-        where: { id: clientId.id },
+      const client = await EstablishmentOwner.findOne({
+        where: { id: payload.id },
         attributes: ['id'],
       });
 
@@ -22,7 +21,7 @@ export class RefrishTokenService {
       const refreshToken = tokenManager.createRefreshToken(client.getId());
       const accessToken = tokenManager.create(client.getId());
 
-      return { result: { accessToken, refreshToken  }, err: null };
+      return { token: accessToken, refreshToken };
     } catch (err) {
       ApiError.verifyType(err);
 

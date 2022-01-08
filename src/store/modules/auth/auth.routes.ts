@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { AuthEstablishmentController } from './auth-login-controller';
+import { AuthEstablishmentController } from './auth.controller';
 
 const routes = Router();
 const authEstablishmentController = new AuthEstablishmentController();
