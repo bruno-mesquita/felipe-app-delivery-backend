@@ -11,7 +11,7 @@ export class RefreshTokenService {
     this.tokenManager = new TokenManager();
   }
 
-  async execute({ token }: IRefreshTokenDto): Promise<string> {
+  async execute({ token }: IRefreshTokenDto): Promise<any> {
     try {
       const payload = this.tokenManager.check(token);
 
@@ -22,7 +22,7 @@ export class RefreshTokenService {
 
       if (!cityManager) throw new ApiError('Cliente não encontrado', 'auth', 401);
 
-      return this.tokenManager.createRefreshToken(cityManager.getId());
+      return this.tokenManager.create(cityManager.getId());
     } catch (err) {
       ApiError.verifyType(err)
 

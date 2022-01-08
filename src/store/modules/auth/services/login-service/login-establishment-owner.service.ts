@@ -25,10 +25,7 @@ export class LoginEstablishmentOwnerService {
 
       if (!owner.comparePassword(loginEstablishment.password)) throw new ApiError('Credenciais inválidas.');
 
-      const token = this.tokenManager.create(owner.getId());
-      const refreshToken = this.tokenManager.createRefreshToken(owner.getId());
-
-      return { token, refreshToken };
+      return this.tokenManager.create(owner.getId());
     } catch (err) {
       ApiError.verifyType(err);
 

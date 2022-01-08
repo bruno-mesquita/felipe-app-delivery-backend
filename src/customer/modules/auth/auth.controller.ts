@@ -44,7 +44,9 @@ class AuthController extends Controller {
     try {
       const sanitizedValues = loginValidate(body);
 
-      return res.json(await this.loginClientService.execute(sanitizedValues));
+      const tokens = await this.loginClientService.execute(sanitizedValues);
+
+      return res.json({ result: tokens });
     } catch (err) {
       return this.requestError(err, res);
     }

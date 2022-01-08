@@ -5,22 +5,30 @@
  */
 
 import { verify, sign } from 'jsonwebtoken';
+import ApiError from '../ApiError';
 
 class TokenManager {
   public check(token: string): { id: number } | null {
     try {
-      return verify(token, process.env.JWT_PASS) as { id: number };
+      const {  JWT_PASS } = process.env;
+
+      return verify(token, JWT_PASS) as { id: number };
     } catch {
-      return null;
+      throw new ApiError('Token invalido', 'auth', 401);
     }
   }
 
-  public create(id: number): string {
-    return sign({ id }, process.env.JWT_PASS, { expiresIn: process.env.JWT_EXPIRES });
-  }
+  public create(id: number): { token: string; refreshToken: string; } {
+    try {
+      const { JWT_EXPIRES, JWT_REFRESH_EXPIRES, JWT_PASS } = process.env;
 
-  public createRefreshToken(id: number): string {
-    return sign({ id }, process.env.JWT_PASS, { expiresIn: process.env.JWT_REFRESH_EXPIRES });
+      const token = sign({ id }, JWT_PASS, { expiresIn: JWT_EXPIRES });
+      const refreshToken = sign({ id }, JWT_PASS, { expiresIn: JWT_REFRESH_EXPIRES });
+
+    return { token, refreshToken }
+    } catch (err) {
+      throw new ApiError('Erro ao criar token de acesso', 'internal', 500);
+    }
   }
 }
 

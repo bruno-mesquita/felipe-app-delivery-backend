@@ -6,6 +6,6 @@ const routes = Router();
 const addressStateController = new AddressStateController();
 
 routes.get('/states', addressStateController.listState);
-routes.get('/cities/:state_id', addressStateController.listCitiesByState);
+routes.get('/cities/:stateId', addressStateController.listCitiesByState);
 
 export default routes;

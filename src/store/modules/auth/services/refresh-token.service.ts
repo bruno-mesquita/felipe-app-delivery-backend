@@ -3,13 +3,15 @@ import ApiError from "@shared/utils/ApiError";
 import { EstablishmentOwner } from "@core/establishment-owner";
 
 export class RefreshTokenService {
+  private tokenManager: TokenManager;
+
+  constructor () {
+    this.tokenManager = new TokenManager();
+  }
+
   async execute(token: string): Promise<{ token: string; refreshToken: string }> {
     try {
-      const tokenManager = new TokenManager();
-
-      const payload = tokenManager.check(token);
-
-      if(!payload) throw new ApiError('Token invalido');
+      const payload = this.tokenManager.check(token);
 
       const client = await EstablishmentOwner.findOne({
         where: { id: payload.id },
@@ -18,10 +20,7 @@ export class RefreshTokenService {
 
       if (!client) throw new ApiError('Cliente não encontrado');
 
-      const refreshToken = tokenManager.createRefreshToken(client.getId());
-      const accessToken = tokenManager.create(client.getId());
-
-      return { token: accessToken, refreshToken };
+      return this.tokenManager.create(client.getId());
     } catch (err) {
       ApiError.verifyType(err);
 

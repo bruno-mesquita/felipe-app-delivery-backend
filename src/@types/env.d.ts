@@ -9,8 +9,8 @@ declare global {
       PORT_AGIOTA: number;
 
       JWT_PASS: string;
-      JWT_EXPIRES: string;
-      JWT_REFRESH_EXPIRES: string;
+      JWT_EXPIRES: number;
+      JWT_REFRESH_EXPIRES: number;
 
       DB_TYPE: Dialect;
       DB_PASS: string;

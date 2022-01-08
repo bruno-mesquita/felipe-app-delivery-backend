@@ -1,16 +1,15 @@
 import State from '@core/state';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 
-class ListStatesService {
+export class ListStatesService {
   async execute(): Promise<ServiceResponse<State[]>> {
     try {
       const states = await State.findAll({ where: { active: true }, attributes: ['name', 'id'] });
 
       return { result: states, err: null };
     } catch (err) {
-      return { result: [], err: 'Erro ao buscar os estados' };
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
-
-export { ListStatesService };

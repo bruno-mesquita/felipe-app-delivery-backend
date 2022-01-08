@@ -1,17 +1,26 @@
 import { Request, Response } from 'express';
 
+import Controller from '@shared/utils/controller';
 import { ListCategoriesService } from './services';
 
-export class CategoryController {
+export class CategoryController extends Controller {
+  private listCategoriesService: ListCategoriesService;
+
+  constructor() {
+    super();
+
+    this.listCategoriesService = new ListCategoriesService();
+
+    this.list = this.list.bind(this);
+  }
+
   async list(_: Request, res: Response): Promise<Response> {
     try {
-      const listCategoriesService = new ListCategoriesService();
+      const result = await this.listCategoriesService.execute();
 
-      const categories = await listCategoriesService.execute();
-
-      return res.json(categories);
+      return res.json(result);
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }

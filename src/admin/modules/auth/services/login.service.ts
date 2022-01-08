@@ -29,14 +29,7 @@ class LoginClientService {
 
       if (!client.comparePassword(loginDto.password)) throw new ApiError('Credenciais inválidas');
 
-      // Criando token
-      const token = tokenManager.create(client.getId());
-
-      const refreshToken = tokenManager.createRefreshToken(client.getId());
-
-      const accessToken = { token, refreshToken };
-
-      return accessToken;
+      return tokenManager.create(client.getId());
     } catch (err) {
       ApiError.verifyType(err);
 

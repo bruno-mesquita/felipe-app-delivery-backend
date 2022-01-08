@@ -1,7 +1,8 @@
 import City from '@core/city';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 
-class ListCitiesByStatesService {
+export class ListCitiesByStatesService {
   async execute(state_id: string): Promise<ServiceResponse<any[]>> {
     try {
       const result = await City.findAll({
@@ -13,9 +14,7 @@ class ListCitiesByStatesService {
 
       return { result, err: null };
     } catch (err) {
-      return { result: [], err: err.message };
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
-
-export { ListCitiesByStatesService };

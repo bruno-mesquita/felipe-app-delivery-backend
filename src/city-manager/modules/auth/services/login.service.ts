@@ -24,12 +24,7 @@ export class LoginCityManagerService {
 
       if (!cityManager.comparePassword(loginDto.password)) throw new ApiError('Credenciais inválidas', 'auth', 401);
 
-      // Criando token
-      const token = this.tokenManager.create(cityManager.getId());
-      const refreshToken = this.tokenManager.createRefreshToken(cityManager.getId());
-
-
-      return { token, refreshToken };
+      return this.tokenManager.create(cityManager.getId());
     } catch (err) {
       ApiError.verifyType(err);
 

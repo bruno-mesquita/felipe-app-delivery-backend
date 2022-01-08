@@ -5,7 +5,6 @@
  */
 
 import Client from '@core/client';
-import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import ApiError from '@shared/utils/ApiError';
 
@@ -17,10 +16,14 @@ interface Response {
 }
 
 export class LoginClientService {
-  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<Response>> {
-    try {
-      const tokenManager = new TokenManager();
+  private tokenManager: TokenManager;
 
+  constructor () {
+    this.tokenManager = new TokenManager();
+  }
+
+  async execute(loginDto: LoginClientDto): Promise<Response> {
+    try {
       // Procurar pelo e-mail e pegar o avatar desse cliente
       const client = await Client.findOne({
         where: { email: loginDto.email, active: true },
@@ -34,15 +37,7 @@ export class LoginClientService {
         throw new ApiError('Credenciais inválidas', 'auth', 401);
       }
 
-      const clientId = client.getId();
-
-      // Criando token
-      const token = tokenManager.create(clientId);
-      const refreshToken = tokenManager.createRefreshToken(clientId);
-
-      return {
-        result: { token, refreshToken }, err: null,
-      };
+      return this.tokenManager.create(client.getId());
     } catch (err) {
       ApiError.verifyType(err);
 
