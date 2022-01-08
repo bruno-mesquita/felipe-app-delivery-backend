@@ -1,3 +1,4 @@
+import Controller from '@shared/utils/controller';
 import { Request, Response } from 'express';
 import {
   CreateAnnouncementService,
@@ -7,78 +8,74 @@ import {
   DeleteAnnouncementService
 } from './services';
 
-export class AnnouncementController {
+export class AnnouncementController extends Controller {
+  private readonly createAnnouncementService: CreateAnnouncementService;
+  private readonly showAnnouncementService: ShowAnnouncementService;
+  private readonly listAnnouncementService: ListAnnouncementService;
+  private readonly updateProductService: UpdateProductService;
+  private readonly deleteAnnouncementService: DeleteAnnouncementService;
+
+  constructor() {
+    super();
+
+    this.createAnnouncementService = new CreateAnnouncementService();
+    this.showAnnouncementService = new ShowAnnouncementService();
+    this.listAnnouncementService = new ListAnnouncementService();
+    this.updateProductService = new UpdateProductService();
+    this.deleteAnnouncementService = new DeleteAnnouncementService();
+
+    this.create = this.create.bind(this);
+    this.show = this.show.bind(this);
+    this.list = this.list.bind(this);
+    this.update = this.update.bind(this);
+    this.delete = this.delete.bind(this);
+  }
+
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
-      const createAnnouncement = new CreateAnnouncementService();
-
-      const announcement = await createAnnouncement.execute(body);
-
-      if (announcement.err) throw new Error(announcement.err);
-
-      return res.status(201).json(announcement);
+      return res.status(201).json(await this.createAnnouncementService.execute(body));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async show({ params }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
-      const showAnnouncement = new ShowAnnouncementService();
 
-      const announcement = await showAnnouncement.execute(Number(id));
-
-      if (announcement.err) throw new Error(announcement.err);
-
-      return res.status(200).json(announcement);
+      return res.json(await this.showAnnouncementService.execute(Number(id)));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async list(_: Request, res: Response): Promise<Response> {
     try {
-      const listAnnouncement = new ListAnnouncementService();
-
-      const announcement = await listAnnouncement.execute();
-
-      if (announcement.err) throw new Error(announcement.err);
-
-      return res.status(200).json(announcement);
+      return res.json(await this.listAnnouncementService.execute());
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async update({ params, body }: Request, res: Response): Promise<Response> {
     try {
-      const updateProductService = new UpdateProductService();
-
       const id = Number(params.id);
 
-      const { err } = await updateProductService.execute({ ...body, id });
+      await this.updateProductService.execute({ ...body, id });
 
-      if(err) throw new Error();
-
-      return res.status(200).json();
+      return res.json();
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async delete({ params }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
-      const deleteAnnouncement = new DeleteAnnouncementService();
 
-      const announcement = await deleteAnnouncement.execute(Number(id));
-
-      if (announcement.err) throw new Error(announcement.err);
-
-      return res.status(200).json(announcement);
+      return res.json(await this.deleteAnnouncementService.execute(Number(id)));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }

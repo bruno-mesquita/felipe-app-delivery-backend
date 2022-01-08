@@ -1,7 +1,8 @@
-import { ServiceResponse } from '@utils/service-response';
+import { ServiceResponse } from '@shared/utils/service-response';
 import CityManager from '@core/city-manager';
 import City from '@core/city';
 import State from '@core/state';
+import ApiError from '@shared/utils/ApiError';
 
 export class ShowCityManagerService {
   async execute(id: number): Promise<ServiceResponse<CityManager>> {
@@ -23,11 +24,13 @@ export class ShowCityManagerService {
         ],
       });
 
-      if (!cityManager) throw new Error('Usuário não encontrado');
+      if (!cityManager) throw new ApiError('Usuário não encontrado');
 
       return { result: cityManager, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     };
   };
 };

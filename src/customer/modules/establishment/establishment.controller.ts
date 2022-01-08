@@ -1,21 +1,41 @@
 import { Request, Response } from 'express';
 
-import { ListEstablishmentService, FindOneEstablishmentService, SearchEstablishmentsByName, ListMenusByEstablishmentService } from './services';
+import Controller from '@shared/utils/controller';
 
-class EstablishmentController {
+import {
+  ListEstablishmentService,
+  FindOneEstablishmentService,
+  SearchEstablishmentsByName,
+  ListMenusByEstablishmentService
+} from './services';
+
+class EstablishmentController extends Controller {
+  private readonly listEstablishmentService: ListEstablishmentService;
+  private readonly findOneEstablishmentService: FindOneEstablishmentService;
+  private readonly searchEstablishmentsByName: SearchEstablishmentsByName;
+  private readonly listMenusByEstablishmentService: ListMenusByEstablishmentService;
+
+  constructor() {
+    super();
+
+    this.listEstablishmentService = new ListEstablishmentService();
+    this.findOneEstablishmentService = new FindOneEstablishmentService();
+    this.searchEstablishmentsByName = new SearchEstablishmentsByName();
+    this.listMenusByEstablishmentService = new ListMenusByEstablishmentService();
+
+    this.list = this.list.bind(this);
+    this.listMenus = this.listMenus.bind(this);
+    this.findOne = this.findOne.bind(this);
+    this.searchByName = this.searchByName.bind(this);
+  }
+
   async list({ query, client }: Request, res: Response): Promise<Response> {
     try {
       const { category, page = 0 }: any = query;
 
-      const listEstablishmentService = new ListEstablishmentService();
-
-      const response = await listEstablishmentService.execute(category, client.id, Number(page));
-
-      if(response.err) throw new Error(response.err);
-
-      return res.json(response);
+      return res.json(await this.listEstablishmentService.execute(category, client.id, Number(page)));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -23,15 +43,9 @@ class EstablishmentController {
     try {
       const { id }: any = params;
 
-      const listMenusByEstablishmentService = new ListMenusByEstablishmentService();
-
-      const response = await listMenusByEstablishmentService.execute(id);
-
-      if(response.err) throw new Error(response.err);
-
-      return res.json(response);
+      return res.json(await this.listMenusByEstablishmentService.execute(id));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -39,13 +53,9 @@ class EstablishmentController {
     try {
       const { id } = params;
 
-      const findOneEstablishmentService = new FindOneEstablishmentService();
-
-      const response = await findOneEstablishmentService.execute(Number(id));
-
-      return res.json(response);
+      return res.json(await this.findOneEstablishmentService.execute(Number(id)));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
@@ -53,15 +63,9 @@ class EstablishmentController {
     try {
       const { name, category } = query;
 
-      const searchEstablishmentsByName = new SearchEstablishmentsByName();
-
-      const response = await searchEstablishmentsByName.execute(name as string, category as string, client.id);
-
-      if (response.err) throw new Error(response.err);
-
-      return res.json(response);
+      return res.json(await this.searchEstablishmentsByName.execute(name as string, category as string, client.id));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }

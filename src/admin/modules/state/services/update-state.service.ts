@@ -3,7 +3,8 @@
  */
 
 import State from '@core/state';
-import { ServiceResponse } from '@utils/service-response';
+import ApiError from '@shared/utils/ApiError';
+import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateStateDto } from '../dtos/update-state-dto';
 import { schema } from '../validations/create-state.validation';
 
@@ -13,7 +14,7 @@ export class UpdateStateService {
       // Fazendo validação DTO
       const valid = schema.isValidSync(updateStateDto);
 
-      if (!valid) throw new Error('Dados inválidos');
+      if (!valid) throw new ApiError('Dados inválidos');
 
       // Verificando se o Estado já exite
 
@@ -21,7 +22,7 @@ export class UpdateStateService {
         where: { name: updateStateDto.name },
       });
 
-      if (!state) throw new Error('[ERRO]: Estado não existe no sistema!');
+      if (!state) throw new ApiError('[ERRO]: Estado não existe no sistema!');
 
       state.setActive(updateStateDto.active);
       state.setName(updateStateDto.name);
@@ -30,7 +31,9 @@ export class UpdateStateService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

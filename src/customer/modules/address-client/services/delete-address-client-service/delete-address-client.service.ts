@@ -1,4 +1,5 @@
 import AddressClient from '@core/address-client';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class DeleteAddressClientService {
@@ -6,13 +7,15 @@ export class DeleteAddressClientService {
     try {
       const addressClient = await AddressClient.findByPk(addressClientId);
 
-      if (!addressClient) throw new Error('Endereço não encontrado');
+      if (!addressClient) throw new ApiError('Endereço não encontrado');
 
       await addressClient.destroy();
 
       return { result: true, err: null };
     } catch (err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

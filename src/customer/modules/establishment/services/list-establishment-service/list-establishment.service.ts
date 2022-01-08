@@ -4,6 +4,7 @@ import Category from '@core/category';
 import Establishment from '@core/establishment';
 import EstablishmentCategory from '@core/establishment-category';
 import Image from '@core/image';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { usePage } from '@shared/utils/use-page';
 
@@ -14,14 +15,14 @@ class ListEstablishmentService {
 
       const category = await Category.findOne({ where: { name: categoryName } });
 
-      if(!category) throw new Error('Categoria não encontrada');
+      if(!category) throw new ApiError('Categoria não encontrada');
 
       const addressClient = await AddressClient.findOne({
         where: { client_id: clientId, active: true },
         attributes: ['id', 'city_id'],
       });
 
-      if(!addressClient) throw new Error('Endereço não encontrado');
+      if(!addressClient) throw new ApiError('Endereço não encontrado');
 
       const establishments = await Establishment.findAll({
         where: { active: true },
@@ -51,8 +52,9 @@ class ListEstablishmentService {
 
       return { result: establishments, err: null };
     } catch (err) {
+      ApiError.verifyType(err);
 
-      return { result: [], err: err.null };
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

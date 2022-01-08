@@ -1,6 +1,7 @@
 import Establishment from "@core/establishment";
 import { EstablishmentOwner } from "@core/establishment-owner";
 import Image from "@core/image";
+import ApiError from "@shared/utils/ApiError";
 import { ServiceResponse } from "@shared/utils/service-response";
 import { UpdateImageDto } from "../dtos/update-image.dto";
 import imageUpdateValidation from '../validation/update-image.validation';
@@ -10,7 +11,7 @@ export class UpdateImageService {
     try {
       const valid = imageUpdateValidation.isValidSync(updateImageDto);
 
-      if (!valid) throw new Error('Dados inválidos');
+      if (!valid) throw new ApiError('Dados inválidos');
 
       const owner = await EstablishmentOwner.findOne({
         where: { id: updateImageDto.onwerId },
@@ -28,7 +29,7 @@ export class UpdateImageService {
         }],
       });
 
-      if (!owner) throw new Error('Estabelecimento não encontrado');
+      if (!owner) throw new ApiError('Estabelecimento não encontrado');
 
       const { encoded } = updateImageDto;
 
@@ -38,7 +39,9 @@ export class UpdateImageService {
 
       return { result: true, err: null }
     } catch(err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   };
 }

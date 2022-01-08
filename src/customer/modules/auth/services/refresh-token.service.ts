@@ -15,14 +15,14 @@ export class RefreshTokenService {
 
       const payload = tokenManager.check(token);
 
-      if(!payload) throw new Error('Payload não existente');
+      if(!payload) throw new ApiError('Payload não existente');
 
       const client = await Client.findOne({
         where: { id: payload.id },
         attributes: ['id'],
       });
 
-      if (!client) throw new Error('Cliente não encontrado');
+      if (!client) throw new ApiError('Cliente não encontrado');
 
       const refreshToken = tokenManager.createRefreshToken(client.getId());
       const accessToken = tokenManager.create(client.getId());

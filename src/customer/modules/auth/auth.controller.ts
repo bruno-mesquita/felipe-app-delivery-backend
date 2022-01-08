@@ -18,8 +18,20 @@ import {
  } from './validation';
 
 class AuthController extends Controller {
+  private readonly loginClientService: LoginClientService;
+  private readonly refreshTokenService: RefreshTokenService;
+  private readonly resetPasswordService: ResetPasswordService;
+  private readonly resendCodeService: ResendCodeService;
+  private readonly forgotPasswordService: ForgotPasswordService;
+
   constructor() {
     super();
+
+    this.loginClientService = new LoginClientService();
+    this.refreshTokenService = new RefreshTokenService();
+    this.resetPasswordService = new ResetPasswordService();
+    this.resendCodeService = new ResendCodeService();
+    this.forgotPasswordService = new ForgotPasswordService();
 
     this.login = this.login.bind(this);
     this.refreshToken = this.refreshToken.bind(this);
@@ -32,11 +44,7 @@ class AuthController extends Controller {
     try {
       const sanitizedValues = loginValidate(body);
 
-      const loginService = new LoginClientService();
-
-      const response = await loginService.execute(sanitizedValues);
-
-      return res.json(response);
+      return res.json(await this.loginClientService.execute(sanitizedValues));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -44,13 +52,7 @@ class AuthController extends Controller {
 
   async refreshToken({ body }: Request, res: Response): Promise<Response> {
     try {
-      const refreshTokenService = new RefreshTokenService();
-
-      const response = await refreshTokenService.execute(body.refreshToken);
-
-      if (response.err) throw new Error(response.err);
-
-      return res.json(response);
+      return res.json(await this.refreshTokenService.execute(body.refreshToken));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -60,9 +62,7 @@ class AuthController extends Controller {
     try {
       const sanitizedValues = forgotPasswordValidate(body);
 
-      const forgotPasswordService = new ForgotPasswordService();
-
-      await forgotPasswordService.execute(sanitizedValues);
+      await this.forgotPasswordService.execute(sanitizedValues);
 
       return res.status(204).json();
     } catch (err) {
@@ -74,9 +74,7 @@ class AuthController extends Controller {
     try {
       const sanitizedValues = resetPasswordValidate(body);
 
-      const resetPasswordService = new ResetPasswordService();
-
-      await resetPasswordService.execute(sanitizedValues);
+      await this.resetPasswordService.execute(sanitizedValues);
 
       return res.status(204).json();
     } catch (err) {
@@ -88,9 +86,7 @@ class AuthController extends Controller {
     try {
       const sanitizedValues = resendCodeValidate(body);
 
-      const resendCodeService = new ResendCodeService();
-
-      await resendCodeService.execute(sanitizedValues);
+      await this.resendCodeService.execute(sanitizedValues);
 
       return res.status(204).json();
     } catch (err) {

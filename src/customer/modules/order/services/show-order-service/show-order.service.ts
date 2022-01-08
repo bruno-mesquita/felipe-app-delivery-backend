@@ -10,8 +10,9 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import Product from '@core/product';
 import Evaluation from '@core/evaluation';
 import AddressClient from '@core/address-client';
+import ApiError from '@shared/utils/ApiError';
 
-class ShowOrderService {
+export class ShowOrderService {
   async execute(id: number): Promise<ServiceResponse<any | null>> {
     try {
       const order = await Order.findOne({
@@ -36,7 +37,7 @@ class ShowOrderService {
         ]
       });
 
-      if (!order) throw new Error('Pedido não encontrado.');
+      if (!order) throw new ApiError('Pedido não encontrado.');
 
       const itemsOrder = await ItemOrder.findAll({
         where: { order_id: id },
@@ -52,9 +53,9 @@ class ShowOrderService {
 
       return { result: { order, items: itemsOrder }, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
-
-export { ShowOrderService };

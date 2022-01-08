@@ -1,21 +1,28 @@
+import Controller from '@shared/utils/controller';
 import { Request, Response } from 'express';
 
 import { ListDeliverymanService } from './services';
 
-export class DeliverymanController {
+export class DeliverymanController extends Controller {
+  private readonly listDeliverymanService: ListDeliverymanService;
+
+  constructor() {
+    super();
+
+    this.listDeliverymanService = new ListDeliverymanService();
+
+    this.list = this.list.bind(this);
+  }
+
   async list({ query }: Request, res: Response): Promise<Response> {
     try {
-      const listDeliverymanService = new ListDeliverymanService();
-
       const { page = 0 } = query;
 
-      const { err, result } = await listDeliverymanService.execute(Number(page) || 0);
-
-      if(err) throw new Error();
+      const { result } = await this.listDeliverymanService.execute(Number(page) || 0);
 
       return res.json({ result });
     } catch (err) {
-      return res.status(400).json({ err: 'Erro ao listar' });
+      return this.requestError(err, res);
     }
   }
 }

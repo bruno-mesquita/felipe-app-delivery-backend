@@ -8,6 +8,7 @@ import AddressEstablishment from '@core/address-establishment';
 import Category from '@core/category';
 import EstablishmetCategory from '@core/establishment-category';
 import { EstablishmentOwner } from '@core/establishment-owner';
+import ApiError from '@shared/utils/ApiError';
 
 export class CreateEstablishmentService {
   public async execute(createEstablishmentDto: CreateEstablishmentDto): Promise<ServiceResponse<Establishment | null>> {
@@ -15,19 +16,19 @@ export class CreateEstablishmentService {
       // validação
       const valid = createEstablishmentSchema.isValidSync(createEstablishmentDto);
 
-      if (!valid) throw new Error('Dados invalidos');
+      if (!valid) throw new ApiError('Dados invalidos');
 
       // Verificando se o celular já existe
       const establishmentExists = await Establishment.findOne({
         where: { cellphone: createEstablishmentDto.cellphone },
       });
 
-      if (establishmentExists) throw new Error('Celular já cadastrado no sistema');
+      if (establishmentExists) throw new ApiError('Celular já cadastrado no sistema');
 
       // Criar o endereço
       const city = await City.findByPk(createEstablishmentDto.address.city);
 
-      if (!city) throw new Error('Cidade não encontrada');
+      if (!city) throw new ApiError('Cidade não encontrada');
 
       const address = await AddressEstablishment.create({
         ...createEstablishmentDto.address,
@@ -53,7 +54,7 @@ export class CreateEstablishmentService {
       for await (const categoryId of categories) { // eslint-disable-line
         const category = await Category.findOne({ where: { id: categoryId } });
 
-        if (!category) throw new Error('Categoria não encontrada');
+        if (!category) throw new ApiError('Categoria não encontrada');
 
         await EstablishmetCategory.create({
           category_id: category.getId(),
@@ -63,7 +64,7 @@ export class CreateEstablishmentService {
 
       const owner = await EstablishmentOwner.findOne({ where: { active: true, id: createEstablishmentDto.userId } });
 
-      if(!owner) throw new Error('Dono não encontrado');
+      if(!owner) throw new ApiError('Dono não encontrado');
 
       owner.setEstablishmentId(establishment.getId());
 
@@ -71,7 +72,9 @@ export class CreateEstablishmentService {
 
       return { result: establishment, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

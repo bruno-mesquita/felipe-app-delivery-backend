@@ -11,7 +11,7 @@ export class CreateRateService {
         where: { id: orderId, client_id: clientId },
       })
 
-      if (!order) throw new Error('Pedido não encontrado');
+      if (!order) throw new ApiError('Pedido não encontrado');
 
       const evaluation = await Evaluation.create({
         value,

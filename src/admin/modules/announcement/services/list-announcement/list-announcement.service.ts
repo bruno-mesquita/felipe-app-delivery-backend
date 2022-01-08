@@ -1,5 +1,5 @@
 import { Announcement } from "@core/announcement";
-import { ServiceResponse } from "@utils/service-response";
+import { ServiceResponse } from "@shared/utils/service-response";
 
 export class ListAnnouncementService {
   async execute(): Promise<ServiceResponse<Announcement[]>> {

@@ -3,18 +3,17 @@
  */
 
 import State from '@core/state';
-import { ServiceResponse } from '@utils/service-response';
+import ApiError from '@shared/utils/ApiError';
 import { CreateStateADto } from '../dtos/create-state-dto';
 import { schema } from '../validations/create-state.validation';
 
-class CreateStateService {
-  async execute(createStateDto: CreateStateADto): Promise<ServiceResponse<number>> {
+export class CreateStateService {
+  async execute(createStateDto: CreateStateADto): Promise<any> {
     try {
       // Fazendo validação DTO
-
       const valid = schema.isValidSync(createStateDto);
 
-      if (!valid) throw new Error('[Erro: Estado] Por favor reveja seus dados');
+      if (!valid) throw new ApiError('[Erro: Estado] Por favor reveja seus dados');
 
       // Verificando se o Estado já exite
 
@@ -22,7 +21,7 @@ class CreateStateService {
         where: { name: createStateDto.name },
       });
 
-      if (stateExists) throw new Error('[ERRO]: Estado já existe no sistema!');
+      if (stateExists) throw new ApiError('[ERRO]: Estado já existe no sistema!');
 
       // criando classe
 
@@ -30,9 +29,9 @@ class CreateStateService {
 
       return { result: state.getId(), err: null };
     } catch (err) {
-      return { result: 0, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
-
-export { CreateStateService };

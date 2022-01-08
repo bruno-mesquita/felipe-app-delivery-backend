@@ -1,5 +1,6 @@
 import { ServiceResponse } from '@shared/utils/service-response';
 import { EstablishmentOwner } from '@core/establishment-owner';
+import ApiError from '@shared/utils/ApiError';
 
 
 export class ProfileOwnertService {
@@ -10,14 +11,16 @@ export class ProfileOwnertService {
         attributes: ['id'].concat(selects.filter(f => f !== 'passoword')),
       });
 
-      if(!owner) throw new Error('Estabelecimento não encontrado');
+      if(!owner) throw new ApiError('Estabelecimento não encontrado');
 
       return {
         result: owner,
         err: null,
       };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

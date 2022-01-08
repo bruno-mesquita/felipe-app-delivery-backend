@@ -1,63 +1,57 @@
+import Controller from '@shared/utils/controller';
 import { Request, Response } from 'express';
 
 import { CreateCityService, UpdateCityService, ListCitiesService, ListCitiesByStateService } from './services';
 
-class CityController {
+export class CityController extends Controller {
+  private readonly createCityService: CreateCityService;
+  private readonly updateCityService: UpdateCityService;
+  private readonly listCitiesService: ListCitiesService;
+  private readonly listCitiesByStateService: ListCitiesByStateService;
+
+  constructor() {
+    super();
+
+    this.createCityService = new CreateCityService();
+    this.updateCityService = new UpdateCityService();
+    this.listCitiesService = new ListCitiesService();
+    this.listCitiesByStateService = new ListCitiesByStateService();
+
+    this.create = this.create.bind(this);
+    this.update = this.update.bind(this);
+    this.list = this.list.bind(this);
+    this.listByState = this.listByState.bind(this);
+  }
+
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
-      const cityService = new CreateCityService();
-
-      const city = await cityService.execute(body);
-
-      if (city.err) throw new Error(city.err);
-
-      return res.status(201).json(city);
+      return res.status(201).json(await this.createCityService.execute(body));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      this.requestError(err, res);
     }
   }
 
   async update({ body, params }: Request, res: Response): Promise<Response> {
     try {
-      const updateCityService = new UpdateCityService();
-
-      const city = await updateCityService.execute({ ...body, id: params.id });
-
-      if (city.err) throw new Error(city.err);
-
-      return res.status(200).json(city);
+      return res.json(await this.updateCityService.execute({ ...body, id: params.id }));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      this.requestError(err, res);
     }
   }
 
   async list(_: Request, res: Response): Promise<Response> {
     try {
-      const listCitiesService = new ListCitiesService();
-
-      const result = await listCitiesService.execute();
-
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.listCitiesService.execute());
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      this.requestError(err, res);
     }
   }
 
   async listByState({ params }: Request, res: Response): Promise<Response> {
     try {
-      const listCitiesByStateService = new ListCitiesByStateService();
-
-      const result = await listCitiesByStateService.execute(params.stateId);
-
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.listCitiesByStateService.execute(params.stateId));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      this.requestError(err, res);
     }
   }
 }
-
-export { CityController };

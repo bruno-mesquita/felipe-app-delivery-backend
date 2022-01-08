@@ -1,6 +1,7 @@
 import Establishment from "@core/establishment";
 import EstablishmentCategory from "@core/establishment-category";
 import { EstablishmentOwner } from "@core/establishment-owner";
+import ApiError from "@shared/utils/ApiError";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 export class RemoveEstablishmentCategoryService {
@@ -17,7 +18,7 @@ export class RemoveEstablishmentCategoryService {
         }]
       });
 
-      if(!owner) throw new Error();
+      if(!owner) throw new ApiError('Erro ao remover');
 
       const establishmentCategory = await EstablishmentCategory.findOne({
         where: {
@@ -26,13 +27,15 @@ export class RemoveEstablishmentCategoryService {
         }
       });
 
-      if(!establishmentCategory) throw new Error();
+      if(!establishmentCategory) throw new ApiError('Erro ao remover');
 
       await establishmentCategory.destroy();
 
       return { result: true, err: null }
     } catch (err) {
-      return { err: 'Erro ao remover', result: false }
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 };

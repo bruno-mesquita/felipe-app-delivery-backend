@@ -1,47 +1,47 @@
+import Controller from '@shared/utils/controller';
 import { Request, Response } from 'express';
 import { CreateStateService, ListStatesService, UpdateStateService } from './services';
 
-export class StateController {
+export class StateController extends Controller {
+  private createStateService: CreateStateService;
+  private listStatesService: ListStatesService;
+  private updateStateService: UpdateStateService;
+
+  constructor() {
+    super();
+
+    this.createStateService = new CreateStateService();
+    this.listStatesService = new ListStatesService();
+    this.updateStateService = new UpdateStateService();
+
+    this.create = this.create.bind(this);
+    this.list = this.list.bind(this);
+    this.update = this.update.bind(this);
+  }
+
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
-      const stateService = new CreateStateService();
-
-      const state = await stateService.execute(body);
-
-      if (state.err) throw new Error(state.err);
-
-      return res.status(201).json(state);
+      return res.status(201).json(await this.createStateService.execute(body));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async list(_: Request, res: Response): Promise<Response> {
     try {
-      const listStates = new ListStatesService();
-
-      const states = await listStates.execute();
-
-      if (states.err) throw new Error(states.err);
-
-      return res.json(states);
+      return res.json(await this.listStatesService.execute());
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async update({ params, body }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
-      const updateStateService = new UpdateStateService();
 
-      const states = await updateStateService.execute({ ...body, id });
-
-      if (states.err) throw new Error(states.err);
-
-      return res.json(states);
+      return res.json(await this.updateStateService.execute({ ...body, id }));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }

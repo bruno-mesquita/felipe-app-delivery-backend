@@ -1,22 +1,22 @@
 import { Announcement } from '@core/announcement';
-import { ServiceResponse } from '@utils/service-response';
+import ApiError from '@shared/utils/ApiError';
 import { UpdateAnnouncementDto } from '../../dtos/update-announcement.dto';
 import { updateAnnouncementValidate } from '../../validations/update-announcement.validation';
 
 export class UpdateProductService {
-  async execute(updateAnnouncement: UpdateAnnouncementDto): Promise<ServiceResponse<boolean>> {
+  async execute(updateAnnouncement: UpdateAnnouncementDto): Promise<any> {
     try {
       // validando e fazendo verificações
 
       const valid = updateAnnouncementValidate.isValidSync(updateAnnouncement);
 
-      if (!valid) throw new Error('Dados inválidos');
+      if (!valid) throw new ApiError('Dados inválidos');
 
       const announcement = await Announcement.findOne({
         where: { id: updateAnnouncement.id },
       });
 
-      if (!announcement) throw new Error('Anúncio não encontrado.');
+      if (!announcement) throw new ApiError('Anúncio não encontrado.');
 
       // Editando classe e Salvando no DB
 
@@ -36,7 +36,9 @@ export class UpdateProductService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { err: err.message, result: null };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

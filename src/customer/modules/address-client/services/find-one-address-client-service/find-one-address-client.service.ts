@@ -1,6 +1,7 @@
 import AddressClient from '@core/address-client';
 import City from '@core/city';
 import State from '@core/state';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class FindOneAddressClientService {
@@ -23,7 +24,7 @@ export class FindOneAddressClientService {
         ]
       });
 
-      if(!address) throw new Error('Endereço não encontrado')
+      if(!address) throw new ApiError('Endereço não encontrado')
 
 
       const result: any = {};
@@ -41,7 +42,9 @@ export class FindOneAddressClientService {
 
       return { err: null, result };
     } catch (err) {
-      return { err: err.message, result: [] };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

@@ -1,4 +1,5 @@
 import { EstablishmentOwner } from '@core/establishment-owner';
+import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 import TokenManager from '@shared/utils/token-manager';
 import { LoginEstablishmentOwnerDto } from '../../dtos/login-establishment';
@@ -8,7 +9,7 @@ import loginValidation from '../../validation/login-establishment.validation';
 export class LoginEstablishmentOwnerService {
   async execute(loginEstablishment: LoginEstablishmentOwnerDto): Promise<ServiceResponse<IEstablishmentAuth | null>> {
     try {
-      if (!loginValidation.isValidSync(loginEstablishment)) throw new Error('Dados inválidos.');
+      if (!loginValidation.isValidSync(loginEstablishment)) throw new ApiError('Dados inválidos.');
 
       const tokenManager = new TokenManager();
 
@@ -17,16 +18,18 @@ export class LoginEstablishmentOwnerService {
         attributes: ['password', 'id']
       });
 
-      if (!owner) throw new Error('usuário não encontrado.');
+      if (!owner) throw new ApiError('usuário não encontrado.');
 
-      if (!owner.comparePassword(loginEstablishment.password)) throw new Error('Credenciais inválidas.');
+      if (!owner.comparePassword(loginEstablishment.password)) throw new ApiError('Credenciais inválidas.');
 
       const token = tokenManager.create(owner.getId());
       const refreshToken = tokenManager.createRefreshToken(owner.getId());
 
       return { result: { token, refreshToken }, err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

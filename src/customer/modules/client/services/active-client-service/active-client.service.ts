@@ -10,16 +10,20 @@ import SmsService from '@shared/utils/sms';
 import { IActiveClientDto } from '../../dtos';
 
 class ActiveClientService {
+  private readonly smsService: SmsService;
+
+  constructor() {
+    this.smsService = new SmsService();
+  }
+
   async execute({ code, userId }: IActiveClientDto): Promise<void> {
     try {
       // verificar se o usuário existe
       const user = await Client.findOne({ where: { id: userId, active: false } });
 
-      if (!user) throw new Error('Cliente não encontrado');
+      if (!user) throw new ApiError('Cliente não encontrado');
 
-      const smsService = new SmsService();
-
-      await smsService.verifyCode(user.getCellphone(), code);
+      await this.smsService.verifyCode(user.getCellphone(), code);
 
       user.activate();
 
@@ -27,7 +31,7 @@ class ActiveClientService {
     } catch (err) {
       ApiError.verifyType(err);
 
-      throw new ApiError('Erro ao ativar usuário, peça um novo código', 'unknown');
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

@@ -29,8 +29,27 @@ import {
 } from './validation';
 
 class ClientController extends Controller {
+  private readonly createClientService: CreateClientService;
+  private readonly activeClientService: ActiveClientService;
+  private readonly updateProfileService: UpdateProfileService;
+  private readonly updatePasswordClientService: UpdatePasswordClientService;
+  private readonly profileClientService: ProfileClientService;
+  private readonly listOrdersService: ListOrdersService;
+  private readonly deleteClientService: DeleteClientService;
+  private readonly deactiveteClientService: DeactiveteClientService;
+
   constructor() {
     super();
+
+    this.createClientService = new CreateClientService();
+    this.activeClientService = new ActiveClientService();
+    this.updateProfileService = new UpdateProfileService();
+    this.updatePasswordClientService = new UpdatePasswordClientService();
+    this.profileClientService = new ProfileClientService();
+    this.listOrdersService = new ListOrdersService();
+    this.deleteClientService = new DeleteClientService();
+    this.deactiveteClientService = new DeactiveteClientService();
+
     this.create = this.create.bind(this);
     this.activate = this.activate.bind(this);
     this.deactivate = this.deactivate.bind(this);
@@ -45,11 +64,7 @@ class ClientController extends Controller {
     try {
       const sanitizedBody = createClientValidate(body);
 
-      const createClientService = new CreateClientService();
-
-      const result = await createClientService.execute(sanitizedBody);
-
-      return res.status(201).json(result);
+      return res.status(201).json(await this.createClientService.execute(sanitizedBody));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -59,9 +74,7 @@ class ClientController extends Controller {
     try {
       const sanitizedBody = activateClientValidate(body);
 
-      const activeClientService = new ActiveClientService();
-
-      await activeClientService.execute(sanitizedBody);
+      await this.activeClientService.execute(sanitizedBody);
 
       return res.status(204).json();
     } catch (err) {
@@ -71,13 +84,7 @@ class ClientController extends Controller {
 
   async deactivate({ client }: Request, res: Response): Promise<Response> {
     try {
-      const deactiveteClientService = new DeactiveteClientService();
-
-      const result = await deactiveteClientService.execute(client.entity);
-
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.deactiveteClientService.execute(client.entity));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -87,13 +94,7 @@ class ClientController extends Controller {
     try {
       const sanitizedValues = updateClientValidate({ ...body, id: client.id });
 
-      const updateProfileService = new UpdateProfileService();
-
-      const result = await updateProfileService.execute(sanitizedValues);
-
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.updateProfileService.execute(sanitizedValues));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -103,13 +104,7 @@ class ClientController extends Controller {
     try {
       const sanitizedValues = updatePasswordValidate({ ...body, id: client.id });
 
-      const updatePasswordClientService = new UpdatePasswordClientService();
-
-      const result = await updatePasswordClientService.execute(sanitizedValues);
-
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.updatePasswordClientService.execute(sanitizedValues));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -119,13 +114,7 @@ class ClientController extends Controller {
     try {
       const sanitizedValues = profileClientValidate({ id: client.id, selects: body.selects });
 
-      const profileClientService = new ProfileClientService();
-
-      const profile = await profileClientService.execute(sanitizedValues);
-
-      if (profile.err) throw new Error(profile.err);
-
-      return res.status(200).json(profile);
+      return res.json(await this.profileClientService.execute(sanitizedValues));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -135,11 +124,7 @@ class ClientController extends Controller {
     try {
       const values = listOrdersClientValidate({ clientId: client.id, page: Number(query.page) || 0 });
 
-      const listOrdersService = new ListOrdersService();
-
-      const result = await listOrdersService.execute(values);
-
-      return res.json(result);
+      return res.json(await this.listOrdersService.execute(values));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -147,13 +132,7 @@ class ClientController extends Controller {
 
   async remove({ client }: Request, res: Response): Promise<Response> {
     try {
-      const deleteClientService = new DeleteClientService();
-
-      const result = await deleteClientService.execute(client.entity);
-
-      if (result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.deleteClientService.execute(client.entity));
     } catch (err) {
       return this.requestError(err, res);
     }

@@ -1,5 +1,6 @@
 import City from '@core/city';
-import { ServiceResponse } from '@utils/service-response';
+import ApiError from '@shared/utils/ApiError';
+import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateCityDto } from '../dtos/update-city-dto';
 import { schema } from '../validations/update-city.validation';
 
@@ -9,7 +10,7 @@ export class UpdateCityService {
       // Fazendo validação DTO
       const valid = schema.isValidSync(updateCityDto);
 
-      if (!valid) throw new Error('[Erro]: Por favor reveja seus dados');
+      if (!valid) throw new ApiError('[Erro]: Por favor reveja seus dados');
 
       // Verificando se a Cidade existe no banco de dados
       const city = await City.findOne({
@@ -17,7 +18,7 @@ export class UpdateCityService {
         attributes: ['id']
       });
 
-      if (!city) throw new Error('[ERRO]: Cidade não existente no sistema!');
+      if (!city) throw new ApiError('[ERRO]: Cidade não existente no sistema!');
 
       city.setName(updateCityDto.name);
       city.setActive(updateCityDto.active);
@@ -27,7 +28,9 @@ export class UpdateCityService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

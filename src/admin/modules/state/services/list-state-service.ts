@@ -1,5 +1,5 @@
 import State from '@core/state';
-import { ServiceResponse } from '@utils/service-response';
+import { ServiceResponse } from '@shared/utils/service-response';
 
 class ListStatesService {
   async execute(): Promise<ServiceResponse<State[] | null>> {

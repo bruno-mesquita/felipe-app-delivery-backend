@@ -1,4 +1,5 @@
 import Establishment from "@core/establishment";
+import ApiError from "@shared/utils/ApiError";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 export class DeactiveAccountService {
@@ -8,14 +9,16 @@ export class DeactiveAccountService {
         where: { id, active: true }
       });
 
-      if (!establishment) throw new Error('Estabelecimento não encontrado');
+      if (!establishment) throw new ApiError('Estabelecimento não encontrado');
 
       establishment.deactivate();
       await establishment.save();
 
       return { result: true, err: null }
     } catch(err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

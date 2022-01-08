@@ -8,6 +8,7 @@ import { ServiceResponse } from '@shared/utils/service-response';
 
 import { MercadoPago } from '../../../../services/mercado-pago';
 import City from '@core/city';
+import ApiError from '@shared/utils/ApiError';
 
 interface FlippValues {
   commission: number; monthlyPayment: number
@@ -53,7 +54,7 @@ export class GenerateATicketService {
 
       const owner = await this.getOwner(ownerId);
 
-      if (!owner) throw new Error('Usuário não encontrado');
+      if (!owner) throw new ApiError('Usuário não encontrado');
 
       const paymentData = mercadoPago.generatePaymentData({
         owner,
@@ -66,7 +67,7 @@ export class GenerateATicketService {
 
       const ticket = await Ticket.findOne({ where: { id: ticketId, status: 'cancelled' } });
 
-      if(!ticket) throw new Error('Boleto não encontrado');
+      if(!ticket) throw new ApiError('Boleto não encontrado');
 
       ticket.barcode = mercadoPagoTicket.barcode.content,
       ticket.date_created = mercadoPagoTicket.date_created,
@@ -83,7 +84,9 @@ export class GenerateATicketService {
 
       return { result: ticket, err: null };
     } catch (err) {
-      return { err: err.message, result: null };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 };

@@ -1,4 +1,4 @@
-import { ServiceResponse } from "@utils/service-response";
+import { ServiceResponse } from "@shared/utils/service-response";
 import { EstablishmentOwner } from "@core/establishment-owner";
 import Establishment from "@core/establishment";
 import AddressEstablishment from "@core/address-establishment";

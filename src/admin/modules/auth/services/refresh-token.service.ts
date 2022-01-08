@@ -1,6 +1,7 @@
 import { ServiceResponse } from "@shared/utils/service-response";
 import TokenManager from "@shared/utils/token-manager";
 import Admin from '@core/admin';
+import ApiError from "@shared/utils/ApiError";
 
 export class RefreshTokenService {
   async execute(token: string): Promise<ServiceResponse<string | null>> {
@@ -14,13 +15,15 @@ export class RefreshTokenService {
         attributes: ['id'],
       });
 
-      if (!admin) throw new Error('Usuário não encontrado');
+      if (!admin) throw new ApiError('Usuário não encontrado');
 
       const accessToken = tokenManager.createRefreshToken(admin.getId());
 
       return { result: accessToken, err: null };
     } catch (err) {
-      return { result: null, err: "Token inválido" };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

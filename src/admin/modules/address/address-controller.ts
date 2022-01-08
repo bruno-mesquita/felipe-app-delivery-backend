@@ -1,20 +1,23 @@
 import { ListCitiesByStatesService } from './services/list-cities-by-state-service';
 import { Request, Response } from 'express';
+import Controller from '@shared/utils/controller';
 
-export class AddressEstablishmentController {
+export class AddressEstablishmentController extends Controller {
+  constructor() {
+    super();
+
+    this.listCitiesByState = this.listCitiesByState.bind(this);
+  }
+
   async listCitiesByState({ params }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
 
       const listCitiesByStatesService = new ListCitiesByStatesService();
 
-      const listCities = await listCitiesByStatesService.execute(Number(id));
-
-      if (listCities.err) throw new Error(listCities.err);
-
-      return res.status(200).json(listCities);
+      return res.json(await listCitiesByStatesService.execute(Number(id)));
     } catch(err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }

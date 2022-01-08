@@ -1,5 +1,6 @@
 import CityManager from '@core/city-manager';
-import { ServiceResponse } from '@utils/service-response';
+import ApiError from '@shared/utils/ApiError';
+import { ServiceResponse } from '@shared/utils/service-response';
 
 export class DeleteCityManagerService {
   async execute(id: number): Promise<ServiceResponse<boolean>> {
@@ -9,13 +10,15 @@ export class DeleteCityManagerService {
         attributes: ['id'],
       });
 
-      if (!cityManager) throw new Error('Usuário não encontrado');
+      if (!cityManager) throw new ApiError('Usuário não encontrado');
 
       await cityManager.destroy();
 
       return { result: true, err: null };
     } catch (err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     };
   };
 };

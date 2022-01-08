@@ -4,14 +4,14 @@ import { ServiceResponse } from "@shared/utils/service-response";
 import { GenerateReportDto } from '../dtos/generate-report.dto';
 import { schema } from '../validation/generate-report.validation';
 import Order from "@core/order";
-import { EstablishmentOwner } from "@core/establishment-owner";
+import ApiError from "@shared/utils/ApiError";
 
 export class GenerateReportService {
  async execute({ establishmentId, data_initial, data_final }: GenerateReportDto): Promise<ServiceResponse<any>> {
   try {
     const valid = schema.isValidSync({ establishmentId, data_initial, data_final });
 
-    if (!valid) throw new Error('Dados Inválidos');
+    if (!valid) throw new ApiError('Dados Inválidos');
 
     // Formatar e Converter String para Date
     const dataI = data_initial.split('/');
@@ -34,7 +34,9 @@ export class GenerateReportService {
 
     return { result: report, err: null };
   } catch(err) {
-    return { result: [], err: err.message };
+    ApiError.verifyType(err);
+
+    throw ApiError.generateErrorUnknown();
   }
  }
 }

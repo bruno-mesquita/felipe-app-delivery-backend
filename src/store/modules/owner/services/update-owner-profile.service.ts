@@ -1,4 +1,5 @@
 import { EstablishmentOwner } from "@core/establishment-owner";
+import ApiError from "@shared/utils/ApiError";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 interface UpdateOwnerDto {
@@ -16,7 +17,7 @@ export class UpdateOwnerProfileService {
         attributes: ['id', 'first_name', 'last_name', 'email', 'cellphone', 'cpf']
       });
 
-      if(!owner) throw new Error('Dono não encontrado');
+      if(!owner) throw new ApiError('Dono não encontrado');
 
       const { cpf, first_name, last_name, email } = model;
 
@@ -27,7 +28,9 @@ export class UpdateOwnerProfileService {
 
       return { err: null, result: true }
     } catch (err) {
-      return { err: 'Erro ao atualizar', result: false }
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

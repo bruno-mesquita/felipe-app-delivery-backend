@@ -6,6 +6,7 @@ import City from '@core/city';
 import { EstablishmentOwner } from '@core/establishment-owner';
 import State from '@core/state';
 import EstablishmentCategory from '@core/establishment-category';
+import ApiError from '@shared/utils/ApiError';
 
 export class ProfileEstablishmentService {
   static FULL = ['name', 'cellphone', 'active', 'openingTime', 'closingTime', 'freightValue', 'address', 'image', 'categories']
@@ -73,7 +74,7 @@ export class ProfileEstablishmentService {
         }]
       });
 
-      if(!owner) throw new Error('Estabelecimento não encontrado');
+      if(!owner) throw new ApiError('Estabelecimento não encontrado');
 
       const result: any = owner.get('establishment').toJSON()
 
@@ -85,7 +86,9 @@ export class ProfileEstablishmentService {
         err: null,
       };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

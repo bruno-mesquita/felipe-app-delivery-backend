@@ -4,6 +4,7 @@ import { UpdateEstablishmentDto } from '../../dtos/update-establishment-dto';
 import updateClientValidation from '../../validation/update-establishment.validation';
 import { EstablishmentOwner } from '@core/establishment-owner';
 import AddressEstablishment from '@core/address-establishment';
+import ApiError from '@shared/utils/ApiError';
 
 export class UpdateProfileService {
   async execute(UpdateEstablishmentDto: UpdateEstablishmentDto): Promise<ServiceResponse<boolean>> {
@@ -11,7 +12,7 @@ export class UpdateProfileService {
       // validando dto
       const valid = updateClientValidation.isValidSync(UpdateEstablishmentDto);
 
-      if (!valid) throw new Error('Dados inválidos');
+      if (!valid) throw new ApiError('Dados inválidos');
 
       // verificando se o usuário existe
       const owner = await EstablishmentOwner.findOne({
@@ -27,7 +28,7 @@ export class UpdateProfileService {
         }],
       });
 
-      if (!owner) throw new Error('Dono não encontrado');
+      if (!owner) throw new ApiError('Dono não encontrado');
 
       const { establishment } = owner;
       const { address, ...rest } = UpdateEstablishmentDto;
@@ -45,7 +46,9 @@ export class UpdateProfileService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { err: err.message, result: false };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

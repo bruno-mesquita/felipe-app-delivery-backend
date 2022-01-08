@@ -4,6 +4,7 @@ import City from '@core/city';
 import State from '@core/state';
 import { usePage } from '@shared/utils/use-page';
 import AddressClient from '@core/address-client';
+import ApiError from '@shared/utils/ApiError';
 
 export class ListAddressClientService {
   async execute(userId: number, page = 0): Promise<ServiceResponse<any>> {
@@ -12,7 +13,7 @@ export class ListAddressClientService {
 
       const client = await Client.findByPk(userId);
 
-      if(!client) throw new Error('Cliente não encontrado');
+      if(!client) throw new ApiError('Cliente não encontrado');
 
       const adresses = await AddressClient.findAll({
         where: { client_id: client.getId() },
@@ -37,7 +38,9 @@ export class ListAddressClientService {
 
       return { err: null, result: adresses };
     } catch (err) {
-      return { err: err.message, result: [] };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

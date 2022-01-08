@@ -1,5 +1,6 @@
 import Category from '@core/category';
-import { ServiceResponse } from '@utils/service-response';
+import ApiError from '@shared/utils/ApiError';
+import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateCategoryDtos } from '../../dtos/create-category.dtos';
 import { schema } from '../../validation/create-category.validation';
 
@@ -9,7 +10,7 @@ export class CreateCategoryService {
       // Validação
       const valid = schema.isValidSync(createCategoryDto);
 
-      if (!valid) throw new Error('Dados inválidos.');
+      if (!valid) throw new ApiError('Dados inválidos.');
 
       // Verificando se já existe esse nome
 
@@ -17,7 +18,7 @@ export class CreateCategoryService {
         where: { name: createCategoryDto.name }
       });
 
-      if (categoryExists) throw new Error('Categoria já cadastrada');
+      if (categoryExists) throw new ApiError('Categoria já cadastrada');
 
       // Criando Classe e Salvando
       const category = await Category.create(createCategoryDto);

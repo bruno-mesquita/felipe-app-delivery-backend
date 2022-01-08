@@ -5,15 +5,15 @@
  */
 
 import Admin from '@core/admin';
-import { ServiceResponse } from '@shared/utils/service-response';
+import ApiError from '@shared/utils/ApiError';
 import TokenManager from '@shared/utils/token-manager';
 import { LoginClientDto } from '../dtos/login-client.dto';
 import loginValidation from '../validation/login.validation';
 
 class LoginClientService {
-  async execute(loginDto: LoginClientDto): Promise<ServiceResponse<{ token: string } | null>> {
+  async execute(loginDto: LoginClientDto): Promise<{ token: string; refreshToken: string }> {
     try {
-      if (!loginValidation.isValidSync(loginDto)) throw new Error('Dados inválidos');
+      if (!loginValidation.isValidSync(loginDto)) throw new ApiError('Dados inválidos');
 
       const tokenManager = new TokenManager();
 
@@ -23,11 +23,11 @@ class LoginClientService {
         attributes: ['id', 'password', 'email']
       });
 
-      if (!client) throw new Error('[erro]: E-mail ou senha incorreto');
+      if (!client) throw new ApiError('[erro]: E-mail ou senha incorreto');
 
       // Comparar senha digitada do cliente com a que foi salva no banco
 
-      if (!client.comparePassword(loginDto.password)) throw new Error('Credenciais inválidas');
+      if (!client.comparePassword(loginDto.password)) throw new ApiError('Credenciais inválidas');
 
       // Criando token
       const token = tokenManager.create(client.getId());
@@ -36,11 +36,11 @@ class LoginClientService {
 
       const accessToken = { token, refreshToken };
 
-      return {
-        result: accessToken, err: null,
-      };
+      return accessToken;
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

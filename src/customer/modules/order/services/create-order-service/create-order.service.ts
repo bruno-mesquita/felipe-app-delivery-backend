@@ -14,6 +14,7 @@ import { CreateOrderDto } from '../../dtos/create-order.dto';
 import { schema } from '../../validation/create-order.validation';
 import Notification from '@shared/utils/Notification';
 import { EstablishmentOwner } from '@core/establishment-owner';
+import ApiError from '@shared/utils/ApiError';
 
 export class CreateOrderService {
   async execute(createOrderDto: CreateOrderDto): Promise<ServiceResponse<any>> {
@@ -21,7 +22,7 @@ export class CreateOrderService {
       // Fazendo validação DTO
       const valid = schema.isValidSync(createOrderDto);
 
-      if (!valid) throw new Error('Campos inválidos');
+      if (!valid) throw new ApiError('Campos inválidos');
 
      // Verificando Estabelecimento
       const establishmentOwner = await EstablishmentOwner.findOne({
@@ -34,13 +35,13 @@ export class CreateOrderService {
         }]
       });
 
-      if (!establishmentOwner) throw new Error('Estabelecimento não encontrado');
+      if (!establishmentOwner) throw new ApiError('Estabelecimento não encontrado');
 
       // verificando cliente
 
       const clientExists = await Client.findByPk(createOrderDto.client_id);
 
-      if (!clientExists) throw new Error('Cliente não encontrado');
+      if (!clientExists) throw new ApiError('Cliente não encontrado');
 
       // Verificando endereço do cliente
 
@@ -50,7 +51,7 @@ export class CreateOrderService {
         },
       });
 
-      if (!addressExists) throw new Error('Endereço do cliente não encontrado');
+      if (!addressExists) throw new ApiError('Endereço do cliente não encontrado');
 
       const ownerJson = establishmentOwner.toJSON() as any;
 
@@ -111,7 +112,9 @@ export class CreateOrderService {
 
       return { result: order.getId(), err: null };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

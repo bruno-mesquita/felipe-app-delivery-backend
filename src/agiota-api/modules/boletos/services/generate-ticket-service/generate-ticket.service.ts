@@ -10,6 +10,7 @@ import { ServiceResponse } from '@shared/utils/service-response';
 
 import { MercadoPago } from '../../../../services/mercado-pago';
 import City from '@core/city';
+import ApiError from '@shared/utils/ApiError';
 
 interface FlippValues {
   commission: number; monthlyPayment: number
@@ -77,7 +78,7 @@ export class GenerateTicketService {
       if(this.isToday()) {
         const owners = await this.getOwners();
 
-        if (owners.length === 0) throw new Error('Nenhum boleto para gerar');
+        if (owners.length === 0) throw new ApiError('Nenhum boleto para gerar');
 
         await Promise.all(owners.map(async owner => {
           const orders = await owner.establishment.getOrders({
@@ -123,7 +124,9 @@ export class GenerateTicketService {
         message: 'Boletos gerados com sucesso',
       }, err: null };
     } catch (err) {
-      return { err: err.message, result: null };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 };

@@ -1,9 +1,9 @@
 import { Announcement } from "@core/announcement";
 import Image from "@core/image";
-import { ServiceResponse } from "@utils/service-response";
+import ApiError from "@shared/utils/ApiError";
 
 export class ShowAnnouncementService {
-  async execute(announcementId: number): Promise<ServiceResponse<Announcement>> {
+  async execute(announcementId: number): Promise<any> {
     try {
       const announcement = await Announcement.findOne({
         where: { id: announcementId },
@@ -17,11 +17,13 @@ export class ShowAnnouncementService {
         ],
       });
 
-      if (!announcement) throw new Error('Anúncio inválido');
+      if (!announcement) throw new ApiError('Anúncio inválido');
 
       return { result: announcement, err: null };
     } catch(err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   };
 };

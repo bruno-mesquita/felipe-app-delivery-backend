@@ -1,4 +1,4 @@
-import { ServiceResponse } from '@utils/service-response';
+import { ServiceResponse } from '@shared/utils/service-response';
 import Category from '@core/category';
 
 export class ListCategoriesService {

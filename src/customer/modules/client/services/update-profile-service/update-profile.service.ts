@@ -8,6 +8,7 @@ import { Op } from 'sequelize';
 import Client from '@core/client';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { IUpdateClientDto } from '../../dtos';
+import ApiError from '@shared/utils/ApiError';
 
 class UpdateProfileService {
   async execute(updateClientDto: IUpdateClientDto): Promise<ServiceResponse<boolean>> {
@@ -17,7 +18,7 @@ class UpdateProfileService {
         where: { id: updateClientDto.id, active: true }
       });
 
-      if (!user) throw new Error('Usuário não encontrado');
+      if (!user) throw new ApiError('Usuário não encontrado');
 
       // Verificando se E-mail e Celular já existe no banco
       const userExists = await Client.findOne({
@@ -31,7 +32,7 @@ class UpdateProfileService {
         }
       });
 
-      if (!userExists) throw new Error('Já existe uma conta com esse email/telefone ');
+      if (!userExists) throw new ApiError('Já existe uma conta com esse email/telefone ');
 
       // Desestruturando
       const { cellphone, email, name } = updateClientDto;
@@ -44,7 +45,9 @@ class UpdateProfileService {
 
       return { result: true, err: null };
     } catch (err) {
-      return { err: err.message, result: false };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

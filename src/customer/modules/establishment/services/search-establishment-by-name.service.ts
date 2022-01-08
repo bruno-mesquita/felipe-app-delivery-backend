@@ -7,6 +7,7 @@ import Image from '@core/image';
 import AddressEstablishment from '@core/address-establishment';
 import EstablishmentCategory from '@core/establishment-category';
 import Category from '@core/category';
+import ApiError from '@shared/utils/ApiError';
 
 export class SearchEstablishmentsByName {
   async execute(searchName: string, categoryName: string, clientId: number): Promise<ServiceResponse<any[]>> {
@@ -18,7 +19,7 @@ export class SearchEstablishmentsByName {
 
       const category = await Category.findOne({ where: { name: categoryName } });
 
-      if(!category) throw new Error('Categoria não encontrada');
+      if(!category) throw new ApiError('Categoria não encontrada');
 
       const establishments = (await Establishment.findAll({
         where: { name: { [Op.iLike]: `%${searchName}%` } },
@@ -46,7 +47,9 @@ export class SearchEstablishmentsByName {
 
       return { result: establishments, err: null };
     } catch (err) {
-      return { result: [], err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

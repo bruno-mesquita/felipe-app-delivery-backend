@@ -1,5 +1,6 @@
 import { EstablishmentOwner } from "@core/establishment-owner";
 import { Ticket } from "@core/ticket";
+import ApiError from "@shared/utils/ApiError";
 import { ServiceResponse } from "@shared/utils/service-response";
 import agiotaApi from '../../../services/agiota-api';
 
@@ -11,7 +12,7 @@ export class NewBoletoService {
         attributes: ['id', 'price'],
       });
 
-      if (!boleto) throw new Error ('Boleto não encontrado');
+      if (!boleto) throw new ApiError ('Boleto não encontrado');
 
       const { data } = await agiotaApi.post(`/tickets/${boleto.getId()}/new`, {
         ownerId: owner.getId(),
@@ -20,7 +21,9 @@ export class NewBoletoService {
 
       return { result: data.result, err: null }
     } catch (err) {
-      return { err: 'Erro', result: null }
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 };

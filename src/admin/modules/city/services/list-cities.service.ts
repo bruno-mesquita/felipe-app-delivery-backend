@@ -1,6 +1,6 @@
 import City from '@core/city';
 import State from '@core/state';
-import { ServiceResponse } from '@utils/service-response';
+import { ServiceResponse } from '@shared/utils/service-response';
 
 export class ListCitiesService {
   async execute(): Promise<ServiceResponse<City[]>> {

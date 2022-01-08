@@ -1,15 +1,15 @@
 import { Announcement } from "@core/announcement";
 import Image from "@core/image";
-import { ServiceResponse } from "@utils/service-response";
+import ApiError from "@shared/utils/ApiError";
 import { CreateAnnouncementDto } from "../../dtos/create-announcement.dto";
 import { createAnnouncementValidate } from '../../validations/create-announcement.validation';
 
 export class CreateAnnouncementService {
-  async execute(createAnnouncement: CreateAnnouncementDto): Promise<ServiceResponse<boolean>> {
+  async execute(createAnnouncement: CreateAnnouncementDto): Promise<any> {
     try {
       const valid = createAnnouncementValidate.isValidSync(createAnnouncement);
 
-      if (!valid) throw new Error('Dados inválidos');
+      if (!valid) throw new ApiError('Dados inválidos');
 
       const image = await Image.create({ encoded: createAnnouncement.image });
 
@@ -21,7 +21,9 @@ export class CreateAnnouncementService {
 
       return { result: true, err: null };
     } catch(err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   };
 };

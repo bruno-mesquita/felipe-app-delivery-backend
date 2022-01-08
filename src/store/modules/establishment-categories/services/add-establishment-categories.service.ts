@@ -1,6 +1,7 @@
 import Establishment from "@core/establishment";
 import EstablishmentCategory from "@core/establishment-category";
 import { EstablishmentOwner } from "@core/establishment-owner";
+import ApiError from "@shared/utils/ApiError";
 import { ServiceResponse } from "@shared/utils/service-response";
 
 export class AddEstablishmentCategoryService {
@@ -17,7 +18,7 @@ export class AddEstablishmentCategoryService {
         }]
       });
 
-      if(!owner) throw new Error();
+      if(!owner) throw new ApiError('Erro ao adicionar');
 
       const establishmentCategory = await EstablishmentCategory.findOne({
         where: {
@@ -26,7 +27,7 @@ export class AddEstablishmentCategoryService {
         }
       });
 
-      if(establishmentCategory) throw new Error();
+      if(establishmentCategory) throw new ApiError('Erro ao adicionar');
 
       await EstablishmentCategory.create({
         category_id: categoryId,
@@ -35,7 +36,9 @@ export class AddEstablishmentCategoryService {
 
       return { result: true, err: null }
     } catch (err) {
-      return { err: 'Erro ao adicionar', result: null }
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 };

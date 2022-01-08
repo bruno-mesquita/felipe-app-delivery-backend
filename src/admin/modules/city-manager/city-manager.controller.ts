@@ -1,3 +1,5 @@
+import ApiError from '@shared/utils/ApiError';
+import Controller from '@shared/utils/controller';
 import { Request, Response } from 'express';
 import * as Yup from 'yup';
 
@@ -17,7 +19,29 @@ const validateNumber = (value: number) => {
   }
 }
 
-export class CityManagerController {
+export class CityManagerController extends Controller {
+  private readonly createCityManagerService: CreateCityManagerService;
+  private readonly listCityManaganersService: ListCityManaganersService;
+  private readonly showCityManagerService: ShowCityManagerService;
+  private readonly deleteCityManagerService: DeleteCityManagerService;
+  private readonly updateCityManagerService: UpdateCityManagerService;
+
+  constructor() {
+    super();
+
+    this.createCityManagerService = new CreateCityManagerService();
+    this.listCityManaganersService = new ListCityManaganersService();
+    this.showCityManagerService = new ShowCityManagerService();
+    this.deleteCityManagerService = new DeleteCityManagerService();
+    this.updateCityManagerService = new UpdateCityManagerService();
+
+    this.list = this.list.bind(this);
+    this.show = this.show.bind(this);
+    this.create = this.create.bind(this);
+    this.destroy = this.destroy.bind(this);
+    this.update = this.update.bind(this);
+  }
+
   async list({ params }: Request, res: Response): Promise<Response> {
     try {
       const { page = 0 } = params;
@@ -26,17 +50,11 @@ export class CityManagerController {
 
       const isValidPage = validateNumber(convertedPage);
 
-      if(!isValidPage) throw new Error('Parametros incorretos');
+      if(!isValidPage) throw new ApiError('Parametros incorretos');
 
-      const listCityManaganersService = new ListCityManaganersService();
-
-      const result = await listCityManaganersService.execute(convertedPage);
-
-      if(result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.listCityManaganersService.execute(convertedPage));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   };
 
@@ -46,31 +64,19 @@ export class CityManagerController {
 
       const isValidId = validateNumber(convertedId);
 
-      if(!isValidId) throw new Error('Parametros incorretos');
+      if(!isValidId) throw new ApiError('Parametros incorretos');
 
-      const showCityManagerService = new ShowCityManagerService();
-
-      const result = await showCityManagerService.execute(convertedId);
-
-      if(result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.showCityManagerService.execute(convertedId));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   };
 
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
-      const createCityManagerService = new CreateCityManagerService();
-
-      const result = await createCityManagerService.execute(body);
-
-      if(result.err) throw new Error(result.err);
-
-      return res.status(201).json(result);
+      return res.status(201).json(await this.createCityManagerService.execute(body));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   };
 
@@ -80,17 +86,11 @@ export class CityManagerController {
 
       const isValidId = validateNumber(convertedId);
 
-      if(!isValidId) throw new Error('Parametros incorretos');
+      if(!isValidId) throw new ApiError('Parametros incorretos');
 
-      const deleteCityManagerService = new DeleteCityManagerService();
-
-      const result = await deleteCityManagerService.execute(convertedId);
-
-      if(result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.deleteCityManagerService.execute(convertedId));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   };
 
@@ -100,17 +100,11 @@ export class CityManagerController {
 
       const isValidId = validateNumber(convertedId);
 
-      if(!isValidId) throw new Error('Parametros incorretos');
+      if(!isValidId) throw new ApiError('Parametros incorretos');
 
-      const updateCityManagerService = new UpdateCityManagerService();
-
-      const result = await updateCityManagerService.execute({ id: convertedId, ...body });
-
-      if(result.err) throw new Error(result.err);
-
-      return res.status(200).json(result);
+      return res.json(await this.updateCityManagerService.execute({ id: convertedId, ...body }));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   };
 };

@@ -3,6 +3,7 @@ import Client from '@core/client';
 import Image from '@core/image';
 
 import type { IProfileClientDto } from '../../dtos';
+import ApiError from '@shared/utils/ApiError';
 
 export default class ProfileClientService {
   async execute({ selects, id }: IProfileClientDto): Promise<ServiceResponse<any>> {
@@ -26,7 +27,7 @@ export default class ProfileClientService {
         include
       })
 
-      if(!client) throw new Error('Cliente não encontrado');
+      if(!client) throw new ApiError('Cliente não encontrado');
 
       const result = {
         ...client.toJSON()
@@ -41,7 +42,9 @@ export default class ProfileClientService {
         err: null,
       };
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

@@ -1,48 +1,48 @@
+import Controller from '@shared/utils/controller';
 import { Request, Response } from 'express';
 
-import { CreateCategoryService, ListCategoriesService } from './services';
-import { UpdateCategoryService } from './services/update-category-service/update-category.service';
+import { CreateCategoryService, ListCategoriesService, UpdateCategoryService } from './services';
 
-class EstablishmentController {
+class EstablishmentController extends Controller {
+  private readonly createCategoryService: CreateCategoryService;
+  private readonly listCategoriesService: ListCategoriesService;
+  private readonly updateCategoryService: UpdateCategoryService;
+
+  constructor() {
+    super();
+
+    this.createCategoryService = new CreateCategoryService();
+    this.listCategoriesService = new ListCategoriesService();
+    this.updateCategoryService = new UpdateCategoryService();
+
+    this.update = this.update.bind(this);
+    this.create = this.create.bind(this);
+    this.list = this.list.bind(this);
+  }
+
   async update({ params, body }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
 
-      const updateCategoryService = new UpdateCategoryService();
-
-      const category = await updateCategoryService.execute({ ...body, id });
-
-      if (category.err) throw new Error(category.err);
-
-      return res.status(200).json(category);
+      return res.json(await this.updateCategoryService.execute({ ...body, id }));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
-      const categoryService = new CreateCategoryService();
-
-      const category = await categoryService.execute(body);
-
-      if (category.err) throw new Error(category.err);
-
-      return res.status(201).json(category);
+      return res.status(201).json(await this.createCategoryService.execute(body));
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 
   async list(_: Request, res: Response): Promise<Response> {
     try {
-      const listCategoriesService = new ListCategoriesService();
-
-      const categories = await listCategoriesService.execute();
-
-      return res.json(categories);
+      return res.json(await this.listCategoriesService.execute());
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }

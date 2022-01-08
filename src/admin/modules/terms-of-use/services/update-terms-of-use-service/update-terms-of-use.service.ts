@@ -1,5 +1,6 @@
 import TermsOfUse from "@core/terms-of-use";
-import { ServiceResponse } from "@utils/service-response";
+import ApiError from "@shared/utils/ApiError";
+import { ServiceResponse } from "@shared/utils/service-response";
 import { UpdateTermsOfUseDto } from '../../dtos/update-terms-of-use.dto';
 import { schema } from '../../validations/update-state.validation';
 
@@ -8,13 +9,13 @@ export class UpdateTermsOfUseService {
     try {
       const valid = schema.isValidSync(updateTermsOfUseDto);
 
-      if (!valid) throw new  Error('Dados inválidos');
+      if (!valid) throw new ApiError('Dados inválidos');
 
       const termsOfUse = await TermsOfUse.findOne({
         where: { id: updateTermsOfUseDto.id }
       });
 
-      if (!termsOfUse) throw new Error('Termos de uso não encontrado');
+      if (!termsOfUse) throw new ApiError('Termos de uso não encontrado');
 
       const { description } = updateTermsOfUseDto;
 
@@ -24,7 +25,9 @@ export class UpdateTermsOfUseService {
 
       return{ result: termsOfUse.id, err: null };
     } catch(err) {
-      return { result: false, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
