@@ -21,9 +21,7 @@ export class AddressStateController extends Controller {
     try {
       const { stateId } = params;
 
-      const result = await this.listCitiesByStatesService.execute(stateId);
-
-      return res.json(result);
+      return res.json(await this.listCitiesByStatesService.execute(stateId));
     } catch (err) {
       return this.requestError(err, res);
     }

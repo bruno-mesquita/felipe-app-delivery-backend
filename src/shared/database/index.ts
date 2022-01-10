@@ -7,9 +7,9 @@ class Database {
   private connection: Sequelize;
 
   public async init(): Promise<void> {
-    this.connection = new Sequelize(databaseConfig);
-
     try {
+      this.connection = new Sequelize(databaseConfig);
+
       await this.connection.authenticate();
       this.initModels();
     } catch (err) {
@@ -17,7 +17,7 @@ class Database {
     }
   }
 
-  private initModels(): void {
+  private initModels() {
     models.map((model: any) => model.start(this.connection)).map(model => model.associate && model.associate(this.connection.models))
   }
 

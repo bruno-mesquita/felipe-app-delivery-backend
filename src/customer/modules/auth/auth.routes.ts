@@ -1,7 +1,10 @@
 import { Router } from 'express';
 
+import AuthController from './auth.controller';
+
 const routes = Router();
-import authController from './auth.controller';
+const authController = new AuthController();
+
 
 routes.post('/auth/login', authController.login);
 routes.post('/auth/refresh-token', authController.refreshToken);

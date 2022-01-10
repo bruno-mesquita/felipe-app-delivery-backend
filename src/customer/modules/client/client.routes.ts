@@ -10,7 +10,7 @@ const routes = Router();
 const middlewares = [isAuthenticated, accessClient];
 
 routes.post('/clients', clientController.create);
-routes.post('/clients/activate', clientController.activate);
+routes.put('/clients/activate', clientController.activate);
 routes.put('/clients', ...middlewares, clientController.updateProfile);
 routes.put('/clients/update-password', ...middlewares, clientController.updatePassword);
 routes.get('/clients/orders', ...middlewares, clientController.listOrdersByClient);
