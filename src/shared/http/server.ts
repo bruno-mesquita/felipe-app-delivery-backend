@@ -5,6 +5,7 @@ import compression from 'compression';
 import helmet from 'helmet';
 
 import '@shared/utils/yup-helpers';
+import loggerMiddleware from '@shared/middlewares/logger';
 
 // routas
 import customerRoutes from '@customer/http/routes';
@@ -24,6 +25,7 @@ server.use(json({ limit: '15mb' }));
 server.use(cors());
 server.use(compression());
 server.use(helmet());
+server.use(loggerMiddleware());
 server.disable('x-powered-by');
 server.use('/api', routes);
 
