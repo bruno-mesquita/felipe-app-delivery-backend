@@ -2,7 +2,6 @@
  * @fileoverview Casos serviços para a criação do pedido
  * @author Jonatas Rosa Moura
  */
-import { Op } from 'sequelize';
 import AddressClient from '@core/address-client';
 import Client from '@core/client';
 import Establishment from '@core/establishment';
@@ -73,7 +72,7 @@ export class CreateOrderService {
 
       let total = 0;
 
-      createOrderDto.items.map(async (item) => {
+      for await (const item of createOrderDto.items) {
         const product = await Product.findByPk(item.itemId);
 
         if (product) {
@@ -91,7 +90,7 @@ export class CreateOrderService {
             total: tot,
           });
         }
-      });
+      }
 
       order.setTotal(total);
 

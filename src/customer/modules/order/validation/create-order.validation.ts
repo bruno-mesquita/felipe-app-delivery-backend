@@ -7,23 +7,21 @@ import { FormOfPaymentType } from '@core/order/order.types';
 import { object, SchemaOf, number, string, array, mixed } from 'yup';
 import { CreateOrderDto } from '../dtos/create-order.dto';
 
-const REQUIRED = 'Campo obrigátorio';
-
 export const schema: SchemaOf<CreateOrderDto> = object({
-  establishment_id: number().integer().required(),
-  client_id: number().integer().required(),
-  address_id: number().integer().required(),
+  establishment_id: number().positive().integer().required(),
+  client_id: number().positive().integer().required(),
+  address_id: number().positive().integer().required(),
   items: array()
     .of<any>(
       object({
-        amount: number().required(),
-        price: number().required(),
+        amount: number().positive().required(),
+        price: number().positive().required(),
         itemId: number().integer().required(),
-        total: number().required(),
+        total: number().positive().required(),
       })
     )
     .required(),
-  total: number().required(),
+  total: number().positive().required(),
   note: string().trim(),
   transshipment: number(),
   payment: mixed()

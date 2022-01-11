@@ -28,27 +28,35 @@ export class EstablishmentOwnerController extends Controller {
     this.update = this.update.bind(this);
   }
 
-  list(_: Request, res: Response): Promise<Response> {
-    return this.listOwnerService.execute()
-      .then(response => res.json(response))
-      .catch(err => this.requestError(err, res));
+  async list(_: Request, res: Response): Promise<Response> {
+    try {
+      return res.json(await this.listOwnerService.execute());
+    } catch (err) {
+      return this.requestError(err, res);
+    }
   };
 
-  show({ params }: Request, res: Response): Promise<Response> {
-    return this.showOwnerEstablishmentService.execute(Number(params.id))
-      .then(response => res.json(response))
-      .catch(err => this.requestError(err, res));
+  async show({ params }: Request, res: Response): Promise<Response> {
+    try {
+      return res.json(await this.showOwnerEstablishmentService.execute(Number(params.id)));
+    } catch (err) {
+      return this.requestError(err, res);
+    }
   };
 
-  create({ body, client }: Request, res: Response): Promise<Response> {
-    return this.createOwnerService.execute({ ...body, created_by_id: client.id })
-      .then(response => res.status(201).json(response))
-      .catch(err => this.requestError(err, res));
+  async create({ body, client }: Request, res: Response): Promise<Response> {
+    try {
+      return res.json(await this.createOwnerService.execute({ ...body, created_by_id: client.id }));
+    } catch (err) {
+      return this.requestError(err, res);
+    }
   };
 
-  update({ body }: Request, res: Response): Promise<Response> {
-    return this.updateOwnerService.execute(body)
-      .then(response => res.status(201).json(response))
-      .catch(err => this.requestError(err, res));
+  async update({ body }: Request, res: Response): Promise<Response> {
+    try {
+      return res.json(await this.updateOwnerService.execute(body));
+    } catch (err) {
+      return this.requestError(err, res);
+    }
   };
 };

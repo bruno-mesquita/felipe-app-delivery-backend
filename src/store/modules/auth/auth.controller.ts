@@ -29,7 +29,7 @@ export class AuthEstablishmentController extends Controller {
 
       return res.json(result);
     } catch (err) {
-      throw this.requestError(err, res);
+      return this.requestError(err, res);
     }
   }
 
@@ -39,7 +39,7 @@ export class AuthEstablishmentController extends Controller {
 
       return res.json(result);
     } catch (err) {
-      throw this.requestError(err, res);
+      return this.requestError(err, res);
     }
   }
 }

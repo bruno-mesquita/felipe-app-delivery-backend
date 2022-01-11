@@ -27,7 +27,7 @@ export class CityController extends Controller {
     try {
       return res.status(201).json(await this.createCityService.execute(body));
     } catch (err) {
-      this.requestError(err, res);
+      return this.requestError(err, res);
     }
   }
 
@@ -35,7 +35,7 @@ export class CityController extends Controller {
     try {
       return res.json(await this.updateCityService.execute({ ...body, id: params.id }));
     } catch (err) {
-      this.requestError(err, res);
+      return this.requestError(err, res);
     }
   }
 
@@ -43,7 +43,7 @@ export class CityController extends Controller {
     try {
       return res.json(await this.listCitiesService.execute());
     } catch (err) {
-      this.requestError(err, res);
+      return this.requestError(err, res);
     }
   }
 
@@ -51,7 +51,7 @@ export class CityController extends Controller {
     try {
       return res.json(await this.listCitiesByStateService.execute(params.stateId));
     } catch (err) {
-      this.requestError(err, res);
+      return this.requestError(err, res);
     }
   }
 }

@@ -54,7 +54,9 @@ class AuthController extends Controller {
 
   async refreshToken({ body }: Request, res: Response): Promise<Response> {
     try {
-      return res.json(await this.refreshTokenService.execute(body.refreshToken));
+      const result = await this.refreshTokenService.execute(body.token);
+
+      return res.json(result);
     } catch (err) {
       return this.requestError(err, res);
     }
