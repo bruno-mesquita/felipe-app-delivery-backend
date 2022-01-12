@@ -6,12 +6,12 @@ import EstablishmentCategory from '@core/establishment-category';
 import Image from '@core/image';
 import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { usePage } from '@shared/utils/use-page';
+import { createPagination } from '@shared/utils/use-page';
 
 class ListEstablishmentService {
   async execute(categoryName: string, clientId: number, page = 0): Promise<ServiceResponse<any[]>> {
     try {
-      const { limit, offset } = usePage(page);
+      const { limit, offset } = createPagination(page);
 
       const category = await Category.findOne({ where: { name: categoryName } });
 

@@ -3,14 +3,14 @@ import Order from '@core/order';
 import Client from '@core/client';
 import Evaluation from '@core/evaluation';
 import Establishment from '@core/establishment';
-import { usePage } from '@shared/utils/use-page';
+import { createPagination } from '@shared/utils/use-page';
 import ApiError from '@shared/utils/ApiError';
 
 import { IListOrdersClient } from '../../dtos';
 export class ListOrdersService {
   async execute({ page, clientId }: IListOrdersClient): Promise<ServiceResponse<Order[]>> {
     try {
-      const { limit, offset } = usePage(page);
+      const { limit, offset } = createPagination(page);
 
       const client = await Client.findOne({ where: { id: clientId, active: true } });
 

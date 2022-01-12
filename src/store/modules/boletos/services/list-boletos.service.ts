@@ -1,11 +1,11 @@
 import { Ticket } from "@core/ticket";
 import { ServiceResponse } from "@shared/utils/service-response";
-import { usePage } from "@shared/utils/use-page";
+import { createPagination } from "@shared/utils/use-page";
 
 export class ListBoletosService {
   async execute(establishmentId: number, page = 0): Promise<ServiceResponse<Ticket[]>> {
     try {
-      const { limit, offset } = usePage(page);
+      const { limit, offset } = createPagination(page);
 
       const boletos = await Ticket.findAll({
         where: { establishment_id: establishmentId },

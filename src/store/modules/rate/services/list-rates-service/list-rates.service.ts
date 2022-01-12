@@ -4,13 +4,13 @@ import Evaluation from '@core/evaluation';
 import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
 import { ListRateDto } from '../../dtos';
-import { usePage } from '@shared/utils/use-page';
+import { createPagination } from '@shared/utils/use-page';
 
 export class ListRateService {
 
   public async execute({ page = 0, establishmentId }: ListRateDto): Promise<ServiceResponse<Order[]>> {
     try {
-      const { limit, offset } = usePage(page);
+      const { limit, offset } = createPagination(page);
 
       const orders = await Order.findAll({
         where: {

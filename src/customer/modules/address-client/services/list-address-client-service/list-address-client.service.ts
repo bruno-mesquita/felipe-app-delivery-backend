@@ -2,14 +2,14 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import Client from '@core/client';
 import City from '@core/city';
 import State from '@core/state';
-import { usePage } from '@shared/utils/use-page';
+import { createPagination } from '@shared/utils/use-page';
 import AddressClient from '@core/address-client';
 import ApiError from '@shared/utils/ApiError';
 
 export class ListAddressClientService {
   async execute(userId: number, page = 0): Promise<ServiceResponse<any>> {
     try {
-      const { limit, offset } = usePage(page);
+      const { limit, offset } = createPagination(page);
 
       const client = await Client.findByPk(userId);
 

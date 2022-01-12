@@ -3,12 +3,12 @@ import Menu from '@core/menu';
 import Product from '@core/product';
 import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { usePage } from '@shared/utils/use-page';
+import { createPagination } from '@shared/utils/use-page';
 
 export class ListProductsService {
   async execute(establishmentId: number, page = 0, menuId?: number | undefined): Promise<ServiceResponse<Product[] | null>> {
     try {
-      const { limit, offset } = usePage(page);
+      const { limit, offset } = createPagination(page);
 
       const menuWhere: any = { establishment_id: establishmentId };
 

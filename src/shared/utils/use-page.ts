@@ -1,8 +1,4 @@
-export const usePage = (page: number, limit = 15) => {
-  const offset = page * limit
-
-  return {
-    limit,
-    offset,
-  }
-};
+export const createPagination = (page: number, limit = 15) => ({
+  limit,
+  offset: page * limit,
+});

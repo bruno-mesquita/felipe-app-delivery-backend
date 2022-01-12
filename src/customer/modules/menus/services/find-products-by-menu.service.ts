@@ -3,14 +3,14 @@ import Menu from '@core/menu';
 import Product from '@core/product';
 import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { usePage } from '@shared/utils/use-page';
+import { createPagination } from '@shared/utils/use-page';
 
 import { IFindProductsByMenuDto } from '../dtos';
 
 export class FindProductsByMenuService {
   async execute({ page, id }: IFindProductsByMenuDto): Promise<ServiceResponse<Product[]>> {
     try {
-      const { limit, offset } = usePage(page);
+      const { limit, offset } = createPagination(page);
 
       const menu = await Menu.findOne({ where: { id: id }, attributes: ['id'] });
 

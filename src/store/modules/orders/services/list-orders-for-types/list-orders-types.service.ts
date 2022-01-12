@@ -6,13 +6,13 @@ import State from "@core/state";
 import City from "@core/city";
 import Client from "@core/client";
 import { schema } from '../../validations/list-orders-types.validation';
-import { usePage } from "@shared/utils/use-page";
+import { createPagination } from "@shared/utils/use-page";
 import ApiError from "@shared/utils/ApiError";
 
 export class ListOrdersForTypesServices {
   async execute({ page = 0, id, types }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
     try {
-      const { limit, offset } = usePage(page);
+      const { limit, offset } = createPagination(page);
 
       // const valid = schema.isValidSync({ page, id, types });
 
