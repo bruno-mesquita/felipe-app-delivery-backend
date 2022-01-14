@@ -1,20 +1,24 @@
+import ApiError from '@shared/utils/ApiError';
 import Notification from '@shared/utils/Notification';
-import { ServiceResponse } from '@shared/utils/service-response';
 
 export class RegisterProviderNotification {
-  async execute(pushToken: string, clientId: number): Promise<ServiceResponse<boolean>> {
-    try {
-      const notification = new Notification();
+  private readonly notificationService: Notification;
 
-      await notification.addListener({
+  constructor() {
+    this.notificationService = new Notification();
+  }
+
+  async execute(pushToken: string, clientId: number): Promise<void> {
+    try {
+      await this.notificationService.addListener({
         targetId: clientId,
         token: pushToken,
         type: 'Partner'
       });
-
-      return { result: true, err: null };
     } catch (err) {
-      return { err: 'Erro ao registrar push notification', result: false }
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 };
