@@ -21,7 +21,7 @@ class NotificationController extends Controller {
         client.id,
       );
 
-      return res.status(400).json({});
+      return res.status(204).json({});
     } catch (err) {
       return this.requestError(err, res);
     }
