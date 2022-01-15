@@ -8,20 +8,18 @@ import Establishment from '@core/establishment';
 import ItemOrder from '@core/item-order';
 import Order from '@core/order';
 import Product from '@core/product';
-import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateOrderDto } from '../../dtos/create-order.dto';
-import { schema } from '../../validation/create-order.validation';
 import Notification from '@shared/utils/Notification';
 import { EstablishmentOwner } from '@core/establishment-owner';
 import ApiError from '@shared/utils/ApiError';
 
 export class CreateOrderService {
-  async execute(createOrderDto: CreateOrderDto): Promise<ServiceResponse<any>> {
+  async execute(createOrderDto: CreateOrderDto): Promise<number> {
     try {
       // Fazendo validação DTO
-      const valid = schema.isValidSync(createOrderDto);
+      // const valid = schema.isValidSync(createOrderDto);
 
-      if (!valid) throw new ApiError('Campos inválidos');
+      // if (!valid) throw new ApiError('Campos inválidos');
 
      // Verificando Estabelecimento
       const establishmentOwner = await EstablishmentOwner.findOne({
@@ -60,7 +58,7 @@ export class CreateOrderService {
         client_id: clientExists.getId(),
         address_id: addressExists.getId(),
         freight_value: ownerJson.establishment.freightValue,
-        transshipment: createOrderDto.transshipment,
+        transshipment: Number(createOrderDto.transshipment) || 0,
         note: createOrderDto.note,
         payment: createOrderDto.payment,
         total: createOrderDto.total,
@@ -109,7 +107,7 @@ export class CreateOrderService {
         }
       });
 
-      return { result: order.getId(), err: null };
+      return order.getId();
     } catch (err) {
       ApiError.verifyType(err);
 

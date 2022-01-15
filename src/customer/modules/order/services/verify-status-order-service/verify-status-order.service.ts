@@ -5,16 +5,15 @@
 
 import Order from '@core/order';
 import ApiError from '@shared/utils/ApiError';
-import { ServiceResponse } from '@shared/utils/service-response';
 
 export class VerifyStatusOrderService {
-  async execute(id: number): Promise<ServiceResponse<string>> {
+  async execute(id: number): Promise<string> {
     try {
       const order = await Order.findOne({ where: { id }, attributes: ['client_order_status'] });
 
       if (!order) throw new ApiError('Pedido não encontrado.');
 
-      return { result: order.getClientOrderStatus(), err: null };
+      return order.getClientOrderStatus();
     } catch (err) {
       ApiError.verifyType(err);
 

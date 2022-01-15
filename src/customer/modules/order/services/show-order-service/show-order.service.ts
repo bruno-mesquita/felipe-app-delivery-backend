@@ -6,14 +6,13 @@
 import Establishment from '@core/establishment';
 import Order from '@core/order';
 import ItemOrder from '@core/item-order';
-import { ServiceResponse } from '@shared/utils/service-response';
 import Product from '@core/product';
 import Evaluation from '@core/evaluation';
 import AddressClient from '@core/address-client';
 import ApiError from '@shared/utils/ApiError';
 
 export class ShowOrderService {
-  async execute(id: number): Promise<ServiceResponse<any | null>> {
+  async execute(id: number): Promise<{ order: Order; items: ItemOrder[] }> {
     try {
       const order = await Order.findOne({
         where: { id },
@@ -39,7 +38,7 @@ export class ShowOrderService {
 
       if (!order) throw new ApiError('Pedido não encontrado.');
 
-      const itemsOrder = await ItemOrder.findAll({
+      const items = await ItemOrder.findAll({
         where: { order_id: id },
         attributes: ['quantity', 'total'],
         include: [
@@ -51,7 +50,7 @@ export class ShowOrderService {
         ]
       })
 
-      return { result: { order, items: itemsOrder }, err: null };
+      return { order, items };
     } catch (err) {
       ApiError.verifyType(err);
 

@@ -1,6 +1,6 @@
 /**
  * @fileoverview Controller do pedido
- * @author Jonatas Rosa Moura
+ * @author Jonatas Rosa Moura, Bruno Mesquita
  */
 
 import { Request, Response } from 'express';
@@ -11,8 +11,16 @@ import { VerifyStatusOrderService } from './services/verify-status-order-service
 import Controller from '@shared/utils/controller';
 
 class OrderController extends Controller {
+  private readonly createOrderService: CreateOrderService;
+  private readonly verifyStatusOrderService: VerifyStatusOrderService;
+  private readonly showOrderService: ShowOrderService;
+
   constructor() {
     super();
+
+    this.createOrderService = new CreateOrderService();
+    this.verifyStatusOrderService = new VerifyStatusOrderService();
+    this.showOrderService = new ShowOrderService();
 
     this.verify = this.verify.bind(this);
     this.show = this.show.bind(this);
@@ -22,13 +30,9 @@ class OrderController extends Controller {
   async verify({ params }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
-      const verifyStatusOrderService = new VerifyStatusOrderService();
+      const result = await this.verifyStatusOrderService.execute(Number(id));
 
-      const order = await verifyStatusOrderService.execute(Number(id));
-
-      if (!order) throw new Error(order.err);
-
-      return res.json(order);
+      return res.json({ result });
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -37,13 +41,10 @@ class OrderController extends Controller {
   async show({ params }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
-      const showOrderService = new ShowOrderService();
 
-      const order = await showOrderService.execute(Number(id));
+      const result = await this.showOrderService.execute(Number(id));
 
-      if (order.err) throw new Error(order.err);
-
-      return res.json(order);
+      return res.json({ result });
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -51,11 +52,9 @@ class OrderController extends Controller {
 
   async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
-      const createOrderService = new CreateOrderService();
+      const response = await this.createOrderService.execute({ ...body, client_id: client.id });
 
-      const response = await createOrderService.execute({ ...body, client_id: client.id });
-
-      return res.status(201).json(response);
+      return res.status(201).json({ result: response });
     } catch (err) {
       return this.requestError(err, res);
     }
