@@ -17,7 +17,7 @@ export class FindProductsByMenuService {
       if(!menu) throw new ApiError('Menu não encontrado');
 
       const products = await Product.findAll({
-        where: { menu_id: id },
+        where: { menu_id: id, active: true },
         attributes: ['id', 'name', 'price', 'description'],
         include: [
           {
