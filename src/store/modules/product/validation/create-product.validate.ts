@@ -6,7 +6,7 @@ import yupWrapper from '@shared/utils/yup-wrapper';
 const schema: SchemaOf<CreateProductDto> = object({
   name: string().trim().required(),
   price: number().required(),
-  description: string().trim().max(150).required(),
+  description: string().trim().required(),
   menu: number().integer().required(),
   image: string().trim().required(),
   active: boolean().required(),
