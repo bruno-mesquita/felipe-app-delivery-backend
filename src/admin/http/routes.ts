@@ -13,15 +13,17 @@ import { cityManagerRoutes } from '../modules/city-manager';
 
 const routes = Router();
 
-routes.use(authRoutes);
-routes.use(ownerRoutes);
-routes.use(deliverymanRoutes);
-routes.use(cityStore);
-routes.use(cityRoutes);
-routes.use(stateRoutes);
-routes.use(categoryRoutes);
-routes.use(termsOfUseRoutes);
-routes.use(announcementRoutes);
-routes.use(cityManagerRoutes);
+routes.use([
+  authRoutes,
+  ownerRoutes,
+  deliverymanRoutes,
+  cityStore,
+  cityRoutes,
+  stateRoutes,
+  categoryRoutes,
+  termsOfUseRoutes,
+  announcementRoutes,
+  cityManagerRoutes,
+])
 
 export default routes;

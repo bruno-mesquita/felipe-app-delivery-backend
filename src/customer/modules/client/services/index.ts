@@ -6,3 +6,4 @@ export { default as ProfileClientService } from './profile-client-service/profil
 export { ListOrdersService } from './list-orders-service';
 export { DeleteClientService } from './delete-client-service';
 export { DeactiveteClientService } from './deactivate-client-service';
+export { ClientMeService } from './client-me.service';

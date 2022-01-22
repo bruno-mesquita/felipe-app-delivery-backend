@@ -20,6 +20,7 @@ export class ListAnnouncementService {
             attributes: ['encoded'],
           }
         ],
+        limit: 15,
       });
 
       return { result: announcements, err: null };

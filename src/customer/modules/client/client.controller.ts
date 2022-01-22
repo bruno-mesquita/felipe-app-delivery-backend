@@ -17,6 +17,7 @@ import {
   ListOrdersService,
   DeleteClientService,
   DeactiveteClientService,
+  ClientMeService,
 } from './services';
 
 import {
@@ -37,6 +38,7 @@ class ClientController extends Controller {
   private readonly listOrdersService: ListOrdersService;
   private readonly deleteClientService: DeleteClientService;
   private readonly deactiveteClientService: DeactiveteClientService;
+  private readonly clientMeService: ClientMeService;
 
   constructor() {
     super();
@@ -49,6 +51,7 @@ class ClientController extends Controller {
     this.listOrdersService = new ListOrdersService();
     this.deleteClientService = new DeleteClientService();
     this.deactiveteClientService = new DeactiveteClientService();
+    this.clientMeService = new ClientMeService();
 
     this.create = this.create.bind(this);
     this.activate = this.activate.bind(this);
@@ -58,6 +61,7 @@ class ClientController extends Controller {
     this.profile = this.profile.bind(this);
     this.listOrdersByClient = this.listOrdersByClient.bind(this);
     this.remove = this.remove.bind(this);
+    this.me = this.me.bind(this);
   }
 
   async create({ body }: Request, res: Response): Promise<Response> {
@@ -133,6 +137,14 @@ class ClientController extends Controller {
   async remove({ client }: Request, res: Response): Promise<Response> {
     try {
       return res.json(await this.deleteClientService.execute(client.entity));
+    } catch (err) {
+      return this.requestError(err, res);
+    }
+  }
+
+  async me({ client }: Request, res: Response): Promise<Response> {
+    try {
+      return res.json(await this.clientMeService.execute(client.id));
     } catch (err) {
       return this.requestError(err, res);
     }

@@ -29,12 +29,10 @@ export default class ProfileClientService {
 
       if(!client) throw new ApiError('Cliente não encontrado');
 
-      const result = {
-        ...client.toJSON()
-      }
+      const result = client.toJSON();
 
       if(includeAvatar) {
-        result['avatar'] = client?.avatar?.encoded || null
+        result['avatar'] = result?.avatar?.encoded || null
       }
 
       return {
