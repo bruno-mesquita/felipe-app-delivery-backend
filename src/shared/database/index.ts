@@ -1,16 +1,31 @@
 import { Sequelize } from 'sequelize';
+import { connect } from 'mongoose';
 
-import databaseConfig from './config';
+import sequelizeConfig from './sequelizeConfig';
+import mongoConfig from './mongoConfig';
 import models from './models';
 
 class Database {
-  private connection: Sequelize;
+  private sequelize: Sequelize;
 
-  public async init(): Promise<void> {
+  public async init() {
+    await this.sequelizeInit();
+    await this.mongoInit();
+  }
+
+  private async mongoInit(): Promise<void>{
     try {
-      this.connection = new Sequelize(databaseConfig);
+      await connect(mongoConfig.uri);
+    } catch (err) {
+      console.log('Erro ao se conectar ao mongoDB');
+    }
+  }
 
-      await this.connection.authenticate();
+  private async sequelizeInit(): Promise<void> {
+    try {
+      this.sequelize = new Sequelize(sequelizeConfig);
+
+      await this.sequelize.authenticate();
       this.initModels();
     } catch (err) {
       console.log('Erro ao se conectar ao database');
@@ -18,11 +33,11 @@ class Database {
   }
 
   private initModels() {
-    models.map((model: any) => model.start(this.connection)).map(model => model.associate && model.associate(this.connection.models))
+    models.map((model: any) => model.start(this.sequelize)).map(model => model.associate && model.associate(this.sequelize.models))
   }
 
   public async disconnect() {
-    await this.connection.close();
+    await this.sequelize.close();
   }
 }
 
