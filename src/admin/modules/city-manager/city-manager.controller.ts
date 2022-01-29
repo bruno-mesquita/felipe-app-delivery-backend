@@ -8,6 +8,7 @@ import {
   ListCityManaganersService,
   DeleteCityManagerService,
   UpdateCityManagerService,
+  FindOneCityManagerService,
 } from './services';
 
 const validateString = (value: string) => {
@@ -23,6 +24,7 @@ export class CityManagerController extends Controller {
   private readonly listCityManaganersService: ListCityManaganersService;
   private readonly deleteCityManagerService: DeleteCityManagerService;
   private readonly updateCityManagerService: UpdateCityManagerService;
+  private readonly findOneCityManagerService: FindOneCityManagerService;
 
   constructor() {
     super();
@@ -31,11 +33,13 @@ export class CityManagerController extends Controller {
     this.listCityManaganersService = new ListCityManaganersService();
     this.deleteCityManagerService = new DeleteCityManagerService();
     this.updateCityManagerService = new UpdateCityManagerService();
+    this.findOneCityManagerService = new FindOneCityManagerService();
 
     this.list = this.list.bind(this);
     this.create = this.create.bind(this);
     this.destroy = this.destroy.bind(this);
     this.update = this.update.bind(this);
+    this.findOne = this.findOne.bind(this);
   }
 
   async list({ query }: Request, res: Response): Promise<Response> {
@@ -67,6 +71,18 @@ export class CityManagerController extends Controller {
       if(!isValidId) throw new ApiError('Parametros incorretos');
 
       return res.json(await this.deleteCityManagerService.execute(params.id));
+    } catch (err) {
+      return this.requestError(err, res);
+    }
+  };
+
+  async findOne({ params }: Request, res: Response): Promise<Response> {
+    try {
+      const isValidId = validateString(params.id);
+
+      if(!isValidId) throw new ApiError('Parametros incorretos');
+
+      return res.json(await this.findOneCityManagerService.execute(params.id));
     } catch (err) {
       return this.requestError(err, res);
     }

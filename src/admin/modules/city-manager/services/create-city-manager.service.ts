@@ -2,22 +2,20 @@ import User from '@core/schemas/user.schema';
 import ApiError from '@shared/utils/ApiError';
 import { hashSync } from 'bcryptjs';
 import { CityManagerDto } from '../dtos/city-manager-dtos';
-import { schema } from '../validations/create-owner.validation';
+import validations from '../validations';
 
 export class CreateCityManagerService {
   async execute(cityManagerDto: CityManagerDto): Promise<void> {
     try {
-      const validation = schema.isValidSync(cityManagerDto);
+      const values = validations.create(cityManagerDto);
 
-      if (!validation) throw new ApiError('Dados inválidos');
-
-      const userExists = await User.findOne({ email: cityManagerDto.email, roles: ['CityManager'] });
+      const userExists = await User.findOne({ email: values.email, roles: ['CityManager'] });
 
       if (userExists) throw new ApiError('Usuário já existente no sistema');
 
       await User.create({
-        ...cityManagerDto,
-        password: hashSync(cityManagerDto.password, 8),
+        ...values,
+        password: hashSync(values.password, 8),
         roles: ['CityManager']
       });
     } catch (err) {

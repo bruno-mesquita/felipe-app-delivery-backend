@@ -1,13 +1,13 @@
 import Controller from '@shared/utils/controller';
 import { Request, Response } from 'express';
 
-import { CreateCityService, UpdateCityService, ListCitiesService, ListCitiesByStateService, FindOneCityService } from './services';
+import { CreateCityService, UpdateCityService, ListCitiesService, FindOneCityService } from './services';
 
 export class CityController extends Controller {
   private readonly createCityService: CreateCityService;
   private readonly updateCityService: UpdateCityService;
   private readonly listCitiesService: ListCitiesService;
-  private readonly listCitiesByStateService: ListCitiesByStateService;
+
   private readonly findOneCityService: FindOneCityService;
 
   constructor() {
@@ -16,13 +16,11 @@ export class CityController extends Controller {
     this.createCityService = new CreateCityService();
     this.updateCityService = new UpdateCityService();
     this.listCitiesService = new ListCitiesService();
-    this.listCitiesByStateService = new ListCitiesByStateService();
     this.findOneCityService = new FindOneCityService();
 
     this.create = this.create.bind(this);
     this.update = this.update.bind(this);
     this.list = this.list.bind(this);
-    this.listByState = this.listByState.bind(this);
     this.findOne = this.findOne.bind(this);
   }
 
@@ -54,13 +52,7 @@ export class CityController extends Controller {
     }
   }
 
-  async listByState({ params }: Request, res: Response): Promise<Response> {
-    try {
-      return res.json(await this.listCitiesByStateService.execute(params.stateId));
-    } catch (err) {
-      return this.requestError(err, res);
-    }
-  }
+
 
   async findOne({ params }: Request, res: Response): Promise<Response> {
     try {

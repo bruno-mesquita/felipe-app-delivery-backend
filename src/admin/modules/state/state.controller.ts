@@ -1,11 +1,13 @@
+import type { Request, Response } from 'express';
+
 import Controller from '@shared/utils/controller';
-import { Request, Response } from 'express';
-import { CreateStateService, ListStatesService, UpdateStateService } from './services';
+import { CreateStateService, ListStatesService, UpdateStateService, ListCitiesByStateService } from './services';
 
 export class StateController extends Controller {
-  private createStateService: CreateStateService;
-  private listStatesService: ListStatesService;
-  private updateStateService: UpdateStateService;
+  private readonly createStateService: CreateStateService;
+  private readonly listStatesService: ListStatesService;
+  private readonly updateStateService: UpdateStateService;
+  private readonly listCitiesByStateService: ListCitiesByStateService;
 
   constructor() {
     super();
@@ -13,10 +15,13 @@ export class StateController extends Controller {
     this.createStateService = new CreateStateService();
     this.listStatesService = new ListStatesService();
     this.updateStateService = new UpdateStateService();
+    this.listCitiesByStateService = new ListCitiesByStateService();
 
     this.create = this.create.bind(this);
     this.list = this.list.bind(this);
     this.update = this.update.bind(this);
+    this.listByState = this.listByState.bind(this);
+
   }
 
   async create({ body }: Request, res: Response): Promise<Response> {
@@ -42,6 +47,14 @@ export class StateController extends Controller {
       await this.updateStateService.execute({ ...body, id });
 
       return res.status(204).json({});
+    } catch (err) {
+      return this.requestError(err, res);
+    }
+  }
+
+  async listByState({ params }: Request, res: Response): Promise<Response> {
+    try {
+      return res.json(await this.listCitiesByStateService.execute(params.stateId));
     } catch (err) {
       return this.requestError(err, res);
     }
