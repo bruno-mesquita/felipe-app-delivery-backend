@@ -4,5 +4,5 @@ export interface CityManagerDto {
   password: string;
   cellphone: string;
   active: boolean;
-  city_of_action_id: number;
+  city: string;
 }

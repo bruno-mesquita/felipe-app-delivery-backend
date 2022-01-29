@@ -1,5 +1,6 @@
 export interface CityAddressDto {
   name: string;
-  state: number;
+  state: string;
   active: boolean;
+  neighborhoods: string[];
 }

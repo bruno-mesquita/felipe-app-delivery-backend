@@ -1,18 +1,16 @@
-import State from '@core/state';
-import { ServiceResponse } from '@shared/utils/service-response';
+import State, { IState } from '@core/schemas/state.schema';
+import ApiError from '@shared/utils/ApiError';
 
-class ListStatesService {
-  async execute(): Promise<ServiceResponse<State[] | null>> {
+export class ListStatesService {
+  async execute(): Promise<IState[]> {
     try {
-      const states = await State.findAll({
-        attributes: ['id', 'name', 'active']
-      });
+      const states = await State.find().select(['name', 'active']);
 
-      return { result: states, err: null };
+      return states;
     } catch (err) {
-      return { result: null, err: err.message};
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
-
-export { ListStatesService };

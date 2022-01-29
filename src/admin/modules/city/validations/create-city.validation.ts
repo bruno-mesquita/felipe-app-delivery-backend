@@ -1,13 +1,13 @@
-import { object, SchemaOf, string, boolean, number } from 'yup';
+import { object, SchemaOf, string, boolean, array } from 'yup';
 
+import yupWrapper from '@shared/utils/yup-wrapper';
 import { CityAddressDto } from '../dtos/create-city-dto';
 
-const REQUIRED = 'Campo obrigátorio';
+export const createValidate = yupWrapper<CityAddressDto>(object({
+    name: string().required(),
+    state: string().required(),
+    active: boolean().required(),
+    neighborhoods: array().of(string()).required(),
+  })
+);
 
-const schema: SchemaOf<CityAddressDto> = object({
-  name: string().required(REQUIRED),
-  state: number().integer().required(REQUIRED),
-  active: boolean().required(REQUIRED),
-});
-
-export { schema };

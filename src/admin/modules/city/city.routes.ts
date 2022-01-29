@@ -10,6 +10,7 @@ const routes = Router();
 routes.post('/cities', ...middlewares, cityController.create);
 routes.put('/cities/:id', ...middlewares, cityController.update);
 routes.get('/cities', ...middlewares, cityController.list);
-routes.get('/cities/:stateId', ...middlewares, cityController.list);
+// routes.get('/cities/:stateId', ...middlewares, cityController.listByState);
+routes.get('/cities/:cityId', ...middlewares, cityController.findOne);
 
 export default routes;

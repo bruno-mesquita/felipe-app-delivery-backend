@@ -39,7 +39,9 @@ export class StateController extends Controller {
     try {
       const { id } = params;
 
-      return res.json(await this.updateStateService.execute({ ...body, id }));
+      await this.updateStateService.execute({ ...body, id });
+
+      return res.status(204).json({});
     } catch (err) {
       return this.requestError(err, res);
     }

@@ -1,41 +1,27 @@
-import City from '@core/city';
-import State from '@core/state';
+import City from '@core/schemas/city.schema';
+import State from '@core/schemas/state.schema';
 import ApiError from '@shared/utils/ApiError';
-import { ServiceResponse } from '@shared/utils/service-response';
 import { CityAddressDto } from '../dtos/create-city-dto';
-import { schema } from '../validations/create-city.validation';
+import { createValidate } from '../validations';
 
 export class CreateCityService {
-  async execute(createCityDto: CityAddressDto): Promise<ServiceResponse<number>> {
+  async execute(createCityDto: CityAddressDto): Promise<string> {
     try {
       // Fazendo validação DTO
-      const valid = schema.isValidSync(createCityDto);
-
-      if (!valid) throw new ApiError('[Erro]: Por favor reveja seus dados');
+      const values = createValidate(createCityDto);
 
       // Verificando se a Cidade existe no banco de dados
-      const cityExists = await City.findOne({
-        where: { name: createCityDto.name }, attributes: ['id', 'name'],
-      });
+      const cityExists = await City.findOne({ name: values.name }).select(['name']);
 
       if (cityExists) throw new ApiError('[ERRO]: Cidade já existente no sistema!');
 
       // Verificando se o Estado existe no sistema ou se está selecionado
 
-      const stateExists = await State.findOne({
-        where: { id: createCityDto.state }, attributes: ['name', 'id'],
-      });
+      const state = await State.findOne({ _id: values.state }).select(['name']);
 
-      if (!stateExists && !createCityDto.state) throw new ApiError('[ERRO]: Estado não encontrado/selecionado.');
+      const city = await City.create(values);
 
-      // criando classe
-      const city = await City.create({
-        name: createCityDto.name,
-        state_id: stateExists.getId(),
-        active: true,
-      });
-
-      return { result: city.getId(), err: null };
+      return city._id.toHexString();
     } catch (err) {
       ApiError.verifyType(err);
 

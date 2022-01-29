@@ -6,14 +6,13 @@ import * as Yup from 'yup';
 import {
   CreateCityManagerService,
   ListCityManaganersService,
-  ShowCityManagerService,
   DeleteCityManagerService,
   UpdateCityManagerService,
 } from './services';
 
-const validateNumber = (value: number) => {
+const validateString = (value: string) => {
   try {
-    return Yup.number().integer().isValidSync(value);
+    return Yup.string().isValidSync(value);
   } catch (err) {
     return false;
   }
@@ -22,7 +21,6 @@ const validateNumber = (value: number) => {
 export class CityManagerController extends Controller {
   private readonly createCityManagerService: CreateCityManagerService;
   private readonly listCityManaganersService: ListCityManaganersService;
-  private readonly showCityManagerService: ShowCityManagerService;
   private readonly deleteCityManagerService: DeleteCityManagerService;
   private readonly updateCityManagerService: UpdateCityManagerService;
 
@@ -31,26 +29,20 @@ export class CityManagerController extends Controller {
 
     this.createCityManagerService = new CreateCityManagerService();
     this.listCityManaganersService = new ListCityManaganersService();
-    this.showCityManagerService = new ShowCityManagerService();
     this.deleteCityManagerService = new DeleteCityManagerService();
     this.updateCityManagerService = new UpdateCityManagerService();
 
     this.list = this.list.bind(this);
-    this.show = this.show.bind(this);
     this.create = this.create.bind(this);
     this.destroy = this.destroy.bind(this);
     this.update = this.update.bind(this);
   }
 
-  async list({ params }: Request, res: Response): Promise<Response> {
+  async list({ query }: Request, res: Response): Promise<Response> {
     try {
-      const { page = 0 } = params;
+      const { page = 0 } = query;
 
       const convertedPage = Number(page);
-
-      const isValidPage = validateNumber(convertedPage);
-
-      if(!isValidPage) throw new ApiError('Parametros incorretos');
 
       return res.json(await this.listCityManaganersService.execute(convertedPage));
     } catch (err) {
@@ -58,23 +50,11 @@ export class CityManagerController extends Controller {
     }
   };
 
-  async show({ params }: Request, res: Response): Promise<Response> {
-    try {
-      const convertedId = Number(params.id);
-
-      const isValidId = validateNumber(convertedId);
-
-      if(!isValidId) throw new ApiError('Parametros incorretos');
-
-      return res.json(await this.showCityManagerService.execute(convertedId));
-    } catch (err) {
-      return this.requestError(err, res);
-    }
-  };
-
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
-      return res.status(201).json(await this.createCityManagerService.execute(body));
+      await this.createCityManagerService.execute(body);
+
+      return res.status(201).json({});
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -82,13 +62,11 @@ export class CityManagerController extends Controller {
 
   async destroy({ params }: Request, res: Response): Promise<Response> {
     try {
-      const convertedId = Number(params.id);
-
-      const isValidId = validateNumber(convertedId);
+      const isValidId = validateString(params.id);
 
       if(!isValidId) throw new ApiError('Parametros incorretos');
 
-      return res.json(await this.deleteCityManagerService.execute(convertedId));
+      return res.json(await this.deleteCityManagerService.execute(params.id));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -96,13 +74,13 @@ export class CityManagerController extends Controller {
 
   async update({ body, params }: Request, res: Response): Promise<Response> {
     try {
-      const convertedId = Number(params.id);
-
-      const isValidId = validateNumber(convertedId);
+      const isValidId = validateString(params.id);
 
       if(!isValidId) throw new ApiError('Parametros incorretos');
 
-      return res.json(await this.updateCityManagerService.execute({ id: convertedId, ...body }));
+      await this.updateCityManagerService.execute({ id: params.id, ...body });
+
+      return res.status(204).json({});
     } catch (err) {
       return this.requestError(err, res);
     }

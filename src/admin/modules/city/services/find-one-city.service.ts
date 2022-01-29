@@ -1,10 +1,10 @@
 import City from '@core/schemas/city.schema';
 import ApiError from '@shared/utils/ApiError';
 
-export class ListCitiesService {
-  async execute(): Promise<any[]> {
+export class FindOneCityService {
+  async execute(cityId: string): Promise<any> {
     try {
-      return  await City.find().select(['name', 'active', 'state', 'neighborhoods']).populate({ path: 'state', select: ['name'] });
+      return City.findOne({ _id: cityId }).select(['-createdAt', '-__v', '-updatedAt']);
     } catch (err) {
       ApiError.verifyType(err);
 

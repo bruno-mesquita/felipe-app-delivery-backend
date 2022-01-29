@@ -1,32 +1,21 @@
-import City from '@core/city';
+import City from '@core/schemas/city.schema';
 import ApiError from '@shared/utils/ApiError';
-import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateCityDto } from '../dtos/update-city-dto';
-import { schema } from '../validations/update-city.validation';
+import { updateValidate } from '../validations';
 
 export class UpdateCityService {
-  async execute(updateCityDto: UpdateCityDto): Promise<ServiceResponse<boolean>> {
+  async execute(updateCityDto: UpdateCityDto): Promise<void> {
     try {
-      // Fazendo validação DTO
-      const valid = schema.isValidSync(updateCityDto);
+      const values = updateValidate(updateCityDto);
 
-      if (!valid) throw new ApiError('[Erro]: Por favor reveja seus dados');
+      const { _id, ...restDto } = values;
 
       // Verificando se a Cidade existe no banco de dados
-      const city = await City.findOne({
-        where: { id: updateCityDto.id },
-        attributes: ['id']
-      });
+      const city = await City.findOne({ _id });
 
       if (!city) throw new ApiError('[ERRO]: Cidade não existente no sistema!');
 
-      city.setName(updateCityDto.name);
-      city.setActive(updateCityDto.active);
-      city.setStateId(updateCityDto.stateId);
-
-      await city.save();
-
-      return { result: true, err: null };
+      await city.update(restDto);
     } catch (err) {
       ApiError.verifyType(err);
 

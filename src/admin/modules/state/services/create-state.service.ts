@@ -1,14 +1,10 @@
-/**
- * @fileoverview Criação de serviço de address de user customer
- */
-
-import State from '@core/state';
+import State from '@core/schemas/state.schema';
 import ApiError from '@shared/utils/ApiError';
 import { CreateStateADto } from '../dtos/create-state-dto';
 import { schema } from '../validations/create-state.validation';
 
 export class CreateStateService {
-  async execute(createStateDto: CreateStateADto): Promise<any> {
+  async execute(createStateDto: CreateStateADto): Promise<string> {
     try {
       // Fazendo validação DTO
       const valid = schema.isValidSync(createStateDto);
@@ -17,17 +13,14 @@ export class CreateStateService {
 
       // Verificando se o Estado já exite
 
-      const stateExists = await State.findOne({
-        where: { name: createStateDto.name },
-      });
+      const stateExists = await State.findOne({ name: createStateDto.name });
 
       if (stateExists) throw new ApiError('[ERRO]: Estado já existe no sistema!');
 
       // criando classe
-
       const state = await State.create(createStateDto);
 
-      return { result: state.getId(), err: null };
+      return state._id.toHexString();
     } catch (err) {
       ApiError.verifyType(err);
 

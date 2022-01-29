@@ -4,7 +4,9 @@
  * @author Bruno Mesquita
  */
 
-import Admin from '@core/admin';
+import { compareSync } from 'bcryptjs';
+
+import User from '@core/schemas/user.schema';
 import ApiError from '@shared/utils/ApiError';
 import TokenManager from '@shared/utils/token-manager';
 import { LoginClientDto } from '../dtos/login-client.dto';
@@ -17,19 +19,16 @@ class LoginClientService {
 
       const tokenManager = new TokenManager();
 
-      // Procurar pelo e-mail e pegar o avatar desse cliente
-      const client = await Admin.findOne({
-        where: { email: loginDto.email },
-        attributes: ['id', 'password', 'email']
-      });
+      const admin = (await User.aggregate([
+        { $match: { email: loginDto.email } },
+      ]))[0]
 
-      if (!client) throw new ApiError('[erro]: E-mail ou senha incorreto');
+      if (!admin) throw new ApiError('[erro]: E-mail ou senha incorreto');
 
       // Comparar senha digitada do cliente com a que foi salva no banco
+      if (!compareSync(loginDto.password, admin.password)) throw new ApiError('Credenciais inválidas');
 
-      if (!client.comparePassword(loginDto.password)) throw new ApiError('Credenciais inválidas');
-
-      return tokenManager.create(client.getId());
+      return tokenManager.create(admin._id);
     } catch (err) {
       ApiError.verifyType(err);
 

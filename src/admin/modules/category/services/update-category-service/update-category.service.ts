@@ -1,40 +1,24 @@
-import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateCategoryDtos } from '../../dtos/update-category.dtos';
-import Category from '@core/category';
+import Category from '@core/schemas/category.schema';
 import { schema } from '../../validation/update-category.validation';
 import ApiError from '@shared/utils/ApiError';
 
 export class UpdateCategoryService {
-  async execute(updateCategoryDto: UpdateCategoryDtos): Promise<ServiceResponse<boolean>> {
+  async execute({ id, name }: UpdateCategoryDtos): Promise<void> {
     try {
       // validando dto
-      const valid = schema.isValidSync(updateCategoryDto);
+      const valid = schema.isValidSync({ id, name });
 
       if (!valid) throw new ApiError('Dados inválidos');
 
       // Verificando se essa existe uma categoria
 
-      const category = await Category.findByPk(updateCategoryDto.id);
+      const category = await Category.findById(id);
 
       if (!category) throw new ApiError('Categoria não encontrada');
 
-      // Verificando se já existe com esse nome
-
-      const categoryExists = await Category.findOne({
-        where: {name: updateCategoryDto.name}
-      });
-
-      if (categoryExists) throw new ApiError('Nome de Categoria já existente');
-
       // Criando classe e Salvando no DB
-
-      const { name } = updateCategoryDto;
-
-      category.setName(name);
-
-      await category.save();
-
-      return { result: true, err: null };
+      await category.update({ name });
     } catch (err) {
       ApiError.verifyType(err);
 

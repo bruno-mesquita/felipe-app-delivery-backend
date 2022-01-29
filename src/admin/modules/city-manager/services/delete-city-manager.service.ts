@@ -1,20 +1,15 @@
-import CityManager from '@core/city-manager';
+import User from '@core/schemas/user.schema';
 import ApiError from '@shared/utils/ApiError';
 import { ServiceResponse } from '@shared/utils/service-response';
 
 export class DeleteCityManagerService {
-  async execute(id: number): Promise<ServiceResponse<boolean>> {
+  async execute(id: string): Promise<void> {
     try {
-      const cityManager = await CityManager.findOne({
-        where: { id },
-        attributes: ['id'],
-      });
+      const user = await User.findOne({ _id: id, roles: ['CityManager'], active: true });
 
-      if (!cityManager) throw new ApiError('Usuário não encontrado');
+      if (!user) throw new ApiError('Usuário não encontrado');
 
-      await cityManager.destroy();
-
-      return { result: true, err: null };
+      await user.delete();
     } catch (err) {
       ApiError.verifyType(err);
 

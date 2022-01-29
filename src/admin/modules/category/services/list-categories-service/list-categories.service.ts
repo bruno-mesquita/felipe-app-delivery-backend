@@ -1,16 +1,14 @@
-import { ServiceResponse } from '@shared/utils/service-response';
-import Category from '@core/category';
+import Category, { type ICategory } from '@core/schemas/category.schema';
+import ApiError from '@shared/utils/ApiError';
 
 export class ListCategoriesService {
-  async execute(): Promise<ServiceResponse<Category[] | null>> {
+  async execute(): Promise<ICategory[]> {
     try {
-      const categories = await Category.findAll({
-        attributes: ['id', 'name'],
-      });
-
-      return { result: categories, err: null };
+      return await Category.find({}).select(['name']);
     } catch (err) {
-      return { result: null, err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

@@ -24,7 +24,9 @@ class EstablishmentController extends Controller {
     try {
       const { id } = params;
 
-      return res.json(await this.updateCategoryService.execute({ ...body, id }));
+      await this.updateCategoryService.execute({ ...body, id })
+
+      return res.status(203).json({});
     } catch (err) {
       return this.requestError(err, res);
     }

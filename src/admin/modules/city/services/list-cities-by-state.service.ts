@@ -1,17 +1,14 @@
-import City from '@core/city';
-import { ServiceResponse } from '@shared/utils/service-response';
+import City from '@core/schemas/city.schema';
+import ApiError from '@shared/utils/ApiError';
 
 export class ListCitiesByStateService {
-  async execute(stateId: string): Promise<ServiceResponse<City[]>> {
+  async execute(stateId: string): Promise<any[]> {
     try {
-      const cities = await City.findAll({
-        where: { state_id: stateId },
-        attributes: ['id', 'name'],
-      });
-
-      return { result: cities, err: null };
+      return City.find({ state: stateId }).select(['name']);
     } catch (err) {
-      return { result: [], err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

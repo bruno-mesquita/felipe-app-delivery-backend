@@ -1,30 +1,25 @@
-import CityManager from '@core/city-manager';
+import User from '@core/schemas/user.schema';
 import ApiError from '@shared/utils/ApiError';
-import { ServiceResponse } from '@shared/utils/service-response';
+import { hashSync } from 'bcryptjs';
 import { CityManagerDto } from '../dtos/city-manager-dtos';
 import { schema } from '../validations/create-owner.validation';
 
 export class CreateCityManagerService {
-  async execute(cityManagerDto: CityManagerDto): Promise<ServiceResponse<boolean>> {
+  async execute(cityManagerDto: CityManagerDto): Promise<void> {
     try {
       const validation = schema.isValidSync(cityManagerDto);
 
       if (!validation) throw new ApiError('Dados inválidos');
 
-      const cityManagerExists = await CityManager.findOne({
-        where: { email: cityManagerDto.email },
-        attributes: ['id'],
+      const userExists = await User.findOne({ email: cityManagerDto.email, roles: ['CityManager'] });
+
+      if (userExists) throw new ApiError('Usuário já existente no sistema');
+
+      await User.create({
+        ...cityManagerDto,
+        password: hashSync(cityManagerDto.password, 8),
+        roles: ['CityManager']
       });
-
-      if (cityManagerExists) throw new ApiError('Usuário já existente no sistema');
-
-      const cityManager = new CityManager(cityManagerDto)
-
-      cityManager.hashPassword();
-
-      await cityManager.save();
-
-      return { result: true, err: null };
     } catch (err) {
       ApiError.verifyType(err);
 

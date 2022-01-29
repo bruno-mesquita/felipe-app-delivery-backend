@@ -1,35 +1,48 @@
-import { ServiceResponse } from '@shared/utils/service-response';
-import CityManager from '@core/city-manager';
-import City from '@core/city';
-import State from '@core/state';
+import User from '@core/schemas/user.schema';
 import { createPagination } from '@shared/utils/use-page';
+import ApiError from '@shared/utils/ApiError';
 
 export class ListCityManaganersService {
-  async execute(page: number): Promise<ServiceResponse<CityManager[]>> {
+  async execute(page: number): Promise<any[]> {
     const { limit, offset } = createPagination(page);
 
     try {
-      const cityManagers = await CityManager.findAll({
-        attributes: ['id', 'name', 'email', 'cellphone', 'active'],
-        include: [
-          {
-            model: City,
-            as: 'cityOfAction',
-            attributes: ['name'],
-            include: [{
-              model: State,
-              as: 'state',
-              attributes: ['name'],
-            }]
-          },
-        ],
-        limit,
-        offset
-      });
+      const users = await User.aggregate([
+        { $match: { roles: ['CityManager'] } },
+        {
+          $lookup: {
+            from: 'cities',
+            let: { cityId: '$city' },
+            pipeline: [
+              { $match: { $expr: { $eq: ['$_id', '$$cityId'] }}},
+              { $project: { name: 1, state: 1 } },
+              {
+                $lookup: {
+                  from: 'states',
+                  let: { stateId: '$state' },
+                  pipeline: [
+                    { $match: { $expr: { $eq: ['$_id', '$$stateId'] }}},
+                    { $project: { name: 1 } },
+                  ],
+                  as: 'state',
+                }
+              },
+              { $unwind: '$state' },
+            ],
+            as: 'city'
+          }
+        },
+        { $unwind: '$city' },
+        { $project: { _id: 1, name: 1, email: 1, cellphone: 1, active: 1, city: 1, } },
+        { $skip: offset },
+        { $limit: limit }
+      ]);
 
-      return { result: cityManagers, err: null };
+      return users;
     } catch (err) {
-      return { result: [], err: err.message };
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     };
   };
 };
