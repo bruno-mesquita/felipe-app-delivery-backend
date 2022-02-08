@@ -15,14 +15,14 @@ export class UpdateProductService {
 
       // Verificando se o Menu existe
 
-      const menuExists = await Menu.findByPk(updateProductDto.menu);
+      const menuExists = await Menu.findByPk(updateProductDto.menu, { attributes: ['id'] });
 
       if (!menuExists) throw new ApiError('Menu não encontrado.');
 
       // Editando classe e Salvando no DB
-      const { name, price, description, image, active } = updateProductDto;
+      const { name, price, description, image, active, menu } = updateProductDto;
 
-      product.updateProduct(name, price, description, menuExists.id, active);
+      product.updateProduct(name, price, description, menu, active);
 
       const photo = await Image.findOne({ where: { id: product.get('image_id') } });
 
