@@ -18,7 +18,10 @@ export class UpdateAddressClientService {
         if (!cityExists) throw new ApiError('Cidade não encontrada');
       }
 
-      await addressClient.update(updateClientAddressDto);
+      await addressClient.update({
+        ...updateClientAddressDto,
+        city_id: updateClientAddressDto.city
+      });
 
       await addressClient.save();
 
