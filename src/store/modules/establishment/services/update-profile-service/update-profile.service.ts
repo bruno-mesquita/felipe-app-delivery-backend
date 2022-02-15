@@ -7,20 +7,22 @@ import AddressEstablishment from '@core/address-establishment';
 import ApiError from '@shared/utils/ApiError';
 
 export class UpdateProfileService {
-  async execute(UpdateEstablishmentDto: UpdateEstablishmentDto): Promise<ServiceResponse<boolean>> {
+  async execute(model: UpdateEstablishmentDto): Promise<ServiceResponse<boolean>> {
     try {
       // validando dto
-      const valid = updateClientValidation.isValidSync(UpdateEstablishmentDto);
+      const valid = updateClientValidation.isValidSync(model);
 
       if (!valid) throw new ApiError('Dados inválidos');
 
+      const { userId, id, address, ...rest } = model;
+
       // verificando se o usuário existe
       const owner = await EstablishmentOwner.findOne({
-        where: { id: UpdateEstablishmentDto.userId },
+        where: { id: userId },
         include: [{
           model: Establishment,
           as: 'establishment',
-          where: { id: UpdateEstablishmentDto.id, active: true },
+          where: { id, active: true },
           include: [{
             model: AddressEstablishment,
             as: 'address',
@@ -31,18 +33,11 @@ export class UpdateProfileService {
       if (!owner) throw new ApiError('Dono não encontrado');
 
       const { establishment } = owner;
-      const { address, ...rest } = UpdateEstablishmentDto;
 
-      establishment.updateProfile(rest as any);
-      establishment.setFreightValue(rest.freightValue);
-      establishment.address.setCityId(address.city)
-      establishment.address.setNeighborhood(address.neighborhood)
-      establishment.address.setNumber(address.number)
-      establishment.address.setStreet(address.street)
-      establishment.address.setCep(address.cep)
+      await establishment.update(rest);
 
-      await establishment.save();
-      await establishment.address.save();
+      const { city, ...addressDto } = address;
+      await establishment.address.update({ ...addressDto, city_id: city })
 
       return { result: true, err: null };
     } catch (err) {
