@@ -6,34 +6,28 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import type { UpdateProductDto } from '../../dtos/update-product-dto';
 
 export class UpdateProductService {
-  async execute(updateProductDto: UpdateProductDto): Promise<ServiceResponse<boolean>> {
+  async execute({ id, menu, image, ...modelDto }: UpdateProductDto): Promise<ServiceResponse<boolean>> {
     try {
       // Verificando se o produto existe
-      const product = await Product.findByPk(updateProductDto.id);
+      const product = await Product.findByPk(id);
 
       if (!product) throw new ApiError('Produto não encontrado.');
 
-      // Verificando se o Menu existe
+      if(menu) {
+        const menuExists = await Menu.findByPk(menu, { attributes: ['id'] });
 
-      const menuExists = await Menu.findByPk(updateProductDto.menu, { attributes: ['id'] });
+        if (!menuExists) throw new ApiError('Menu não encontrado.');
 
-      if (!menuExists) throw new ApiError('Menu não encontrado.');
+        modelDto.menu_id = menu;
+      }
 
-      // Editando classe e Salvando no DB
-      const { name, price, description, image, active, menu } = updateProductDto;
+      if(image) {
+        const photo = await Image.findOne({ where: { id: product.get('image_id') }, attributes: ['encoded'] });
 
-      
-      await product.update({
-        name,
-        price,
-        description,
-        active,
-        menu_id: menu,
-      });
+        await photo.update({ encoded: image });
+      }
 
-      const photo = await Image.findOne({ where: { id: product.get('image_id') }, attributes: ['encoded'] });
-
-      await photo.update({ encoded: image });
+      await product.update(modelDto);
 
       return { result: true, err: null };
     } catch (err) {

@@ -1,14 +1,9 @@
-/**
- * @fileoverview Update de DTOs exclusivos de Produtos
- * @author Jonatas Rosa Moura
- */
-
- export interface UpdateProductDto {
-  id: number;
+export type UpdateProductDto  = Partial<{
   name: string;
   price: number;
   description: string;
   menu: number;
+  menu_id: number;
   image: string;
   active: boolean;
-}
+} & { id: number; }>
