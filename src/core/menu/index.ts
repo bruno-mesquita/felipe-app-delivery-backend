@@ -16,6 +16,7 @@ import Model from '../_Bases/model';
 class Menu extends Model {
   name: string;
   establishment_id!: number;
+  active: boolean;
 
   public readonly products?: Product[];
 
@@ -26,6 +27,7 @@ class Menu extends Model {
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.NUMBER,
+      active: DataTypes.BOOLEAN,
     }, { sequelize, tableName: 'menu', paranoid: true });
 
     return this;

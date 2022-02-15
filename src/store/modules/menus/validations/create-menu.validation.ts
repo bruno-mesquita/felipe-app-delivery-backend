@@ -1,17 +1,10 @@
-import { object, SchemaOf, string, number } from 'yup';
+import { object, string, number, boolean } from 'yup';
 
-import ApiError from '@shared/utils/ApiError';
-import { CreateMenuDto } from '../dtos/create-menu.dtos';
+import YupWrapper from '@shared/utils/yup-wrapper';
+import type { CreateMenuDto } from '../dtos/create-menu.dtos';
 
-const schema: SchemaOf<CreateMenuDto> = object({
+export const createMenuValidate = YupWrapper<CreateMenuDto>(object().shape({
   name: string().trim().required(),
   establishmentId: number().integer().min(1).required(),
-});
-
-export const createMenuValidate = (values: CreateMenuDto) => {
-  try {
-    return schema.validateSync(values, { stripUnknown: true });
-  } catch (err) {
-    throw new ApiError('Erro de validação!', 'validate');
-  }
-}
+  active: boolean().default(true),
+}))
