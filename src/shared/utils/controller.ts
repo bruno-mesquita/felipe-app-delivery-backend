@@ -3,8 +3,10 @@ import { Response } from 'express';
 import ApiError from './ApiError';
 
 abstract class Controller {
-  constructor() {
+  constructor(binds = []) {
     this.requestError = this.requestError.bind(this);
+
+    binds.forEach(bind => this[bind] = this[bind].bind(this));
   }
 
   requestError(err: any, res: Response) {

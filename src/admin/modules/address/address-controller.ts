@@ -1,5 +1,5 @@
+import type { Request, Response } from 'express';
 import { ListCitiesByStatesService } from './services/list-cities-by-state-service';
-import { Request, Response } from 'express';
 import Controller from '@shared/utils/controller';
 
 export class AddressEstablishmentController extends Controller {
