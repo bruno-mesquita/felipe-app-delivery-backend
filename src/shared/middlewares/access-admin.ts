@@ -1,7 +1,3 @@
-/**
- * @fileoverview Verificando se é o id do admin que está criando nessa rota
- */
-
 import User from '@core/schemas/user.schema';
 import { Request, Response, NextFunction } from 'express';
 import { Types } from 'mongoose';

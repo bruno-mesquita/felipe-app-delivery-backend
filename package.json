@@ -13,8 +13,7 @@
     "test": "cross-env NODE_ENV=test yarn db:seed && jest",
     "db:migrate": "yarn generate:migrations && sequelize db:migrate",
     "db:migrate:drop": "sequelize db:migrate:undo:all",
-    "db:seed": "yarn generate:seeds && yarn db:migrate:drop && yarn db:migrate && sequelize db:seed:all",
-    "db:migrations": "cross-env NODE_ENV=development tsnd -r tsconfig-paths/register --respawn --transpile-only src/scriptMigrations.ts"
+    "db:seed": "yarn generate:seeds && yarn db:migrate:drop && yarn db:migrate && sequelize db:seed:all"
   },
   "dependencies": {
     "axios": "^0.24.0",

@@ -15,8 +15,9 @@ class City extends Model {
     return this;
   }
 
-  static associate({ State }) {
+  static associate({ State, Neighborhood }) {
     this.belongsTo(State, { foreignKey: 'state_id', as: 'state' });
+    this.hasMany(Neighborhood, { foreignKey: 'menu_id', as: 'neighborhoods', sourceKey: 'id', onDelete: 'cascade' });
   }
 
   public setName(name: string): void {

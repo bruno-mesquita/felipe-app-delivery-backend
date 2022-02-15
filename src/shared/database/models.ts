@@ -19,6 +19,7 @@ import { EstablishmentOwner } from '@core/establishment-owner';
 import { Deliveryman } from '@core/deliveryman';
 import { Announcement } from '@core/announcement';
 import CityManager from '@core/city-manager';
+import Neighborhood from '@core/neighborhood';
 
 export default [
   Image,
@@ -41,7 +42,8 @@ export default [
   EstablishmentOwner,
   Deliveryman,
   Announcement,
-  CityManager
+  CityManager,
+  Neighborhood
 ]
 
 
