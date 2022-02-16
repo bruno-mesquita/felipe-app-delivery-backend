@@ -98,12 +98,11 @@ export class CreateOrderService {
       const notification = new Notification();
 
       await notification.send({
-        targetId: establishmentOwner.getId(),
+        targetId: ownerJson.id,
         type: 'Partner',
         data: {
           title: 'Chegou um novo pedido para você!',
-          body: '',
-          data: {},
+          body: 'Venha conferir',
         }
       });
 

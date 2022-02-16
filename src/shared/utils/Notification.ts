@@ -1,5 +1,4 @@
 import axios, { AxiosInstance } from 'axios';
-import ApiError from './ApiError';
 
 type SendData = {
   targetId: number;
