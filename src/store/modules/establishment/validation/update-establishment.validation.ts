@@ -1,4 +1,4 @@
-import { object, SchemaOf, string, number } from 'yup';
+import { object, SchemaOf, string, number, boolean } from 'yup';
 
 import { UpdateEstablishmentDto } from '../dtos/update-establishment-dto';
 
@@ -12,6 +12,7 @@ const schema: SchemaOf<UpdateEstablishmentDto> = object({
   closingTime: number().required(),
   freightValue: number().required(),
   userId: number().required(),
+  active: boolean(),
   address: object({
     street: string().trim().required(),
     number: string().trim().required(),

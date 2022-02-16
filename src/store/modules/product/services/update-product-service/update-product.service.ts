@@ -6,12 +6,10 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import type { UpdateProductDto } from '../../dtos/update-product-dto';
 
 export class UpdateProductService {
-  async execute({ id, _id, menu, image, ...modelDto }: UpdateProductDto): Promise<ServiceResponse<boolean>> {
+  async execute({ id, menu, image, ...modelDto }: UpdateProductDto): Promise<ServiceResponse<boolean>> {
     try {
-      const productId = id || _id;
-
       // Verificando se o produto existe
-      const product = await Product.findByPk(productId);
+      const product = await Product.findByPk(id);
 
       if (!product) throw new ApiError('Produto não encontrado.');
 

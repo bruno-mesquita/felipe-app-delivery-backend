@@ -4,7 +4,6 @@ import type { UpdateProductDto } from '../dtos/update-product-dto';
 import yupWrapper from '@shared/utils/yup-wrapper';
 
 export const updateProductValidate = yupWrapper<Omit<UpdateProductDto, 'menu_id'>>(object({
-  _id: number().integer().positive(),
   id: number().integer().positive(),
   name: string().trim(),
   price: number().positive(),

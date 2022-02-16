@@ -6,6 +6,4 @@ export type UpdateProductDto  = Partial<{
   menu_id: number;
   image: string;
   active: boolean;
-  id: number
-  _id: number;
-}>
+}> & { id: number; };

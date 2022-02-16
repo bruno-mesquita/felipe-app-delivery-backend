@@ -6,6 +6,7 @@ export interface UpdateEstablishmentDto {
   closingTime: number;
   freightValue: number;
   userId: number;
+  active: boolean;
   address: {
     street: string;
     number: string;

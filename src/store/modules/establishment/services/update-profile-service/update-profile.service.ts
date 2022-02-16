@@ -14,7 +14,7 @@ export class UpdateProfileService {
 
       if (!valid) throw new ApiError('Dados inválidos');
 
-      const { userId, id, address, ...rest } = model;
+      const { userId, id, address: addressModel, ...rest } = model;
 
       // verificando se o usuário existe
       const owner = await EstablishmentOwner.findOne({
@@ -32,12 +32,13 @@ export class UpdateProfileService {
 
       if (!owner) throw new ApiError('Dono não encontrado');
 
-      const { establishment } = owner;
+      const establishment = owner.get('establishment');
+      const address = establishment.get('address')
+
+      const { city, ...addressDto } = addressModel;
 
       await establishment.update(rest);
-
-      const { city, ...addressDto } = address;
-      await establishment.address.update({ ...addressDto, city_id: city })
+      await address.update({ ...addressDto, city_id: city })
 
       return { result: true, err: null };
     } catch (err) {
