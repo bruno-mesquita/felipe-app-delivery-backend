@@ -5,7 +5,7 @@ export class ListMenusByEstablishmentService {
 
   async execute(establishmentId: number): Promise<ServiceResponse<Menu[]>> {
     try {
-      const menus = await Menu.findAll({ where: { establishment_id: establishmentId }, attributes: ['id', 'name'] });
+      const menus = await Menu.findAll({ where: { establishment_id: establishmentId, active: true }, attributes: ['id', 'name'] });
 
       return { result: menus, err: null };
     } catch (err) {

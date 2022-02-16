@@ -12,7 +12,7 @@ export class FindProductsByMenuService {
     try {
       const { limit, offset } = createPagination(page);
 
-      const menu = await Menu.findOne({ where: { id: id }, attributes: ['id'] });
+      const menu = await Menu.findOne({ where: { id: id, active: true }, attributes: ['id'] });
 
       if(!menu) throw new ApiError('Menu não encontrado');
 
