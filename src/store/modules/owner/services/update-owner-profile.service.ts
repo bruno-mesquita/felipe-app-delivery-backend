@@ -19,12 +19,7 @@ export class UpdateOwnerProfileService {
 
       if(!owner) throw new ApiError('Dono não encontrado');
 
-      const { cpf, first_name, last_name, email } = model;
-
-      owner.setFirstName(first_name);
-      owner.setFirstName(last_name);
-      owner.setEmail(email);
-      owner.setCpf(cpf);
+      await owner.update(model);
 
       return { err: null, result: true }
     } catch (err) {
