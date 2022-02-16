@@ -5,7 +5,7 @@ import type { UpdateMenuDto } from '../dtos/update-menu.dto';
 
 export const updateMenuValidate = YupWrapper<UpdateMenuDto>(object({
   id: number().integer().positive().required(),
-  name: string().trim().required(),
+  name: string().trim(),
   establishmentId: number().integer().positive().required(),
   active: boolean(),
 }));
