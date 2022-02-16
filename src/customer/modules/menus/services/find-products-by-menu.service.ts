@@ -18,7 +18,7 @@ export class FindProductsByMenuService {
 
       const products = await Product.findAll({
         where: { menu_id: id, active: true },
-        attributes: ['id', 'name', 'price', 'description'],
+        attributes: ['id', 'name', 'price', 'description', 'unit', 'unitType'],
         include: [
           {
             model: Image,

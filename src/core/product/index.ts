@@ -1,11 +1,13 @@
-/**
- * @fileoverview Criação da entidade Produto
- */
-
 import { DataTypes, Sequelize, BelongsToGetAssociationMixin, BelongsTo } from 'sequelize';
 
 import Image from '@core/image';
 import Model from '../_Bases/model';
+
+export const UNIT = {
+  UN: 'Un',
+  GR: 'gr',
+  KG: 'Kg',
+}
 
 class Product extends Model {
   name: string;
@@ -14,6 +16,8 @@ class Product extends Model {
   active: boolean;
   menu_id!: number;
   image_id!: number;
+  unitType: string;
+  unit: number;
 
   public readonly photo?: Image;
 
@@ -27,6 +31,8 @@ class Product extends Model {
       price: DataTypes.NUMBER,
       description: DataTypes.STRING,
       active: DataTypes.BOOLEAN,
+      unit: DataTypes.NUMBER,
+      unitType: DataTypes.STRING,
     }, { sequelize, tableName: 'product', paranoid: true });
 
     return this;
@@ -47,14 +53,6 @@ class Product extends Model {
 
   public getDescription(): string {
     return this.get('description');
-  }
-
-  public updateProduct(name: string, price: number, description: string, menuId: number, active: boolean): void {
-    this.set('name', name);
-    this.set('price', price);
-    this.set('description', description);
-    this.set('active', active);
-    this.set('menu_id', menuId);
   }
 
   public isActive(): boolean {

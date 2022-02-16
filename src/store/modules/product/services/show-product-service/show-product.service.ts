@@ -11,7 +11,7 @@ export class ShowProductService {
     try {
       const product = await Product.findOne({
         where: { id },
-        attributes: ['id', 'name', 'price', 'description', 'menu_id', 'active'],
+        attributes: ['id', 'name', 'price', 'description', 'menu_id', 'active', 'unit', 'unitType'],
         include: [
           {
             model: Image,
