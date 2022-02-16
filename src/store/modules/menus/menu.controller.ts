@@ -1,5 +1,6 @@
-import ApiError from '@shared/utils/ApiError';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
+
+import Controller from '@shared/utils/controller';
 
 import {
   CreateMenuService,
@@ -16,10 +17,14 @@ import {
   findOneMenuValidate,
 } from './validations';
 
-export class MenuController {
+export class MenuController extends Controller {
+  constructor() {
+    super(['create', 'list', 'findOne', 'update', 'delete']);
+  }
+
   async create({ client, body }: Request, res: Response): Promise<Response> {
     try {
-      const sanitizedValues = createMenuValidate({ name: body.name, establishmentId: client.entity.getEstablishmentId() });
+      const sanitizedValues = createMenuValidate({ ...body, establishmentId: client.entity.getEstablishmentId() });
 
       const menuService = new CreateMenuService();
 
@@ -27,11 +32,7 @@ export class MenuController {
 
       return res.status(201).json(menu);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -41,17 +42,11 @@ export class MenuController {
 
       const establishmentId = req.client.entity.getEstablishmentId();
 
-      if(!establishmentId) throw new Error('Id invalido ou inexistente');
-
       const menu = await menuService.execute(establishmentId);
 
       return res.json(menu);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -68,11 +63,7 @@ export class MenuController {
 
       return res.json(menu);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -80,8 +71,8 @@ export class MenuController {
     try {
       const sanitizedValues = updateMenuValidate({
         id: Number(params.id),
-        name: body.name,
-        establishmentId: client.entity.getEstablishmentId()
+        establishmentId: client.entity.getEstablishmentId(),
+        ...body,
       });
 
       const menuService = new UpdateMenuService();
@@ -90,11 +81,7 @@ export class MenuController {
 
       return res.json(menu);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -111,11 +98,7 @@ export class MenuController {
 
       return res.json(menu);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 }

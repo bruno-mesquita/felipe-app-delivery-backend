@@ -4,18 +4,16 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateMenuDto } from '../dtos/update-menu.dto';
 
 export class UpdateMenuService {
-  async execute(updateMenuDto: UpdateMenuDto): Promise<ServiceResponse<boolean | null>> {
+  async execute({ establishmentId, id, ...modelDto }: UpdateMenuDto): Promise<ServiceResponse<boolean | null>> {
     try {
       // Verificando se o menu já existe cadastrado
       const menu = await Menu.findOne({
-        where: { id: updateMenuDto.id, establishment_id: updateMenuDto.establishmentId },
+        where: { id, establishment_id: establishmentId },
       });
 
       if (!menu) throw new ApiError('Menu não encontrado');
 
-      menu.setName(updateMenuDto.name);
-
-      await menu.save();
+      menu.update(modelDto);
 
       return { result: true, err: null };
     } catch (err) {
