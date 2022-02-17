@@ -61,7 +61,7 @@ export class CreateOrderService {
         transshipment: Number(createOrderDto.transshipment) || 0,
         note: createOrderDto.note,
         payment: createOrderDto.payment,
-        total: createOrderDto.total,
+        total: Number(createOrderDto.total || 0),
       });
 
       order.open();
@@ -71,7 +71,7 @@ export class CreateOrderService {
       let total = 0;
 
       for await (const item of createOrderDto.items) {
-        const product = await Product.findByPk(item.itemId);
+        const product = await Product.findByPk(item.itemId, { attributes: ['price'] });
 
         if (product) {
           const tot = product.calcTotal(item.amount);
@@ -90,7 +90,7 @@ export class CreateOrderService {
         }
       }
 
-      order.setTotal(total);
+      order.setTotal(total + ownerJson.establishment.freightValue);
 
       // Salvando produto no db
       await order.save();
