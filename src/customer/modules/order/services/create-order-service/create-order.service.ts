@@ -71,7 +71,7 @@ export class CreateOrderService {
       let total = 0;
 
       for await (const item of createOrderDto.items) {
-        const product = await Product.findByPk(item.itemId, { attributes: ['price'] });
+        const product = await Product.findByPk(item.itemId, { attributes: ['id','price'] });
 
         if (product) {
           const tot = product.calcTotal(item.amount);
@@ -90,7 +90,7 @@ export class CreateOrderService {
         }
       }
 
-      order.setTotal(total + ownerJson.establishment.freightValue);
+      order.setTotal(total + Number(ownerJson.establishment.freightValue));
 
       // Salvando produto no db
       await order.save();
