@@ -3,6 +3,7 @@ import City from "@core/city";
 import Client from "@core/client";
 import Evaluation from "@core/evaluation";
 import ItemOrder from "@core/item-order";
+import Menu from "@core/menu";
 import Order from "@core/order";
 import Product from "@core/product";
 import State from "@core/state";
@@ -63,6 +64,11 @@ export class ShowOrderService {
             as: 'product',
             attributes: ['name'],
             paranoid: false,
+            include: [{
+              model: Menu,
+              as: 'menu',
+              attributes: ['name']
+            }]
           },
         ],
       });
