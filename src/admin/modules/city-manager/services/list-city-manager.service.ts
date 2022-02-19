@@ -1,44 +1,28 @@
-import User from '@core/schemas/user.schema';
+import CityManager from '@core/city-manager';
 import { createPagination } from '@shared/utils/use-page';
 import ApiError from '@shared/utils/ApiError';
+import City from '@core/city';
+import State from '@core/state';
 
 export class ListCityManaganersService {
   async execute(page: number): Promise<any[]> {
-    const { limit, offset } = createPagination(page);
-
     try {
-      const users = await User.aggregate([
-        { $match: { roles: ['CityManager'] } },
-        {
-          $lookup: {
-            from: 'cities',
-            let: { cityId: '$city' },
-            pipeline: [
-              { $match: { $expr: { $eq: ['$_id', '$$cityId'] }}},
-              { $project: { name: 1, state: 1 } },
-              {
-                $lookup: {
-                  from: 'states',
-                  let: { stateId: '$state' },
-                  pipeline: [
-                    { $match: { $expr: { $eq: ['$_id', '$$stateId'] }}},
-                    { $project: { name: 1 } },
-                  ],
-                  as: 'state',
-                }
-              },
-              { $unwind: '$state' },
-            ],
-            as: 'city'
-          }
-        },
-        { $unwind: '$city' },
-        { $project: { _id: 1, name: 1, email: 1, cellphone: 1, active: 1, city: 1, } },
-        { $skip: offset },
-        { $limit: limit }
-      ]);
+      const { limit, offset } = createPagination(page);
 
-      return users;
+      return CityManager.findAll({
+        include: [{
+          model: City,
+          as: 'cityOfAction',
+          attributes: ['name', 'state'],
+          include: [{
+            model: State,
+            as: 'state',
+            attributes: ['name'],
+          }]
+        }],
+        limit,
+        offset,
+      })
     } catch (err) {
       ApiError.verifyType(err);
 

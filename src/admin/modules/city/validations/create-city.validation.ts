@@ -1,4 +1,4 @@
-import { object, SchemaOf, string, boolean, array } from 'yup';
+import { object, string, boolean, array } from 'yup';
 
 import yupWrapper from '@shared/utils/yup-wrapper';
 import { CityAddressDto } from '../dtos/create-city-dto';

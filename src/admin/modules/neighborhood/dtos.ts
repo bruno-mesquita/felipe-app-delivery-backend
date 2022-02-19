@@ -1,5 +1,5 @@
 export interface ICreateNeighborhood {
   name: string;
-  active: string;
+  active: boolean;
   cityId: number;
 }

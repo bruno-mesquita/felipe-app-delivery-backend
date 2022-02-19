@@ -1,10 +1,10 @@
-import State from '@core/schemas/state.schema';
+import State from '@core/state';
 import ApiError from '@shared/utils/ApiError';
 import { CreateStateADto } from '../dtos/create-state-dto';
 import { schema } from '../validations/create-state.validation';
 
 export class CreateStateService {
-  async execute(createStateDto: CreateStateADto): Promise<string> {
+  async execute(createStateDto: CreateStateADto): Promise<number> {
     try {
       // Fazendo validação DTO
       const valid = schema.isValidSync(createStateDto);
@@ -13,14 +13,14 @@ export class CreateStateService {
 
       // Verificando se o Estado já exite
 
-      const stateExists = await State.findOne({ name: createStateDto.name });
+      const stateExists = await State.findOne({ where: { name: createStateDto.name } });
 
       if (stateExists) throw new ApiError('[ERRO]: Estado já existe no sistema!');
 
       // criando classe
       const state = await State.create(createStateDto);
 
-      return state._id.toHexString();
+      return state.getId();
     } catch (err) {
       ApiError.verifyType(err);
 

@@ -1,6 +1,6 @@
-import City from '@core/schemas/city.schema';
+import City from '@core/city';
 import ApiError from '@shared/utils/ApiError';
-import { UpdateCityDto } from '../dtos/update-city-dto';
+import type { UpdateCityDto } from '../dtos/update-city-dto';
 import { updateValidate } from '../validations';
 
 export class UpdateCityService {
@@ -8,10 +8,9 @@ export class UpdateCityService {
     try {
       const values = updateValidate(updateCityDto);
 
-      const { _id, ...restDto } = values;
+      const { id, ...restDto } = values;
 
-      // Verificando se a Cidade existe no banco de dados
-      const city = await City.findOne({ _id });
+      const city = await City.findOne({ where: { id } });
 
       if (!city) throw new ApiError('[ERRO]: Cidade não existente no sistema!');
 

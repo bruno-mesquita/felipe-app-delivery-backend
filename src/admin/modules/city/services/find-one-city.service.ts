@@ -1,10 +1,20 @@
-import City from '@core/schemas/city.schema';
+import Neighborhood from '@core/neighborhood';
+import City from '@core/city';
 import ApiError from '@shared/utils/ApiError';
 
 export class FindOneCityService {
-  async execute(cityId: string): Promise<any> {
+  async execute(cityId: number): Promise<any> {
     try {
-      return City.findOne({ _id: cityId }).select(['-createdAt', '-__v', '-updatedAt']);
+      const city = await City.findOne({ where: { id: cityId }, attributes: ['name', 'active'], raw: true });
+
+      const neighborhoods = await Neighborhood.findAll({ where: { cityId } });
+
+      return {
+        id: city.id,
+        name: city.name,
+        active: city.active,
+        neighborhoods
+      }
     } catch (err) {
       ApiError.verifyType(err);
 

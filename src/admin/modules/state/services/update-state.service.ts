@@ -1,4 +1,4 @@
-import State from '@core/schemas/state.schema';
+import State from '@core/state';
 import ApiError from '@shared/utils/ApiError';
 import { UpdateStateDto } from '../dtos/update-state-dto';
 import { schema } from '../validations/create-state.validation';
@@ -13,7 +13,9 @@ export class UpdateStateService {
 
       // Verificando se o Estado já exite
 
-      const state = await State.findOne({ name: updateStateDto.name, _id: updateStateDto.id });
+      const state = await State.findOne({
+        where: { name: updateStateDto.name, id: updateStateDto.id }
+      });
 
       if (!state) throw new ApiError('[ERRO]: Estado não existe no sistema!');
 

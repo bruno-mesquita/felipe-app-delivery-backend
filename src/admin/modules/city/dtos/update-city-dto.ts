@@ -1,7 +1,6 @@
 export interface UpdateCityDto {
-  _id: string;
+  id: number;
   name: string;
   state: string;
   active: boolean;
-  neighborhoods: string[];
 }

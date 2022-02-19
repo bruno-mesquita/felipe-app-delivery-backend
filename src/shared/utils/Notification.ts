@@ -26,7 +26,7 @@ class Notification {
 
   async addListener(addListenerData: AddListenerData) {
     try {
-      await this.api.post<AddListenerData>('/push-tokens', addListenerData)
+      await this.api.post<AddListenerData>('/tokens', addListenerData)
     } catch (err) {
       // throw new ApiError('Erro ao cadastrar notificações');
     }

@@ -35,7 +35,6 @@ class Establishment extends Model {
   public getMenus!: HasManyGetAssociationsMixin<Menu>;
   public setImage!: BelongsToSetAssociationMixin<Image, string>;
 
-
   static start(sequelize: Sequelize) {
     this.init({
       name: DataTypes.STRING,

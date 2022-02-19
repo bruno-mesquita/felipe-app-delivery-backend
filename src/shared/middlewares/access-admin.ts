@@ -1,6 +1,6 @@
-import User from '@core/schemas/user.schema';
-import { Request, Response, NextFunction } from 'express';
-import { Types } from 'mongoose';
+import type { Request, Response, NextFunction } from 'express';
+
+import Admin from '@core/admin';
 
 export async function accessAdmin(request: Request, response: Response, next: NextFunction): Promise<Response | void> {
   try {
@@ -8,15 +8,11 @@ export async function accessAdmin(request: Request, response: Response, next: Ne
     const adminId = request.client.id;
     // const apiType = request.headers.apiType as string || 'old';
 
-    const admin = await User.aggregate([
-      { $match: { _id: new Types.ObjectId(adminId) } }
-    ]);
+    const admin = await Admin.findByPk(adminId);
 
-    if (admin.length !== 1) {
-      return response.status(401).json('[Acesso]: ID está ausente');
-    }
+    if (!admin) return response.status(401).json('[Acesso]: ID está ausente');
 
-    request.client.entity = admin[0];
+    request.client.entity = admin as any;
 
     return next();
   } catch(err) {

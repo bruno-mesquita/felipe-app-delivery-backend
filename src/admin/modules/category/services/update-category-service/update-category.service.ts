@@ -1,5 +1,5 @@
 import { UpdateCategoryDtos } from '../../dtos/update-category.dtos';
-import Category from '@core/schemas/category.schema';
+import Category from '@core/category';
 import { schema } from '../../validation/update-category.validation';
 import ApiError from '@shared/utils/ApiError';
 
@@ -13,7 +13,7 @@ export class UpdateCategoryService {
 
       // Verificando se essa existe uma categoria
 
-      const category = await Category.findById(id);
+      const category = await Category.findByPk(id);
 
       if (!category) throw new ApiError('Categoria não encontrada');
 

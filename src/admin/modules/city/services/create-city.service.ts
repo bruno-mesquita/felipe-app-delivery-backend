@@ -1,27 +1,37 @@
-import City from '@core/schemas/city.schema';
-import State from '@core/schemas/state.schema';
+
+import City from '@core/city';
 import ApiError from '@shared/utils/ApiError';
-import { CityAddressDto } from '../dtos/create-city-dto';
+import { NeighborhoodRepository } from '@admin/modules/neighborhood';
+
+import type { CityAddressDto } from '../dtos/create-city-dto';
 import { createValidate } from '../validations';
 
 export class CreateCityService {
-  async execute(createCityDto: CityAddressDto): Promise<string> {
+  private readonly neighborhoodRepository: NeighborhoodRepository;
+
+  constructor() {
+    this.neighborhoodRepository = new NeighborhoodRepository();
+  }
+
+  async execute(createCityDto: CityAddressDto): Promise<number> {
     try {
       // Fazendo validação DTO
-      const values = createValidate(createCityDto);
+      const { neighborhoods, ...cityDto } = createValidate(createCityDto);
 
       // Verificando se a Cidade existe no banco de dados
-      const cityExists = await City.findOne({ name: values.name }).select(['name']);
+      const cityExists = await City.findOne({ where: { name: cityDto.name } });
 
       if (cityExists) throw new ApiError('[ERRO]: Cidade já existente no sistema!');
 
-      // Verificando se o Estado existe no sistema ou se está selecionado
+      const city = await City.create(cityDto);
 
-      const state = await State.findOne({ _id: values.state }).select(['name']);
+      await this.neighborhoodRepository.createMany(neighborhoods.map(item => ({
+        name: item,
+        active: true,
+        cityId: city.get('id')
+      })));
 
-      const city = await City.create(values);
-
-      return city._id.toHexString();
+      return city.get('id');
     } catch (err) {
       ApiError.verifyType(err);
 

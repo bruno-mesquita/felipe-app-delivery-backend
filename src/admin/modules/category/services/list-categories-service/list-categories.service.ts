@@ -1,10 +1,10 @@
-import Category, { type ICategory } from '@core/schemas/category.schema';
+import Category from '@core/category';
 import ApiError from '@shared/utils/ApiError';
 
 export class ListCategoriesService {
-  async execute(): Promise<ICategory[]> {
+  async execute(): Promise<Category[]> {
     try {
-      return await Category.find({}).select(['name']);
+      return await Category.findAll({ attributes: ['id', 'name'] })
     } catch (err) {
       ApiError.verifyType(err);
 

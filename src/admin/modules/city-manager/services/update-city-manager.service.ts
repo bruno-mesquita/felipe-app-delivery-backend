@@ -1,10 +1,10 @@
-import User from '@core/schemas/user.schema';
+import CityManager from '@core/city-manager';
 import ApiError from '@shared/utils/ApiError';
 
 export class UpdateCityManagerService {
   async execute(values: any): Promise<void> {
     try {
-      const user = await User.findOne({ _id: values._id, roles: ['CityManager'] });
+      const user = await CityManager.findByPk(values.id);
 
       if (!user) throw new ApiError('Usuário não encontrado');
 

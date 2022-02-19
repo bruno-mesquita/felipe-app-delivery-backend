@@ -1,10 +1,10 @@
-import Category from '@core/schemas/category.schema';
+import Category from '@core/category';
 import ApiError from '@shared/utils/ApiError';
 import { CreateCategoryDto } from '../../dtos/create-category.dtos';
 import { schema } from '../../validation/create-category.validation';
 
 export class CreateCategoryService {
-  async execute(createCategoryDto: CreateCategoryDto): Promise<string> {
+  async execute(createCategoryDto: CreateCategoryDto): Promise<number> {
     try {
       // Validação
       const valid = schema.isValidSync(createCategoryDto);
@@ -13,14 +13,14 @@ export class CreateCategoryService {
 
       // Verificando se já existe esse nome
 
-      const categoryExists = await Category.findOne({ name: createCategoryDto.name });
+      const categoryExists = await Category.findOne({ where: { name: createCategoryDto.name } });
 
       if (categoryExists) throw new ApiError('Categoria já cadastrada');
 
       // Criando Classe e Salvando
       const category = await Category.create(createCategoryDto);
 
-      return category._id.toHexString();
+      return category.getId();
     } catch (err) {
       ApiError.verifyType(err);
 
