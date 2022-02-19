@@ -1,20 +1,18 @@
 import ApiError from '@shared/utils/ApiError';
 
 import NeighborhoodRepository from '../neighborhood.repository';
-import type { ICreateNeighborhood } from '../dtos';
+import type { IDeleteNeighborhood } from '../dtos';
 
-export class CreateNeighborhoodService {
+export class DeleteNeighborhoodService {
   private readonly neighborhoodRepository: NeighborhoodRepository;
 
   constructor() {
     this.neighborhoodRepository = new NeighborhoodRepository();
   }
 
-  async execute(model: ICreateNeighborhood | ICreateNeighborhood[]): Promise<number | void> {
+  async execute(model: IDeleteNeighborhood): Promise<void> {
     try {
-      if(Array.isArray(model)) return this.neighborhoodRepository.createMany(model);
-
-      return this.neighborhoodRepository.create(model);
+      await this.neighborhoodRepository.deleteOne(model);
     } catch (err) {
       ApiError.verifyType(err);
 

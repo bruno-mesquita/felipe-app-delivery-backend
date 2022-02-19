@@ -10,6 +10,7 @@ import { ownerRoutes } from '../modules/establisment-owner';
 import { deliverymanRoutes } from '../modules/deliveryman';
 import { announcementRoutes } from '../modules/announcement/announcement.routes';
 import { cityManagerRoutes } from '../modules/city-manager';
+import { neighborhoodRoutes } from '../modules/neighborhood';
 
 const routes = Router();
 
@@ -24,6 +25,7 @@ routes.use([
   termsOfUseRoutes,
   announcementRoutes,
   cityManagerRoutes,
+  neighborhoodRoutes,
 ])
 
 export default routes;

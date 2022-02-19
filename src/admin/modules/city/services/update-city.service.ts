@@ -8,13 +8,13 @@ export class UpdateCityService {
     try {
       const values = updateValidate(updateCityDto);
 
-      const { id, ...restDto } = values;
+      const { id, state, ...restDto } = values;
 
       const city = await City.findOne({ where: { id } });
 
       if (!city) throw new ApiError('[ERRO]: Cidade não existente no sistema!');
 
-      await city.update(restDto);
+      await city.update({ ...restDto, state_id: state });
     } catch (err) {
       ApiError.verifyType(err);
 

@@ -28,7 +28,7 @@ export class CreateCityService {
       await this.neighborhoodRepository.createMany(neighborhoods.map(item => ({
         name: item,
         active: true,
-        cityId: city.get('id')
+        city: city.get('id')
       })));
 
       return city.get('id');

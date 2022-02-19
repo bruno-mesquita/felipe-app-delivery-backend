@@ -1,5 +1,13 @@
 export interface ICreateNeighborhood {
   name: string;
   active: boolean;
-  cityId: number;
+  city: number;
 }
+
+export type IUpdateNeighborhood = Partial<{
+  name: string;
+  active: boolean;
+  city: number;
+}> & { id: number }
+
+export type IDeleteNeighborhood = { id: number; }
