@@ -5,7 +5,6 @@ import { ListOrdersDto } from '../../dtos/list-orders-types.dto';
 import State from "@core/state";
 import City from "@core/city";
 import Client from "@core/client";
-import { schema } from '../../validations/list-orders-types.validation';
 import { createPagination } from "@shared/utils/use-page";
 import ApiError from "@shared/utils/ApiError";
 

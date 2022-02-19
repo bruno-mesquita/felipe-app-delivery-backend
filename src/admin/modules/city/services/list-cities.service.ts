@@ -1,11 +1,17 @@
 import City from '@core/city';
+import State from '@core/state';
 import ApiError from '@shared/utils/ApiError';
 
 export class ListCitiesService {
-  async execute(): Promise<any[]> {
+  async execute(): Promise<City[]> {
     try {
-      return  await City.findAll({
-        attributes: ['id', 'name', 'active', 'state'],
+      return City.findAll({
+        attributes: ['id', 'name', 'active'],
+        include: [{
+          model: State,
+          as: 'state',
+          attributes: ['name']
+        }]
       });
     } catch (err) {
       ApiError.verifyType(err);

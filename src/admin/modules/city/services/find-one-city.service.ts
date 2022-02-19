@@ -7,7 +7,7 @@ export class FindOneCityService {
     try {
       const city = await City.findOne({ where: { id: cityId }, attributes: ['name', 'active'], raw: true });
 
-      const neighborhoods = await Neighborhood.findAll({ where: { cityId } });
+      const neighborhoods = await Neighborhood.findAll({ where: { city: cityId } });
 
       return {
         id: city.id,

@@ -5,7 +5,7 @@ import Model from '../_Bases/model';
 class Neighborhood extends Model {
   name: string;
   active: boolean;
-  cityId: number;
+  city: number;
 
   static start(sequelize: Sequelize) {
     this.init({
