@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { UpdateAdressService } from "./services/update-address.service";
 
 export class AddressEstablishmentController {

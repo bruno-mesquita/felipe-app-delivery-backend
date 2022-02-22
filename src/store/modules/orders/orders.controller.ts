@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { ShowOrderService } from "@store/modules/orders/services/show-order-service/show-order.service";
 import { ListOrdersForTypesServices } from "./services/list-orders-for-types/list-orders-types.service";
 import { UpdateOrderStatusServices } from "./services/update-order-status/update-order-status.service";

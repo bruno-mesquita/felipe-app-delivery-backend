@@ -1,7 +1,8 @@
+import type { Request } from 'express';
+
 import Admin from '@core/admin';
 import { EstablishmentOwner } from '@core/establishment-owner';
 import Client from '@core/client';
-import { Request } from 'express';
 import CityManager from '@core/city-manager';
 
 declare global {

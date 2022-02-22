@@ -4,7 +4,7 @@
  * @author Bruno Mesquita
  */
 
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import Controller from '@shared/utils/controller';
 

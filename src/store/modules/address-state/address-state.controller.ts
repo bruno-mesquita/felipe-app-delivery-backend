@@ -1,5 +1,5 @@
 import Controller from '@shared/utils/controller';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 import { ListCitiesByStatesService } from './services/list-cities-by-state-service';
 import { ListStatesService } from './services/list-state-service';
 

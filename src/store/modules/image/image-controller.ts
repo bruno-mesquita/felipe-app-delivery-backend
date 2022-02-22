@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { UpdateImageService } from "./services/update-image.service";
 
 export class ImageEstablishmentController {
@@ -10,7 +10,7 @@ export class ImageEstablishmentController {
 
       if (imageEstablishment.err) throw new Error(imageEstablishment.err);
 
-      return res.status(200).json(imageEstablishment);
+      return res.json(imageEstablishment);
     } catch(err) {
       return res.status(400).json({ err: err.message });
     }

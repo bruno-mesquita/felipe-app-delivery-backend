@@ -1,5 +1,5 @@
 import Controller from '@shared/utils/controller';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import { CreateAvatarClientService, FindOneAvatarClientClientService } from './services';
 import { createAvatarValidate } from './validations';

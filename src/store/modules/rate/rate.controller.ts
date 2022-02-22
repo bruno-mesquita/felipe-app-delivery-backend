@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { ListRateService } from "./services/list-rates-service/list-rates.service";
 
 export class RateController {

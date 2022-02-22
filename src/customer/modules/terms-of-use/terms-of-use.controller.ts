@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { ShowTermsOfUseService } from "./services/show-terms-of-use.service";
 
 export class TermsOfUseController {

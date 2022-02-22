@@ -1,5 +1,5 @@
 import Controller from '@shared/utils/controller';
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import { FindOneRateService, CreateRateService } from './services';
 import { createRateValidate } from './validations';

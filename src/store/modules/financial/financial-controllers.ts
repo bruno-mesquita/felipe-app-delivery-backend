@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import type { Request, Response } from "express";
 import { GenerateReportService } from "./services/generate-report.service";
 
 export class FinancialController {

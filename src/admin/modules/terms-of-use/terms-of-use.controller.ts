@@ -1,4 +1,4 @@
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import { CreateTermsOfUseService } from './services/create-terms-of-use-service/create-terms-of-use.service';
 import { ShowTermsOfUse } from './services/show-terms-of-use-service/show-terms-of-use.service';

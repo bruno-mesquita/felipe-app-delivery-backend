@@ -3,7 +3,7 @@
  * @author Jonatas Rosa Moura, Bruno Mesquita
  */
 
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import { CreateOrderService } from './services/create-order-service/create-order.service';
 import { ShowOrderService } from './services/show-order-service/show-order.service';

@@ -3,7 +3,7 @@
  * @author Jonatas Rosa Moura
  */
 
-import { Request, Response } from 'express';
+import type { Request, Response } from 'express';
 
 import Controller from '@shared/utils/controller';
 import { ListCitiesByStateService, ListStatesService } from './services';

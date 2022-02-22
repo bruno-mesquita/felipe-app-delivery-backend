@@ -1,5 +1,6 @@
+import type { Request, Response } from 'express';
+
 import Controller from '@shared/utils/controller';
-import { Request, Response } from 'express';
 
 import { LoginCityManagerService, RefreshTokenService } from './services';
 import { loginValidate, refreshTokenValidate } from './validations';

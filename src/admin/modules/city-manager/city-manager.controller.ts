@@ -1,7 +1,8 @@
+import type { Request, Response } from 'express';
+import * as Yup from 'yup';
+
 import ApiError from '@shared/utils/ApiError';
 import Controller from '@shared/utils/controller';
-import { Request, Response } from 'express';
-import * as Yup from 'yup';
 
 import {
   CreateCityManagerService,
