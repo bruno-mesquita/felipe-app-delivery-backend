@@ -41,7 +41,7 @@ class Product extends Model {
     this.init(
       {
         name: DataTypes.STRING,
-        price: DataTypes.NUMBER,
+        price: DataTypes.DECIMAL,
         description: DataTypes.STRING,
         active: DataTypes.BOOLEAN,
         unit: DataTypes.NUMBER,
@@ -53,12 +53,12 @@ class Product extends Model {
     return this;
   }
 
-  static associate({ Image, Menu }): void {
-    Product.Photo = this.belongsTo(Image, {
+  static associate(models): void {
+    Product.Photo = this.belongsTo(models.Image, {
       foreignKey: 'image_id',
       as: 'photo',
     });
-    this.belongsTo(Menu, { foreignKey: 'menu_id', as: 'menu' });
+    this.belongsTo(models.Menu, { foreignKey: 'menu_id', as: 'menu' });
   }
 
   public getName(): string {
