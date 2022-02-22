@@ -2,14 +2,13 @@ import Image from '@core/image';
 import Menu from '@core/menu';
 import Product from '@core/product';
 import ApiError from '@shared/utils/ApiError';
-import { ServiceResponse } from '@shared/utils/service-response';
 import type { UpdateProductDto } from '../../dtos/update-product-dto';
 
 export class UpdateProductService {
-  async execute({ id, menu, image, ...modelDto }: UpdateProductDto): Promise<ServiceResponse<boolean>> {
+  async execute({ id, menu, image, ...modelDto }: UpdateProductDto): Promise<void> {
     try {
       // Verificando se o produto existe
-      const product = await Product.findByPk(id);
+      const product = await Product.findByPk(id, { attributes: ['image_id', 'id'] });
 
       if (!product) throw new ApiError('Produto não encontrado.');
 
@@ -28,8 +27,6 @@ export class UpdateProductService {
       }
 
       await product.update(modelDto);
-
-      return { result: true, err: null };
     } catch (err) {
       ApiError.verifyType(err);
 

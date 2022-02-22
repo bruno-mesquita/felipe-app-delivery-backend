@@ -18,8 +18,13 @@ import {
   searchNameProductValidate,
   showProductValidate,
 } from './validation';
+import Controller from '@shared/utils/controller';
 
-class ProductController {
+class ProductController extends Controller {
+  constructor() {
+    super(['searchName', 'list', 'show', 'create', 'update', 'delete']);
+  }
+
   async searchName({ client, query }: Request, res: Response): Promise<Response> {
     try {
       const sanitizedValues = searchNameProductValidate({
@@ -33,11 +38,7 @@ class ProductController {
 
       return res.json(products);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -53,11 +54,7 @@ class ProductController {
 
       return res.status(200).json(products);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -76,11 +73,7 @@ class ProductController {
 
       return res.json(product);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -94,11 +87,7 @@ class ProductController {
 
       return res.status(201).json(product);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -109,15 +98,11 @@ class ProductController {
 
       const updateProductService = new UpdateProductService();
 
-      const updateProduct = await updateProductService.execute(sanitizedValues as any);
+      await updateProductService.execute(sanitizedValues);
 
-      return res.json(updateProduct);
+      return res.status(204).json({});
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 
@@ -136,11 +121,7 @@ class ProductController {
 
       return res.json(result);
     } catch (err) {
-      if(err instanceof ApiError) {
-        return res.status(err.statusCode).json(err);
-      }
-
-      return res.status(500).json({ message: 'Erro no servidor' });
+      return this.requestError(err, res);
     }
   }
 }
