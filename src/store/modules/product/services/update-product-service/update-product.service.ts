@@ -21,7 +21,9 @@ export class UpdateProductService {
       }
 
       if(image) {
-        const photo = await Image.findOne({ where: { id: product.get('image_id') }, attributes: ['encoded'] });
+        const photo = await Image.findOne({ where: { id: product.get('image_id') }, attributes: ['id', 'encoded'] });
+
+        if(!photo) throw new ApiError('Imagem não encontrada.');
 
         await photo.update({ encoded: image });
       }
