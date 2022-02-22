@@ -55,7 +55,7 @@ export default {
         precision: 10,
         scale: 2,
         allowNull: true,
-        defaultValue: 0
+        defaultValue: 0,
       },
       commission: {
         type: Sequelize.BOOLEAN,
@@ -97,5 +97,5 @@ export default {
 
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.dropTable('order');
-  }
+  },
 };

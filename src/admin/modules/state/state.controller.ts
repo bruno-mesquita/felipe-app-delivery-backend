@@ -1,12 +1,20 @@
 import type { Request, Response } from 'express';
 
 import Controller from '@shared/utils/controller';
-import { CreateStateService, ListStatesService, UpdateStateService, ListCitiesByStateService } from './services';
+import {
+  CreateStateService,
+  ListStatesService,
+  UpdateStateService,
+  ListCitiesByStateService,
+} from './services';
 
 export class StateController extends Controller {
   private readonly createStateService: CreateStateService;
+
   private readonly listStatesService: ListStatesService;
+
   private readonly updateStateService: UpdateStateService;
+
   private readonly listCitiesByStateService: ListCitiesByStateService;
 
   constructor() {
@@ -21,7 +29,6 @@ export class StateController extends Controller {
     this.list = this.list.bind(this);
     this.update = this.update.bind(this);
     this.listByState = this.listByState.bind(this);
-
   }
 
   async create({ body }: Request, res: Response): Promise<Response> {
@@ -54,7 +61,9 @@ export class StateController extends Controller {
 
   async listByState({ params }: Request, res: Response): Promise<Response> {
     try {
-      return res.json(await this.listCitiesByStateService.execute(params.stateId));
+      return res.json(
+        await this.listCitiesByStateService.execute(params.stateId)
+      );
     } catch (err) {
       return this.requestError(err, res);
     }

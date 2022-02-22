@@ -9,7 +9,10 @@ import ApiError from '@shared/utils/ApiError';
 import { SearchNameProductDto } from '../../dtos/search-name-product-dto';
 
 export class SearchNameProductsService {
-  async execute({ establishmentId, search }: SearchNameProductDto): Promise<ServiceResponse<Product[] | null>> {
+  async execute({
+    establishmentId,
+    search,
+  }: SearchNameProductDto): Promise<ServiceResponse<Product[] | null>> {
     try {
       const products = await Product.findAll({
         where: { name: { [Op.iLike]: `%${search}%` } },
@@ -18,14 +21,14 @@ export class SearchNameProductsService {
           {
             model: Image,
             as: 'photo',
-            attributes: ['encoded']
+            attributes: ['encoded'],
           },
           {
             model: Menu,
             as: 'menu',
             where: { establishment_id: establishmentId },
-            attributes: ['id']
-          }
+            attributes: ['id'],
+          },
         ],
       });
 

@@ -14,4 +14,4 @@ export const findOneMenuValidate = (values: FindOneMenuDto) => {
   } catch (err) {
     throw new ApiError('Erro de validação!', 'validate');
   }
-}
+};

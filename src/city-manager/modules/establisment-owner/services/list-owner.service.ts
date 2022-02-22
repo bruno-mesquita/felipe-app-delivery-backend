@@ -1,12 +1,19 @@
-import { EstablishmentOwner } from "@core/establishment-owner";
-import Establishment from "@core/establishment";
-import ApiError from "@shared/utils/ApiError";
+import { EstablishmentOwner } from '@core/establishment-owner';
+import Establishment from '@core/establishment';
+import ApiError from '@shared/utils/ApiError';
 
 export class ListOwnerService {
   async execute(): Promise<EstablishmentOwner[]> {
     try {
       return await EstablishmentOwner.findAll({
-        attributes: ['id', 'first_name', 'last_name', 'cellphone', 'active', 'email'],
+        attributes: [
+          'id',
+          'first_name',
+          'last_name',
+          'cellphone',
+          'active',
+          'email',
+        ],
         include: [
           {
             model: Establishment,
@@ -19,6 +26,6 @@ export class ListOwnerService {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

@@ -1,8 +1,8 @@
 interface IDeliveryMan {
   name: string;
-	cellphone: string;
-	entry_date: string;
-	departure_date: string;
+  cellphone: string;
+  entry_date: string;
+  departure_date: string;
   city_id: number;
 }
 

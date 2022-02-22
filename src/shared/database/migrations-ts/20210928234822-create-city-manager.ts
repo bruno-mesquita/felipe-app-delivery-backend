@@ -59,5 +59,5 @@ export default {
 
   down: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
     await queryInterface.dropTable('city-manager');
-  }
+  },
 };

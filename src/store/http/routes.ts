@@ -37,7 +37,7 @@ routes.use([
   listRatesRoutes,
   routesFinancial,
   notificationsRoutes,
-  ordersRoutes
+  ordersRoutes,
 ]);
 
 export default routes;

@@ -1,9 +1,9 @@
-import type { Request, Response } from "express";
-import { ShowOrderService } from "@store/modules/orders/services/show-order-service/show-order.service";
-import { ListOrdersForTypesServices } from "./services/list-orders-for-types/list-orders-types.service";
-import { UpdateOrderStatusServices } from "./services/update-order-status/update-order-status.service";
-import { CancelOrderService } from "./services/cancel-order/cancel-order.service";
-import Controller from "@shared/utils/controller";
+import type { Request, Response } from 'express';
+import { ShowOrderService } from '@store/modules/orders/services/show-order-service/show-order.service';
+import Controller from '@shared/utils/controller';
+import { ListOrdersForTypesServices } from './services/list-orders-for-types/list-orders-types.service';
+import { UpdateOrderStatusServices } from './services/update-order-status/update-order-status.service';
+import { CancelOrderService } from './services/cancel-order/cancel-order.service';
 
 class OrderController extends Controller {
   constructor() {
@@ -21,10 +21,13 @@ class OrderController extends Controller {
 
       const showOrderService = new ShowOrderService();
 
-      const showOrder = await showOrderService.execute({ id: Number(params.id), establishmentId: establishmentId });
+      const showOrder = await showOrderService.execute({
+        id: Number(params.id),
+        establishmentId,
+      });
 
       return res.json(showOrder);
-    } catch(err) {
+    } catch (err) {
       return this.requestError(err, res);
     }
   }
@@ -37,10 +40,14 @@ class OrderController extends Controller {
 
       const establishmentId = client.entity.getEstablishmentId();
 
-      const listOrders = await listOrdersForTypesServices.execute({ id: establishmentId, types: types as any, page: Number(page) });
+      const listOrders = await listOrdersForTypesServices.execute({
+        id: establishmentId,
+        types: types as any,
+        page: Number(page),
+      });
 
       return res.status(200).json(listOrders);
-    } catch(err) {
+    } catch (err) {
       return this.requestError(err, res);
     }
   }
@@ -51,10 +58,13 @@ class OrderController extends Controller {
 
       const establishmentId = client.entity.getEstablishmentId();
 
-      const order = await cancelOrderService.execute({ id: Number(params.id), establishmentId: establishmentId });
+      const order = await cancelOrderService.execute({
+        id: Number(params.id),
+        establishmentId,
+      });
 
       return res.status(200).json(order);
-    } catch(err) {
+    } catch (err) {
       return this.requestError(err, res);
     }
   }
@@ -65,10 +75,13 @@ class OrderController extends Controller {
 
       const establishmentId = client.entity.getEstablishmentId();
 
-      const order = await updateOrderService.execute({ id: Number(params.id), establishmentId: establishmentId });
+      const order = await updateOrderService.execute({
+        id: Number(params.id),
+        establishmentId,
+      });
 
       return res.status(200).json(order);
-    } catch(err) {
+    } catch (err) {
       return this.requestError(err, res);
     }
   }

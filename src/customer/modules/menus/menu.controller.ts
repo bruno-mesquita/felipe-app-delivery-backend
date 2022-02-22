@@ -12,7 +12,10 @@ class MenuController extends Controller {
     this.findProductsByMenu = this.findProductsByMenu.bind(this);
   }
 
-  async findProductsByMenu({ query, params }: Request, res: Response): Promise<Response> {
+  async findProductsByMenu(
+    { query, params }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
       const values = findProductsByMenuValidate({
         id: Number(params.id),

@@ -1,6 +1,11 @@
 import type { Request, Response } from 'express';
 
-import { GenerateTicketService, VerifyTicketService, CheckExpiredBillsService, GenerateATicketService } from './services';
+import {
+  GenerateTicketService,
+  VerifyTicketService,
+  CheckExpiredBillsService,
+  GenerateATicketService,
+} from './services';
 
 export class BoletosController {
   async generateTicket(_: Request, res: Response): Promise<Response> {
@@ -19,7 +24,11 @@ export class BoletosController {
     try {
       const generateATicketService = new GenerateATicketService();
 
-      const result = await generateATicketService.execute(req.body.ownerId, Number(req.body.total), Number(req.params.id));
+      const result = await generateATicketService.execute(
+        req.body.ownerId,
+        Number(req.body.total),
+        Number(req.params.id)
+      );
 
       return res.json(result);
     } catch (err) {
@@ -50,4 +59,4 @@ export class BoletosController {
       return res.status(400).json({ err: err.message });
     }
   }
-};
+}

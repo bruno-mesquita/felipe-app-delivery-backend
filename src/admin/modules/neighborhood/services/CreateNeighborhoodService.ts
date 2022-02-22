@@ -10,9 +10,12 @@ export class CreateNeighborhoodService {
     this.neighborhoodRepository = new NeighborhoodRepository();
   }
 
-  async execute(model: ICreateNeighborhood | ICreateNeighborhood[]): Promise<number | void> {
+  async execute(
+    model: ICreateNeighborhood | ICreateNeighborhood[]
+  ): Promise<number | void> {
     try {
-      if(Array.isArray(model)) return this.neighborhoodRepository.createMany(model);
+      if (Array.isArray(model))
+        return this.neighborhoodRepository.createMany(model);
 
       return this.neighborhoodRepository.create(model);
     } catch (err) {

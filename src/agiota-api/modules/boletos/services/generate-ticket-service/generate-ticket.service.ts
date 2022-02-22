@@ -8,12 +8,13 @@ import { Ticket } from '@core/ticket';
 import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
 
-import { MercadoPago } from '../../../../services/mercado-pago';
 import City from '@core/city';
 import ApiError from '@shared/utils/ApiError';
+import { MercadoPago } from '../../../../services/mercado-pago';
 
 interface FlippValues {
-  commission: number; monthlyPayment: number
+  commission: number;
+  monthlyPayment: number;
 }
 
 export class GenerateTicketService {
@@ -21,7 +22,7 @@ export class GenerateTicketService {
     return {
       commission: 0.07,
       monthlyPayment: 50,
-    }
+    };
   }
 
   private isToday(): boolean {
@@ -36,23 +37,29 @@ export class GenerateTicketService {
       return EstablishmentOwner.findAll({
         where: { active: true },
         attributes: ['id', 'first_name', 'last_name', 'email', 'cpf'],
-        include: [{
-          model: Establishment,
-          as: 'establishment',
-          where: { active: true },
-          attributes: ['id'],
-          include: [{
-            model: AddressEstablishment,
-            as: 'address',
-            attributes: { exclude: ['createdAt', 'updatedAt'] },
-            include: [{
-              model: City,
-              as: 'city',
-              attributes: ['name']
-            }]
-          }]
-        }],
-        limit: 50
+        include: [
+          {
+            model: Establishment,
+            as: 'establishment',
+            where: { active: true },
+            attributes: ['id'],
+            include: [
+              {
+                model: AddressEstablishment,
+                as: 'address',
+                attributes: { exclude: ['createdAt', 'updatedAt'] },
+                include: [
+                  {
+                    model: City,
+                    as: 'city',
+                    attributes: ['name'],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+        limit: 50,
       });
     } catch (err) {
       return [];
@@ -62,7 +69,11 @@ export class GenerateTicketService {
   private calcTotal(orders: Order[]): number {
     const { commission, monthlyPayment } = this.getFlippPrices();
 
-    return ((orders.reduce((prev, current) => Number(current.total) + prev, 0)) * commission) + monthlyPayment;
+    return (
+      orders.reduce((prev, current) => Number(current.total) + prev, 0) *
+        commission +
+      monthlyPayment
+    );
   }
 
   private getDateOfExpiration(): Date {
@@ -75,58 +86,73 @@ export class GenerateTicketService {
     try {
       const mercadoPago = new MercadoPago();
 
-      if(this.isToday()) {
+      if (this.isToday()) {
         const owners = await this.getOwners();
 
         if (owners.length === 0) throw new ApiError('Nenhum boleto para gerar');
 
-        await Promise.all(owners.map(async owner => {
-          const orders = await owner.establishment.getOrders({
-            where: { commission: false, order_status: 'Finalizado' },
-            attributes: ['total', 'id'],
-          });
+        await Promise.all(
+          owners.map(async (owner) => {
+            const orders = await owner.establishment.getOrders({
+              where: { commission: false, order_status: 'Finalizado' },
+              attributes: ['total', 'id'],
+            });
 
-          const total = this.calcTotal(orders);
+            const total = this.calcTotal(orders);
 
-          const paymentData = mercadoPago.generatePaymentData({
-            owner,
-            description: 'Comissão + mensalidade do Flipp Delivery',
-            transaction_amount: total,
-            date_of_expiration: this.getDateOfExpiration(),
-          });
+            const paymentData = mercadoPago.generatePaymentData({
+              owner,
+              description: 'Comissão + mensalidade do Flipp Delivery',
+              transaction_amount: total,
+              date_of_expiration: this.getDateOfExpiration(),
+            });
 
-          const mercadoPagoTicket = await mercadoPago.generateTicket(paymentData);
+            const mercadoPagoTicket = await mercadoPago.generateTicket(
+              paymentData
+            );
 
-          await Ticket.create({
-            barcode: mercadoPagoTicket.barcode.content,
-            date_created: mercadoPagoTicket.date_created,
-            price: total,
-            status: mercadoPagoTicket.status,
-            link: mercadoPagoTicket.transaction_details.external_resource_url,
-            status_detail: mercadoPagoTicket.status_detail,
-            verification_code: mercadoPagoTicket.verification_code || mercadoPagoTicket.transaction_details.verification_code,
-            payment_method_reference_id: mercadoPagoTicket.payment_method_reference_id || mercadoPagoTicket.transaction_details.payment_method_reference_id,
-            date_of_expiration: mercadoPagoTicket.date_of_expiration,
-            date_last_updated: mercadoPagoTicket.date_last_updated,
-            reference_id: mercadoPagoTicket.id,
-            establishment_id: owner.establishment.id,
-          });
+            await Ticket.create({
+              barcode: mercadoPagoTicket.barcode.content,
+              date_created: mercadoPagoTicket.date_created,
+              price: total,
+              status: mercadoPagoTicket.status,
+              link: mercadoPagoTicket.transaction_details.external_resource_url,
+              status_detail: mercadoPagoTicket.status_detail,
+              verification_code:
+                mercadoPagoTicket.verification_code ||
+                mercadoPagoTicket.transaction_details.verification_code,
+              payment_method_reference_id:
+                mercadoPagoTicket.payment_method_reference_id ||
+                mercadoPagoTicket.transaction_details
+                  .payment_method_reference_id,
+              date_of_expiration: mercadoPagoTicket.date_of_expiration,
+              date_last_updated: mercadoPagoTicket.date_last_updated,
+              reference_id: mercadoPagoTicket.id,
+              establishment_id: owner.establishment.id,
+            });
 
-          const ids = orders.map(order => order.id);
+            const ids = orders.map((order) => order.id);
 
-          await Order.update({ commission: true }, { where: { id: { [Op.in]: ids } } })
-        }))
+            await Order.update(
+              { commission: true },
+              { where: { id: { [Op.in]: ids } } }
+            );
+          })
+        );
       } else {
-        return { result: 'Hoje não é o dia de gerar boleto', err: null }
+        return { result: 'Hoje não é o dia de gerar boleto', err: null };
       }
 
-      return { result: {
-        message: 'Boletos gerados com sucesso',
-      }, err: null };
+      return {
+        result: {
+          message: 'Boletos gerados com sucesso',
+        },
+        err: null,
+      };
     } catch (err) {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
     }
   }
-};
+}

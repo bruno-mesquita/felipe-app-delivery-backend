@@ -7,7 +7,7 @@ import {
   DeleteMenuService,
   ListMenuService,
   UpdateMenuService,
-  GetMenuService
+  GetMenuService,
 } from './services';
 
 import {
@@ -24,7 +24,10 @@ export class MenuController extends Controller {
 
   async create({ client, body }: Request, res: Response): Promise<Response> {
     try {
-      const sanitizedValues = createMenuValidate({ ...body, establishmentId: client.entity.getEstablishmentId() });
+      const sanitizedValues = createMenuValidate({
+        ...body,
+        establishmentId: client.entity.getEstablishmentId(),
+      });
 
       const menuService = new CreateMenuService();
 
@@ -55,7 +58,10 @@ export class MenuController extends Controller {
       const establishmentId = client.entity.getEstablishmentId();
       const { id } = params;
 
-      const sanitizedValues = findOneMenuValidate({ id: Number(id), establishmentId });
+      const sanitizedValues = findOneMenuValidate({
+        id: Number(id),
+        establishmentId,
+      });
 
       const menuService = new GetMenuService();
 
@@ -67,7 +73,10 @@ export class MenuController extends Controller {
     }
   }
 
-  async update({ params, body, client }: Request, res: Response): Promise<Response> {
+  async update(
+    { params, body, client }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
       const sanitizedValues = updateMenuValidate({
         id: Number(params.id),
@@ -89,7 +98,7 @@ export class MenuController extends Controller {
     try {
       const sanitizedValues = deleteMenuValidate({
         id: Number(params.id),
-        establishmentId: client.entity.getEstablishmentId()
+        establishmentId: client.entity.getEstablishmentId(),
       });
 
       const menuService = new DeleteMenuService();

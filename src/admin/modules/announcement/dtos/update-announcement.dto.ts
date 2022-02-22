@@ -3,4 +3,4 @@ export interface UpdateAnnouncementDto {
   name: string;
   active: boolean;
   image?: string;
-};
+}

@@ -9,7 +9,10 @@ import ApiError from '@shared/utils/ApiError';
 export class VerifyStatusOrderService {
   async execute(id: number): Promise<string> {
     try {
-      const order = await Order.findOne({ where: { id }, attributes: ['client_order_status'] });
+      const order = await Order.findOne({
+        where: { id },
+        attributes: ['client_order_status'],
+      });
 
       if (!order) throw new ApiError('Pedido não encontrado.');
 

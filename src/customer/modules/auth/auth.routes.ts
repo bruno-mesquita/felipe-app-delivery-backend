@@ -5,7 +5,6 @@ import AuthController from './auth.controller';
 const routes = Router();
 const authController = new AuthController();
 
-
 routes.post('/auth/login', authController.login);
 routes.post('/auth/refresh-token', authController.refreshToken);
 routes.put('/auth/reset-password', authController.resetPassword);

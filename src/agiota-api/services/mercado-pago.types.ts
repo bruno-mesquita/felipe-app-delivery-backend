@@ -10,7 +10,7 @@ export interface PaymentResponse {
     external_resource_url: string;
     verification_code: string;
     payment_method_reference_id: string;
-  }
+  };
   status_detail: string;
   verification_code: string;
   payment_method_reference_id: string;

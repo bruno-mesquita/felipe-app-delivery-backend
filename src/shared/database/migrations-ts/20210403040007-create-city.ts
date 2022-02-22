@@ -22,7 +22,7 @@ export default {
         allowNull: false,
         references: { model: 'state', key: 'id' },
         onDelete: 'CASCADE',
-        onUpdate: 'CASCADE'
+        onUpdate: 'CASCADE',
       },
       created_at: {
         type: Sequelize.DATE,
@@ -37,5 +37,5 @@ export default {
 
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.dropTable('city');
-  }
+  },
 };

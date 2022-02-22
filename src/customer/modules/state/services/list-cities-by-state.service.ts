@@ -8,13 +8,13 @@ export class ListCitiesByStateService {
     try {
       const stateExists = await State.findByPk(stateId, { attributes: ['id'] });
 
-      if(!stateExists) throw new ApiError('Estado não encontrado');
+      if (!stateExists) throw new ApiError('Estado não encontrado');
 
       const result = await City.findAll({
         where: {
           state_id: stateId,
         },
-        attributes: ['id', 'name']
+        attributes: ['id', 'name'],
       });
 
       return { result, err: null };

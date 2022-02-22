@@ -1,7 +1,7 @@
-import { ServiceResponse } from "@shared/utils/service-response";
-import TokenManager from "@shared/utils/token-manager";
+import { ServiceResponse } from '@shared/utils/service-response';
+import TokenManager from '@shared/utils/token-manager';
 import Admin from '@core/admin';
-import ApiError from "@shared/utils/ApiError";
+import ApiError from '@shared/utils/ApiError';
 
 export class RefreshTokenService {
   private tokenManager: TokenManager;

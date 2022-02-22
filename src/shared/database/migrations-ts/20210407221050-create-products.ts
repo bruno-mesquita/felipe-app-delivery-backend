@@ -56,5 +56,5 @@ export default {
 
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.dropTable('product');
-  }
+  },
 };

@@ -9,13 +9,17 @@ export class CreateStateService {
       // Fazendo validação DTO
       const valid = schema.isValidSync(createStateDto);
 
-      if (!valid) throw new ApiError('[Erro: Estado] Por favor reveja seus dados');
+      if (!valid)
+        throw new ApiError('[Erro: Estado] Por favor reveja seus dados');
 
       // Verificando se o Estado já exite
 
-      const stateExists = await State.findOne({ where: { name: createStateDto.name } });
+      const stateExists = await State.findOne({
+        where: { name: createStateDto.name },
+      });
 
-      if (stateExists) throw new ApiError('[ERRO]: Estado já existe no sistema!');
+      if (stateExists)
+        throw new ApiError('[ERRO]: Estado já existe no sistema!');
 
       // criando classe
       const state = await State.create(createStateDto);

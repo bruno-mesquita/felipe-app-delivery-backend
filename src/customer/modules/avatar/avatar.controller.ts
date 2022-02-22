@@ -1,7 +1,10 @@
 import Controller from '@shared/utils/controller';
 import type { Request, Response } from 'express';
 
-import { CreateAvatarClientService, FindOneAvatarClientClientService } from './services';
+import {
+  CreateAvatarClientService,
+  FindOneAvatarClientClientService,
+} from './services';
 import { createAvatarValidate } from './validations';
 
 class AvatarController extends Controller {
@@ -16,7 +19,7 @@ class AvatarController extends Controller {
     try {
       const values = createAvatarValidate({
         ...body,
-        clientId: client.id
+        clientId: client.id,
       });
 
       const avatarService = new CreateAvatarClientService();
@@ -31,7 +34,8 @@ class AvatarController extends Controller {
 
   async findOne({ client }: Request, res: Response): Promise<Response> {
     try {
-      const findOneAvatarClientClientService = new FindOneAvatarClientClientService();
+      const findOneAvatarClientClientService =
+        new FindOneAvatarClientClientService();
 
       const avatar = await findOneAvatarClientClientService.execute(client.id);
 

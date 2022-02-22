@@ -4,7 +4,11 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateMenuDto } from '../dtos/update-menu.dto';
 
 export class UpdateMenuService {
-  async execute({ establishmentId, id, ...modelDto }: UpdateMenuDto): Promise<ServiceResponse<boolean | null>> {
+  async execute({
+    establishmentId,
+    id,
+    ...modelDto
+  }: UpdateMenuDto): Promise<ServiceResponse<boolean | null>> {
     try {
       // Verificando se o menu já existe cadastrado
       const menu = await Menu.findOne({
@@ -17,7 +21,7 @@ export class UpdateMenuService {
 
       return { result: true, err: null };
     } catch (err) {
-      if(err instanceof ApiError) throw err;
+      if (err instanceof ApiError) throw err;
 
       throw new ApiError('Erro ao atualizar menu', 'unknown', 500);
     }

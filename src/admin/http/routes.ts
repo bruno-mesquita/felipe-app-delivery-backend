@@ -3,7 +3,7 @@ import { Router } from 'express';
 import { categoryRoutes } from '../modules/category/category.routes';
 import { cityRoutes } from '../modules/city';
 import { stateRoutes } from '../modules/state';
-import { authRoutes } from '../modules/auth'
+import { authRoutes } from '../modules/auth';
 import { addressEstablishmentRoutes as cityStore } from '../modules/address/address.routes';
 import { routes as termsOfUseRoutes } from '../modules/terms-of-use/terms-of-use.routes';
 import { ownerRoutes } from '../modules/establisment-owner';
@@ -26,6 +26,6 @@ routes.use([
   announcementRoutes,
   cityManagerRoutes,
   neighborhoodRoutes,
-])
+]);
 
 export default routes;

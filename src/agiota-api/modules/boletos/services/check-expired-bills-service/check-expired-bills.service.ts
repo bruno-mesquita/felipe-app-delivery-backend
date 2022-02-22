@@ -8,24 +8,32 @@ export class CheckExpiredBillsService {
     try {
       const mercadoPago = new MercadoPago();
 
-      const tickets = await Ticket.findAll({ where: { status: 'pending' }, limit: 50 });
+      const tickets = await Ticket.findAll({
+        where: { status: 'pending' },
+        limit: 50,
+      });
 
-      await Promise.all(tickets.map(async ticket => {
-        const maxDateExpired = addBusinessDays(ticket.date_of_expiration as any, 3);
+      await Promise.all(
+        tickets.map(async (ticket) => {
+          const maxDateExpired = addBusinessDays(
+            ticket.date_of_expiration as any,
+            3
+          );
 
-        const today = subHours(new Date(), 3);
+          const today = subHours(new Date(), 3);
 
-        if (isAfter(today, maxDateExpired)) {
-          await mercadoPago.cancelTicket(ticket.reference_id);
+          if (isAfter(today, maxDateExpired)) {
+            await mercadoPago.cancelTicket(ticket.reference_id);
 
-          ticket.cancel();
-          await ticket.save();
-        }
-      }))
+            ticket.cancel();
+            await ticket.save();
+          }
+        })
+      );
 
-      return { result: true, err: null }
+      return { result: true, err: null };
     } catch (err) {
       return { result: false, err: err.message };
     }
   }
-};
+}

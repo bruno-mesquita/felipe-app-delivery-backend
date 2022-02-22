@@ -21,10 +21,10 @@ export default {
         type: Sequelize.DATE,
         allowNull: false,
       },
-    })
+    });
   },
 
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.dropTable('category');
-  }
+  },
 };

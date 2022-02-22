@@ -15,8 +15,9 @@ export class CityManagerController extends Controller {
   }
 
   async me({ client, body }: Request, res: Response): Promise<Response> {
-    return this.profileCityManagerService.execute(client.id, body.selects)
-    .then(response => res.json(response))
-    .catch(err => this.requestError(err, res));
+    return this.profileCityManagerService
+      .execute(client.id, body.selects)
+      .then((response) => res.json(response))
+      .catch((err) => this.requestError(err, res));
   }
 }

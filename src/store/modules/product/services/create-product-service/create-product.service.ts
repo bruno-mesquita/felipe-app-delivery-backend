@@ -2,19 +2,23 @@ import Menu from '@core/menu';
 import Product from '@core/product';
 import Image from '@core/image';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { CreateProductDto } from '../../dtos/create-product-dto';
 import ApiError from '@shared/utils/ApiError';
+import { CreateProductDto } from '../../dtos/create-product-dto';
 
 export class CreateProductService {
-  public async execute(createProductDto: CreateProductDto): Promise<ServiceResponse<boolean>> {
+  public async execute(
+    createProductDto: CreateProductDto
+  ): Promise<ServiceResponse<boolean>> {
     try {
       // Verificando se o Menu existe.
-      const menu = await Menu.findByPk(createProductDto.menu, { attributes: ['id'] });
+      const menu = await Menu.findByPk(createProductDto.menu, {
+        attributes: ['id'],
+      });
 
       if (!menu) throw new ApiError('Menu não encontrado no sistema.');
 
       const image = await Image.create({
-        encoded:  createProductDto.image,
+        encoded: createProductDto.image,
       });
 
       await Product.create({

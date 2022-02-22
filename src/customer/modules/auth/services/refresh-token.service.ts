@@ -1,6 +1,6 @@
-import TokenManager from "@shared/utils/token-manager";
+import TokenManager from '@shared/utils/token-manager';
 import Client from '@core/client';
-import ApiError from "@shared/utils/ApiError";
+import ApiError from '@shared/utils/ApiError';
 
 interface IRefreshTokenServiceResponse {
   token: string;
@@ -10,7 +10,7 @@ interface IRefreshTokenServiceResponse {
 export class RefreshTokenService {
   private tokenManager: TokenManager;
 
-  constructor () {
+  constructor() {
     this.tokenManager = new TokenManager();
   }
 

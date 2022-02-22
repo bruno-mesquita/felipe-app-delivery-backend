@@ -11,13 +11,10 @@ class NotificationController extends Controller {
 
   async register({ body, client }: Request, res: Response): Promise<Response> {
     try {
-      if(body.token) {
+      if (body.token) {
         const registerProviderNotification = new RegisterProviderNotification();
 
-        await registerProviderNotification.execute(
-          body.token,
-          client.id,
-        );
+        await registerProviderNotification.execute(body.token, client.id);
       }
       return res.status(204).json({});
     } catch (err) {

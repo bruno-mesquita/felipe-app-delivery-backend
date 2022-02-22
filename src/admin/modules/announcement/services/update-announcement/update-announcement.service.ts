@@ -24,13 +24,13 @@ export class UpdateProductService {
 
       announcement.updateAnnouncement(name, active);
 
-      if(updateAnnouncement.image) {
+      if (updateAnnouncement.image) {
         const photo = await announcement.getPhoto();
 
         photo.setEncoded(image);
 
         await photo.save();
-      };
+      }
 
       await announcement.save();
 

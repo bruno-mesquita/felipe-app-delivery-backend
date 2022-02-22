@@ -5,12 +5,13 @@
  */
 
 import type { Request, Response } from 'express';
+import Controller from '@shared/utils/controller';
 import { LoginEstablishmentOwnerService } from './services/login-service/login-establishment-owner.service';
 import { RefreshTokenService } from './services';
-import Controller from '@shared/utils/controller';
 
 export class AuthEstablishmentController extends Controller {
   private loginEstablishmentOwnerService: LoginEstablishmentOwnerService;
+
   private refreshTokenService: RefreshTokenService;
 
   constructor() {

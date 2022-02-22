@@ -1,4 +1,4 @@
-export type UpdateProductDto  = Partial<{
+export type UpdateProductDto = Partial<{
   name: string;
   price: number;
   description: string;
@@ -6,4 +6,4 @@ export type UpdateProductDto  = Partial<{
   menu_id: number;
   image: string;
   active: boolean;
-}> & { id: number; };
+}> & { id: number };

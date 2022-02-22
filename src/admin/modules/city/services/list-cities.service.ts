@@ -7,11 +7,13 @@ export class ListCitiesService {
     try {
       return City.findAll({
         attributes: ['id', 'name', 'active'],
-        include: [{
-          model: State,
-          as: 'state',
-          attributes: ['name']
-        }]
+        include: [
+          {
+            model: State,
+            as: 'state',
+            attributes: ['name'],
+          },
+        ],
       });
     } catch (err) {
       ApiError.verifyType(err);
@@ -20,4 +22,3 @@ export class ListCitiesService {
     }
   }
 }
-

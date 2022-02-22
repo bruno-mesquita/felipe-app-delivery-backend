@@ -5,11 +5,16 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { ICreateRateDto } from '../dtos';
 
 export class CreateRateService {
-  async execute({ value, message, orderId, clientId }: ICreateRateDto): Promise<ServiceResponse<boolean>> {
+  async execute({
+    value,
+    message,
+    orderId,
+    clientId,
+  }: ICreateRateDto): Promise<ServiceResponse<boolean>> {
     try {
       const order = await Order.findOne({
         where: { id: orderId, client_id: clientId },
-      })
+      });
 
       if (!order) throw new ApiError('Pedido não encontrado');
 

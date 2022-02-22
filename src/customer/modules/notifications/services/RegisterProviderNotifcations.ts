@@ -9,7 +9,7 @@ export class RegisterProviderNotification {
       await notification.addListener({
         targetId: clientId,
         token: pushToken,
-        type: 'Client'
+        type: 'Client',
       });
     } catch (err) {
       ApiError.verifyType(err);
@@ -17,4 +17,4 @@ export class RegisterProviderNotification {
       throw ApiError.generateErrorUnknown();
     }
   }
-};
+}

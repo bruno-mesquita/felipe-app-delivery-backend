@@ -8,7 +8,7 @@ export type ApiSMSResponse = AxiosResponse<{
     ExpireInMinutes: string;
     EnforceSecureValidation: string;
     TokenCode: string;
-  }
+  };
   Message: string;
 }>;
 
@@ -19,8 +19,7 @@ export interface RequestBodySendToken {
   ExpireInMinutes: string;
 }
 
-
 export interface RequestBodyTokenVerify {
-  TokenCode:string;
+  TokenCode: string;
   PhoneNumber: string;
 }

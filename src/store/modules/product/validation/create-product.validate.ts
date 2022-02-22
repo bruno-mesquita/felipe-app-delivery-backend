@@ -1,7 +1,7 @@
 import { object, SchemaOf, string, number, boolean } from 'yup';
 
-import { CreateProductDto } from '../dtos/create-product-dto';
 import yupWrapper from '@shared/utils/yup-wrapper';
+import { CreateProductDto } from '../dtos/create-product-dto';
 
 const schema: SchemaOf<CreateProductDto> = object({
   name: string().trim().required(),

@@ -3,4 +3,3 @@ export interface CreateMenuDto {
   establishmentId: number;
   active: boolean;
 }
-

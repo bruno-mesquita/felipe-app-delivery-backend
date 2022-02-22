@@ -7,20 +7,21 @@ import { format } from 'date-fns';
 
 import JsonHandler from '../utils/json-handler';
 
-const getIp = (req: IncomingMessage & Request) => {
-  return req.ip || req.ips || (req.socket && req.socket.remoteAddress) || undefined;
-};
+const getIp = (req: IncomingMessage & Request) =>
+  req.ip || req.ips || (req.socket && req.socket.remoteAddress) || undefined;
 
-const loggerMiddleware = () => {
-  return morgan((tokens, req, res) => {
+const loggerMiddleware = () =>
+  morgan((tokens, req, res) => {
     const status = tokens.status(req, res);
 
-    if(Number(status) >= 400) {
+    if (Number(status) >= 400) {
       const pathRoot = resolve(__dirname, '..', '..', '..', 'logs');
 
       if (!existsSync(pathRoot)) mkdirSync(pathRoot);
-  
-      const jsonHandler = new JsonHandler(resolve(pathRoot, `requests-${tokens.status(req, res)}.json`));
+
+      const jsonHandler = new JsonHandler(
+        resolve(pathRoot, `requests-${tokens.status(req, res)}.json`)
+      );
       const result = {
         ip: getIp(req as any),
         method: tokens.method(req, res),
@@ -30,12 +31,11 @@ const loggerMiddleware = () => {
         responseTime: `${tokens['response-time'](req, res)} ms`,
         date: format(new Date(), 'dd/MM/yyyy HH:mm'),
       };
-  
+
       jsonHandler.add(result);
     }
 
     return '';
   });
-};
 
 export default loggerMiddleware;

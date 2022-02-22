@@ -7,13 +7,17 @@ interface IClient {
   city: number;
 }
 
-export type Select = 'avatar' | 'active' | keyof Pick<IClient, 'name' | 'email' | 'cpf' | 'cellphone'>;
+export type Select =
+  | 'avatar'
+  | 'active'
+  | keyof Pick<IClient, 'name' | 'email' | 'cpf' | 'cellphone'>;
 
 export interface ICreateClientDto extends IClient {
   confirmPassword: string;
 }
 
-export interface IUpdateClientDto extends Pick<IClient, 'name' | 'email' | 'cellphone'> {
+export interface IUpdateClientDto
+  extends Pick<IClient, 'name' | 'email' | 'cellphone'> {
   id: number;
 }
 

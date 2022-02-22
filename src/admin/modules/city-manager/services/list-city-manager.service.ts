@@ -10,23 +10,27 @@ export class ListCityManaganersService {
       const { limit, offset } = createPagination(page);
 
       return CityManager.findAll({
-        include: [{
-          model: City,
-          as: 'cityOfAction',
-          attributes: ['name', 'state'],
-          include: [{
-            model: State,
-            as: 'state',
-            attributes: ['name'],
-          }]
-        }],
+        include: [
+          {
+            model: City,
+            as: 'cityOfAction',
+            attributes: ['name', 'state'],
+            include: [
+              {
+                model: State,
+                as: 'state',
+                attributes: ['name'],
+              },
+            ],
+          },
+        ],
         limit,
         offset,
-      })
+      });
     } catch (err) {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

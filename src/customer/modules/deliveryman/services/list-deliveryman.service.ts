@@ -1,6 +1,6 @@
-import { Deliveryman } from "@core/deliveryman";
-import { ServiceResponse } from "@shared/utils/service-response";
-import { createPagination } from "@shared/utils/use-page";
+import { Deliveryman } from '@core/deliveryman';
+import { ServiceResponse } from '@shared/utils/service-response';
+import { createPagination } from '@shared/utils/use-page';
 
 export class ListDeliverymanService {
   async execute(page = 0): Promise<ServiceResponse<Deliveryman[]>> {

@@ -8,4 +8,3 @@ export const schema: SchemaOf<UpdateStateDto> = object({
   name: string().required(REQUIRED),
   active: boolean().required(REQUIRED),
 });
-

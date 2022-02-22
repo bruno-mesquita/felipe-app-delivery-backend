@@ -1,6 +1,6 @@
-import { EstablishmentOwner } from "@core/establishment-owner";
-import ApiError from "@shared/utils/ApiError";
-import { ServiceResponse } from "@shared/utils/service-response";
+import { EstablishmentOwner } from '@core/establishment-owner';
+import ApiError from '@shared/utils/ApiError';
+import { ServiceResponse } from '@shared/utils/service-response';
 
 interface UpdateOwnerDto {
   first_name: string;
@@ -10,18 +10,28 @@ interface UpdateOwnerDto {
 }
 
 export class UpdateOwnerProfileService {
-  async execute(model: UpdateOwnerDto, id: number): Promise<ServiceResponse<boolean>> {
+  async execute(
+    model: UpdateOwnerDto,
+    id: number
+  ): Promise<ServiceResponse<boolean>> {
     try {
       const owner = await EstablishmentOwner.findOne({
         where: { id },
-        attributes: ['id', 'first_name', 'last_name', 'email', 'cellphone', 'cpf']
+        attributes: [
+          'id',
+          'first_name',
+          'last_name',
+          'email',
+          'cellphone',
+          'cpf',
+        ],
       });
 
-      if(!owner) throw new ApiError('Dono não encontrado');
+      if (!owner) throw new ApiError('Dono não encontrado');
 
       await owner.update(model);
 
-      return { err: null, result: true }
+      return { err: null, result: true };
     } catch (err) {
       ApiError.verifyType(err);
 

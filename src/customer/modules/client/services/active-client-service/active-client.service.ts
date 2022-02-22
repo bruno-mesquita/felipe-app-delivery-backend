@@ -19,7 +19,9 @@ class ActiveClientService {
   async execute({ code, userId }: IActiveClientDto): Promise<void> {
     try {
       // verificar se o usuário existe
-      const user = await Client.findOne({ where: { id: userId, active: false } });
+      const user = await Client.findOne({
+        where: { id: userId, active: false },
+      });
 
       if (!user) throw new ApiError('Cliente não encontrado');
 

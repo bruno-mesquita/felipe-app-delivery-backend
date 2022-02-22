@@ -5,9 +5,13 @@ import { LoginClientDto } from '../dtos/login-client.dto';
 import loginValidation from '../validation/login.validation';
 
 export class LoginClientService {
-  async execute({ email, password }: LoginClientDto): Promise<{ token: string; refreshToken: string }> {
+  async execute({
+    email,
+    password,
+  }: LoginClientDto): Promise<{ token: string; refreshToken: string }> {
     try {
-      if (!loginValidation.isValidSync({ email, password })) throw new ApiError('Dados inválidos');
+      if (!loginValidation.isValidSync({ email, password }))
+        throw new ApiError('Dados inválidos');
 
       const tokenManager = new TokenManager();
 
@@ -16,7 +20,8 @@ export class LoginClientService {
       if (!admin) throw new ApiError('[erro]: E-mail ou senha incorreto');
 
       // Comparar senha digitada do cliente com a que foi salva no banco
-      if (!admin.comparePassword(password)) throw new ApiError('Credenciais inválidas');
+      if (!admin.comparePassword(password))
+        throw new ApiError('Credenciais inválidas');
 
       return tokenManager.create(admin.getId());
     } catch (err) {

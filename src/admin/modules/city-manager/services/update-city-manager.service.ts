@@ -13,6 +13,6 @@ export class UpdateCityManagerService {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

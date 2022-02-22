@@ -17,11 +17,11 @@ interface Payer {
   phone?: {
     area_code: number;
     number: string;
-  }
+  };
   identification?: {
-    type: 'CPF',
+    type: 'CPF';
     number: string;
-  }
+  };
   address: {
     zip_code: string;
     street_name: string;
@@ -29,14 +29,14 @@ interface Payer {
     neighborhood: string;
     city: string;
     federal_unit?: string;
-  }
-};
+  };
+}
 
 interface PaymentData {
   transaction_amount: number;
   description: string;
   payment_method_id: 'bolbradesco';
-  payer: Payer
+  payer: Payer;
 }
 
 interface GeneratePaymentData {
@@ -58,7 +58,7 @@ export class MercadoPago {
   }
 
   generatePaymentData({ owner, ...rest }: GeneratePaymentData): PaymentData {
-    const address = owner.establishment.address;
+    const { address } = owner.establishment;
 
     return {
       ...rest,
@@ -69,17 +69,17 @@ export class MercadoPago {
         last_name: owner.last_name,
         identification: {
           type: 'CPF',
-          number: owner.cpf
+          number: owner.cpf,
         },
-        address:  {
+        address: {
           zip_code: address.cep,
           street_name: address.street,
           street_number: address.number,
           neighborhood: address.neighborhood,
           city: address.city.name,
-        }
-      }
-    }
+        },
+      },
+    };
   }
 
   async generateTicket(paymentData: PaymentData): Promise<PaymentResponse> {
@@ -104,7 +104,9 @@ export class MercadoPago {
 
   async cancelTicket(id: number) {
     try {
-      const { data } = await api.put(`/v1/payments/${id}`, { status: 'cancelled' });
+      const { data } = await api.put(`/v1/payments/${id}`, {
+        status: 'cancelled',
+      });
 
       return data;
     } catch (err) {

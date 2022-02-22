@@ -13,7 +13,9 @@ export class CreateCategoryService {
 
       // Verificando se já existe esse nome
 
-      const categoryExists = await Category.findOne({ where: { name: createCategoryDto.name } });
+      const categoryExists = await Category.findOne({
+        where: { name: createCategoryDto.name },
+      });
 
       if (categoryExists) throw new ApiError('Categoria já cadastrada');
 

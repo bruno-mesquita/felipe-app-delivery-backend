@@ -1,9 +1,9 @@
 import { Op } from 'sequelize';
 
 import { EstablishmentOwner } from '@core/establishment-owner';
+import ApiError from '@shared/utils/ApiError';
 import { CreateOwnerDto } from '../dtos/create-owner-dtos';
 import { schema } from '../validations/create-owner.validation';
-import ApiError from '@shared/utils/ApiError';
 
 export class CreateOwnerService {
   async execute(createOwnerDto: CreateOwnerDto): Promise<void> {
@@ -36,6 +36,6 @@ export class CreateOwnerService {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

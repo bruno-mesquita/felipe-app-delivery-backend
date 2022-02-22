@@ -8,7 +8,7 @@ const schema: SchemaOf<UpdateAddressDto> = object({
   number: string().trim().required(),
   neighborhood: string().trim().required(),
   cep: string().trim().required(),
-  city: number().integer().required()
+  city: number().integer().required(),
 });
 
 export default schema;

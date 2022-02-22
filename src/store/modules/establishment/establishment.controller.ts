@@ -13,7 +13,10 @@ export class EstabishmentController {
     try {
       const createEstablishmentService = new CreateEstablishmentService();
 
-      const establishment = await createEstablishmentService.execute({ ...req.body, userId: req.client.id });
+      const establishment = await createEstablishmentService.execute({
+        ...req.body,
+        userId: req.client.id,
+      });
 
       if (establishment.err) throw new Error(establishment.err);
 
@@ -27,7 +30,10 @@ export class EstabishmentController {
     try {
       const updateProfileService = new UpdateProfileService();
 
-      const result = await updateProfileService.execute({ ...req.body, userId: req.client.id });
+      const result = await updateProfileService.execute({
+        ...req.body,
+        userId: req.client.id,
+      });
 
       if (result.err) throw new Error(result.err);
 
@@ -38,10 +44,13 @@ export class EstabishmentController {
   }
 
   async profile(req: Request, res: Response): Promise<Response> {
-     try {
+    try {
       const profileEstablishmentService = new ProfileEstablishmentService();
 
-      const profile = await profileEstablishmentService.execute(req.body.selects, req.client.id);
+      const profile = await profileEstablishmentService.execute(
+        req.body.selects,
+        req.client.id
+      );
 
       if (profile.err) throw new Error(profile.err);
 
@@ -57,10 +66,10 @@ export class EstabishmentController {
 
       const deactive = await deactivateAccount.execute(req.client.id);
 
-      if (deactive.err) throw new  Error(deactive.err);
+      if (deactive.err) throw new Error(deactive.err);
 
       return res.status(200).json(deactive);
-    }catch(err) {
+    } catch (err) {
       return res.status(400).json({ err: err.message });
     }
   }
@@ -71,10 +80,10 @@ export class EstabishmentController {
 
       const result = await existsEstablishmentService.execute(req.client.id);
 
-      if (result.err) throw new  Error(result.err);
+      if (result.err) throw new Error(result.err);
 
       return res.json(result);
-    }catch(err) {
+    } catch (err) {
       return res.status(400).json({ err: err.message });
     }
   }

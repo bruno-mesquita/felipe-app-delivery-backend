@@ -1,9 +1,9 @@
-import { ServiceResponse } from "@shared/utils/service-response";
-import { EstablishmentOwner } from "@core/establishment-owner";
-import Establishment from "@core/establishment";
-import AddressEstablishment from "@core/address-establishment";
-import City from "@core/city";
-import State from "@core/state";
+import { ServiceResponse } from '@shared/utils/service-response';
+import { EstablishmentOwner } from '@core/establishment-owner';
+import Establishment from '@core/establishment';
+import AddressEstablishment from '@core/address-establishment';
+import City from '@core/city';
+import State from '@core/state';
 
 export class ListOwnerService {
   async execute(): Promise<ServiceResponse<EstablishmentOwner[]>> {
@@ -22,6 +22,6 @@ export class ListOwnerService {
       return { result: owner, err: null };
     } catch (err) {
       return { result: [], err: err.message };
-    };
-  };
-};
+    }
+  }
+}

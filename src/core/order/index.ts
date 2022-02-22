@@ -3,45 +3,73 @@
  */
 import { DataTypes, Sequelize } from 'sequelize';
 
-import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from './order.types';
+import {
+  CustomerStatusType,
+  FormOfPaymentType,
+  StatusOrderType,
+} from './order.types';
 import Model from '../_Bases/model';
 
 class Order extends Model {
   payment: FormOfPaymentType;
+
   total: number;
+
   discount: number;
+
   client_order_status: CustomerStatusType;
+
   order_status: StatusOrderType;
+
   freight_value: number;
+
   transshipment: number;
+
   note: string;
+
   address_id: number;
+
   evaluation_id: number;
+
   establishment_id: number;
+
   client_id: number;
+
   commission: boolean;
 
   static start(sequelize: Sequelize) {
-    this.init({
-      payment: DataTypes.STRING,
-      total: DataTypes.DECIMAL,
-      discount: DataTypes.NUMBER,
-      client_order_status: DataTypes.STRING,
-      order_status: DataTypes.STRING,
-      freight_value: DataTypes.DECIMAL,
-      transshipment: DataTypes.DECIMAL,
-      note: DataTypes.STRING,
-      commission: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'order' });
+    this.init(
+      {
+        payment: DataTypes.STRING,
+        total: DataTypes.DECIMAL,
+        discount: DataTypes.NUMBER,
+        client_order_status: DataTypes.STRING,
+        order_status: DataTypes.STRING,
+        freight_value: DataTypes.DECIMAL,
+        transshipment: DataTypes.DECIMAL,
+        note: DataTypes.STRING,
+        commission: DataTypes.BOOLEAN,
+      },
+      { sequelize, tableName: 'order' }
+    );
 
     return this;
   }
 
   static associate({ Evaluation, Establishment, Client, AddressClient }): void {
-    this.belongsTo(Evaluation, { foreignKey: 'evaluation_id', as: 'evaluation' })
-    this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishment' })
-    this.belongsTo(Client, { foreignKey: 'client_id', as: 'client' })
-    this.belongsTo(AddressClient, { foreignKey: 'address_id', as: 'address_client' })
+    this.belongsTo(Evaluation, {
+      foreignKey: 'evaluation_id',
+      as: 'evaluation',
+    });
+    this.belongsTo(Establishment, {
+      foreignKey: 'establishment_id',
+      as: 'establishment',
+    });
+    this.belongsTo(Client, { foreignKey: 'client_id', as: 'client' });
+    this.belongsTo(AddressClient, {
+      foreignKey: 'address_id',
+      as: 'address_client',
+    });
   }
 
   public getClientOrderStatus(): CustomerStatusType {
@@ -56,7 +84,10 @@ class Order extends Model {
     this.set('evaluation_id', evaluationId);
   }
 
-  public updateOrder(payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
+  public updateOrder(
+    payment: FormOfPaymentType,
+    client_order_status: CustomerStatusType
+  ): void {
     this.set('payment', payment);
     this.set('client_order_status', client_order_status);
   }
@@ -73,12 +104,24 @@ class Order extends Model {
   }
 
   private getStatus(): CustomerStatusType[] {
-    return ['Novo', 'Aceito', 'Em preparo', 'Saiu para entrega', 'Entregue', 'Cancelado'];
+    return [
+      'Novo',
+      'Aceito',
+      'Em preparo',
+      'Saiu para entrega',
+      'Entregue',
+      'Cancelado',
+    ];
   }
 
   public nextStatus(): void {
-    if (this.get('client_order_status') !== 'Entregue' && this.get('client_order_status') !== 'Cancelado') {
-      const index = this.getStatus().findIndex((item) => item === this.get('client_order_status'));
+    if (
+      this.get('client_order_status') !== 'Entregue' &&
+      this.get('client_order_status') !== 'Cancelado'
+    ) {
+      const index = this.getStatus().findIndex(
+        (item) => item === this.get('client_order_status')
+      );
 
       const status = this.getStatus()[index + 1];
 

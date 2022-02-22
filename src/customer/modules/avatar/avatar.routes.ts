@@ -10,7 +10,7 @@ const avatarController = new AvatarController();
 
 const middlewares = [isAuthenticated, accessClient];
 
-routes.post('/avatar', ...middlewares,  avatarController.create);
+routes.post('/avatar', ...middlewares, avatarController.create);
 routes.get('/avatar', ...middlewares, avatarController.findOne);
 
 export default routes;

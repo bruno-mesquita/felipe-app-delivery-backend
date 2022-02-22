@@ -23,6 +23,6 @@ export class CreateCityManagerService {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

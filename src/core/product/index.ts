@@ -1,4 +1,9 @@
-import { DataTypes, Sequelize, BelongsToGetAssociationMixin, BelongsTo } from 'sequelize';
+import {
+  DataTypes,
+  Sequelize,
+  BelongsToGetAssociationMixin,
+  BelongsTo,
+} from 'sequelize';
 
 import Image from '@core/image';
 import Model from '../_Bases/model';
@@ -7,16 +12,23 @@ export const UNIT = {
   UN: 'Un',
   GR: 'gr',
   KG: 'Kg',
-}
+};
 
 class Product extends Model {
   name: string;
+
   price: number;
+
   description: string;
+
   active: boolean;
+
   menu_id!: number;
+
   image_id!: number;
+
   unitType: string;
+
   unit: number;
 
   public readonly photo?: Image;
@@ -26,21 +38,27 @@ class Product extends Model {
   public getPhoto!: BelongsToGetAssociationMixin<Image>;
 
   static start(sequelize: Sequelize) {
-    this.init({
-      name: DataTypes.STRING,
-      price: DataTypes.NUMBER,
-      description: DataTypes.STRING,
-      active: DataTypes.BOOLEAN,
-      unit: DataTypes.NUMBER,
-      unitType: DataTypes.STRING,
-    }, { sequelize, tableName: 'product', paranoid: true });
+    this.init(
+      {
+        name: DataTypes.STRING,
+        price: DataTypes.NUMBER,
+        description: DataTypes.STRING,
+        active: DataTypes.BOOLEAN,
+        unit: DataTypes.NUMBER,
+        unitType: DataTypes.STRING,
+      },
+      { sequelize, tableName: 'product', paranoid: true }
+    );
 
     return this;
   }
 
   static associate({ Image, Menu }): void {
-    Product.Photo = this.belongsTo(Image, { foreignKey: 'image_id', as: 'photo' })
-    this.belongsTo(Menu, { foreignKey: 'menu_id', as: 'menu' })
+    Product.Photo = this.belongsTo(Image, {
+      foreignKey: 'image_id',
+      as: 'photo',
+    });
+    this.belongsTo(Menu, { foreignKey: 'menu_id', as: 'menu' });
   }
 
   public getName(): string {

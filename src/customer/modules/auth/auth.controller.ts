@@ -15,13 +15,17 @@ import {
   resetPasswordValidate,
   resendCodeValidate,
   forgotPasswordValidate,
- } from './validation';
+} from './validation';
 
 class AuthController extends Controller {
   private readonly loginClientService: LoginClientService;
+
   private readonly refreshTokenService: RefreshTokenService;
+
   private readonly resetPasswordService: ResetPasswordService;
+
   private readonly resendCodeService: ResendCodeService;
+
   private readonly forgotPasswordService: ForgotPasswordService;
 
   constructor() {

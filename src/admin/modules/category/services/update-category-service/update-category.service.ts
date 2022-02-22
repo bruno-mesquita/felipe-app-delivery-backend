@@ -1,7 +1,7 @@
-import { UpdateCategoryDtos } from '../../dtos/update-category.dtos';
 import Category from '@core/category';
-import { schema } from '../../validation/update-category.validation';
 import ApiError from '@shared/utils/ApiError';
+import { UpdateCategoryDtos } from '../../dtos/update-category.dtos';
+import { schema } from '../../validation/update-category.validation';
 
 export class UpdateCategoryService {
   async execute({ id, name }: UpdateCategoryDtos): Promise<void> {

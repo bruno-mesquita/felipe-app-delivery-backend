@@ -1,43 +1,57 @@
-import {
-  DataTypes,
-  Sequelize,
-} from 'sequelize';
+import { DataTypes, Sequelize } from 'sequelize';
 import { compareSync, hashSync } from 'bcryptjs';
 
 import Establishment from '@core/establishment';
-import Model from '../_Bases/model';
 import CityManager from '@core/city-manager';
+import Model from '../_Bases/model';
 
 export class EstablishmentOwner extends Model {
   first_name: string;
+
   last_name: string;
+
   password: string;
+
   email: string;
+
   cellphone: string;
+
   cpf: string;
+
   establishment_id: number;
+
   created_by_id: number;
 
   public readonly created_by?: CityManager;
+
   public readonly establishment?: Establishment;
 
   static start(sequelize: Sequelize) {
-    this.init({
-      first_name: DataTypes.STRING,
-      last_name: DataTypes.STRING,
-      email: DataTypes.STRING,
-      password: DataTypes.STRING,
-      cellphone: DataTypes.STRING,
-      active: DataTypes.BOOLEAN,
-      cpf: DataTypes.STRING,
-    }, { sequelize, tableName: 'establishment-owner' });
+    this.init(
+      {
+        first_name: DataTypes.STRING,
+        last_name: DataTypes.STRING,
+        email: DataTypes.STRING,
+        password: DataTypes.STRING,
+        cellphone: DataTypes.STRING,
+        active: DataTypes.BOOLEAN,
+        cpf: DataTypes.STRING,
+      },
+      { sequelize, tableName: 'establishment-owner' }
+    );
 
     return this;
   }
 
   static associate({ Establishment, CityManager }) {
-    this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishment' });
-    this.belongsTo(CityManager, { foreignKey: 'created_by_id', as: 'created_by' });
+    this.belongsTo(Establishment, {
+      foreignKey: 'establishment_id',
+      as: 'establishment',
+    });
+    this.belongsTo(CityManager, {
+      foreignKey: 'created_by_id',
+      as: 'created_by',
+    });
   }
 
   public hashPassword(): void {
@@ -75,6 +89,4 @@ export class EstablishmentOwner extends Model {
   public setEstablishmentId(establishmentId: number): void {
     this.set('establishment_id', establishmentId);
   }
-
-
 }

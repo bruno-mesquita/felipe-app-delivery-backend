@@ -4,14 +4,19 @@ import Model from '../_Bases/model';
 
 class Neighborhood extends Model {
   name: string;
+
   active: boolean;
+
   city: number;
 
   static start(sequelize: Sequelize) {
-    this.init({
-      name: DataTypes.STRING,
-      active: DataTypes.BOOLEAN,
-    }, { sequelize, tableName: 'neighborhood' });
+    this.init(
+      {
+        name: DataTypes.STRING,
+        active: DataTypes.BOOLEAN,
+      },
+      { sequelize, tableName: 'neighborhood' }
+    );
 
     return this;
   }

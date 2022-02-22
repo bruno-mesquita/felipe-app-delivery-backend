@@ -2,18 +2,29 @@ import type { Request, Response } from 'express';
 
 import Controller from '@shared/utils/controller';
 
-import { UpdatePasswordEstabishmentService, UpdateOwnerProfileService, ProfileOwnertService } from './services';
+import {
+  UpdatePasswordEstabishmentService,
+  UpdateOwnerProfileService,
+  ProfileOwnertService,
+} from './services';
 
 export class OwnerController extends Controller {
   constructor() {
     super(['updatePassword', 'updateOwner', 'me']);
   }
 
-  async updatePassword({ body, client }: Request, res: Response): Promise<Response> {
+  async updatePassword(
+    { body, client }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
-      const updatePasswordEstabishmentService = new UpdatePasswordEstabishmentService();
+      const updatePasswordEstabishmentService =
+        new UpdatePasswordEstabishmentService();
 
-      const result = await updatePasswordEstabishmentService.execute({ ...body, id: client.id });
+      const result = await updatePasswordEstabishmentService.execute({
+        ...body,
+        id: client.id,
+      });
 
       return res.json(result);
     } catch (err) {
@@ -21,7 +32,10 @@ export class OwnerController extends Controller {
     }
   }
 
-  async updateOwner({ body, client }: Request, res: Response): Promise<Response> {
+  async updateOwner(
+    { body, client }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
       const updateOwnerProfileService = new UpdateOwnerProfileService();
 
@@ -37,11 +51,14 @@ export class OwnerController extends Controller {
     try {
       const profileOwnertService = new ProfileOwnertService();
 
-      const result = await profileOwnertService.execute(body.selects, client.id);
+      const result = await profileOwnertService.execute(
+        body.selects,
+        client.id
+      );
 
       return res.json(result);
     } catch (err) {
       return this.requestError(err, res);
     }
   }
-};
+}

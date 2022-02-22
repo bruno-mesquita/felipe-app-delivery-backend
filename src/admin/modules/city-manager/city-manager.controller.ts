@@ -18,13 +18,17 @@ const validateString = (value: string) => {
   } catch (err) {
     return false;
   }
-}
+};
 
 export class CityManagerController extends Controller {
   private readonly createCityManagerService: CreateCityManagerService;
+
   private readonly listCityManaganersService: ListCityManaganersService;
+
   private readonly deleteCityManagerService: DeleteCityManagerService;
+
   private readonly updateCityManagerService: UpdateCityManagerService;
+
   private readonly findOneCityManagerService: FindOneCityManagerService;
 
   constructor() {
@@ -49,11 +53,13 @@ export class CityManagerController extends Controller {
 
       const convertedPage = Number(page);
 
-      return res.json(await this.listCityManaganersService.execute(convertedPage));
+      return res.json(
+        await this.listCityManaganersService.execute(convertedPage)
+      );
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
+  }
 
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
@@ -63,37 +69,37 @@ export class CityManagerController extends Controller {
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
+  }
 
   async destroy({ params }: Request, res: Response): Promise<Response> {
     try {
       const isValidId = validateString(params.id);
 
-      if(!isValidId) throw new ApiError('Parametros incorretos');
+      if (!isValidId) throw new ApiError('Parametros incorretos');
 
       return res.json(await this.deleteCityManagerService.execute(params.id));
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
+  }
 
   async findOne({ params }: Request, res: Response): Promise<Response> {
     try {
       const isValidId = validateString(params.id);
 
-      if(!isValidId) throw new ApiError('Parametros incorretos');
+      if (!isValidId) throw new ApiError('Parametros incorretos');
 
       return res.json(await this.findOneCityManagerService.execute(params.id));
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
+  }
 
   async update({ body, params }: Request, res: Response): Promise<Response> {
     try {
       const isValidId = validateString(params.id);
 
-      if(!isValidId) throw new ApiError('Parametros incorretos');
+      if (!isValidId) throw new ApiError('Parametros incorretos');
 
       await this.updateCityManagerService.execute({ id: params.id, ...body });
 
@@ -101,5 +107,5 @@ export class CityManagerController extends Controller {
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
-};
+  }
+}

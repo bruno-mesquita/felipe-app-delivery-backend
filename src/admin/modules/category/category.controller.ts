@@ -2,11 +2,17 @@ import type { Request, Response } from 'express';
 
 import Controller from '@shared/utils/controller';
 
-import { CreateCategoryService, ListCategoriesService, UpdateCategoryService } from './services';
+import {
+  CreateCategoryService,
+  ListCategoriesService,
+  UpdateCategoryService,
+} from './services';
 
 class EstablishmentController extends Controller {
   private readonly createCategoryService: CreateCategoryService;
+
   private readonly listCategoriesService: ListCategoriesService;
+
   private readonly updateCategoryService: UpdateCategoryService;
 
   constructor() {
@@ -25,7 +31,7 @@ class EstablishmentController extends Controller {
     try {
       const { id } = params;
 
-      await this.updateCategoryService.execute({ ...body, id })
+      await this.updateCategoryService.execute({ ...body, id });
 
       return res.status(203).json({});
     } catch (err) {
@@ -35,7 +41,9 @@ class EstablishmentController extends Controller {
 
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
-      return res.status(201).json(await this.createCategoryService.execute(body));
+      return res
+        .status(201)
+        .json(await this.createCategoryService.execute(body));
     } catch (err) {
       return this.requestError(err, res);
     }

@@ -1,7 +1,7 @@
-import { Announcement } from "@core/announcement";
-import Image from "@core/image";
-import ApiError from "@shared/utils/ApiError";
-import { CreateAnnouncementDto } from "../../dtos/create-announcement.dto";
+import { Announcement } from '@core/announcement';
+import Image from '@core/image';
+import ApiError from '@shared/utils/ApiError';
+import { CreateAnnouncementDto } from '../../dtos/create-announcement.dto';
 import { createAnnouncementValidate } from '../../validations/create-announcement.validation';
 
 export class CreateAnnouncementService {
@@ -20,10 +20,10 @@ export class CreateAnnouncementService {
       });
 
       return { result: true, err: null };
-    } catch(err) {
+    } catch (err) {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
     }
-  };
-};
+  }
+}

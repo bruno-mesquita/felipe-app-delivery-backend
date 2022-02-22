@@ -5,18 +5,24 @@ import { UpdatePasswordEstablishmentDto } from '../../dtos/update-password-owner
 import updatePasswordEstabishmentValidation from '../../validation/update-password-owner.validation';
 
 export class UpdatePasswordEstabishmentService {
-  async execute(updatePasswordDto: UpdatePasswordEstablishmentDto): Promise<ServiceResponse<boolean>> {
+  async execute(
+    updatePasswordDto: UpdatePasswordEstablishmentDto
+  ): Promise<ServiceResponse<boolean>> {
     try {
       // validando dados
-      if (!updatePasswordEstabishmentValidation.isValidSync(updatePasswordDto)) throw new ApiError('Dados inválidos');
+      if (!updatePasswordEstabishmentValidation.isValidSync(updatePasswordDto))
+        throw new ApiError('Dados inválidos');
 
       // Verificando se o usuário existe
-      const user = await EstablishmentOwner.findOne({ where: { id: updatePasswordDto.id, active: true } });
+      const user = await EstablishmentOwner.findOne({
+        where: { id: updatePasswordDto.id, active: true },
+      });
 
       if (!user) throw new ApiError('Usuário não encontrado');
 
       // Verificando se a senha fornecida é igual salva
-      if (!user.comparePassword(updatePasswordDto.currentPassword)) throw new ApiError('Senha inválida');
+      if (!user.comparePassword(updatePasswordDto.currentPassword))
+        throw new ApiError('Senha inválida');
 
       user.setPassword(updatePasswordDto.newPassword);
       user.hashPassword();

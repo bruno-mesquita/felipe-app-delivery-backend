@@ -1,5 +1,5 @@
-import Establishment from "@core/establishment";
-import ApiError from "@shared/utils/ApiError";
+import Establishment from '@core/establishment';
+import ApiError from '@shared/utils/ApiError';
 
 export class UpdateOwnerService {
   async execute({ ownerId, establishment }: any): Promise<void> {
@@ -19,18 +19,17 @@ export class UpdateOwnerService {
 
       const entity = await Establishment.findByPk(establishment.id);
 
-      if(!entity) throw new ApiError('Estabelecimento não encontrado');
+      if (!entity) throw new ApiError('Estabelecimento não encontrado');
 
-      if(entity.isActive()) entity.deactivate();
+      if (entity.isActive()) entity.deactivate();
       else entity.activate();
 
       console.log(entity.isActive());
       await entity.save();
-
     } catch (err) {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

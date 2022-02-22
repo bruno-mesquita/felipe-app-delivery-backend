@@ -13,7 +13,7 @@ export class TermsOfUseController {
       const termsOfUse = await updateTermsOfUseService.execute({ ...body, id });
 
       return res.status(201).json(termsOfUse);
-    } catch(err) {
+    } catch (err) {
       return res.status(401).json({ err: err.message });
     }
   }
@@ -25,7 +25,7 @@ export class TermsOfUseController {
       const termsOfUse = await showTermsOfUseService.execute();
 
       return res.status(201).json(termsOfUse);
-    } catch(err) {
+    } catch (err) {
       return res.status(401).json({ err: err.message });
     }
   }
@@ -37,7 +37,7 @@ export class TermsOfUseController {
       const termsOfUse = await createTermsOfUseService.execute(body);
 
       return res.status(201).json(termsOfUse);
-    } catch(err) {
+    } catch (err) {
       return res.status(401).json({ err: err.message });
     }
   }

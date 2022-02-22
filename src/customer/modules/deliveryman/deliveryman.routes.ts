@@ -7,6 +7,11 @@ import { DeliverymanController } from './deliveryman.controller';
 const routes = Router();
 const deliverymanController = new DeliverymanController();
 
-routes.get('/deliverymen', isAuthenticated, accessClient, deliverymanController.list);
+routes.get(
+  '/deliverymen',
+  isAuthenticated,
+  accessClient,
+  deliverymanController.list
+);
 
 export default routes;

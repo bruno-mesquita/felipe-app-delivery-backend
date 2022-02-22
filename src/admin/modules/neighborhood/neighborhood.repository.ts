@@ -1,13 +1,17 @@
 import Neighborhood from '@core/neighborhood';
 import ApiError from '@shared/utils/ApiError';
-import type { ICreateNeighborhood, IUpdateNeighborhood, IDeleteNeighborhood } from './dtos';
+import type {
+  ICreateNeighborhood,
+  IUpdateNeighborhood,
+  IDeleteNeighborhood,
+} from './dtos';
 
 class NeighborhoodRepository {
   private async findOne(id: number): Promise<Neighborhood> {
     try {
       const neighborhood = await Neighborhood.findByPk(id);
 
-      if(!neighborhood) throw new ApiError('Bairro não encontrado');
+      if (!neighborhood) throw new ApiError('Bairro não encontrado');
 
       return neighborhood;
     } catch (err) {
@@ -39,7 +43,7 @@ class NeighborhoodRepository {
     try {
       const neighborhood = await Neighborhood.findByPk(id);
 
-      if(!neighborhood) throw new ApiError('Bairro não encontrado');
+      if (!neighborhood) throw new ApiError('Bairro não encontrado');
 
       await neighborhood.update(model);
     } catch (err) {

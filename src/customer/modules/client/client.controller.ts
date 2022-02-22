@@ -31,13 +31,21 @@ import {
 
 class ClientController extends Controller {
   private readonly createClientService: CreateClientService;
+
   private readonly activeClientService: ActiveClientService;
+
   private readonly updateProfileService: UpdateProfileService;
+
   private readonly updatePasswordClientService: UpdatePasswordClientService;
+
   private readonly profileClientService: ProfileClientService;
+
   private readonly listOrdersService: ListOrdersService;
+
   private readonly deleteClientService: DeleteClientService;
+
   private readonly deactiveteClientService: DeactiveteClientService;
+
   private readonly clientMeService: ClientMeService;
 
   constructor() {
@@ -68,7 +76,9 @@ class ClientController extends Controller {
     try {
       const sanitizedBody = createClientValidate(body);
 
-      return res.status(201).json(await this.createClientService.execute(sanitizedBody));
+      return res
+        .status(201)
+        .json(await this.createClientService.execute(sanitizedBody));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -88,13 +98,18 @@ class ClientController extends Controller {
 
   async deactivate({ client }: Request, res: Response): Promise<Response> {
     try {
-      return res.json(await this.deactiveteClientService.execute(client.entity));
+      return res.json(
+        await this.deactiveteClientService.execute(client.entity)
+      );
     } catch (err) {
       return this.requestError(err, res);
     }
   }
 
-  async updateProfile({ body, client }: Request, res: Response): Promise<Response> {
+  async updateProfile(
+    { body, client }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
       const sanitizedValues = updateClientValidate({ ...body, id: client.id });
 
@@ -104,11 +119,19 @@ class ClientController extends Controller {
     }
   }
 
-  async updatePassword({ body, client }: Request, res: Response): Promise<Response> {
+  async updatePassword(
+    { body, client }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
-      const sanitizedValues = updatePasswordValidate({ ...body, id: client.id });
+      const sanitizedValues = updatePasswordValidate({
+        ...body,
+        id: client.id,
+      });
 
-      return res.json(await this.updatePasswordClientService.execute(sanitizedValues));
+      return res.json(
+        await this.updatePasswordClientService.execute(sanitizedValues)
+      );
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -116,7 +139,10 @@ class ClientController extends Controller {
 
   async profile({ client, body }: Request, res: Response): Promise<Response> {
     try {
-      const sanitizedValues = profileClientValidate({ id: client.id, selects: body.selects });
+      const sanitizedValues = profileClientValidate({
+        id: client.id,
+        selects: body.selects,
+      });
 
       return res.json(await this.profileClientService.execute(sanitizedValues));
     } catch (err) {
@@ -124,9 +150,15 @@ class ClientController extends Controller {
     }
   }
 
-  async listOrdersByClient({ client, query }: Request, res: Response): Promise<Response> {
+  async listOrdersByClient(
+    { client, query }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
-      const values = listOrdersClientValidate({ clientId: client.id, page: Number(query.page) || 0 });
+      const values = listOrdersClientValidate({
+        clientId: client.id,
+        page: Number(query.page) || 0,
+      });
 
       return res.json(await this.listOrdersService.execute(values));
     } catch (err) {

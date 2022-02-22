@@ -2,37 +2,40 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import Client from '@core/client';
 import Image from '@core/image';
 
-import type { IProfileClientDto } from '../../dtos';
 import ApiError from '@shared/utils/ApiError';
+import type { IProfileClientDto } from '../../dtos';
 
 export default class ProfileClientService {
-  async execute({ selects, id }: IProfileClientDto): Promise<ServiceResponse<any>> {
+  async execute({
+    selects,
+    id,
+  }: IProfileClientDto): Promise<ServiceResponse<any>> {
     try {
       const include = [];
 
-      const includeAvatar = selects.find(item => item === 'avatar');
+      const includeAvatar = selects.find((item) => item === 'avatar');
 
-      if(includeAvatar) {
+      if (includeAvatar) {
         include.push({
           model: Image,
-            as: 'avatar',
-            attributes: ['name', 'encoded'],
-        })
-        selects = selects.filter(item => item !== 'avatar');
+          as: 'avatar',
+          attributes: ['name', 'encoded'],
+        });
+        selects = selects.filter((item) => item !== 'avatar');
       }
 
       const client = await Client.findOne({
         where: { id, active: true },
         attributes: selects,
-        include
-      })
+        include,
+      });
 
-      if(!client) throw new ApiError('Cliente não encontrado');
+      if (!client) throw new ApiError('Cliente não encontrado');
 
       const result = client.toJSON();
 
-      if(includeAvatar) {
-        result['avatar'] = result?.avatar?.encoded || null
+      if (includeAvatar) {
+        result.avatar = result?.avatar?.encoded || null;
       }
 
       return {

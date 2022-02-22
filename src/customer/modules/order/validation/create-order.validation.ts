@@ -25,6 +25,10 @@ export const schema: SchemaOf<CreateOrderDto> = object({
   note: string().trim(),
   transshipment: number(),
   payment: mixed()
-    .oneOf<FormOfPaymentType>(['Dinheiro', 'Cartão de débidto', 'Cartão de crédito'])
+    .oneOf<FormOfPaymentType>([
+      'Dinheiro',
+      'Cartão de débidto',
+      'Cartão de crédito',
+    ])
     .required(),
 });

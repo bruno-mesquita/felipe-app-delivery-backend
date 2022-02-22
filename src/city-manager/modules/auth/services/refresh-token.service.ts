@@ -1,6 +1,6 @@
-import TokenManager from "@shared/utils/token-manager";
+import TokenManager from '@shared/utils/token-manager';
 import CityManager from '@core/city-manager';
-import ApiError from "@shared/utils/ApiError";
+import ApiError from '@shared/utils/ApiError';
 
 import { IRefreshTokenDto } from '../dtos';
 
@@ -20,11 +20,12 @@ export class RefreshTokenService {
         attributes: ['id'],
       });
 
-      if (!cityManager) throw new ApiError('Cliente não encontrado', 'auth', 401);
+      if (!cityManager)
+        throw new ApiError('Cliente não encontrado', 'auth', 401);
 
       return this.tokenManager.create(cityManager.getId());
     } catch (err) {
-      ApiError.verifyType(err)
+      ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
     }

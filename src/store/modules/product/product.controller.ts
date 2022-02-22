@@ -2,13 +2,14 @@ import type { Request, Response } from 'express';
 
 import ApiError from '@shared/utils/ApiError';
 
+import Controller from '@shared/utils/controller';
 import {
   CreateProductService,
   DeleteProductService,
   ListProductsService,
   ShowProductService,
   UpdateProductService,
-  SearchNameProductsService
+  SearchNameProductsService,
 } from './services';
 
 import {
@@ -18,14 +19,16 @@ import {
   searchNameProductValidate,
   showProductValidate,
 } from './validation';
-import Controller from '@shared/utils/controller';
 
 class ProductController extends Controller {
   constructor() {
     super(['searchName', 'list', 'show', 'create', 'update', 'delete']);
   }
 
-  async searchName({ client, query }: Request, res: Response): Promise<Response> {
+  async searchName(
+    { client, query }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
       const sanitizedValues = searchNameProductValidate({
         establishmentId: client.entity.getEstablishmentId(),
@@ -34,7 +37,9 @@ class ProductController extends Controller {
 
       const searchNameProductsService = new SearchNameProductsService();
 
-      const products = await searchNameProductsService.execute(sanitizedValues as any);
+      const products = await searchNameProductsService.execute(
+        sanitizedValues as any
+      );
 
       return res.json(products);
     } catch (err) {
@@ -50,7 +55,11 @@ class ProductController extends Controller {
 
       const establishmentId = client.entity.getEstablishmentId();
 
-      const products = await listProductsService.execute(establishmentId, Number(page), menuId ? Number(menuId) : undefined);
+      const products = await listProductsService.execute(
+        establishmentId,
+        Number(page),
+        menuId ? Number(menuId) : undefined
+      );
 
       return res.status(200).json(products);
     } catch (err) {
@@ -64,7 +73,7 @@ class ProductController extends Controller {
 
       const sanitizedValues = showProductValidate({
         id: Number(id),
-        establishmentId:client.entity.getEstablishmentId()
+        establishmentId: client.entity.getEstablishmentId(),
       });
 
       const productService = new ShowProductService();
@@ -83,7 +92,9 @@ class ProductController extends Controller {
 
       const createProductService = new CreateProductService();
 
-      const product = await createProductService.execute(sanitizedValues as any);
+      const product = await createProductService.execute(
+        sanitizedValues as any
+      );
 
       return res.status(201).json(product);
     } catch (err) {

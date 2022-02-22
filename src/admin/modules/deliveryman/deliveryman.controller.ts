@@ -5,15 +5,15 @@ import {
   CreateDeliverymanService,
   DeleteDeliverymanService,
   ListDeliverymanService,
-  UpdateDeliverymanService
+  UpdateDeliverymanService,
 } from './services';
 
 import {
   createDeliverymanValidate,
-  updateDeliverymanValidate
+  updateDeliverymanValidate,
 } from './validations';
 
-export class DeliverymanController extends Controller  {
+export class DeliverymanController extends Controller {
   constructor() {
     super();
 

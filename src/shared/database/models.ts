@@ -43,7 +43,5 @@ export default [
   Deliveryman,
   Announcement,
   CityManager,
-  Neighborhood
-]
-
-
+  Neighborhood,
+];

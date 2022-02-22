@@ -8,16 +8,20 @@ export class FindOneCityManagerService {
     try {
       const cityManager = CityManager.findOne({
         where: { id },
-        include: [{
-          model: City,
-          as: 'cityOfAction',
-          attributes: ['name', 'state'],
-          include: [{
-            model: State,
-            as: 'state',
-            attributes: ['name'],
-          }]
-        }]
+        include: [
+          {
+            model: City,
+            as: 'cityOfAction',
+            attributes: ['name', 'state'],
+            include: [
+              {
+                model: State,
+                as: 'state',
+                attributes: ['name'],
+              },
+            ],
+          },
+        ],
       });
 
       return cityManager;
@@ -29,6 +33,6 @@ export class FindOneCityManagerService {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

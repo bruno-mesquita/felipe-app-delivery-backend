@@ -6,14 +6,18 @@ import {
   ShowAnnouncementService,
   ListAnnouncementService,
   UpdateProductService,
-  DeleteAnnouncementService
+  DeleteAnnouncementService,
 } from './services';
 
 export class AnnouncementController extends Controller {
   private readonly createAnnouncementService: CreateAnnouncementService;
+
   private readonly showAnnouncementService: ShowAnnouncementService;
+
   private readonly listAnnouncementService: ListAnnouncementService;
+
   private readonly updateProductService: UpdateProductService;
+
   private readonly deleteAnnouncementService: DeleteAnnouncementService;
 
   constructor() {
@@ -34,7 +38,9 @@ export class AnnouncementController extends Controller {
 
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
-      return res.status(201).json(await this.createAnnouncementService.execute(body));
+      return res
+        .status(201)
+        .json(await this.createAnnouncementService.execute(body));
     } catch (err) {
       return this.requestError(err, res);
     }

@@ -4,9 +4,13 @@ import Model from './model';
 
 abstract class User extends Model {
   name: string;
+
   email: string;
+
   password: string;
+
   cellphone: string;
+
   active: boolean;
 
   public setName(name: string): void {
@@ -14,7 +18,7 @@ abstract class User extends Model {
   }
 
   public setEmail(email: string): void {
-    this.set('email',email);
+    this.set('email', email);
   }
 
   public getEmail(): string {
@@ -58,4 +62,4 @@ abstract class User extends Model {
   }
 }
 
-export default User
+export default User;

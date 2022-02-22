@@ -8,7 +8,7 @@ export class ListMenuService {
       const menus = await Menu.findAll({
         where: { establishment_id: establishmentId },
         attributes: ['id', 'name'],
-        order: [['createdAt', 'ASC']]
+        order: [['createdAt', 'ASC']],
       });
 
       return { result: menus, err: null };

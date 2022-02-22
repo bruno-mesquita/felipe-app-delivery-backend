@@ -7,7 +7,11 @@
 import axios, { AxiosInstance } from 'axios';
 import ApiError from '../ApiError';
 
-import { ApiSMSResponse, RequestBodySendToken, RequestBodyTokenVerify } from './types';
+import {
+  ApiSMSResponse,
+  RequestBodySendToken,
+  RequestBodyTokenVerify,
+} from './types';
 
 class SmsService {
   private api: AxiosInstance;
@@ -19,7 +23,7 @@ class SmsService {
       baseURL: SMS_API_URL,
       headers: {
         'auth-key': SMS_KEY,
-      }
+      },
     });
   }
 
@@ -28,14 +32,19 @@ class SmsService {
    */
   async sendCode(phone: string): Promise<void> {
     try {
-      const { data } = await this.api.post<any, ApiSMSResponse, RequestBodySendToken>('/tokenmanager', {
+      const { data } = await this.api.post<
+        any,
+        ApiSMSResponse,
+        RequestBodySendToken
+      >('/tokenmanager', {
         EnforceSecureValidation: true,
         ExpireInMinutes: '5m',
         Prefix: 'Flipp',
-        PhoneNumber: phone
+        PhoneNumber: phone,
       });
 
-      if(!data.Success) throw new ApiError('Erro ao enviar codigo de ativação');
+      if (!data.Success)
+        throw new ApiError('Erro ao enviar codigo de ativação');
     } catch (err) {
       console.log(err);
       ApiError.verifyType(err);
@@ -46,12 +55,17 @@ class SmsService {
 
   async verifyCode(phone: string, code: string): Promise<void> {
     try {
-      const { data } = await this.api.put<any, ApiSMSResponse, RequestBodyTokenVerify>('/tokenmanager', {
+      const { data } = await this.api.put<
+        any,
+        ApiSMSResponse,
+        RequestBodyTokenVerify
+      >('/tokenmanager', {
         PhoneNumber: phone,
-        TokenCode: code
+        TokenCode: code,
       });
 
-      if(!data.Success) throw new ApiError('Código inválido solicite um novo código');
+      if (!data.Success)
+        throw new ApiError('Código inválido solicite um novo código');
     } catch (err) {
       ApiError.verifyType(err);
 

@@ -1,5 +1,5 @@
-import type { Request, Response } from "express";
-import { ShowTermsOfUseService } from "./services/show-terms-of-use.service";
+import type { Request, Response } from 'express';
+import { ShowTermsOfUseService } from './services/show-terms-of-use.service';
 
 export class TermsOfUseController {
   async show(req: Request, res: Response): Promise<Response> {
@@ -11,7 +11,7 @@ export class TermsOfUseController {
       if (termsOfUse.err) throw new Error(termsOfUse.err);
 
       return res.status(200).json(termsOfUse);
-    } catch(err) {
+    } catch (err) {
       return res.status(400).json({ err: err.message });
     }
   }

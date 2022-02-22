@@ -9,17 +9,14 @@ class NotificationController extends Controller {
   constructor() {
     super();
 
-    this.registerProviderNotification =  new RegisterProviderNotification();
+    this.registerProviderNotification = new RegisterProviderNotification();
 
     this.register = this.register.bind(this);
   }
 
   async register({ body, client }: Request, res: Response): Promise<Response> {
     try {
-      await this.registerProviderNotification.execute(
-        body.token,
-        client.id,
-      );
+      await this.registerProviderNotification.execute(body.token, client.id);
 
       return res.status(204).json({});
     } catch (err) {

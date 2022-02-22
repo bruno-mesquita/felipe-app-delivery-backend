@@ -10,13 +10,20 @@ import {
   FindOneAddressClientService,
 } from './services';
 
-import { createAddressClientValidate, updateAddressClientValidate } from './validations';
+import {
+  createAddressClientValidate,
+  updateAddressClientValidate,
+} from './validations';
 
 class ClientAddressController extends Controller {
   private readonly createAddressClientService: CreateAddressClientService;
+
   private readonly listAddressClientService: ListAddressClientService;
+
   private readonly deleteAddressClientService: DeleteAddressClientService;
+
   private readonly updateAddressClientService: UpdateAddressClientService;
+
   private readonly findOneAddressClientService: FindOneAddressClientService;
 
   constructor() {
@@ -37,7 +44,10 @@ class ClientAddressController extends Controller {
 
   async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
-      const values = createAddressClientValidate({ ...body, userId: client.id });
+      const values = createAddressClientValidate({
+        ...body,
+        userId: client.id,
+      });
 
       await this.createAddressClientService.execute(values);
 
@@ -49,7 +59,12 @@ class ClientAddressController extends Controller {
 
   async list({ client, query }: Request, res: Response): Promise<Response> {
     try {
-      return res.json(await this.listAddressClientService.execute(client.id, Number(query.page || 0)));
+      return res.json(
+        await this.listAddressClientService.execute(
+          client.id,
+          Number(query.page || 0)
+        )
+      );
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
@@ -57,7 +72,12 @@ class ClientAddressController extends Controller {
 
   async findOne({ params, client }: Request, res: Response): Promise<Response> {
     try {
-      return res.json(await this.findOneAddressClientService.execute(Number(params.id), client.id));
+      return res.json(
+        await this.findOneAddressClientService.execute(
+          Number(params.id),
+          client.id
+        )
+      );
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
@@ -79,7 +99,9 @@ class ClientAddressController extends Controller {
     try {
       const { addressClientId } = params;
 
-      return res.json(await this.deleteAddressClientService.execute(Number(addressClientId)));
+      return res.json(
+        await this.deleteAddressClientService.execute(Number(addressClientId))
+      );
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }

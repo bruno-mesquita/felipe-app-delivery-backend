@@ -7,31 +7,31 @@ export class ProfileCityManagerService {
     try {
       const include = [];
 
-      const includeAvatar = selects.find(item => item === 'avatar');
+      const includeAvatar = selects.find((item) => item === 'avatar');
 
-      if(includeAvatar) {
+      if (includeAvatar) {
         include.push({
           model: Image,
-            as: 'avatar',
-            attributes: ['name', 'encoded'],
-        })
-        selects = selects.filter(item => item !== 'avatar');
+          as: 'avatar',
+          attributes: ['name', 'encoded'],
+        });
+        selects = selects.filter((item) => item !== 'avatar');
       }
 
       const client = await CityManager.findOne({
         where: { id, active: true },
         attributes: selects,
-        include
-      })
+        include,
+      });
 
-      if(!client) throw new ApiError('Cliente não encontrado');
+      if (!client) throw new ApiError('Cliente não encontrado');
 
       const result = {
-        ...client.toJSON()
-      }
+        ...client.toJSON(),
+      };
 
-      if(includeAvatar) {
-        result['avatar'] = client?.avatar?.encoded || null
+      if (includeAvatar) {
+        result.avatar = client?.avatar?.encoded || null;
       }
 
       return result;

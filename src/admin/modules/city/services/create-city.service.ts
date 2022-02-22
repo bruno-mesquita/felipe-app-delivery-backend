@@ -1,4 +1,3 @@
-
 import City from '@core/city';
 import ApiError from '@shared/utils/ApiError';
 import { NeighborhoodRepository } from '@admin/modules/neighborhood';
@@ -21,15 +20,18 @@ export class CreateCityService {
       // Verificando se a Cidade existe no banco de dados
       const cityExists = await City.findOne({ where: { name: cityDto.name } });
 
-      if (cityExists) throw new ApiError('[ERRO]: Cidade já existente no sistema!');
+      if (cityExists)
+        throw new ApiError('[ERRO]: Cidade já existente no sistema!');
 
       const city = await City.create(cityDto);
 
-      await this.neighborhoodRepository.createMany(neighborhoods.map(item => ({
-        name: item,
-        active: true,
-        city: city.get('id')
-      })));
+      await this.neighborhoodRepository.createMany(
+        neighborhoods.map((item) => ({
+          name: item,
+          active: true,
+          city: city.get('id'),
+        }))
+      );
 
       return city.get('id');
     } catch (err) {

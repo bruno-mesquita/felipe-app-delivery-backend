@@ -10,8 +10,11 @@ import {
 
 export class EstablishmentOwnerController extends Controller {
   private listOwnerService: ListOwnerService;
+
   private showOwnerEstablishmentService: ShowOwnerEstablishmentService;
+
   private createOwnerService: CreateOwnerService;
+
   private updateOwnerService: UpdateOwnerService;
 
   constructor() {
@@ -34,23 +37,30 @@ export class EstablishmentOwnerController extends Controller {
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
+  }
 
   async show({ params }: Request, res: Response): Promise<Response> {
     try {
-      return res.json(await this.showOwnerEstablishmentService.execute(Number(params.id)));
+      return res.json(
+        await this.showOwnerEstablishmentService.execute(Number(params.id))
+      );
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
+  }
 
   async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
-      return res.json(await this.createOwnerService.execute({ ...body, created_by_id: client.id }));
+      return res.json(
+        await this.createOwnerService.execute({
+          ...body,
+          created_by_id: client.id,
+        })
+      );
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
+  }
 
   async update({ body }: Request, res: Response): Promise<Response> {
     try {
@@ -58,5 +68,5 @@ export class EstablishmentOwnerController extends Controller {
     } catch (err) {
       return this.requestError(err, res);
     }
-  };
-};
+  }
+}

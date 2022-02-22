@@ -7,14 +7,20 @@ import { createPagination } from '@shared/utils/use-page';
 import ApiError from '@shared/utils/ApiError';
 
 import { IListOrdersClient } from '../../dtos';
+
 export class ListOrdersService {
-  async execute({ page, clientId }: IListOrdersClient): Promise<ServiceResponse<Order[]>> {
+  async execute({
+    page,
+    clientId,
+  }: IListOrdersClient): Promise<ServiceResponse<Order[]>> {
     try {
       const { limit, offset } = createPagination(page);
 
-      const client = await Client.findOne({ where: { id: clientId, active: true } });
+      const client = await Client.findOne({
+        where: { id: clientId, active: true },
+      });
 
-      if(!client) throw new ApiError('Cliente não encontrado');
+      if (!client) throw new ApiError('Cliente não encontrado');
 
       const orders = await Order.findAll({
         where: { client_id: clientId },
@@ -29,7 +35,7 @@ export class ListOrdersService {
             model: Evaluation,
             as: 'evaluation',
             attributes: ['id', 'value'],
-          }
+          },
         ],
         order: [['createdAt', 'desc']],
         limit,

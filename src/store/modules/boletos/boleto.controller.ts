@@ -7,9 +7,12 @@ export class BoletoController {
     try {
       const listBoletosService = new ListBoletosService();
 
-      const result = await listBoletosService.execute(req.client.entity.getId(), Number(req.query.page || 0));
+      const result = await listBoletosService.execute(
+        req.client.entity.getId(),
+        Number(req.query.page || 0)
+      );
 
-      if(result.err) throw new Error(result.err);
+      if (result.err) throw new Error(result.err);
 
       return res.json(result);
     } catch (err) {
@@ -21,13 +24,16 @@ export class BoletoController {
     try {
       const newBoletoService = new NewBoletoService();
 
-      const result = await newBoletoService.execute(req.client.entity, Number(req.params.id));
+      const result = await newBoletoService.execute(
+        req.client.entity,
+        Number(req.params.id)
+      );
 
-      if(result.err) throw new Error(result.err);
+      if (result.err) throw new Error(result.err);
 
       return res.json(result);
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
   }
-};
+}

@@ -1,15 +1,17 @@
-import TokenManager from "@shared/utils/token-manager";
-import ApiError from "@shared/utils/ApiError";
-import { EstablishmentOwner } from "@core/establishment-owner";
+import TokenManager from '@shared/utils/token-manager';
+import ApiError from '@shared/utils/ApiError';
+import { EstablishmentOwner } from '@core/establishment-owner';
 
 export class RefreshTokenService {
   private tokenManager: TokenManager;
 
-  constructor () {
+  constructor() {
     this.tokenManager = new TokenManager();
   }
 
-  async execute(token: string): Promise<{ token: string; refreshToken: string }> {
+  async execute(
+    token: string
+  ): Promise<{ token: string; refreshToken: string }> {
     try {
       const payload = this.tokenManager.check(token);
 

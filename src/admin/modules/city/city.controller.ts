@@ -2,11 +2,18 @@ import type { Request, Response } from 'express';
 
 import Controller from '@shared/utils/controller';
 
-import { CreateCityService, UpdateCityService, ListCitiesService, FindOneCityService } from './services';
+import {
+  CreateCityService,
+  UpdateCityService,
+  ListCitiesService,
+  FindOneCityService,
+} from './services';
 
 export class CityController extends Controller {
   private readonly createCityService: CreateCityService;
+
   private readonly updateCityService: UpdateCityService;
+
   private readonly listCitiesService: ListCitiesService;
 
   private readonly findOneCityService: FindOneCityService;
@@ -37,7 +44,7 @@ export class CityController extends Controller {
 
   async update({ body, params }: Request, res: Response): Promise<Response> {
     try {
-      await this.updateCityService.execute({ ...body, id: params.id })
+      await this.updateCityService.execute({ ...body, id: params.id });
 
       return res.status(204).json({});
     } catch (err) {
@@ -52,8 +59,6 @@ export class CityController extends Controller {
       return this.requestError(err, res);
     }
   }
-
-
 
   async findOne({ params }: Request, res: Response): Promise<Response> {
     try {

@@ -19,9 +19,9 @@ export class FindOneEstablishmentService {
             model: Image,
             as: 'image',
             attributes: ['encoded'],
-          }
-        ]
-      })
+          },
+        ],
+      });
 
       return { result: establishment, err: null };
     } catch (err) {

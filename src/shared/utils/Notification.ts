@@ -8,14 +8,14 @@ type SendData = {
     data?: any;
     subtitle?: string;
     body?: string;
-  }
-}
+  };
+};
 
 type AddListenerData = {
   targetId: number;
   type: 'Client' | 'Partner';
-  token: string,
-}
+  token: string;
+};
 
 class Notification {
   private api: AxiosInstance;
@@ -26,7 +26,7 @@ class Notification {
 
   async addListener(addListenerData: AddListenerData) {
     try {
-      await this.api.post<AddListenerData>('/tokens', addListenerData)
+      await this.api.post<AddListenerData>('/tokens', addListenerData);
     } catch (err) {
       // throw new ApiError('Erro ao cadastrar notificações');
     }
@@ -34,7 +34,7 @@ class Notification {
 
   async send(data: SendData) {
     try {
-      await this.api.post<SendData>('/notifications', data)
+      await this.api.post<SendData>('/notifications', data);
     } catch (err) {
       // throw new ApiError('Erro ao enviar notificação');
     }

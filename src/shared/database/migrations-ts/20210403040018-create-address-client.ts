@@ -63,5 +63,5 @@ export default {
 
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.dropTable('address_client');
-  }
+  },
 };

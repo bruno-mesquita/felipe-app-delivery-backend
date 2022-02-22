@@ -10,16 +10,20 @@ export class CreateAddressClientService {
       // Verificando se a cidade existe no banco
       const city = await City.findByPk(createAddressDto.city);
 
-      if (!city) throw new ApiError('[ERRO: Endereço] Cidade selecionada não existe no sistema');
+      if (!city)
+        throw new ApiError(
+          '[ERRO: Endereço] Cidade selecionada não existe no sistema'
+        );
 
       const client = await Client.findOne({
         where: { id: createAddressDto.userId },
         attributes: ['id', 'name'],
       });
 
-      if(!client) throw new ApiError('Cliente não encontrado');
+      if (!client) throw new ApiError('Cliente não encontrado');
 
-      const { cep, neighborhood, nickname, number, street,  userId } = createAddressDto;
+      const { cep, neighborhood, nickname, number, street, userId } =
+        createAddressDto;
 
       await AddressClient.create({
         nickname,
@@ -29,9 +33,8 @@ export class CreateAddressClientService {
         cep,
         city_id: city.getId(),
         active: false,
-        client_id: userId
+        client_id: userId,
       });
-
     } catch (err) {
       ApiError.verifyType(err);
 

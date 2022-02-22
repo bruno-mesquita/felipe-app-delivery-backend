@@ -26,14 +26,14 @@ export class ShowOrderService {
           {
             model: Evaluation,
             as: 'evaluation',
-            attributes: ['id', 'value', 'message']
+            attributes: ['id', 'value', 'message'],
           },
           {
             model: AddressClient,
             as: 'address_client',
             attributes: ['nickname'],
-          }
-        ]
+          },
+        ],
       });
 
       if (!order) throw new ApiError('Pedido não encontrado.');
@@ -46,9 +46,9 @@ export class ShowOrderService {
             model: Product,
             as: 'product',
             attributes: ['name'],
-          }
-        ]
-      })
+          },
+        ],
+      });
 
       return { order, items };
     } catch (err) {

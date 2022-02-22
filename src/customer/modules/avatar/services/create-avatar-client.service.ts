@@ -5,15 +5,21 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { ICreateAvatarDto } from '../dtos';
 
 export class CreateAvatarClientService {
-  async execute(createAvatar: ICreateAvatarDto): Promise<ServiceResponse<boolean | null>> {
+  async execute(
+    createAvatar: ICreateAvatarDto
+  ): Promise<ServiceResponse<boolean | null>> {
     try {
       // Verificando se o usuário existe
-      const client = await Client.findOne({ where: { id: createAvatar.clientId, active: true } });
+      const client = await Client.findOne({
+        where: { id: createAvatar.clientId, active: true },
+      });
 
       if (!client) throw new ApiError('Usuário não econtrado.');
 
       if (client.getAvatarId()) {
-        const clientAvatar = await client.getAvatar({ attributes: ['name', 'encoded', 'id'] });
+        const clientAvatar = await client.getAvatar({
+          attributes: ['name', 'encoded', 'id'],
+        });
 
         clientAvatar.setEncoded(createAvatar.encoded);
         clientAvatar.setName(createAvatar.name);

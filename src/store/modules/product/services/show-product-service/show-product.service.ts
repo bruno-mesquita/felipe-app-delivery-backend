@@ -6,18 +6,29 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { ShowProductDto } from '../../dtos/show-product-dto';
 
 export class ShowProductService {
-  async execute({ id }: ShowProductDto): Promise<ServiceResponse<Product | null>> {
+  async execute({
+    id,
+  }: ShowProductDto): Promise<ServiceResponse<Product | null>> {
     try {
       const product = await Product.findOne({
         where: { id },
-        attributes: ['id', 'name', 'price', 'description', 'menu_id', 'active', 'unit', 'unitType'],
+        attributes: [
+          'id',
+          'name',
+          'price',
+          'description',
+          'menu_id',
+          'active',
+          'unit',
+          'unitType',
+        ],
         include: [
           {
             model: Image,
             as: 'photo',
-            attributes: ['encoded']
+            attributes: ['encoded'],
           },
-        ]
+        ],
       });
 
       if (!product) throw new ApiError('Procuro não encontrado');

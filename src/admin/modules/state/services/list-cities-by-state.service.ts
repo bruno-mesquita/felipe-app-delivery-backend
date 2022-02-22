@@ -4,7 +4,10 @@ import ApiError from '@shared/utils/ApiError';
 export class ListCitiesByStateService {
   async execute(stateId: string): Promise<City[]> {
     try {
-      return City.findAll({ where: { state_id: stateId }, attributes: ['id', 'name'] });
+      return City.findAll({
+        where: { state_id: stateId },
+        attributes: ['id', 'name'],
+      });
     } catch (err) {
       ApiError.verifyType(err);
 
@@ -12,4 +15,3 @@ export class ListCitiesByStateService {
     }
   }
 }
-

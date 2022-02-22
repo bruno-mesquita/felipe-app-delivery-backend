@@ -8,13 +8,17 @@ import Model from '../_Bases/model';
 
 class Evaluation extends Model {
   value: number;
+
   message: string;
 
   static start(sequelize: Sequelize) {
-    this.init({
-      value: DataTypes.NUMBER,
-      message: DataTypes.STRING,
-    }, { sequelize, tableName: 'evaluation' });
+    this.init(
+      {
+        value: DataTypes.NUMBER,
+        message: DataTypes.STRING,
+      },
+      { sequelize, tableName: 'evaluation' }
+    );
 
     return this;
   }

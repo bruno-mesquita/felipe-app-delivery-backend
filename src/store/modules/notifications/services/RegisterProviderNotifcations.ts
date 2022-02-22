@@ -4,12 +4,12 @@ import Notification from '@shared/utils/Notification';
 export class RegisterProviderNotification {
   async execute(pushToken: string, clientId: number): Promise<void> {
     try {
-      const notificationService =  new Notification();
+      const notificationService = new Notification();
 
       await notificationService.addListener({
         targetId: clientId,
         token: pushToken,
-        type: 'Partner'
+        type: 'Partner',
       });
     } catch (err) {
       ApiError.verifyType(err);
@@ -17,4 +17,4 @@ export class RegisterProviderNotification {
       throw ApiError.generateErrorUnknown();
     }
   }
-};
+}

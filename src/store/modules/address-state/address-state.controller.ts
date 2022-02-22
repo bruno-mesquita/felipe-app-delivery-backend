@@ -5,6 +5,7 @@ import { ListStatesService } from './services/list-state-service';
 
 export class AddressStateController extends Controller {
   private listCitiesByStatesService: ListCitiesByStatesService;
+
   private listStatesService: ListStatesService;
 
   constructor() {
@@ -17,7 +18,10 @@ export class AddressStateController extends Controller {
     this.listState = this.listState.bind(this);
   }
 
-  async listCitiesByState({ params }: Request, res: Response): Promise<Response> {
+  async listCitiesByState(
+    { params }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
       const { stateId } = params;
 

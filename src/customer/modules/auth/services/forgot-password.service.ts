@@ -7,7 +7,6 @@ import { IForgotPasswordDto } from '../dtos/forgot-password.dto';
 export class ForgotPasswordService {
   async execute({ cellphone }: IForgotPasswordDto): Promise<void> {
     try {
-
       const client = await Client.findOne({
         where: { cellphone },
         attributes: ['id', 'cellphone'],
@@ -17,11 +16,12 @@ export class ForgotPasswordService {
 
       const smsService = new SmsService();
 
-      if(process.env.NODE_ENV !== 'test') await smsService.sendCode(client.getCellphone());
+      if (process.env.NODE_ENV !== 'test')
+        await smsService.sendCode(client.getCellphone());
     } catch (err) {
-      ApiError.verifyType(err)
+      ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
     }
-  };
+  }
 }

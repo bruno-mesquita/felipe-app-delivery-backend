@@ -1,13 +1,15 @@
-import { Op } from "sequelize";
+import { Op } from 'sequelize';
 
-import { EstablishmentOwner } from "@core/establishment-owner";
-import { ServiceResponse } from "@shared/utils/service-response";
+import { EstablishmentOwner } from '@core/establishment-owner';
+import { ServiceResponse } from '@shared/utils/service-response';
+import ApiError from '@shared/utils/ApiError';
 import { CreateOwnerDto } from '../dtos/create-owner-dtos';
 import { schema } from '../validations/create-owner.validation';
-import ApiError from "@shared/utils/ApiError";
 
 export class CreateOwnerService {
-  async execute(createOwnerDto: CreateOwnerDto): Promise<ServiceResponse<boolean>> {
+  async execute(
+    createOwnerDto: CreateOwnerDto
+  ): Promise<ServiceResponse<boolean>> {
     try {
       const validation = schema.isValidSync(createOwnerDto);
 
@@ -39,6 +41,6 @@ export class CreateOwnerService {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

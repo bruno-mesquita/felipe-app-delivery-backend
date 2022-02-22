@@ -13,11 +13,19 @@ export class ListAddressClientService {
 
       const client = await Client.findByPk(userId);
 
-      if(!client) throw new ApiError('Cliente não encontrado');
+      if (!client) throw new ApiError('Cliente não encontrado');
 
       const adresses = await AddressClient.findAll({
         where: { client_id: client.getId() },
-        attributes: ['id', 'nickname', 'street', 'number', 'neighborhood', 'cep', 'active'],
+        attributes: [
+          'id',
+          'nickname',
+          'street',
+          'number',
+          'neighborhood',
+          'cep',
+          'active',
+        ],
         include: [
           {
             model: City,
@@ -27,10 +35,10 @@ export class ListAddressClientService {
               {
                 model: State,
                 attributes: ['name'],
-                as: 'state'
-              }
-            ]
-          }
+                as: 'state',
+              },
+            ],
+          },
         ],
         limit,
         offset,

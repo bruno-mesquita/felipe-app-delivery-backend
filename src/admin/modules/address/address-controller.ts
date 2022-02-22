@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
-import { ListCitiesByStatesService } from './services/list-cities-by-state-service';
 import Controller from '@shared/utils/controller';
+import { ListCitiesByStatesService } from './services/list-cities-by-state-service';
 
 export class AddressEstablishmentController extends Controller {
   constructor() {
@@ -9,14 +9,17 @@ export class AddressEstablishmentController extends Controller {
     this.listCitiesByState = this.listCitiesByState.bind(this);
   }
 
-  async listCitiesByState({ params }: Request, res: Response): Promise<Response> {
+  async listCitiesByState(
+    { params }: Request,
+    res: Response
+  ): Promise<Response> {
     try {
       const { id } = params;
 
       const listCitiesByStatesService = new ListCitiesByStatesService();
 
       return res.json(await listCitiesByStatesService.execute(Number(id)));
-    } catch(err) {
+    } catch (err) {
       return this.requestError(err, res);
     }
   }

@@ -8,6 +8,7 @@ import Model from '../_Bases/model';
 
 class EstablishmentCategory extends Model {
   category_id: number;
+
   establishment_id: number;
 
   static start(sequelize: Sequelize) {
@@ -18,7 +19,10 @@ class EstablishmentCategory extends Model {
 
   static associate({ Category, Establishment }) {
     this.belongsTo(Category, { foreignKey: 'category_id', as: 'category' });
-    this.belongsTo(Establishment, { foreignKey: 'establishment_id', as: 'establishment' });
+    this.belongsTo(Establishment, {
+      foreignKey: 'establishment_id',
+      as: 'establishment',
+    });
   }
 }
 

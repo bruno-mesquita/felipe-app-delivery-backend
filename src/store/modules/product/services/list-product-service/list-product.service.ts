@@ -6,13 +6,17 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { createPagination } from '@shared/utils/use-page';
 
 export class ListProductsService {
-  async execute(establishmentId: number, page = 0, menuId?: number | undefined): Promise<ServiceResponse<Product[] | null>> {
+  async execute(
+    establishmentId: number,
+    page = 0,
+    menuId?: number | undefined
+  ): Promise<ServiceResponse<Product[] | null>> {
     try {
       const { limit, offset } = createPagination(page);
 
       const menuWhere: any = { establishment_id: establishmentId };
 
-      if(menuId) menuWhere.id = menuId;
+      if (menuId) menuWhere.id = menuId;
 
       const products = await Product.findAll({
         attributes: ['id', 'name', 'price', 'menu_id'],
@@ -20,14 +24,14 @@ export class ListProductsService {
           {
             model: Image,
             as: 'photo',
-            attributes: ['encoded']
+            attributes: ['encoded'],
           },
           {
             model: Menu,
             as: 'menu',
             where: menuWhere,
-            attributes: ['id']
-          }
+            attributes: ['id'],
+          },
         ],
         limit,
         offset,

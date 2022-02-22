@@ -18,7 +18,7 @@ interface Response {
 export class LoginClientService {
   private tokenManager: TokenManager;
 
-  constructor () {
+  constructor() {
     this.tokenManager = new TokenManager();
   }
 

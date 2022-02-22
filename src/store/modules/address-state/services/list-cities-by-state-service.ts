@@ -9,7 +9,7 @@ export class ListCitiesByStatesService {
         where: {
           state_id,
         },
-        attributes: ['id', 'name']
+        attributes: ['id', 'name'],
       });
 
       return { result, err: null };

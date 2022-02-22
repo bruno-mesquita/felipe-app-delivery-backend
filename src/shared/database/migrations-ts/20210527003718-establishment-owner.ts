@@ -60,5 +60,5 @@ export default {
 
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.dropTable('establishment-owner');
-  }
+  },
 };

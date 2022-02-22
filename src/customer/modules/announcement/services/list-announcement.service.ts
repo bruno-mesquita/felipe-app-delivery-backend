@@ -9,25 +9,23 @@ export class ListAnnouncementService {
       const announcements = await Announcement.findAll({
         where: { active: true },
         attributes: {
-          exclude: [
-            'name', 'active', 'createdAt', 'updatedAt', 'image_id'
-          ]
+          exclude: ['name', 'active', 'createdAt', 'updatedAt', 'image_id'],
         },
         include: [
           {
             model: Image,
             as: 'photo',
             attributes: ['encoded'],
-          }
+          },
         ],
         limit: 15,
       });
 
       return { result: announcements, err: null };
-    } catch(err) {
-      ApiError.verifyType(err)
+    } catch (err) {
+      ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
     }
-  };
-};
+  }
+}

@@ -28,6 +28,6 @@ routes.use([
   avatarRoutes,
   establishmentRoutes,
   notificationsRoutes,
-])
+]);
 
 export default routes;

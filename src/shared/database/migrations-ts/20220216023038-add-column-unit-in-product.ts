@@ -11,5 +11,5 @@ export default {
 
   down: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
     await queryInterface.removeColumn('product', 'unit');
-  }
+  },
 };

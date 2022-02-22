@@ -12,8 +12,16 @@ const middlewares = [isAuthenticated, accessClient];
 routes.post('/clients', clientController.create);
 routes.put('/clients/activate', clientController.activate);
 routes.put('/clients', ...middlewares, clientController.updateProfile);
-routes.put('/clients/update-password', ...middlewares, clientController.updatePassword);
-routes.get('/clients/orders', ...middlewares, clientController.listOrdersByClient);
+routes.put(
+  '/clients/update-password',
+  ...middlewares,
+  clientController.updatePassword
+);
+routes.get(
+  '/clients/orders',
+  ...middlewares,
+  clientController.listOrdersByClient
+);
 routes.post('/clients/me', ...middlewares, clientController.profile);
 routes.get('/clients/me', ...middlewares, clientController.me);
 routes.delete('/clients', ...middlewares, clientController.remove);

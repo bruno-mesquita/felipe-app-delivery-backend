@@ -9,7 +9,11 @@ const cityManagerController = new CityManagerController();
 routes.post('/city-managers', ...middlewares, cityManagerController.create);
 routes.get('/city-managers', ...middlewares, cityManagerController.list);
 routes.get('/city-managers/:id', ...middlewares, cityManagerController.findOne);
-routes.delete('/city-managers/:id', ...middlewares, cityManagerController.destroy);
+routes.delete(
+  '/city-managers/:id',
+  ...middlewares,
+  cityManagerController.destroy
+);
 routes.put('/city-managers/:id', ...middlewares, cityManagerController.update);
 
 export default routes;

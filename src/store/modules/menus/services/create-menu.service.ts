@@ -4,12 +4,16 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { CreateMenuDto } from '../dtos/create-menu.dtos';
 
 export class CreateMenuService {
-  async execute({ active, establishmentId, name }: CreateMenuDto): Promise<ServiceResponse<boolean | null>> {
+  async execute({
+    active,
+    establishmentId,
+    name,
+  }: CreateMenuDto): Promise<ServiceResponse<boolean | null>> {
     try {
       await Menu.create({
         name,
         active,
-        establishment_id: establishmentId
+        establishment_id: establishmentId,
       });
 
       return { result: true, err: null };

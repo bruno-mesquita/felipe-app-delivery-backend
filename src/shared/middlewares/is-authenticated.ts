@@ -6,7 +6,11 @@ import { Request, Response, NextFunction } from 'express';
 
 import TokenManager from '@shared/utils/token-manager';
 
-export default function isAuthenticated(request: Request, response: Response, next: NextFunction): void | Response {
+export default function isAuthenticated(
+  request: Request,
+  response: Response,
+  next: NextFunction
+): void | Response {
   try {
     const authConfig = new TokenManager();
 
@@ -15,7 +19,9 @@ export default function isAuthenticated(request: Request, response: Response, ne
     const authHeader = request.headers.authorization;
 
     if (!authHeader) {
-      return response.status(401).json({ 'Autenticação': 'JWT Token está ausente' });
+      return response
+        .status(401)
+        .json({ Autenticação: 'JWT Token está ausente' });
     }
 
     // array token vai ter 2 posições -> Bearer açsd6464JAFPO(&&%/;). -> chave secreta (token)
@@ -30,6 +36,10 @@ export default function isAuthenticated(request: Request, response: Response, ne
 
     return next();
   } catch (err) {
-    return response.status(401).json({ error: '[Autenticação]: Token Inválido.', type: 'Autenticação', message: 'Token Inválido.' });
+    return response.status(401).json({
+      error: '[Autenticação]: Token Inválido.',
+      type: 'Autenticação',
+      message: 'Token Inválido.',
+    });
   }
 }

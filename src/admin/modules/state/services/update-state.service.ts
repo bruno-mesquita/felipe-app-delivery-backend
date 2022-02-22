@@ -14,12 +14,15 @@ export class UpdateStateService {
       // Verificando se o Estado já exite
 
       const state = await State.findOne({
-        where: { name: updateStateDto.name, id: updateStateDto.id }
+        where: { name: updateStateDto.name, id: updateStateDto.id },
       });
 
       if (!state) throw new ApiError('[ERRO]: Estado não existe no sistema!');
 
-      await state.update({ name: updateStateDto.name, active: updateStateDto.active });
+      await state.update({
+        name: updateStateDto.name,
+        active: updateStateDto.active,
+      });
     } catch (err) {
       ApiError.verifyType(err);
 

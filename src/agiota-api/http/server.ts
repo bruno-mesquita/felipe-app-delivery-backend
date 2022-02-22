@@ -33,7 +33,6 @@ class App {
   }
 }
 
-
 new App().express.listen(process.env.PORT_AGIOTA || 80, () => {
   console.log(`Server started ON! ${process.env.PORT_AGIOTA || 80}`);
 });

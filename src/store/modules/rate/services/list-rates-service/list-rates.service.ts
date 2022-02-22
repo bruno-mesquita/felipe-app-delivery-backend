@@ -3,12 +3,14 @@ import { Op } from 'sequelize';
 import Evaluation from '@core/evaluation';
 import Order from '@core/order';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { ListRateDto } from '../../dtos';
 import { createPagination } from '@shared/utils/use-page';
+import { ListRateDto } from '../../dtos';
 
 export class ListRateService {
-
-  public async execute({ page = 0, establishmentId }: ListRateDto): Promise<ServiceResponse<Order[]>> {
+  public async execute({
+    page = 0,
+    establishmentId,
+  }: ListRateDto): Promise<ServiceResponse<Order[]>> {
     try {
       const { limit, offset } = createPagination(page);
 
@@ -24,7 +26,7 @@ export class ListRateService {
             model: Evaluation,
             as: 'evaluation',
             attributes: ['value', 'message'],
-          }
+          },
         ],
         order: [['createdAt', 'desc']],
         limit,

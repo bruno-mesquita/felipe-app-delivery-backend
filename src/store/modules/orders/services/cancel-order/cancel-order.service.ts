@@ -1,11 +1,14 @@
-import Order from "@core/order";
-import ApiError from "@shared/utils/ApiError";
-import { ServiceResponse } from "@shared/utils/service-response";
+import Order from '@core/order';
+import ApiError from '@shared/utils/ApiError';
+import { ServiceResponse } from '@shared/utils/service-response';
 import { CacelOrderDto } from '../../dtos/cancel-order.dto';
 import { schema } from '../../validations/cancel-order.validation';
 
 export class CancelOrderService {
-  async execute({ id, establishmentId }: CacelOrderDto): Promise<ServiceResponse<boolean>> {
+  async execute({
+    id,
+    establishmentId,
+  }: CacelOrderDto): Promise<ServiceResponse<boolean>> {
     try {
       const valid = schema.isValidSync({ id, establishmentId });
 
@@ -22,7 +25,7 @@ export class CancelOrderService {
       await cancelOrder.save();
 
       return { result: true, err: null };
-    } catch(err) {
+    } catch (err) {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();

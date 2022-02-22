@@ -8,6 +8,6 @@ export type IUpdateNeighborhood = Partial<{
   name: string;
   active: boolean;
   city: number;
-}> & { id: number }
+}> & { id: number };
 
-export type IDeleteNeighborhood = { id: number; }
+export type IDeleteNeighborhood = { id: number };

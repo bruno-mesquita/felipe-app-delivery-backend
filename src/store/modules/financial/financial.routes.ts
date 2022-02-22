@@ -8,6 +8,11 @@ const financialController = new FinancialController();
 
 const routesFinancial = Router();
 
-routesFinancial.get('/generate-report', isAuthenticated, accessEstablishmentOwner, financialController.listRenatorio);
+routesFinancial.get(
+  '/generate-report',
+  isAuthenticated,
+  accessEstablishmentOwner,
+  financialController.listRenatorio
+);
 
 export { routesFinancial };

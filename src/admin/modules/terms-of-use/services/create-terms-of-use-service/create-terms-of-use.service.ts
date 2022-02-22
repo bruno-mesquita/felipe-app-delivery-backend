@@ -1,11 +1,14 @@
-import { CreateTermsOfUseDto } from '../../dtos/create-terms-of-use.dto';
 import { ServiceResponse } from '@shared/utils/service-response';
-import { schema } from '../../validations/create-state.validation';
 import TermsOfUse from '@core/terms-of-use';
 import ApiError from '@shared/utils/ApiError';
+import { schema } from '../../validations/create-state.validation';
+import { CreateTermsOfUseDto } from '../../dtos/create-terms-of-use.dto';
 
 export class CreateTermsOfUseService {
-  public async execute({ id, description }: CreateTermsOfUseDto): Promise<ServiceResponse<boolean>> {
+  public async execute({
+    id,
+    description,
+  }: CreateTermsOfUseDto): Promise<ServiceResponse<boolean>> {
     try {
       const valid = schema.isValidSync({ description });
 
@@ -13,7 +16,8 @@ export class CreateTermsOfUseService {
 
       const termsOfUse = await TermsOfUse.findAll();
 
-      if (termsOfUse.length > 0) throw new ApiError('Termos de Uso já cadastrado no sistema');
+      if (termsOfUse.length > 0)
+        throw new ApiError('Termos de Uso já cadastrado no sistema');
 
       await TermsOfUse.create({ description });
       return { result: true, err: null };

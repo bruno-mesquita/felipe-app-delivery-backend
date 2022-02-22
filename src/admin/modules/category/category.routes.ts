@@ -10,6 +10,10 @@ const categoryRoutes = Router();
 
 categoryRoutes.post('/categories', ...middlewares, categoryController.create);
 categoryRoutes.get('/categories', ...middlewares, categoryController.list);
-categoryRoutes.put('/categories/:id', ...middlewares, categoryController.update);
+categoryRoutes.put(
+  '/categories/:id',
+  ...middlewares,
+  categoryController.update
+);
 
 export { categoryRoutes };

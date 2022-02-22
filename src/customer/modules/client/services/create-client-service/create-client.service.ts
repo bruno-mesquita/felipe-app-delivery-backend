@@ -18,10 +18,13 @@ import { ICreateClientDto } from '../../dtos';
 const UNINFORMED = 'Não informado';
 
 class CreateClientService {
-  async execute(createClientDto: ICreateClientDto): Promise<ServiceResponse<{ userId: number } | null>> {
+  async execute(
+    createClientDto: ICreateClientDto
+  ): Promise<ServiceResponse<{ userId: number } | null>> {
     try {
       // Verificando se as senhas são iguais
-      if (createClientDto.confirmPassword !== createClientDto.password) throw new ApiError('Senhas não são iguais', 'validate');
+      if (createClientDto.confirmPassword !== createClientDto.password)
+        throw new ApiError('Senhas não são iguais', 'validate');
 
       // Verificando se já existe um cliente com esse cpf
       const userExists = await Client.findOne({
@@ -30,12 +33,13 @@ class CreateClientService {
             { cpf: createClientDto.cpf },
             { email: createClientDto.email },
             { cellphone: createClientDto.cellphone },
-          ]
+          ],
         },
         attributes: { exclude: ['password'] },
       });
 
-      if(userExists) throw new ApiError('Já existe um usuário cadastrado com esses dados');
+      if (userExists)
+        throw new ApiError('Já existe um usuário cadastrado com esses dados');
 
       // Criando a classe
       const user = Client.build({
@@ -64,7 +68,8 @@ class CreateClientService {
 
       const smsService = new SmsService();
 
-      if(process.env.NODE_ENV !== 'test') await smsService.sendCode(user.getCellphone());
+      if (process.env.NODE_ENV !== 'test')
+        await smsService.sendCode(user.getCellphone());
 
       return { result: { userId: user.getId() }, err: null };
     } catch (err) {

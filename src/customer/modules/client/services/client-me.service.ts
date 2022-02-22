@@ -9,21 +9,22 @@ export class ClientMeService {
       const client = await Client.findOne({
         where: { id, active: true },
         attributes: ['id', 'name', 'cpf', 'email', 'active', 'cellphone'],
-        include: [{
-          model: Image,
-          as: 'avatar',
-          attributes: ['encoded'],
-        }]
-      })
+        include: [
+          {
+            model: Image,
+            as: 'avatar',
+            attributes: ['encoded'],
+          },
+        ],
+      });
 
-      if(!client) throw new ApiError('Cliente não encontrado');
+      if (!client) throw new ApiError('Cliente não encontrado');
 
-      const user = client.toJSON()
+      const user = client.toJSON();
 
-      user['avatar'] = user?.avatar?.encoded || null
+      user.avatar = user?.avatar?.encoded || null;
 
-
-      return user
+      return user;
     } catch (err) {
       ApiError.verifyType(err);
 

@@ -4,9 +4,13 @@ import Model from './model';
 
 abstract class Address extends Model {
   street: string;
+
   number: string;
+
   neighborhood: string;
+
   cep: string;
+
   city_id: number;
 
   public readonly city: City;
@@ -53,4 +57,3 @@ abstract class Address extends Model {
 }
 
 export default Address;
-

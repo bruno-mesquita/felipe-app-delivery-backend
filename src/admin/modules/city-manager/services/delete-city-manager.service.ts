@@ -13,6 +13,6 @@ export class DeleteCityManagerService {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();
-    };
-  };
-};
+    }
+  }
+}

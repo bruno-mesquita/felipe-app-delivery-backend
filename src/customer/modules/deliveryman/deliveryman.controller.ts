@@ -18,7 +18,9 @@ export class DeliverymanController extends Controller {
     try {
       const { page = 0 } = query;
 
-      const { result } = await this.listDeliverymanService.execute(Number(page) || 0);
+      const { result } = await this.listDeliverymanService.execute(
+        Number(page) || 0
+      );
 
       return res.json({ result });
     } catch (err) {

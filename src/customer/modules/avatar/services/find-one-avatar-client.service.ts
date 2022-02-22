@@ -14,9 +14,9 @@ export class FindOneAvatarClientService {
             model: Image,
             as: 'avatar',
             attributes: ['encoded'],
-          }
-        ]
-      })
+          },
+        ],
+      });
 
       return { result: client.avatar.getEncoded(), err: null };
     } catch (err) {

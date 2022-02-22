@@ -6,10 +6,6 @@ import { cityManagerRoutes } from '../modules/city-manager';
 
 const routes = Router();
 
-routes.use([
-  authRoutes,
-  cityManagerRoutes,
-  ownerRoutes
-]);
+routes.use([authRoutes, cityManagerRoutes, ownerRoutes]);
 
 export default routes;

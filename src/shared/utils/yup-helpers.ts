@@ -2,9 +2,9 @@ import * as Yup from 'yup';
 
 Yup.setLocale({
   mixed: {
-    default: 'Campo obrigátorio'
+    default: 'Campo obrigátorio',
   },
   string: {
-    email: 'Email inválido'
-  }
-})
+    email: 'Email inválido',
+  },
+});

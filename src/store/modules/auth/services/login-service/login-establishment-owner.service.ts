@@ -12,18 +12,22 @@ export class LoginEstablishmentOwnerService {
     this.tokenManager = new TokenManager();
   }
 
-  async execute(loginEstablishment: LoginEstablishmentOwnerDto): Promise<IEstablishmentAuth> {
+  async execute(
+    loginEstablishment: LoginEstablishmentOwnerDto
+  ): Promise<IEstablishmentAuth> {
     try {
-      if (!loginValidation.isValidSync(loginEstablishment)) throw new ApiError('Dados inválidos.');
+      if (!loginValidation.isValidSync(loginEstablishment))
+        throw new ApiError('Dados inválidos.');
 
       const owner = await EstablishmentOwner.findOne({
         where: { email: loginEstablishment.email },
-        attributes: ['password', 'id']
+        attributes: ['password', 'id'],
       });
 
       if (!owner) throw new ApiError('usuário não encontrado.');
 
-      if (!owner.comparePassword(loginEstablishment.password)) throw new ApiError('Credenciais inválidas.');
+      if (!owner.comparePassword(loginEstablishment.password))
+        throw new ApiError('Credenciais inválidas.');
 
       return this.tokenManager.create(owner.getId());
     } catch (err) {

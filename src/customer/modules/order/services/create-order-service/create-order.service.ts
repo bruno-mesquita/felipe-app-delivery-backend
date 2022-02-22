@@ -8,10 +8,10 @@ import Establishment from '@core/establishment';
 import ItemOrder from '@core/item-order';
 import Order from '@core/order';
 import Product from '@core/product';
-import { CreateOrderDto } from '../../dtos/create-order.dto';
 import Notification from '@shared/utils/Notification';
 import { EstablishmentOwner } from '@core/establishment-owner';
 import ApiError from '@shared/utils/ApiError';
+import { CreateOrderDto } from '../../dtos/create-order.dto';
 
 export class CreateOrderService {
   async execute(createOrderDto: CreateOrderDto): Promise<number> {
@@ -21,18 +21,21 @@ export class CreateOrderService {
 
       // if (!valid) throw new ApiError('Campos inválidos');
 
-     // Verificando Estabelecimento
+      // Verificando Estabelecimento
       const establishmentOwner = await EstablishmentOwner.findOne({
         where: {
           establishment_id: createOrderDto.establishment_id,
         },
-        include: [{
-          model: Establishment,
-          as: 'establishment',
-        }]
+        include: [
+          {
+            model: Establishment,
+            as: 'establishment',
+          },
+        ],
       });
 
-      if (!establishmentOwner) throw new ApiError('Estabelecimento não encontrado');
+      if (!establishmentOwner)
+        throw new ApiError('Estabelecimento não encontrado');
 
       // verificando cliente
 
@@ -48,7 +51,8 @@ export class CreateOrderService {
         },
       });
 
-      if (!addressExists) throw new ApiError('Endereço do cliente não encontrado');
+      if (!addressExists)
+        throw new ApiError('Endereço do cliente não encontrado');
 
       const ownerJson = establishmentOwner.toJSON() as any;
 
@@ -71,7 +75,9 @@ export class CreateOrderService {
       let total = 0;
 
       for await (const item of createOrderDto.items) {
-        const product = await Product.findByPk(item.itemId, { attributes: ['id','price'] });
+        const product = await Product.findByPk(item.itemId, {
+          attributes: ['id', 'price'],
+        });
 
         if (product) {
           const tot = product.calcTotal(item.amount);
@@ -103,7 +109,7 @@ export class CreateOrderService {
         data: {
           title: 'Chegou um novo pedido para você!',
           body: 'Venha conferir',
-        }
+        },
       });
 
       return order.getId();

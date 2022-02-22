@@ -7,6 +7,7 @@ import { RefreshTokenService } from './services/refresh-token.service';
 
 export class AuthController extends Controller {
   private readonly loginClientService: LoginClientService;
+
   private readonly refreshTokenService: RefreshTokenService;
 
   constructor() {

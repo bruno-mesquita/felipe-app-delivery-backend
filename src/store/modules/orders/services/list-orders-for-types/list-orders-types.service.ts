@@ -1,15 +1,19 @@
-import AddressClient from "@core/address-client";
-import Order from "@core/order";
-import { ServiceResponse } from "@shared/utils/service-response";
+import AddressClient from '@core/address-client';
+import Order from '@core/order';
+import { ServiceResponse } from '@shared/utils/service-response';
+import State from '@core/state';
+import City from '@core/city';
+import Client from '@core/client';
+import { createPagination } from '@shared/utils/use-page';
+import ApiError from '@shared/utils/ApiError';
 import { ListOrdersDto } from '../../dtos/list-orders-types.dto';
-import State from "@core/state";
-import City from "@core/city";
-import Client from "@core/client";
-import { createPagination } from "@shared/utils/use-page";
-import ApiError from "@shared/utils/ApiError";
 
 export class ListOrdersForTypesServices {
-  async execute({ page = 0, id, types }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
+  async execute({
+    page = 0,
+    id,
+    types,
+  }: ListOrdersDto): Promise<ServiceResponse<Order[]>> {
     try {
       const { limit, offset } = createPagination(page);
 
@@ -22,12 +26,25 @@ export class ListOrdersForTypesServices {
           establishment_id: id,
           client_order_status: JSON.parse(types as any),
         },
-        attributes: ['id', 'payment', 'total', 'createdAt', 'client_order_status'],
+        attributes: [
+          'id',
+          'payment',
+          'total',
+          'createdAt',
+          'client_order_status',
+        ],
         include: [
           {
             model: AddressClient,
             as: 'address_client',
-            attributes: ['id', 'street', 'number', 'neighborhood', 'cep', 'city_id'],
+            attributes: [
+              'id',
+              'street',
+              'number',
+              'neighborhood',
+              'cep',
+              'city_id',
+            ],
             paranoid: false,
             include: [
               {
@@ -38,7 +55,7 @@ export class ListOrdersForTypesServices {
               {
                 model: City,
                 as: 'city',
-                attributes: ['id' ,'name'],
+                attributes: ['id', 'name'],
                 include: [
                   {
                     model: State,
@@ -56,7 +73,7 @@ export class ListOrdersForTypesServices {
       });
 
       return { result: orders, err: null };
-    } catch(err) {
+    } catch (err) {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();

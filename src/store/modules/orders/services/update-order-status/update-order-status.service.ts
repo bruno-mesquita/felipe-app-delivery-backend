@@ -1,12 +1,15 @@
-import Order from "@core/order";
-import ApiError from "@shared/utils/ApiError";
-import Notification from "@shared/utils/Notification";
-import { ServiceResponse } from "@shared/utils/service-response";
+import Order from '@core/order';
+import ApiError from '@shared/utils/ApiError';
+import Notification from '@shared/utils/Notification';
+import { ServiceResponse } from '@shared/utils/service-response';
 import { UpdateOrderStatusDto } from '../../dtos/update-order.dto';
 import { schema } from '../../validations/update-order-status.validation';
 
 export class UpdateOrderStatusServices {
-  async execute({ id, establishmentId }: UpdateOrderStatusDto): Promise<ServiceResponse<boolean>> {
+  async execute({
+    id,
+    establishmentId,
+  }: UpdateOrderStatusDto): Promise<ServiceResponse<boolean>> {
     try {
       const valid = schema.isValidSync({ id, establishmentId });
 
@@ -29,12 +32,12 @@ export class UpdateOrderStatusServices {
         type: 'Client',
         data: {
           title: 'Sobre o seu pedido',
-          body: 'O Status do seu pedido mudou'
-        }
+          body: 'O Status do seu pedido mudou',
+        },
       });
 
       return { result: true, err: null };
-    } catch(err) {
+    } catch (err) {
       ApiError.verifyType(err);
 
       throw ApiError.generateErrorUnknown();

@@ -1,6 +1,6 @@
 import type { Request, Response } from 'express';
 
-import Controller from "@shared/utils/controller";
+import Controller from '@shared/utils/controller';
 
 import {
   CreateNeighborhoodService,
@@ -10,7 +10,9 @@ import {
 
 export class NeighborhoodController extends Controller {
   private readonly createNeighborhoodService: CreateNeighborhoodService;
+
   private readonly updateNeighborhoodService: UpdateNeighborhoodService;
+
   private readonly deleteNeighborhoodService: DeleteNeighborhoodService;
 
   constructor() {
@@ -23,7 +25,9 @@ export class NeighborhoodController extends Controller {
 
   async create(req: Request, res: Response): Promise<Response> {
     try {
-      const neighborhoodId = await this.createNeighborhoodService.execute(req.body);
+      const neighborhoodId = await this.createNeighborhoodService.execute(
+        req.body
+      );
 
       return res.status(201).json(neighborhoodId ? { neighborhoodId } : {});
     } catch (err) {
@@ -43,7 +47,9 @@ export class NeighborhoodController extends Controller {
 
   async destroy(req: Request, res: Response): Promise<Response> {
     try {
-      await this.deleteNeighborhoodService.execute({ id: req.params.id as any });
+      await this.deleteNeighborhoodService.execute({
+        id: req.params.id as any,
+      });
 
       return res.status(204).json({});
     } catch (err) {

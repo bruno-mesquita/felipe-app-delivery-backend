@@ -32,5 +32,5 @@ export default {
 
   down: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
     await queryInterface.dropTable('establishment_category');
-  }
+  },
 };

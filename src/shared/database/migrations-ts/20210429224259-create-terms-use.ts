@@ -1,6 +1,6 @@
 import { QueryInterface, DataTypes } from 'sequelize';
 
-export default  {
+export default {
   up: async (queryInterface: QueryInterface, Sequelize: typeof DataTypes) => {
     await queryInterface.createTable('terms-of-use', {
       id: {
@@ -21,10 +21,10 @@ export default  {
         type: Sequelize.DATE,
         allowNull: false,
       },
-    })
+    });
   },
 
   down: async (queryInterface: QueryInterface) => {
     await queryInterface.dropTable('terms-of-use');
-  }
+  },
 };

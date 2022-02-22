@@ -13,12 +13,12 @@ export class ResendCodeService {
     try {
       const client = await Client.findOne({
         where: { cellphone },
-        attributes: ['id', 'cellphone']
+        attributes: ['id', 'cellphone'],
       });
 
       if (!client) throw new ApiError('Cliente não encontrado');
 
-      if(newCellphone) {
+      if (newCellphone) {
         client.setCellphone(newCellphone);
 
         await client.save();
@@ -26,8 +26,8 @@ export class ResendCodeService {
 
       const smsService = new SmsService();
 
-      if(process.env.NODE_ENV !== 'test') await smsService.sendCode(client.getCellphone());
-
+      if (process.env.NODE_ENV !== 'test')
+        await smsService.sendCode(client.getCellphone());
     } catch (err) {
       ApiError.verifyType(err);
 

@@ -4,7 +4,10 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { DeleteMenuDto } from '../dtos/delete-menu.dto';
 
 export class DeleteMenuService {
-  async execute({ id, establishmentId }: DeleteMenuDto): Promise<ServiceResponse<boolean | null>> {
+  async execute({
+    id,
+    establishmentId,
+  }: DeleteMenuDto): Promise<ServiceResponse<boolean | null>> {
     try {
       // Verificando se o menu já existe cadastrado
       const menu = await Menu.findOne({
@@ -17,7 +20,7 @@ export class DeleteMenuService {
 
       return { result: true, err: null };
     } catch (err) {
-      if(err instanceof ApiError) throw err;
+      if (err instanceof ApiError) throw err;
 
       throw new ApiError('Erro ao buscar o menu', 'unknown');
     }

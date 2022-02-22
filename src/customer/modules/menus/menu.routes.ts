@@ -10,6 +10,10 @@ const middlewares = [isAuthenticated, accessClient];
 const routes = Router();
 const menuController = new MenuController();
 
-routes.get('/menus/:id/products', ...middlewares, menuController.findProductsByMenu);
+routes.get(
+  '/menus/:id/products',
+  ...middlewares,
+  menuController.findProductsByMenu
+);
 
 export default routes;

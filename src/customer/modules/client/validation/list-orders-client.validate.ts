@@ -4,8 +4,9 @@ import yupWrapper from '@shared/utils/yup-wrapper';
 
 import { IListOrdersClient } from '../dtos';
 
-export const listOrdersClientValidate = yupWrapper<IListOrdersClient>(object({
-  clientId: number().integer().positive().required(),
-  page: number().integer().required(),
-}))
-
+export const listOrdersClientValidate = yupWrapper<IListOrdersClient>(
+  object({
+    clientId: number().integer().positive().required(),
+    page: number().integer().required(),
+  })
+);

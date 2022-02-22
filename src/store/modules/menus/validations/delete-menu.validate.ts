@@ -14,4 +14,4 @@ export const deleteMenuValidate = (values: DeleteMenuDto) => {
   } catch (err) {
     throw new ApiError('Erro de validação!', 'validate');
   }
-}
+};

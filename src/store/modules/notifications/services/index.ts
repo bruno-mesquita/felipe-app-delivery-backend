@@ -1,1 +1,1 @@
-export { RegisterProviderNotification } from './RegisterProviderNotifcations'
+export { RegisterProviderNotification } from './RegisterProviderNotifcations';

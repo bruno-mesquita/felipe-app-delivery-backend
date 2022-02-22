@@ -1,5 +1,5 @@
-import { EstablishmentOwner } from "@core/establishment-owner";
-import { ServiceResponse } from "@shared/utils/service-response";
+import { EstablishmentOwner } from '@core/establishment-owner';
+import { ServiceResponse } from '@shared/utils/service-response';
 
 export class ExistsEstablishmentService {
   async execute(ownerId: number): Promise<ServiceResponse<boolean>> {
@@ -11,7 +11,7 @@ export class ExistsEstablishmentService {
 
       return { result: !!owner.getEstablishmentId(), err: null };
     } catch (err) {
-      return { err: 'Erro ao buscar', result: false }
+      return { err: 'Erro ao buscar', result: false };
     }
   }
-};
+}

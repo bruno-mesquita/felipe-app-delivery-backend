@@ -5,14 +5,16 @@
 
 import type { Request, Response } from 'express';
 
+import Controller from '@shared/utils/controller';
 import { CreateOrderService } from './services/create-order-service/create-order.service';
 import { ShowOrderService } from './services/show-order-service/show-order.service';
 import { VerifyStatusOrderService } from './services/verify-status-order-service/verify-status-order.service';
-import Controller from '@shared/utils/controller';
 
 class OrderController extends Controller {
   private readonly createOrderService: CreateOrderService;
+
   private readonly verifyStatusOrderService: VerifyStatusOrderService;
+
   private readonly showOrderService: ShowOrderService;
 
   constructor() {
@@ -52,7 +54,10 @@ class OrderController extends Controller {
 
   async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
-      const response = await this.createOrderService.execute({ ...body, client_id: client.id });
+      const response = await this.createOrderService.execute({
+        ...body,
+        client_id: client.id,
+      });
 
       return res.status(201).json({ result: response });
     } catch (err) {

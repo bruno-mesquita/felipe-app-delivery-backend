@@ -10,7 +10,9 @@ import {
 
 export class EstablishmentOwnerController extends Controller {
   private readonly createOwnerService: CreateOwnerService;
+
   private readonly listOwnerService: ListOwnerService;
+
   private readonly showOwnerEstablishmentService: ShowOwnerEstablishmentService;
 
   constructor() {
@@ -31,17 +33,19 @@ export class EstablishmentOwnerController extends Controller {
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
-  };
+  }
 
   async show({ params }: Request, res: Response): Promise<Response> {
     try {
       const { id } = params;
 
-      return res.json(await this.showOwnerEstablishmentService.execute(Number(id)));
+      return res.json(
+        await this.showOwnerEstablishmentService.execute(Number(id))
+      );
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
-  };
+  }
 
   async create({ body }: Request, res: Response): Promise<Response> {
     try {
@@ -49,5 +53,5 @@ export class EstablishmentOwnerController extends Controller {
     } catch (err) {
       return res.status(400).json({ err: err.message });
     }
-  };
-};
+  }
+}

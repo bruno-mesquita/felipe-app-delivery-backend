@@ -6,13 +6,12 @@ type IClientAddress = {
   city: number;
   nickname: string;
   active: boolean;
-}
-
+};
 
 export interface IClientAddressDto extends Omit<IClientAddress, 'active'> {
   userId: number;
 }
 
-export interface IUpdateClientAddressDto extends IClientAddress  {
+export interface IUpdateClientAddressDto extends IClientAddress {
   id: number;
 }
