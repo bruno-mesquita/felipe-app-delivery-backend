@@ -5,9 +5,9 @@ import { CreateProductDto } from '../dtos/create-product-dto';
 
 const schema: SchemaOf<CreateProductDto> = object({
   name: string().trim().required(),
-  price: number().required(),
+  price: number().positive().required(),
   description: string().trim().required(),
-  menu: number().integer().required(),
+  menu: number().positive().integer().required(),
   image: string().trim().required(),
   active: boolean().required(),
 });

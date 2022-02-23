@@ -92,9 +92,7 @@ class ProductController extends Controller {
 
       const createProductService = new CreateProductService();
 
-      const product = await createProductService.execute(
-        sanitizedValues as any
-      );
+      const product = await createProductService.execute(sanitizedValues);
 
       return res.status(201).json(product);
     } catch (err) {

@@ -96,8 +96,7 @@ export class ProfileEstablishmentService {
 
       const result: any = owner.get('establishment').toJSON();
 
-      if (includeAvatar)
-        result.image = owner.establishment?.image?.encoded || null;
+      if (includeAvatar) result.image = result?.image?.encoded || null;
       if (includeCategories)
         result.categories = result.categories.map((e) => e.category_id);
 
