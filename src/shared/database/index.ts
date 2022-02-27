@@ -24,9 +24,7 @@ class Database {
   private initModels() {
     models
       .map((model: any) => model.start(this.sequelize))
-      .map(
-        (model) => model.associate && model.associate(this.sequelize.models)
-      );
+      .map((model) => model.associate && model.associate(this.sequelize.models));
   }
 
   public async disconnect() {
