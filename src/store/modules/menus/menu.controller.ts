@@ -2,20 +2,9 @@ import type { Request, Response } from 'express';
 
 import Controller from '@shared/utils/controller';
 
-import {
-  CreateMenuService,
-  DeleteMenuService,
-  ListMenuService,
-  UpdateMenuService,
-  GetMenuService,
-} from './services';
+import { CreateMenuService, DeleteMenuService, ListMenuService, UpdateMenuService, GetMenuService } from './services';
 
-import {
-  createMenuValidate,
-  updateMenuValidate,
-  deleteMenuValidate,
-  findOneMenuValidate,
-} from './validations';
+import { createMenuValidate, updateMenuValidate, deleteMenuValidate, findOneMenuValidate } from './validations';
 
 export class MenuController extends Controller {
   constructor() {
@@ -31,23 +20,24 @@ export class MenuController extends Controller {
 
       const menuService = new CreateMenuService();
 
-      const menu = await menuService.execute(sanitizedValues);
+      const result = await menuService.execute(sanitizedValues);
 
-      return res.status(201).json(menu);
+      return res.status(201).json(result);
     } catch (err) {
       return this.requestError(err, res);
     }
   }
 
-  async list(req: Request, res: Response): Promise<Response> {
+  async list({ client, query }: Request, res: Response): Promise<Response> {
     try {
       const menuService = new ListMenuService();
 
-      const establishmentId = req.client.entity.getEstablishmentId();
+      const menus = await menuService.execute({
+        establishmentId: client.entity.getEstablishmentId(),
+        page: Number(query.page) || 1,
+      });
 
-      const menu = await menuService.execute(establishmentId);
-
-      return res.json(menu);
+      return res.json(menus);
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -55,12 +45,9 @@ export class MenuController extends Controller {
 
   async findOne({ params, client }: Request, res: Response): Promise<Response> {
     try {
-      const establishmentId = client.entity.getEstablishmentId();
-      const { id } = params;
-
       const sanitizedValues = findOneMenuValidate({
-        id: Number(id),
-        establishmentId,
+        id: Number(params.id),
+        establishmentId: client.entity.getEstablishmentId(),
       });
 
       const menuService = new GetMenuService();
@@ -73,10 +60,7 @@ export class MenuController extends Controller {
     }
   }
 
-  async update(
-    { params, body, client }: Request,
-    res: Response
-  ): Promise<Response> {
+  async update({ params, body, client }: Request, res: Response): Promise<Response> {
     try {
       const sanitizedValues = updateMenuValidate({
         id: Number(params.id),
@@ -86,9 +70,9 @@ export class MenuController extends Controller {
 
       const menuService = new UpdateMenuService();
 
-      const menu = await menuService.execute(sanitizedValues);
+      await menuService.execute(sanitizedValues);
 
-      return res.json(menu);
+      return res.status(204).json({});
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -103,9 +87,9 @@ export class MenuController extends Controller {
 
       const menuService = new DeleteMenuService();
 
-      const menu = await menuService.execute(sanitizedValues);
+      await menuService.execute(sanitizedValues);
 
-      return res.json(menu);
+      return res.status(204).json({});
     } catch (err) {
       return this.requestError(err, res);
     }

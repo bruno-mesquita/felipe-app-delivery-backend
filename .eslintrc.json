@@ -28,6 +28,7 @@
   "rules": {
     "prettier/prettier": "error",
     "import/prefer-default-export": "off",
+    "class-methods-use-this": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
@@ -36,7 +37,8 @@
         "mjs": "never",
         "jsx": "never",
         "ts": "never",
-        "tsx": "never"
+        "tsx": "never",
+        "json": "never"
       }
    ]
   }

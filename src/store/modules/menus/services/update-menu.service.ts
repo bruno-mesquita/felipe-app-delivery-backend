@@ -1,29 +1,21 @@
 import ApiError from '@shared/utils/ApiError';
-import Menu from '@core/menu';
-import { ServiceResponse } from '@shared/utils/service-response';
-import { UpdateMenuDto } from '../dtos/update-menu.dto';
+import { IUpdateMenuDto } from '../dtos';
+import MenuRepository from '../menu.repository';
 
 export class UpdateMenuService {
-  async execute({
-    establishmentId,
-    id,
-    ...modelDto
-  }: UpdateMenuDto): Promise<ServiceResponse<boolean | null>> {
+  private repository: MenuRepository;
+
+  constructor() {
+    this.repository = new MenuRepository();
+  }
+
+  async execute(model: IUpdateMenuDto): Promise<void> {
     try {
-      // Verificando se o menu já existe cadastrado
-      const menu = await Menu.findOne({
-        where: { id, establishment_id: establishmentId },
-      });
-
-      if (!menu) throw new ApiError('Menu não encontrado');
-
-      menu.update(modelDto);
-
-      return { result: true, err: null };
+      this.repository.updateOne(model);
     } catch (err) {
-      if (err instanceof ApiError) throw err;
+      ApiError.verifyType(err);
 
-      throw new ApiError('Erro ao atualizar menu', 'unknown', 500);
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

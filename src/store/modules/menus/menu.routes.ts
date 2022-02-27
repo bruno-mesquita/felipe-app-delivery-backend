@@ -1,13 +1,10 @@
 import { Router } from 'express';
 
-import isAuthenticated from '@shared/middlewares/is-authenticated';
-import { accessEstablishmentOwner } from '@shared/middlewares/access-establishment-owner';
+import middlewares from '@store/http/middlewares';
 import { MenuController } from './menu.controller';
 
 const menuRoutes = Router();
 const menuController = new MenuController();
-
-const middlewares = [isAuthenticated, accessEstablishmentOwner];
 
 menuRoutes.post('/menus', ...middlewares, menuController.create);
 menuRoutes.get('/menus', ...middlewares, menuController.list);

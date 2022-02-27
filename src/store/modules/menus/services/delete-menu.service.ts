@@ -1,28 +1,24 @@
-import Menu from '@core/menu';
 import ApiError from '@shared/utils/ApiError';
-import { ServiceResponse } from '@shared/utils/service-response';
-import { DeleteMenuDto } from '../dtos/delete-menu.dto';
+import { IDeleteMenuDto } from '../dtos';
+import MenuRepository from '../menu.repository';
 
 export class DeleteMenuService {
-  async execute({
-    id,
-    establishmentId,
-  }: DeleteMenuDto): Promise<ServiceResponse<boolean | null>> {
+  private repository: MenuRepository;
+
+  constructor() {
+    this.repository = new MenuRepository();
+  }
+
+  async execute({ id, establishmentId }: IDeleteMenuDto): Promise<void> {
     try {
-      // Verificando se o menu já existe cadastrado
-      const menu = await Menu.findOne({
-        where: { id, establishment_id: establishmentId },
+      await this.repository.deleteOne({
+        establishmentId,
+        id,
       });
-
-      if (!menu) throw new ApiError('Menu não encontrado');
-
-      await menu.destroy();
-
-      return { result: true, err: null };
     } catch (err) {
-      if (err instanceof ApiError) throw err;
+      ApiError.verifyType(err);
 
-      throw new ApiError('Erro ao buscar o menu', 'unknown');
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

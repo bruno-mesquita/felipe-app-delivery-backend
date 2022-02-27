@@ -1,4 +1,5 @@
 {
   "singleQuote": true,
-  "tranlingComma": "es5"
+  "tranlingComma": "es5",
+  "printWidth": 120
 }

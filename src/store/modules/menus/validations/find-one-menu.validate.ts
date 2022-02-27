@@ -1,17 +1,11 @@
-import { object, SchemaOf, number } from 'yup';
+import { object, number } from 'yup';
 
-import ApiError from '@shared/utils/ApiError';
-import { FindOneMenuDto } from '../dtos/find-one-menu.dto';
+import YupWrapper from '@shared/utils/yup-wrapper';
+import { IFindOneMenuDto } from '../dtos';
 
-const schema: SchemaOf<FindOneMenuDto> = object({
-  id: number().integer().min(1).required(),
-  establishmentId: number().integer().min(1).required(),
-});
-
-export const findOneMenuValidate = (values: FindOneMenuDto) => {
-  try {
-    return schema.validateSync(values, { stripUnknown: true });
-  } catch (err) {
-    throw new ApiError('Erro de validação!', 'validate');
-  }
-};
+export const findOneMenuValidate = YupWrapper<IFindOneMenuDto>(
+  object({
+    id: number().integer().min(1).required(),
+    establishmentId: number().integer().min(1).required(),
+  })
+);

@@ -8,10 +8,7 @@ import { createPagination } from '@shared/utils/use-page';
 import { IFindProductsByMenuDto } from '../dtos';
 
 export class FindProductsByMenuService {
-  async execute({
-    page,
-    id,
-  }: IFindProductsByMenuDto): Promise<ServiceResponse<Product[]>> {
+  async execute({ page, id }: IFindProductsByMenuDto): Promise<ServiceResponse<Product[]>> {
     try {
       const { limit, offset } = createPagination(page);
 

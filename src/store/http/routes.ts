@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { menuRoutes } from '../modules/menus/menu.routes';
+import { menuRoutes } from '../modules/menus';
 import { productsRoutes } from '../modules/product/product.routes';
 import { authRoutes } from '../modules/auth';
 import { establishmentRoutes } from '../modules/establishment';

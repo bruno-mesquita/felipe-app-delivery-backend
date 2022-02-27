@@ -1,5 +1,5 @@
 require('dotenv').config({
-  path: `.env.${process.env.NODE_ENV || process.argv[4]}`
+  path: `.env.${process.env.NODE_ENV || process.argv[4]}`,
 });
 
 module.exports = {

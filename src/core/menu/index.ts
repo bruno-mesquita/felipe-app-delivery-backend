@@ -1,7 +1,3 @@
-/**
- * @fileoverview entidade de produtos
- */
-
 import {
   DataTypes,
   Sequelize,
@@ -13,12 +9,24 @@ import {
 import Product from '@core/product';
 import Model from '../_Bases/model';
 
-class Menu extends Model {
+export interface TModelAttributes {
+  id: number;
+  name: string;
+  establishment_id: number;
+  active: boolean;
+  priority: number;
+}
+
+export type TCreationAttributes = Omit<TModelAttributes, 'id'>;
+
+class Menu extends Model<any, TCreationAttributes> {
   name: string;
 
   establishment_id!: number;
 
   active: boolean;
+
+  priority: number;
 
   public readonly products?: Product[];
 
@@ -31,7 +39,8 @@ class Menu extends Model {
   static start(sequelize: Sequelize) {
     this.init(
       {
-        name: DataTypes.NUMBER,
+        name: DataTypes.STRING,
+        priority: DataTypes.INTEGER,
         active: DataTypes.BOOLEAN,
       },
       { sequelize, tableName: 'menu', paranoid: true }
@@ -40,12 +49,12 @@ class Menu extends Model {
     return this;
   }
 
-  static associate({ Establishment, Product }): void {
-    this.belongsTo(Establishment, {
+  static associate(models: any): void {
+    this.belongsTo(models.Establishment, {
       foreignKey: 'establishment_id',
       as: 'establishments',
     });
-    this.hasMany(Product, {
+    this.hasMany(models.Product, {
       foreignKey: 'menu_id',
       as: 'products',
       sourceKey: 'id',

@@ -1,19 +1,24 @@
 import ApiError from '@shared/utils/ApiError';
 import Menu from '@core/menu';
-import { ServiceResponse } from '@shared/utils/service-response';
+import MenuRepository from '../menu.repository';
 
 export class ListMenuService {
-  async execute(establishmentId: number): Promise<ServiceResponse<Menu[]>> {
-    try {
-      const menus = await Menu.findAll({
-        where: { establishment_id: establishmentId },
-        attributes: ['id', 'name'],
-        order: [['createdAt', 'ASC']],
-      });
+  private repository: MenuRepository;
 
-      return { result: menus, err: null };
+  constructor() {
+    this.repository = new MenuRepository();
+  }
+
+  async execute({ establishmentId, page }): Promise<Menu[]> {
+    try {
+      return this.repository.findAll({
+        establishmentId,
+        page,
+      });
     } catch (err) {
-      throw new ApiError('Erro ao buscar menus', 'unknown', 500);
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }

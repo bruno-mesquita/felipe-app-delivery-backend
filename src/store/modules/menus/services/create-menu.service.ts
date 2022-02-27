@@ -1,24 +1,27 @@
-import Menu from '@core/menu';
 import ApiError from '@shared/utils/ApiError';
-import { ServiceResponse } from '@shared/utils/service-response';
-import { CreateMenuDto } from '../dtos/create-menu.dtos';
+
+import type { ICreateMenuDto } from '../dtos';
+import MenuRepository from '../menu.repository';
 
 export class CreateMenuService {
-  async execute({
-    active,
-    establishmentId,
-    name,
-  }: CreateMenuDto): Promise<ServiceResponse<boolean | null>> {
+  private repository: MenuRepository;
+
+  constructor() {
+    this.repository = new MenuRepository();
+  }
+
+  async execute({ establishmentId, ...rest }: ICreateMenuDto): Promise<number> {
     try {
-      await Menu.create({
-        name,
-        active,
+      const menu = await this.repository.create({
+        ...rest,
         establishment_id: establishmentId,
       });
 
-      return { result: true, err: null };
+      return menu.getId();
     } catch (err) {
-      throw new ApiError('Erro ao criar menu');
+      ApiError.verifyType(err);
+
+      throw ApiError.generateErrorUnknown();
     }
   }
 }
