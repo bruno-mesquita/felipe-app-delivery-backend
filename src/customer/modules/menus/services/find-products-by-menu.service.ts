@@ -21,12 +21,12 @@ export class FindProductsByMenuService {
 
       const products = await Product.findAll({
         where: { menu_id: id, active: true },
-        attributes: ['id', 'name', 'price', 'description', 'unit', 'unitType'],
+        attributes: ['id', 'name', 'price'],
         include: [
           {
             model: Image,
             as: 'photo',
-            attributes: ['encoded'],
+            attributes: ['id', 'encoded'],
           },
         ],
         limit,
