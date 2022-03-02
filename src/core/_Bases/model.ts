@@ -4,16 +4,16 @@ abstract class Model<
   TModelAttributes extends {} = any,
   TCreationAttributes extends {} = TModelAttributes
 > extends SequelizeModel<TModelAttributes, TCreationAttributes> {
-  readonly id!: number;
+  declare id: number;
 
-  readonly createdAt!: Date;
+  declare createdAt: Date;
 
-  readonly updatedAt!: Date;
+  declare updatedAt: Date;
 
-  readonly deletedAt!: Date;
+  declare deletedAt: Date;
 
   public async toRemove() {
-    Object.entries({ ...this.toJSON() }).map((field) => {
+    Object.entries({ ...this.toJSON() }).forEach((field) => {
       const [key, fieldValue] = field;
       let value = fieldValue;
 

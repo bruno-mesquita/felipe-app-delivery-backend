@@ -12,7 +12,7 @@ import Model from '../_Bases/model';
 export interface TModelAttributes {
   id: number;
   name: string;
-  establishment_id: number;
+  establishmentId: number;
   active: boolean;
   priority: number;
 }
@@ -20,13 +20,13 @@ export interface TModelAttributes {
 export type TCreationAttributes = Omit<TModelAttributes, 'id'>;
 
 class Menu extends Model<any, TCreationAttributes> {
-  name: string;
+  declare name: string;
 
-  establishment_id!: number;
+  declare establishmentId: number;
 
-  active: boolean;
+  declare active: boolean;
 
-  priority: number;
+  declare priority: number;
 
   public readonly products?: Product[];
 
@@ -51,7 +51,7 @@ class Menu extends Model<any, TCreationAttributes> {
 
   static associate(models: any): void {
     this.belongsTo(models.Establishment, {
-      foreignKey: 'establishment_id',
+      foreignKey: 'establishmentId',
       as: 'establishments',
     });
     this.hasMany(models.Product, {
@@ -60,10 +60,6 @@ class Menu extends Model<any, TCreationAttributes> {
       sourceKey: 'id',
       onDelete: 'cascade',
     });
-  }
-
-  public setName(name: string): void {
-    this.set('name', name);
   }
 }
 

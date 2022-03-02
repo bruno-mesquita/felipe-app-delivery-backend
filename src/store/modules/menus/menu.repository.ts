@@ -20,7 +20,7 @@ class MenuRepository {
       const menu = await Menu.findOne({
         where: {
           id,
-          establishment_id: establishmentId,
+          establishmentId,
         },
         attributes: { exclude: ['createdAt', 'updatedAt', 'deletedAt'] },
       });
@@ -49,7 +49,7 @@ class MenuRepository {
 
       await menu.update({
         ...model,
-        establishment_id: establishmentId,
+        establishmentId,
       });
     } catch (err) {
       ApiError.verifyType(err);
@@ -75,7 +75,7 @@ class MenuRepository {
       const { limit, offset } = createPagination(page - 1);
 
       const menus = await Menu.findAll({
-        where: { establishment_id: establishmentId },
+        where: { establishmentId },
         attributes: ['id', 'name'],
         order: [['priority', 'ASC']],
         limit,
