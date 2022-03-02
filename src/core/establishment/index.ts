@@ -1,10 +1,4 @@
-import {
-  DataTypes,
-  Sequelize,
-  HasManyGetAssociationsMixin,
-  BelongsToSetAssociationMixin,
-} from 'sequelize';
-import { setHours, isPast } from 'date-fns';
+import { DataTypes, Sequelize, HasManyGetAssociationsMixin, BelongsToSetAssociationMixin } from 'sequelize';
 
 import Image from '@core/image';
 import AddressEstablishment from '@core/address-establishment';
@@ -12,46 +6,38 @@ import Order from '@core/order';
 import Menu from '@core/menu';
 import Model from '../_Bases/model';
 
-interface UpdateProfile {
-  name: string;
-  cellphone: string;
-  openingTime: number;
-  closingTime: number;
-  freightValue: number;
-}
-
 class Establishment extends Model {
-  name: string;
+  declare name: string;
 
-  cellphone: string;
+  declare cellphone: string;
 
-  active: boolean;
+  declare active: boolean;
 
-  openingTime: number;
+  declare openingTime: number;
 
-  closingTime: number;
+  declare closingTime: number;
 
-  freightValue: number;
+  declare freightValue: number;
 
-  evaluation: number;
+  declare evaluation: number;
 
-  image_id!: number;
+  declare image_id: number;
 
-  address_id!: number;
+  declare address_id: number;
 
-  public readonly image?: Image;
+  declare image?: Image;
 
-  public readonly address?: AddressEstablishment;
+  declare address?: AddressEstablishment;
 
-  public readonly orders?: Order[];
+  declare orders?: Order[];
 
-  public readonly menus?: Menu[];
+  declare menus?: Menu[];
 
-  public getOrders!: HasManyGetAssociationsMixin<Order>;
+  declare getOrders: HasManyGetAssociationsMixin<Order>;
 
-  public getMenus!: HasManyGetAssociationsMixin<Menu>;
+  declare getMenus: HasManyGetAssociationsMixin<Menu>;
 
-  public setImage!: BelongsToSetAssociationMixin<Image, string>;
+  declare setImage: BelongsToSetAssociationMixin<Image, string>;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -70,74 +56,26 @@ class Establishment extends Model {
     return this;
   }
 
-  static associate({
-    Image,
-    AddressEstablishment,
-    EstablishmentCategory,
-    Order,
-    Menu,
-  }) {
-    this.hasMany(EstablishmentCategory, {
+  static associate(models) {
+    this.hasMany(models.EstablishmentCategory, {
       foreignKey: 'establishment_id',
       as: 'categories',
     });
-    this.belongsTo(Image, { foreignKey: 'image_id', as: 'image' });
-    this.belongsTo(AddressEstablishment, {
+    this.belongsTo(models.Image, { foreignKey: 'image_id', as: 'image' });
+    this.belongsTo(models.AddressEstablishment, {
       foreignKey: 'address_id',
       as: 'address',
     });
-    this.hasMany(Order, {
+    this.hasMany(models.Order, {
       foreignKey: 'establishment_id',
       as: 'orders',
       sourceKey: 'id',
     });
-    this.hasMany(Menu, {
+    this.hasMany(models.Menu, {
       foreignKey: 'establishment_id',
       as: 'menus',
       sourceKey: 'id',
     });
-  }
-
-  public setImageId(imageId: number): void {
-    this.image_id = imageId;
-  }
-
-  public getFreightValue(): number {
-    return this.get('freightValue');
-  }
-
-  public updateProfile({
-    name,
-    cellphone,
-    closingTime,
-    openingTime,
-    freightValue,
-  }: UpdateProfile): void {
-    this.set('name', name);
-    this.set('cellphone', cellphone);
-    this.set('freightValue', freightValue);
-    this.set('openingTime', openingTime);
-    this.set('closingTime', closingTime);
-  }
-
-  public isOpen(): boolean {
-    const closedDate = setHours(new Date(), this.get('closingTime'));
-
-    if (isPast(closedDate)) return false;
-
-    return true;
-  }
-
-  public setOpeningTime(openingTime: number): void {
-    this.set('openingTime', openingTime);
-  }
-
-  public setClosingTime(closingTime: number): void {
-    this.set('closingTime', closingTime);
-  }
-
-  public setFreightValue(freightValue: number): void {
-    this.set('freightValue', freightValue);
   }
 
   public isActive(): boolean {

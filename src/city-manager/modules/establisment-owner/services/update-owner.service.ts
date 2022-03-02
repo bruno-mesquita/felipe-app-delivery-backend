@@ -23,8 +23,6 @@ export class UpdateOwnerService {
 
       if (entity.isActive()) entity.deactivate();
       else entity.activate();
-
-      console.log(entity.isActive());
       await entity.save();
     } catch (err) {
       ApiError.verifyType(err);

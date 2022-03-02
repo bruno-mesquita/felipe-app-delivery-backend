@@ -1,21 +1,24 @@
+import Controller from '@shared/utils/controller';
 import type { Request, Response } from 'express';
 import { UpdateImageService } from './services/update-image.service';
 
-export class ImageEstablishmentController {
+export class ImageEstablishmentController extends Controller {
+  constructor() {
+    super(['update']);
+  }
+
   async update(req: Request, res: Response): Promise<Response> {
     try {
       const updateImageService = new UpdateImageService();
 
-      const imageEstablishment = await updateImageService.execute({
+      await updateImageService.execute({
         encoded: req.body.encoded,
-        onwerId: req.client.id,
+        establishmentId: req.client.entity.getEstablishmentId(),
       });
 
-      if (imageEstablishment.err) throw new Error(imageEstablishment.err);
-
-      return res.json(imageEstablishment);
+      return res.json({ ok: true });
     } catch (err) {
-      return res.status(400).json({ err: err.message });
+      return this.requestError(err, res);
     }
   }
 }
