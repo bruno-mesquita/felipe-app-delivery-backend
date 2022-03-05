@@ -18,15 +18,11 @@ class OrderController extends Controller {
   private readonly showOrderService: ShowOrderService;
 
   constructor() {
-    super();
+    super(['verify', 'show', 'create']);
 
     this.createOrderService = new CreateOrderService();
     this.verifyStatusOrderService = new VerifyStatusOrderService();
     this.showOrderService = new ShowOrderService();
-
-    this.verify = this.verify.bind(this);
-    this.show = this.show.bind(this);
-    this.create = this.create.bind(this);
   }
 
   async verify({ params }: Request, res: Response): Promise<Response> {
@@ -54,9 +50,13 @@ class OrderController extends Controller {
 
   async create({ body, client }: Request, res: Response): Promise<Response> {
     try {
+      const { establishment_id, address_id, ...rest } = body;
+
       const response = await this.createOrderService.execute({
-        ...body,
-        client_id: client.id,
+        ...rest,
+        establishmentId: establishment_id,
+        addressId: address_id,
+        clientId: client.id,
       });
 
       return res.status(201).json({ result: response });

@@ -29,18 +29,6 @@ class City extends Model {
       onDelete: 'cascade',
     });
   }
-
-  public setName(name: string): void {
-    this.set('name', name);
-  }
-
-  public setActive(active: boolean): void {
-    this.set('active', active);
-  }
-
-  public setStateId(stateId: number): void {
-    this.set('state_id', stateId);
-  }
 }
 
 export default City;

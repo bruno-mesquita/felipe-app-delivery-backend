@@ -21,9 +21,7 @@ export class UpdateOwnerService {
 
       if (!entity) throw new ApiError('Estabelecimento não encontrado');
 
-      if (entity.isActive()) entity.deactivate();
-      else entity.activate();
-      await entity.save();
+      await entity.update({ active: !entity.active });
     } catch (err) {
       ApiError.verifyType(err);
 

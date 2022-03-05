@@ -9,14 +9,9 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { createPagination } from '@shared/utils/use-page';
 
 class ListEstablishmentService {
-  async execute(
-    categoryName: string,
-    clientId: number,
-    page = 0
-  ): Promise<ServiceResponse<any[]>> {
+  async execute(categoryName: string, clientId: number, page = 0): Promise<ServiceResponse<any[]>> {
     try {
       const { limit, offset } = createPagination(page);
-
       const category = await Category.findOne({
         where: { name: categoryName },
       });
@@ -31,14 +26,10 @@ class ListEstablishmentService {
       if (!addressClient) throw new ApiError('Endereço não encontrado');
 
       const establishments = await Establishment.findAll({
-        where: { active: true },
-        attributes: [
-          'id',
-          'name',
-          'openingTime',
-          'closingTime',
-          'freightValue',
-        ],
+        where: {
+          active: true,
+        },
+        attributes: ['id', 'name', 'openingTime', 'closingTime', 'freightValue'],
         include: [
           {
             model: Image,
@@ -48,14 +39,14 @@ class ListEstablishmentService {
           {
             model: AddressEstablishment,
             as: 'address',
-            where: { city_id: addressClient.getCityId() },
+            where: { city_id: addressClient.city_id },
             attributes: ['city_id'],
           },
           {
             model: EstablishmentCategory,
             as: 'categories',
             attributes: ['category_id'],
-            where: { category_id: category.getId() },
+            where: { category_id: category.id },
           },
         ],
         limit,

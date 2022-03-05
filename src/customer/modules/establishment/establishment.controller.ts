@@ -24,8 +24,7 @@ class EstablishmentController extends Controller {
     this.listEstablishmentService = new ListEstablishmentService();
     this.findOneEstablishmentService = new FindOneEstablishmentService();
     this.searchEstablishmentsByName = new SearchEstablishmentsByName();
-    this.listMenusByEstablishmentService =
-      new ListMenusByEstablishmentService();
+    this.listMenusByEstablishmentService = new ListMenusByEstablishmentService();
 
     this.list = this.list.bind(this);
     this.listMenus = this.listMenus.bind(this);
@@ -37,13 +36,7 @@ class EstablishmentController extends Controller {
     try {
       const { category, page = 0 }: any = query;
 
-      return res.json(
-        await this.listEstablishmentService.execute(
-          category,
-          client.id,
-          Number(page)
-        )
-      );
+      return res.json(await this.listEstablishmentService.execute(category, client.id, Number(page)));
     } catch (err) {
       return this.requestError(err, res);
     }
@@ -63,28 +56,17 @@ class EstablishmentController extends Controller {
     try {
       const { id } = params;
 
-      return res.json(
-        await this.findOneEstablishmentService.execute(Number(id))
-      );
+      return res.json(await this.findOneEstablishmentService.execute(Number(id)));
     } catch (err) {
       return this.requestError(err, res);
     }
   }
 
-  async searchByName(
-    { query, client }: Request,
-    res: Response
-  ): Promise<Response> {
+  async searchByName({ query, client }: Request, res: Response): Promise<Response> {
     try {
       const { name, category } = query;
 
-      return res.json(
-        await this.searchEstablishmentsByName.execute(
-          name as string,
-          category as string,
-          client.id
-        )
-      );
+      return res.json(await this.searchEstablishmentsByName.execute(name as string, category as string, client.id));
     } catch (err) {
       return this.requestError(err, res);
     }

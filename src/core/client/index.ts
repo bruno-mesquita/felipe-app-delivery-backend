@@ -13,27 +13,27 @@ import Order from '@core/order';
 import UserBase from '../_Bases/user';
 
 class Client extends UserBase {
-  cpf: string;
+  declare cpf: string;
 
-  avatar_id!: number;
+  declare avatar_id: number;
 
-  public readonly avatar?: Image;
+  declare avatar?: Image;
 
-  public readonly orders?: Order[];
+  declare orders?: Order[];
 
-  public readonly adresses?: AddressClient[];
+  declare adresses?: AddressClient[];
 
   static Addresses: HasMany<Client>;
 
-  public createOrder!: HasManyCreateAssociationMixin<Order>;
+  declare createOrder: HasManyCreateAssociationMixin<Order>;
 
-  public getOrders!: HasManyGetAssociationsMixin<Order>;
+  declare getOrders: HasManyGetAssociationsMixin<Order>;
 
-  public createAdress!: HasManyCreateAssociationMixin<AddressClient>;
+  declare createAdress: HasManyCreateAssociationMixin<AddressClient>;
 
-  public getAdresses!: HasManyGetAssociationsMixin<AddressClient>;
+  declare getAdresses: HasManyGetAssociationsMixin<AddressClient>;
 
-  public getAvatar!: BelongsToGetAssociationMixin<Image>;
+  declare getAvatar: BelongsToGetAssociationMixin<Image>;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -51,14 +51,14 @@ class Client extends UserBase {
     return this;
   }
 
-  static associate({ Image, AddressClient, Order }) {
-    this.belongsTo(Image, { foreignKey: 'avatar_id', as: 'avatar' });
-    this.Addresses = this.hasMany(AddressClient, {
+  static associate(models) {
+    this.belongsTo(models.Image, { foreignKey: 'avatar_id', as: 'avatar' });
+    this.Addresses = this.hasMany(models.AddressClient, {
       foreignKey: 'client_id',
       as: 'addresses',
       sourceKey: 'id',
     });
-    this.hasMany(Order, {
+    this.hasMany(models.Order, {
       foreignKey: 'client_id',
       as: 'orders',
       sourceKey: 'id',

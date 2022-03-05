@@ -1,7 +1,7 @@
-/**
- * @fileoverview Casos serviços para a criação do pedido
- * @author Jonatas Rosa Moura
- */
+import { Op } from 'sequelize';
+import { getHours } from 'date-fns';
+import { utcToZonedTime } from 'date-fns-tz';
+
 import AddressClient from '@core/address-client';
 import Client from '@core/client';
 import Establishment from '@core/establishment';
@@ -9,63 +9,66 @@ import ItemOrder from '@core/item-order';
 import Order from '@core/order';
 import Product from '@core/product';
 import Notification from '@shared/utils/Notification';
-import { EstablishmentOwner } from '@core/establishment-owner';
 import ApiError from '@shared/utils/ApiError';
+import { EstablishmentOwner } from '@core/establishment-owner';
 import { CreateOrderDto } from '../../dtos/create-order.dto';
 
 export class CreateOrderService {
-  async execute(createOrderDto: CreateOrderDto): Promise<number> {
+  private getCurrentHour(): number {
+    const now = new Date();
+
+    const timeZone = 'America/Sao_Paulo';
+    const zonedDate = utcToZonedTime(now, timeZone);
+    return getHours(zonedDate);
+  }
+
+  async execute({ establishmentId, ...rest }: CreateOrderDto): Promise<number> {
     try {
       // Fazendo validação DTO
       // const valid = schema.isValidSync(createOrderDto);
 
       // if (!valid) throw new ApiError('Campos inválidos');
 
+      const currentHour = this.getCurrentHour();
+
       // Verificando Estabelecimento
-      const establishmentOwner = await EstablishmentOwner.findOne({
+      const establishment = await Establishment.findOne({
         where: {
-          establishment_id: createOrderDto.establishment_id,
-        },
-        include: [
-          {
-            model: Establishment,
-            as: 'establishment',
+          id: establishmentId,
+          active: true,
+          openingTime: {
+            [Op.lte]: currentHour,
           },
-        ],
+          closingTime: {
+            [Op.gt]: currentHour,
+          },
+        },
       });
 
-      if (!establishmentOwner)
-        throw new ApiError('Estabelecimento não encontrado');
+      if (!establishment) throw new ApiError('Estabelecimento não encontrado ou fechado');
 
       // verificando cliente
 
-      const clientExists = await Client.findByPk(createOrderDto.client_id);
+      const client = await Client.findByPk(rest.clientId, { attributes: ['id'] });
 
-      if (!clientExists) throw new ApiError('Cliente não encontrado');
+      if (!client) throw new ApiError('Cliente não encontrado');
 
       // Verificando endereço do cliente
 
-      const addressExists = await AddressClient.findOne({
-        where: {
-          id: createOrderDto.address_id,
-        },
-      });
+      const address = await AddressClient.findByPk(rest.addressId, { attributes: ['id'] });
 
-      if (!addressExists)
-        throw new ApiError('Endereço do cliente não encontrado');
-
-      const ownerJson = establishmentOwner.toJSON() as any;
+      if (!address) throw new ApiError('Endereço do cliente não encontrado');
 
       // Criando o pedido
       const order = Order.build({
-        establishment_id: ownerJson.establishment_id,
-        client_id: clientExists.getId(),
-        address_id: addressExists.getId(),
-        freight_value: ownerJson.establishment.freightValue,
-        transshipment: Number(createOrderDto.transshipment) || 0,
-        note: createOrderDto.note,
-        payment: createOrderDto.payment,
-        total: Number(createOrderDto.total || 0),
+        establishment_id: establishment.id,
+        client_id: client.id,
+        address_id: address.id,
+        freight_value: establishment.freightValue,
+        transshipment: Number(rest.transshipment) || 0,
+        note: rest.note,
+        payment: rest.payment,
+        total: Number(rest.total || 0),
       });
 
       order.open();
@@ -74,7 +77,7 @@ export class CreateOrderService {
 
       let total = 0;
 
-      for await (const item of createOrderDto.items) {
+      for await (const item of rest.items) {
         const product = await Product.findByPk(item.itemId, {
           attributes: ['id', 'price'],
         });
@@ -96,15 +99,20 @@ export class CreateOrderService {
         }
       }
 
-      order.setTotal(total + Number(ownerJson.establishment.freightValue));
+      order.setTotal(total + Number(establishment.freightValue));
 
       // Salvando produto no db
       await order.save();
 
       const notification = new Notification();
 
+      const owner = await EstablishmentOwner.findOne({
+        where: { establishment_id: establishment.id },
+        attributes: ['id'],
+      });
+
       await notification.send({
-        targetId: ownerJson.id,
+        targetId: owner.id,
         type: 'Partner',
         data: {
           title: 'Chegou um novo pedido para você!',

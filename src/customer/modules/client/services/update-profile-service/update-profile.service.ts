@@ -11,9 +11,7 @@ import ApiError from '@shared/utils/ApiError';
 import { IUpdateClientDto } from '../../dtos';
 
 class UpdateProfileService {
-  async execute(
-    updateClientDto: IUpdateClientDto
-  ): Promise<ServiceResponse<boolean>> {
+  async execute(updateClientDto: IUpdateClientDto): Promise<ServiceResponse<boolean>> {
     try {
       // verificando se o usuário existe
       const user = await Client.findOne({
@@ -34,8 +32,7 @@ class UpdateProfileService {
         },
       });
 
-      if (!userExists)
-        throw new ApiError('Já existe uma conta com esse email/telefone ');
+      if (!userExists) throw new ApiError('Já existe uma conta com esse email/telefone ');
 
       // Desestruturando
       const { cellphone, email, name } = updateClientDto;

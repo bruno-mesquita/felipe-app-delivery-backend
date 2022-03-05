@@ -6,25 +6,25 @@ import CityManager from '@core/city-manager';
 import Model from '../_Bases/model';
 
 export class EstablishmentOwner extends Model {
-  first_name: string;
+  declare first_name: string;
 
-  last_name: string;
+  declare last_name: string;
 
-  password: string;
+  declare password: string;
 
-  email: string;
+  declare email: string;
 
-  cellphone: string;
+  declare cellphone: string;
 
-  cpf: string;
+  declare cpf: string;
 
-  establishment_id: number;
+  declare establishment_id: number;
 
-  created_by_id: number;
+  declare created_by_id: number;
 
-  public readonly created_by?: CityManager;
+  declare created_by?: CityManager;
 
-  public readonly establishment?: Establishment;
+  declare establishment?: Establishment;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -43,12 +43,12 @@ export class EstablishmentOwner extends Model {
     return this;
   }
 
-  static associate({ Establishment, CityManager }) {
-    this.belongsTo(Establishment, {
+  static associate(models) {
+    this.belongsTo(models.Establishment, {
       foreignKey: 'establishment_id',
       as: 'establishment',
     });
-    this.belongsTo(CityManager, {
+    this.belongsTo(models.CityManager, {
       foreignKey: 'created_by_id',
       as: 'created_by',
     });
@@ -66,27 +66,7 @@ export class EstablishmentOwner extends Model {
     this.set('password', password);
   }
 
-  public setFirstName(firstName: string): void {
-    this.set('first_name', firstName);
-  }
-
-  public setLastName(lastName: string): void {
-    this.set('last_name', lastName);
-  }
-
-  public setEmail(email: string): void {
-    this.set('email', email);
-  }
-
-  public setCpf(cpf: string): void {
-    this.set('cpf', cpf);
-  }
-
   public getEstablishmentId(): number {
     return this.get('establishment_id');
-  }
-
-  public setEstablishmentId(establishmentId: number): void {
-    this.set('establishment_id', establishmentId);
   }
 }

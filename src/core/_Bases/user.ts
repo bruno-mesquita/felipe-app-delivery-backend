@@ -3,15 +3,15 @@ import { compareSync, hashSync } from 'bcryptjs';
 import Model from './model';
 
 abstract class User extends Model {
-  name: string;
+  declare name: string;
 
-  email: string;
+  declare email: string;
 
-  password: string;
+  declare password: string;
 
-  cellphone: string;
+  declare cellphone: string;
 
-  active: boolean;
+  declare active: boolean;
 
   public setName(name: string): void {
     this.set('name', name);

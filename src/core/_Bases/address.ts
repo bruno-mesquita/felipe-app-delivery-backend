@@ -3,33 +3,17 @@ import City from '@core/city';
 import Model from './model';
 
 abstract class Address extends Model {
-  street: string;
+  declare street: string;
 
-  number: string;
+  declare number: string;
 
-  neighborhood: string;
+  declare neighborhood: string;
 
-  cep: string;
+  declare cep: string;
 
-  city_id: number;
+  declare city_id: number;
 
-  public readonly city: City;
-
-  public getStreet(): string {
-    return this.get('street');
-  }
-
-  public getNumber(): string {
-    return this.get('number');
-  }
-
-  public getNeighborhood(): string {
-    return this.get('neighborhood');
-  }
-
-  public getCep(): string {
-    return this.get('cep');
-  }
+  declare city: City;
 
   public getCityId(): number {
     return this.get('city_id');

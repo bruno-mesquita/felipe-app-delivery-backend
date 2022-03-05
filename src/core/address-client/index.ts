@@ -4,13 +4,13 @@ import Order from '@core/order';
 import AddressModel from '../_Bases/address';
 
 class AddressClient extends AddressModel {
-  nickname: string;
+  declare nickname: string;
 
-  client_id!: number;
+  declare client_id: number;
 
-  active: boolean;
+  declare active: boolean;
 
-  public getOrders!: HasManyGetAssociationsMixin<Order>;
+  declare getOrders: HasManyGetAssociationsMixin<Order>;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -28,26 +28,14 @@ class AddressClient extends AddressModel {
     return this;
   }
 
-  static associate({ City, Order, Client }) {
-    this.belongsTo(City, { foreignKey: 'city_id', as: 'city' });
-    this.hasMany(Order, {
+  static associate(models) {
+    this.belongsTo(models.City, { foreignKey: 'city_id', as: 'city' });
+    this.hasMany(models.Order, {
       foreignKey: 'address_id',
       as: 'orders',
       sourceKey: 'id',
     });
-    this.belongsTo(Client, { foreignKey: 'client_id', as: 'client' });
-  }
-
-  public getNickname(): string {
-    return this.get('nickname');
-  }
-
-  public setNickname(nickname: string): void {
-    this.set('nickname', nickname);
-  }
-
-  public setActive(active: boolean): void {
-    this.set('active', active);
+    this.belongsTo(models.Client, { foreignKey: 'client_id', as: 'client' });
   }
 }
 

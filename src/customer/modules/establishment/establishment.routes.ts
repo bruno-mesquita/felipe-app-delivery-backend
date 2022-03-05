@@ -10,21 +10,9 @@ const establishmentController = new EstablishmentController();
 
 const middlewares = [isAuthenticated, accessClient];
 
-routes.get(
-  '/establishments/:id',
-  ...middlewares,
-  establishmentController.findOne
-);
-routes.get(
-  '/establishments-by-name',
-  ...middlewares,
-  establishmentController.searchByName
-);
+routes.get('/establishments/:id', ...middlewares, establishmentController.findOne);
+routes.get('/establishments-by-name', ...middlewares, establishmentController.searchByName);
 routes.get('/establishments', ...middlewares, establishmentController.list);
-routes.get(
-  '/establishments/:id/menus',
-  ...middlewares,
-  establishmentController.listMenus
-);
+routes.get('/establishments/:id/menus', ...middlewares, establishmentController.listMenus);
 
 export default routes;

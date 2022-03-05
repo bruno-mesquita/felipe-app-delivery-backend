@@ -1,9 +1,4 @@
-import {
-  DataTypes,
-  Sequelize,
-  BelongsToGetAssociationMixin,
-  BelongsTo,
-} from 'sequelize';
+import { DataTypes, Sequelize, BelongsToGetAssociationMixin, BelongsTo } from 'sequelize';
 
 import Image from '@core/image';
 import Model from '../_Bases/model';
@@ -15,27 +10,27 @@ export const UNIT = {
 };
 
 class Product extends Model {
-  name: string;
+  declare name: string;
 
-  price: number;
+  declare price: number;
 
-  description: string;
+  declare description: string;
 
-  active: boolean;
+  declare active: boolean;
 
-  menu_id!: number;
+  declare menu_id: number;
 
-  image_id!: number;
+  declare image_id: number;
 
-  unitType: string;
+  declare unitType: string;
 
-  unit: number;
+  declare unit: number;
 
-  public readonly photo?: Image;
+  declare photo?: Image;
 
-  public static Photo: BelongsTo<Product, Image>;
+  static Photo: BelongsTo<Product, Image>;
 
-  public getPhoto!: BelongsToGetAssociationMixin<Image>;
+  declare getPhoto: BelongsToGetAssociationMixin<Image>;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -61,24 +56,8 @@ class Product extends Model {
     this.belongsTo(models.Menu, { foreignKey: 'menu_id', as: 'menu' });
   }
 
-  public getName(): string {
-    return this.get('name');
-  }
-
-  public getPrice(): number {
-    return this.get('price');
-  }
-
-  public getDescription(): string {
-    return this.get('description');
-  }
-
-  public isActive(): boolean {
-    return this.get('active');
-  }
-
   public calcTotal(amount: number): number {
-    return this.get('price') * amount;
+    return this.price * amount;
   }
 }
 

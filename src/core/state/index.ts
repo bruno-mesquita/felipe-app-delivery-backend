@@ -3,9 +3,9 @@ import { DataTypes, Sequelize } from 'sequelize';
 import Model from '../_Bases/model';
 
 class State extends Model {
-  name: string;
+  declare name: string;
 
-  active: boolean;
+  declare active: boolean;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -17,14 +17,6 @@ class State extends Model {
     );
 
     return this;
-  }
-
-  public setName(name: string): void {
-    this.set('name', name);
-  }
-
-  public setActive(active: boolean): void {
-    this.set('active', active);
   }
 }
 
