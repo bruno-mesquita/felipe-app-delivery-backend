@@ -9,7 +9,7 @@ import { ServiceResponse } from '@shared/utils/service-response';
 import { createPagination } from '@shared/utils/use-page';
 
 class ListEstablishmentService {
-  async execute(categoryName: string, clientId: number, page = 0): Promise<ServiceResponse<any[]>> {
+  async execute(categoryName: string, clientId: number, appVerison: number, page = 0): Promise<ServiceResponse<any[]>> {
     try {
       const { limit, offset } = createPagination(page);
       const category = await Category.findOne({
@@ -25,30 +25,35 @@ class ListEstablishmentService {
 
       if (!addressClient) throw new ApiError('Endereço não encontrado');
 
+      const include: any[] = [
+        {
+          model: AddressEstablishment,
+          as: 'address',
+          where: { city_id: addressClient.city_id },
+          attributes: ['city_id'],
+        },
+        {
+          model: EstablishmentCategory,
+          as: 'categories',
+          attributes: ['category_id'],
+          where: { category_id: category.id },
+        },
+      ];
+
+      if (appVerison <= 1.1) {
+        include.push({
+          model: Image,
+          as: 'image',
+          attributes: ['encoded'],
+        });
+      }
+
       const establishments = await Establishment.findAll({
         where: {
           active: true,
         },
-        attributes: ['id', 'name', 'openingTime', 'closingTime', 'freightValue'],
-        include: [
-          {
-            model: Image,
-            as: 'image',
-            attributes: ['encoded'],
-          },
-          {
-            model: AddressEstablishment,
-            as: 'address',
-            where: { city_id: addressClient.city_id },
-            attributes: ['city_id'],
-          },
-          {
-            model: EstablishmentCategory,
-            as: 'categories',
-            attributes: ['category_id'],
-            where: { category_id: category.id },
-          },
-        ],
+        attributes: ['id', 'name', 'openingTime', 'closingTime', 'freightValue', 'image_id'],
+        include,
         limit,
         offset,
       });

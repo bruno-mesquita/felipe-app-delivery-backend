@@ -1,0 +1,1 @@
+export { FindOneImageService } from './FindOneImageService';

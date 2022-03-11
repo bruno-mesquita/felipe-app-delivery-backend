@@ -19,24 +19,27 @@ class EstablishmentController extends Controller {
   private readonly listMenusByEstablishmentService: ListMenusByEstablishmentService;
 
   constructor() {
-    super();
+    super(['list', 'listMenus', 'findOne', 'searchByName']);
 
     this.listEstablishmentService = new ListEstablishmentService();
     this.findOneEstablishmentService = new FindOneEstablishmentService();
     this.searchEstablishmentsByName = new SearchEstablishmentsByName();
     this.listMenusByEstablishmentService = new ListMenusByEstablishmentService();
-
-    this.list = this.list.bind(this);
-    this.listMenus = this.listMenus.bind(this);
-    this.findOne = this.findOne.bind(this);
-    this.searchByName = this.searchByName.bind(this);
   }
 
-  async list({ query, client }: Request, res: Response): Promise<Response> {
+  async list({ query, client, headers }: Request, res: Response): Promise<Response> {
     try {
       const { category, page = 0 }: any = query;
+      const { appversion } = headers;
 
-      return res.json(await this.listEstablishmentService.execute(category, client.id, Number(page)));
+      return res.json(
+        await this.listEstablishmentService.execute(
+          category,
+          client.id,
+          Number.parseFloat((appversion as any) || 1),
+          Number(page)
+        )
+      );
     } catch (err) {
       return this.requestError(err, res);
     }

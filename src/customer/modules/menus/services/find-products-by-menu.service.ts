@@ -8,7 +8,7 @@ import { createPagination } from '@shared/utils/use-page';
 import { IFindProductsByMenuDto } from '../dtos';
 
 export class FindProductsByMenuService {
-  async execute({ page, id }: IFindProductsByMenuDto): Promise<ServiceResponse<Product[]>> {
+  async execute({ page, id, appVersion }: IFindProductsByMenuDto): Promise<ServiceResponse<Product[]>> {
     try {
       const { limit, offset } = createPagination(page);
 
@@ -19,16 +19,19 @@ export class FindProductsByMenuService {
 
       if (!menu) throw new ApiError('Menu não encontrado');
 
+      const include: any[] = [];
+      if (appVersion <= 1.1) {
+        include.push({
+          model: Image,
+          as: 'image',
+          attributes: ['encoded'],
+        });
+      }
+
       const products = await Product.findAll({
         where: { menu_id: id, active: true },
-        attributes: ['id', 'name', 'price'],
-        include: [
-          {
-            model: Image,
-            as: 'photo',
-            attributes: ['id', 'encoded'],
-          },
-        ],
+        attributes: ['id', 'name', 'price', 'image_id'],
+        include,
         limit,
         offset,
       });

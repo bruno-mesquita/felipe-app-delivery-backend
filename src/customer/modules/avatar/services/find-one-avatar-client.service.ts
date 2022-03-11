@@ -18,7 +18,7 @@ export class FindOneAvatarClientService {
         ],
       });
 
-      return { result: client.avatar.getEncoded(), err: null };
+      return { result: client.avatar.encoded, err: null };
     } catch (err) {
       ApiError.verifyType(err);
 

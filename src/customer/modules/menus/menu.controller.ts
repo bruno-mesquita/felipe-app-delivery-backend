@@ -12,19 +12,15 @@ class MenuController extends Controller {
     this.findProductsByMenu = this.findProductsByMenu.bind(this);
   }
 
-  async findProductsByMenu(
-    { query, params }: Request,
-    res: Response
-  ): Promise<Response> {
+  async findProductsByMenu({ query, params, headers }: Request, res: Response): Promise<Response> {
     try {
-      const values = findProductsByMenuValidate({
-        id: Number(params.id),
-        page: Number(query.page),
-      });
-
       const findProductsByMenuService = new FindProductsByMenuService();
 
-      const result = await findProductsByMenuService.execute(values);
+      const result = await findProductsByMenuService.execute({
+        id: Number(params.id),
+        page: Number(query.page),
+        appVersion: Number.parseFloat((headers.appversion as any) || 1),
+      });
 
       return res.json(result);
     } catch (err) {

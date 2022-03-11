@@ -13,11 +13,12 @@ export class ProductController extends Controller {
     this.findOneProductService = new FindOneProductService();
   }
 
-  async findOne(req: Request, res: Response): Promise<Response> {
+  async findOne({ query, params, headers }: Request, res: Response): Promise<Response> {
     try {
       const product = await this.findOneProductService.execute({
-        menuId: Number(req.query.menuId),
-        productId: Number(req.params.id),
+        menuId: Number(query.menuId),
+        productId: Number(params.id),
+        appVersion: Number.parseFloat((headers.appversion as any) || 1),
       });
 
       return res.json(product);

@@ -11,11 +11,12 @@ export class FindOneProductService {
     this.repository = new ProductRepository();
   }
 
-  async execute({ menuId, productId }: IFindOneOptions): Promise<Product> {
+  async execute({ menuId, productId, appVersion }: IFindOneOptions): Promise<Product> {
     try {
       return this.repository.findOne({
         menuId,
         productId,
+        appVersion,
       });
     } catch (err) {
       ApiError.verifyType(err);

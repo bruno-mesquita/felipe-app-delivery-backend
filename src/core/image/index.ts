@@ -1,17 +1,11 @@
-/**
- * @fileoverview entidade de Image
- *
- * @author Bruno Mesquita
- */
-
 import { DataTypes, Sequelize } from 'sequelize';
 
 import Model from '../_Bases/model';
 
 class Image extends Model {
-  name: string;
+  declare name: string;
 
-  encoded: string;
+  declare encoded: string;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -23,22 +17,6 @@ class Image extends Model {
     );
 
     return this;
-  }
-
-  public setName(name: string): void {
-    this.set('name', name);
-  }
-
-  public setEncoded(encoded: string): void {
-    this.set('encoded', encoded);
-  }
-
-  public getName(): string {
-    return this.get('name');
-  }
-
-  public getEncoded(): string {
-    return this.get('encoded');
   }
 }
 

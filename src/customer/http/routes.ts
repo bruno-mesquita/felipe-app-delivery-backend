@@ -13,6 +13,7 @@ import { rateRoutes } from '../modules/rate';
 import { notificationsRoutes } from '../modules/notifications';
 import { announcementRoutes } from '../modules/announcement';
 import { productsRoutes } from '../modules/products';
+import { imageRoutes } from '../modules/image';
 
 const routes = Router();
 
@@ -30,6 +31,7 @@ routes.use([
   establishmentRoutes,
   notificationsRoutes,
   productsRoutes,
+  imageRoutes,
 ]);
 
 export default routes;
