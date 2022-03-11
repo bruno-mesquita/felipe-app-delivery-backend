@@ -12,7 +12,7 @@ class ProductRepository {
       if (appVersion <= 1.1) {
         include.push({
           model: Image,
-          as: 'image',
+          as: 'photo',
           attributes: ['encoded'],
         });
       }
@@ -28,6 +28,7 @@ class ProductRepository {
       return product;
     } catch (err) {
       ApiError.verifyType(err);
+      console.log();
 
       throw new ApiError('Erro ao procurar produto');
     }
