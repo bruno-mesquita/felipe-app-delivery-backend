@@ -18,7 +18,7 @@ class MenuController extends Controller {
 
       const result = await findProductsByMenuService.execute({
         id: Number(params.id),
-        page: Number(query.page),
+        page: Number(query.page || 0),
         appVersion: Number.parseFloat((headers.appversion as any) || 1),
       });
 
