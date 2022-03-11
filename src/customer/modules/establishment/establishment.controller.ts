@@ -30,13 +30,13 @@ class EstablishmentController extends Controller {
   async list({ query, client, headers }: Request, res: Response): Promise<Response> {
     try {
       const { category, page = 0 }: any = query;
-      const { appversion } = headers;
+      const { apiversion } = headers;
 
       return res.json(
         await this.listEstablishmentService.execute(
           category,
           client.id,
-          Number.parseFloat((appversion as any) || 1),
+          Number.parseFloat((apiversion as any) || 1),
           Number(page)
         )
       );

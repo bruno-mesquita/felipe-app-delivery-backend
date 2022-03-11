@@ -18,7 +18,7 @@ export class ProductController extends Controller {
       const product = await this.findOneProductService.execute({
         menuId: Number(query.menuId),
         productId: Number(params.id),
-        appVersion: Number.parseFloat((headers.appversion as any) || 1),
+        appVersion: Number.parseFloat((headers.apiversion as any) || 1),
       });
 
       return res.json(product);
