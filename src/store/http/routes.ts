@@ -17,6 +17,8 @@ import { ownerRoutes } from '../modules/owner';
 import { boletosRoutes } from '../modules/boletos';
 import { deliverymanRoutes } from '../modules/deliveryman';
 import { notificationsRoutes } from '../modules/notifications';
+import { freightRoutes } from '../modules/freight';
+import { neighborhoodRoutes } from '../modules/neighborhood';
 
 const routes = Router();
 
@@ -38,6 +40,8 @@ routes.use([
   routesFinancial,
   notificationsRoutes,
   ordersRoutes,
+  neighborhoodRoutes,
+  freightRoutes,
 ]);
 
 export default routes;

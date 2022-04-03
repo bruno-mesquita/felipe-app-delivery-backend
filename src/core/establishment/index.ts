@@ -1,9 +1,20 @@
-import { DataTypes, Sequelize, HasManyGetAssociationsMixin, BelongsToSetAssociationMixin } from 'sequelize';
+import {
+  DataTypes,
+  Sequelize,
+  HasManyGetAssociationsMixin,
+  BelongsToSetAssociationMixin,
+  BelongsToGetAssociationMixin,
+  HasManyAddAssociationMixin,
+  HasManyAddAssociationsMixin,
+  HasManyCreateAssociationMixin,
+  Association,
+} from 'sequelize';
 
 import Image from '@core/image';
 import AddressEstablishment from '@core/address-establishment';
 import Order from '@core/order';
 import Menu from '@core/menu';
+import Freight from '../Freight';
 import Model from '../_Bases/model';
 
 class Establishment extends Model {
@@ -31,13 +42,31 @@ class Establishment extends Model {
 
   declare orders?: Order[];
 
+  declare freights?: Freight[];
+
   declare menus?: Menu[];
 
   declare getOrders: HasManyGetAssociationsMixin<Order>;
 
+  declare addFreight: HasManyAddAssociationMixin<Freight, number>;
+
+  declare addFreights: HasManyAddAssociationsMixin<Freight, number>;
+
+  declare getFreights: HasManyGetAssociationsMixin<Freight>;
+
+  declare createFreight: HasManyCreateAssociationMixin<Freight, 'establishmentId'>;
+
   declare getMenus: HasManyGetAssociationsMixin<Menu>;
 
   declare setImage: BelongsToSetAssociationMixin<Image, string>;
+
+  declare getAddress: BelongsToGetAssociationMixin<AddressEstablishment>;
+
+  declare static associations: {
+    photo: Association<Establishment, Image>;
+    freights: Association<Establishment, Freight>;
+    address: Association<Establishment, AddressEstablishment>;
+  };
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -74,6 +103,12 @@ class Establishment extends Model {
     this.hasMany(models.Menu, {
       foreignKey: 'establishment_id',
       as: 'menus',
+      sourceKey: 'id',
+    });
+
+    this.hasMany(models.Freight, {
+      foreignKey: 'establishmentId',
+      as: 'freights',
       sourceKey: 'id',
     });
   }

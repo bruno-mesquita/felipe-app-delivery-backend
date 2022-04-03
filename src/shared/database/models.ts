@@ -20,6 +20,7 @@ import { Deliveryman } from '@core/deliveryman';
 import { Announcement } from '@core/announcement';
 import CityManager from '@core/city-manager';
 import Neighborhood from '@core/neighborhood';
+import Freight from '@core/Freight';
 
 export default [
   Image,
@@ -44,4 +45,5 @@ export default [
   Announcement,
   CityManager,
   Neighborhood,
+  Freight,
 ];

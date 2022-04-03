@@ -1,4 +1,4 @@
-import { DataTypes, Sequelize } from 'sequelize';
+import { DataTypes, Sequelize, BelongsToGetAssociationMixin } from 'sequelize';
 import { compareSync, hashSync } from 'bcryptjs';
 
 import Establishment from '@core/establishment';
@@ -25,6 +25,8 @@ export class EstablishmentOwner extends Model {
   declare created_by?: CityManager;
 
   declare establishment?: Establishment;
+
+  declare getEstablishment: BelongsToGetAssociationMixin<Establishment>;
 
   static start(sequelize: Sequelize) {
     this.init(

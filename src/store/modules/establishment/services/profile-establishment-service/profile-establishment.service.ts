@@ -21,13 +21,9 @@ export class ProfileEstablishmentService {
     'categories',
   ];
 
-  async execute(
-    selects: string[],
-    ownerId: number
-  ): Promise<ServiceResponse<any>> {
+  async execute(selects: string[], ownerId: number): Promise<ServiceResponse<any>> {
     try {
-      if (selects[0].toLowerCase() === 'full')
-        selects = ProfileEstablishmentService.FULL;
+      if (selects[0].toLowerCase() === 'full') selects = ProfileEstablishmentService.FULL;
 
       const defaultFieldExclude = ['createdAt', 'updatedAt'];
 
@@ -97,8 +93,7 @@ export class ProfileEstablishmentService {
       const result: any = owner.get('establishment').toJSON();
 
       if (includeAvatar) result.image = result?.image?.encoded || null;
-      if (includeCategories)
-        result.categories = result.categories.map((e) => e.category_id);
+      if (includeCategories) result.categories = result.categories.map((e) => e.category_id);
 
       return {
         result,

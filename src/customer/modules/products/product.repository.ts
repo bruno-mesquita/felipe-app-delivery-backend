@@ -28,7 +28,6 @@ class ProductRepository {
       return product;
     } catch (err) {
       ApiError.verifyType(err);
-      console.log();
 
       throw new ApiError('Erro ao procurar produto');
     }

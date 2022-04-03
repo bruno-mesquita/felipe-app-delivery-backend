@@ -20,6 +20,14 @@ class Neighborhood extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.hasMany(models.Freight, {
+      foreignKey: 'neighborhoodId',
+      as: 'freights',
+      sourceKey: 'id',
+    });
+  }
 }
 
 export default Neighborhood;
