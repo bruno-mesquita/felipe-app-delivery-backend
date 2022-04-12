@@ -1,4 +1,5 @@
 import Freight from '@core/Freight';
+import Neighborhood from '@core/neighborhood';
 import ApiError from '@shared/utils/ApiError';
 
 type IRequest = {
@@ -11,6 +12,13 @@ export class ListFreightsService {
       return Freight.findAll({
         where: { establishmentId },
         attributes: { exclude: ['createdAt', 'updatedAt'] },
+        include: [
+          {
+            model: Neighborhood,
+            as: 'neighborhood',
+            attributes: ['name'],
+          },
+        ],
       });
     } catch (err) {
       ApiError.verifyType(err);

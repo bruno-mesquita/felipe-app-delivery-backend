@@ -25,6 +25,13 @@ class Freight extends Model {
 
     return this;
   }
+
+  static associate(models) {
+    this.belongsTo(models.Neighborhood, {
+      foreignKey: 'neighborhoodId',
+      as: 'neighborhood',
+    });
+  }
 }
 
 export default Freight;

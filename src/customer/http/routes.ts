@@ -14,6 +14,7 @@ import { notificationsRoutes } from '../modules/notifications';
 import { announcementRoutes } from '../modules/announcement';
 import { productsRoutes } from '../modules/products';
 import { imageRoutes } from '../modules/image';
+import { freightRoutes } from '../modules/freight';
 
 const routes = Router();
 
@@ -32,6 +33,7 @@ routes.use([
   notificationsRoutes,
   productsRoutes,
   imageRoutes,
+  freightRoutes,
 ]);
 
 export default routes;
