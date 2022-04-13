@@ -1,41 +1,34 @@
-/**
- * @fileoverview entidade de produtos
- */
 import { DataTypes, Sequelize } from 'sequelize';
 
-import {
-  CustomerStatusType,
-  FormOfPaymentType,
-  StatusOrderType,
-} from './order.types';
+import { CustomerStatusType, FormOfPaymentType, StatusOrderType } from './order.types';
 import Model from '../_Bases/model';
 
 class Order extends Model {
   payment: FormOfPaymentType;
 
-  total: number;
+  declare total: number;
 
-  discount: number;
+  declare discount: number;
 
-  client_order_status: CustomerStatusType;
+  declare client_order_status: CustomerStatusType;
 
-  order_status: StatusOrderType;
+  declare order_status: StatusOrderType;
 
-  freight_value: number;
+  declare freight_value: number;
 
-  transshipment: number;
+  declare transshipment: number;
 
-  note: string;
+  declare note: string;
 
-  address_id: number;
+  declare address_id: number;
 
-  evaluation_id: number;
+  declare evaluation_id: number;
 
-  establishment_id: number;
+  declare establishment_id: number;
 
-  client_id: number;
+  declare client_id: number;
 
-  commission: boolean;
+  declare commission: boolean;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -84,10 +77,7 @@ class Order extends Model {
     this.set('evaluation_id', evaluationId);
   }
 
-  public updateOrder(
-    payment: FormOfPaymentType,
-    client_order_status: CustomerStatusType
-  ): void {
+  public updateOrder(payment: FormOfPaymentType, client_order_status: CustomerStatusType): void {
     this.set('payment', payment);
     this.set('client_order_status', client_order_status);
   }
@@ -104,24 +94,12 @@ class Order extends Model {
   }
 
   private getStatus(): CustomerStatusType[] {
-    return [
-      'Novo',
-      'Aceito',
-      'Em preparo',
-      'Saiu para entrega',
-      'Entregue',
-      'Cancelado',
-    ];
+    return ['Novo', 'Aceito', 'Em preparo', 'Saiu para entrega', 'Entregue', 'Cancelado'];
   }
 
   public nextStatus(): void {
-    if (
-      this.get('client_order_status') !== 'Entregue' &&
-      this.get('client_order_status') !== 'Cancelado'
-    ) {
-      const index = this.getStatus().findIndex(
-        (item) => item === this.get('client_order_status')
-      );
+    if (this.get('client_order_status') !== 'Entregue' && this.get('client_order_status') !== 'Cancelado') {
+      const index = this.getStatus().findIndex((item) => item === this.get('client_order_status'));
 
       const status = this.getStatus()[index + 1];
 

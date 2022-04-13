@@ -19,15 +19,12 @@ export class ResendCodeService {
       if (!client) throw new ApiError('Cliente não encontrado');
 
       if (newCellphone) {
-        client.setCellphone(newCellphone);
-
-        await client.save();
+        await client.update({ cellphone: newCellphone });
       }
 
       const smsService = new SmsService();
 
-      if (process.env.NODE_ENV !== 'test')
-        await smsService.sendCode(client.getCellphone());
+      if (process.env.NODE_ENV !== 'test') await smsService.sendCode(client.cellphone);
     } catch (err) {
       ApiError.verifyType(err);
 

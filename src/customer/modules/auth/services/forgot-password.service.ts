@@ -16,8 +16,7 @@ export class ForgotPasswordService {
 
       const smsService = new SmsService();
 
-      if (process.env.NODE_ENV !== 'test')
-        await smsService.sendCode(client.getCellphone());
+      if (process.env.NODE_ENV !== 'test') await smsService.sendCode(client.cellphone);
     } catch (err) {
       ApiError.verifyType(err);
 

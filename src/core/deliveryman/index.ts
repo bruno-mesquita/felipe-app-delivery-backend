@@ -3,15 +3,15 @@ import { DataTypes, Sequelize } from 'sequelize';
 import Model from '../_Bases/model';
 
 export class Deliveryman extends Model {
-  name: string;
+  declare name: string;
 
-  cellphone: string;
+  declare cellphone: string;
 
-  entry_date: string;
+  declare entry_date: string;
 
-  departure_date: string;
+  declare departure_date: string;
 
-  city_id: number;
+  declare city_id: number;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -29,41 +29,5 @@ export class Deliveryman extends Model {
 
   static associate({ City }) {
     this.belongsTo(City, { foreignKey: 'city_id', as: 'city' });
-  }
-
-  public getName(): string {
-    return this.get('name');
-  }
-
-  public setName(name: string): void {
-    this.set('name', name);
-  }
-
-  public getCellphone(): string {
-    return this.get('cellphone');
-  }
-
-  public setCellphone(cellphone: string): void {
-    this.set('cellphone', cellphone);
-  }
-
-  public getEntryDate(): string {
-    return this.get('entry_date');
-  }
-
-  public setEntryDate(entryDate: string): void {
-    this.set('entry_date', entryDate);
-  }
-
-  public getDepartureDate(): string {
-    return this.get('departure_date');
-  }
-
-  public setDepartureDate(departureDate: string): void {
-    this.set('departure_date', departureDate);
-  }
-
-  public setCityId(cityId: number): void {
-    this.set('city_id', cityId);
   }
 }

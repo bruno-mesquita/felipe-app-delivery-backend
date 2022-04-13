@@ -13,30 +13,6 @@ abstract class User extends Model {
 
   declare active: boolean;
 
-  public setName(name: string): void {
-    this.set('name', name);
-  }
-
-  public setEmail(email: string): void {
-    this.set('email', email);
-  }
-
-  public getEmail(): string {
-    return this.get('email');
-  }
-
-  public setCellphone(cellphone: string): void {
-    this.set('cellphone', cellphone);
-  }
-
-  public getCellphone(): string {
-    return this.get('cellphone');
-  }
-
-  public getActive(): boolean {
-    return this.get('active');
-  }
-
   public activate(): void {
     this.set('active', true);
   }

@@ -4,29 +4,29 @@ import { DataTypes, Sequelize } from 'sequelize';
 import Model from '../_Bases/model';
 
 export class Ticket extends Model {
-  barcode: string;
+  declare barcode: string;
 
-  date_created: string;
+  declare date_created: string;
 
-  price: number;
+  declare price: number;
 
-  status: 'pending' | 'approved' | 'cancelled';
+  declare status: 'pending' | 'approved' | 'cancelled';
 
-  link: string;
+  declare link: string;
 
-  status_detail: string;
+  declare status_detail: string;
 
-  verification_code: string;
+  declare verification_code: string;
 
-  payment_method_reference_id: string;
+  declare payment_method_reference_id: string;
 
-  date_of_expiration: Date;
+  declare date_of_expiration: Date;
 
-  date_last_updated: string;
+  declare date_last_updated: string;
 
-  reference_id: number;
+  declare reference_id: number;
 
-  establishment_id: number;
+  declare establishment_id: number;
 
   public readonly establishment?: Establishment;
 

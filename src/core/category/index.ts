@@ -24,14 +24,6 @@ class Category extends Model {
       as: 'categories',
     });
   }
-
-  public getName(): string {
-    return this.get('name');
-  }
-
-  public setName(name: string): void {
-    this.set('name', name);
-  }
 }
 
 export default Category;

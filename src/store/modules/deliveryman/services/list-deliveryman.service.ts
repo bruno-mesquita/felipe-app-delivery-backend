@@ -7,10 +7,7 @@ import { createPagination } from '@shared/utils/use-page';
 import { IListDeliverymanDto } from '../dtos';
 
 export class ListDeliverymanService {
-  async execute({
-    page,
-    establishmentId,
-  }: IListDeliverymanDto): Promise<Deliveryman[]> {
+  async execute({ page, establishmentId }: IListDeliverymanDto): Promise<Deliveryman[]> {
     try {
       const { limit, offset } = createPagination(page);
 
@@ -24,9 +21,7 @@ export class ListDeliverymanService {
             attributes: ['city_id'],
           },
         })
-      )
-        .getDataValue('address')
-        .getCityId();
+      ).getDataValue('address').city_id;
 
       const data = await Deliveryman.findAll({
         where: { city_id: cityId },

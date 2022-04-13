@@ -7,9 +7,9 @@ import { DataTypes, Sequelize } from 'sequelize';
 import Model from '../_Bases/model';
 
 class Evaluation extends Model {
-  value: number;
+  declare value: number;
 
-  message: string;
+  declare message: string;
 
   static start(sequelize: Sequelize) {
     this.init(

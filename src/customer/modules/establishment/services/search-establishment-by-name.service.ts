@@ -10,11 +10,7 @@ import Category from '@core/category';
 import ApiError from '@shared/utils/ApiError';
 
 export class SearchEstablishmentsByName {
-  async execute(
-    searchName: string,
-    categoryName: string,
-    clientId: number
-  ): Promise<ServiceResponse<any[]>> {
+  async execute(searchName: string, categoryName: string, clientId: number): Promise<ServiceResponse<any[]>> {
     try {
       const addressClient = await AddressClient.findOne({
         where: { client_id: clientId, active: true },
@@ -29,13 +25,7 @@ export class SearchEstablishmentsByName {
 
       const establishments = await Establishment.findAll({
         where: { name: { [Op.iLike]: `%${searchName}%` } },
-        attributes: [
-          'id',
-          'name',
-          'openingTime',
-          'closingTime',
-          'freightValue',
-        ],
+        attributes: ['id', 'name', 'openingTime', 'closingTime', 'freightValue'],
         include: [
           {
             model: Image,
@@ -45,14 +35,14 @@ export class SearchEstablishmentsByName {
           {
             model: AddressEstablishment,
             as: 'address',
-            where: { city_id: addressClient.getCityId() },
+            where: { city_id: addressClient.city_id },
             attributes: ['city_id'],
           },
           {
             model: EstablishmentCategory,
             as: 'categories',
             attributes: ['category_id'],
-            where: { category_id: category.getId() },
+            where: { category_id: category.id },
           },
         ],
       });

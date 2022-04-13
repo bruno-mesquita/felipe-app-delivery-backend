@@ -25,7 +25,7 @@ class ActiveClientService {
 
       if (!user) throw new ApiError('Cliente não encontrado');
 
-      await this.smsService.verifyCode(user.getCellphone(), code);
+      await this.smsService.verifyCode(user.cellphone, code);
 
       user.activate();
 

@@ -1,24 +1,19 @@
-import {
-  BelongsTo,
-  BelongsToGetAssociationMixin,
-  DataTypes,
-  Sequelize,
-} from 'sequelize';
+import { BelongsTo, BelongsToGetAssociationMixin, DataTypes, Sequelize } from 'sequelize';
 import Model from '@core/_Bases/model';
 import Image from '@core/image';
 
 export class Announcement extends Model {
-  name: string;
+  declare name: string;
 
-  active: boolean;
+  declare active: boolean;
 
-  image_id!: number;
+  declare image_id: number;
 
-  public photo?: Image | String;
+  declare photo?: Image | String;
 
-  public static Photo: BelongsTo<Announcement, Image>;
+  declare static Photo: BelongsTo<Announcement, Image>;
 
-  public getPhoto!: BelongsToGetAssociationMixin<Image>;
+  declare getPhoto: BelongsToGetAssociationMixin<Image>;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -32,23 +27,10 @@ export class Announcement extends Model {
     return this;
   }
 
-  static associate({ Image }) {
-    Announcement.Photo = this.belongsTo(Image, {
+  static associate(models) {
+    Announcement.Photo = this.belongsTo(models.Image, {
       foreignKey: 'image_id',
       as: 'photo',
     });
-  }
-
-  public getName(): string {
-    return this.get('name');
-  }
-
-  public updateAnnouncement(name: string, active: boolean): void {
-    this.set('name', name);
-    this.set('active', active);
-  }
-
-  public isActive(): boolean {
-    return this.get('active');
   }
 }

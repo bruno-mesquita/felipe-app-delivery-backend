@@ -113,14 +113,6 @@ class Establishment extends Model {
     });
   }
 
-  public isActive(): boolean {
-    return this.get('active');
-  }
-
-  public getAddressId(): number {
-    return this.get('address_id');
-  }
-
   public activate(): void {
     this.set('active', true);
   }

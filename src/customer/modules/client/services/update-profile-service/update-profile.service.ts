@@ -11,11 +11,11 @@ import ApiError from '@shared/utils/ApiError';
 import { IUpdateClientDto } from '../../dtos';
 
 class UpdateProfileService {
-  async execute(updateClientDto: IUpdateClientDto): Promise<ServiceResponse<boolean>> {
+  async execute({ id, cellphone, email, name }: IUpdateClientDto): Promise<ServiceResponse<boolean>> {
     try {
       // verificando se o usuário existe
       const user = await Client.findOne({
-        where: { id: updateClientDto.id, active: true },
+        where: { id, active: true },
       });
 
       if (!user) throw new ApiError('Usuário não encontrado');
@@ -24,24 +24,21 @@ class UpdateProfileService {
       const userExists = await Client.findOne({
         where: {
           [Op.or]: [
-            { [Op.not]: { email: user.getEmail() } },
-            { email: updateClientDto.email },
-            { [Op.not]: { cellphone: user.getCellphone() } },
-            { cellphone: updateClientDto.cellphone },
+            { [Op.not]: { email: user.email } },
+            { email },
+            { [Op.not]: { cellphone: user.cellphone } },
+            { cellphone },
           ],
         },
       });
 
       if (!userExists) throw new ApiError('Já existe uma conta com esse email/telefone ');
 
-      // Desestruturando
-      const { cellphone, email, name } = updateClientDto;
-
-      user.setName(name);
-      user.setEmail(email);
-      user.setCellphone(cellphone);
-
-      await user.save();
+      await user.update({
+        name,
+        email,
+        cellphone,
+      });
 
       return { result: true, err: null };
     } catch (err) {

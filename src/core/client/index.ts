@@ -64,14 +64,6 @@ class Client extends UserBase {
       sourceKey: 'id',
     });
   }
-
-  public setAvatar(avatarId: number): void {
-    this.set('avatar_id', avatarId);
-  }
-
-  public getAvatarId(): number {
-    return this.get('avatar_id');
-  }
 }
 
 export default Client;

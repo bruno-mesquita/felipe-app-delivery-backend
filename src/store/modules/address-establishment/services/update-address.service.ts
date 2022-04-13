@@ -6,9 +6,7 @@ import { UpdateAddressDto } from '../dtos/update-address.dto';
 import addressUpdateValidation from '../validation/update-address.validation';
 
 export class UpdateAdressService {
-  async execute(
-    updateAddressDto: UpdateAddressDto
-  ): Promise<ServiceResponse<boolean>> {
+  async execute(updateAddressDto: UpdateAddressDto): Promise<ServiceResponse<boolean>> {
     try {
       const valid = addressUpdateValidation.isValidSync(updateAddressDto);
 
@@ -21,22 +19,19 @@ export class UpdateAdressService {
 
       if (!establishmet) throw new ApiError('Estabelecimento não encontrado');
 
-      const addressEstablishment = await AddressEstablishment.findByPk(
-        establishmet.getAddressId()
-      );
+      const addressEstablishment = await AddressEstablishment.findByPk(establishmet.address_id);
 
-      if (!addressEstablishment)
-        throw new ApiError('Endereço do Estabelecimento não encontrado');
+      if (!addressEstablishment) throw new ApiError('Endereço do Estabelecimento não encontrado');
 
       const { street, number, neighborhood, cep, city } = updateAddressDto;
 
-      addressEstablishment.setStreet(street);
-      addressEstablishment.setNumber(number);
-      addressEstablishment.setNeighborhood(neighborhood);
-      addressEstablishment.setCep(cep);
-      addressEstablishment.setCityId(city);
-
-      await addressEstablishment.save();
+      await addressEstablishment.update({
+        street,
+        number,
+        neighborhood,
+        cep,
+        city_id: city,
+      });
 
       return { result: true, err: null };
     } catch (err) {

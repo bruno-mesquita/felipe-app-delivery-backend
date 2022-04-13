@@ -1,28 +1,23 @@
-import {
-  DataTypes,
-  Sequelize,
-  BelongsToGetAssociationMixin,
-  OrderItem,
-} from 'sequelize';
+import { DataTypes, Sequelize, BelongsToGetAssociationMixin } from 'sequelize';
 
 import Order from '@core/order';
 import Product from '@core/product';
 import Model from '../_Bases/model';
 
 class ItemOrder extends Model {
-  quantity: number;
+  declare quantity: number;
 
-  total: number;
+  declare total: number;
 
-  product_id!: number;
+  declare product_id: number;
 
-  order_id!: number;
+  declare order_id: number;
 
-  public readonly product?: Product;
+  declare product?: Product;
 
-  public readonly order?: Order;
+  declare order?: Order;
 
-  public getProduct!: BelongsToGetAssociationMixin<Product>;
+  declare getProduct: BelongsToGetAssociationMixin<Product>;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -36,9 +31,9 @@ class ItemOrder extends Model {
     return this;
   }
 
-  static associate({ Product, Order }): void {
-    this.belongsTo(Product, { foreignKey: 'product_id', as: 'product' });
-    this.belongsTo(Order, { foreignKey: 'order_id', as: 'order' });
+  static associate(models) {
+    this.belongsTo(models.Product, { foreignKey: 'product_id', as: 'product' });
+    this.belongsTo(models.Order, { foreignKey: 'order_id', as: 'order' });
   }
 }
 

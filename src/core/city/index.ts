@@ -3,11 +3,11 @@ import { DataTypes, Sequelize } from 'sequelize';
 import Model from '../_Bases/model';
 
 class City extends Model {
-  name: string;
+  declare name: string;
 
-  active: boolean;
+  declare active: boolean;
 
-  state_id!: number;
+  declare state_id!: number;
 
   static start(sequelize: Sequelize) {
     this.init(

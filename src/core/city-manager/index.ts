@@ -1,10 +1,4 @@
-import {
-  DataTypes,
-  Sequelize,
-  HasManyGetAssociationsMixin,
-  HasManyCreateAssociationMixin,
-  BelongsTo,
-} from 'sequelize';
+import { DataTypes, Sequelize, HasManyGetAssociationsMixin, HasManyCreateAssociationMixin, BelongsTo } from 'sequelize';
 
 import City from '@core/city';
 import Image from '@core/image';
@@ -44,16 +38,16 @@ class CityManager extends UserBase {
     return this;
   }
 
-  static associate({ EstablishmentOwner, City, Image }) {
-    CityManager.Avatar = this.belongsTo(Image, {
+  static associate(models) {
+    CityManager.Avatar = this.belongsTo(models.Image, {
       foreignKey: 'avatar_id',
       as: 'avatar',
     });
-    this.belongsTo(City, {
+    this.belongsTo(models.City, {
       foreignKey: 'city_of_action_id',
       as: 'cityOfAction',
     });
-    this.hasMany(EstablishmentOwner, {
+    this.hasMany(models.EstablishmentOwner, {
       foreignKey: 'created_by_id',
       as: 'establishments',
       sourceKey: 'id',
