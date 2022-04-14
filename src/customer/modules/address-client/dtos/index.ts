@@ -1,7 +1,8 @@
 type IClientAddress = {
   street: string;
   number: string;
-  neighborhood: string;
+  neighborhood?: string;
+  neighborhoodId?: number;
   cep: string;
   city: number;
   nickname: string;

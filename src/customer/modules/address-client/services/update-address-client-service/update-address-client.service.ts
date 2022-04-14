@@ -4,16 +4,11 @@ import ApiError from '@shared/utils/ApiError';
 import type { IUpdateClientAddressDto } from '../../dtos';
 
 export class UpdateAddressClientService {
-  async execute(
-    updateClientAddressDto: IUpdateClientAddressDto
-  ): Promise<void> {
+  async execute(updateClientAddressDto: IUpdateClientAddressDto): Promise<void> {
     try {
-      const addressClient = await AddressClient.findByPk(
-        updateClientAddressDto.id,
-        {
-          attributes: ['id'],
-        }
-      );
+      const addressClient = await AddressClient.findByPk(updateClientAddressDto.id, {
+        attributes: ['id'],
+      });
 
       if (!addressClient) throw new ApiError('Endereço não encontrado');
 

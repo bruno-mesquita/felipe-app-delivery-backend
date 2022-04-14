@@ -11,6 +11,7 @@ export const updateAddressClientValidate = yupWrapper<IUpdateClientAddressDto>(
     street: string().trim(),
     number: string().trim(),
     neighborhood: string().trim(),
+    neighborhoodId: number(),
     city: number(),
     userId: number(),
     active: boolean(),

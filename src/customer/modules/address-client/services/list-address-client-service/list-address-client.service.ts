@@ -1,32 +1,24 @@
-import { ServiceResponse } from '@shared/utils/service-response';
-import Client from '@core/client';
 import City from '@core/city';
 import State from '@core/state';
 import { createPagination } from '@shared/utils/use-page';
 import AddressClient from '@core/address-client';
 import ApiError from '@shared/utils/ApiError';
+import Neighborhood from '@core/neighborhood';
 
 export class ListAddressClientService {
-  async execute(userId: number, page = 0): Promise<ServiceResponse<any>> {
+  async execute(clientId: number, page = 0): Promise<any[]> {
     try {
       const { limit, offset } = createPagination(page);
 
-      const client = await Client.findByPk(userId);
-
-      if (!client) throw new ApiError('Cliente não encontrado');
-
       const adresses = await AddressClient.findAll({
-        where: { client_id: client.getId() },
-        attributes: [
-          'id',
-          'nickname',
-          'street',
-          'number',
-          'neighborhood',
-          'cep',
-          'active',
-        ],
+        where: { client_id: clientId },
+        attributes: ['id', 'nickname', 'street', 'number', 'neighborhood', 'cep', 'active', 'neighborhoodId'],
         include: [
+          {
+            model: Neighborhood,
+            as: 'district',
+            attributes: ['name'],
+          },
           {
             model: City,
             attributes: ['name'],
@@ -44,7 +36,7 @@ export class ListAddressClientService {
         offset,
       });
 
-      return { err: null, result: adresses };
+      return adresses;
     } catch (err) {
       ApiError.verifyType(err);
 

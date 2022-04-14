@@ -15,6 +15,7 @@ import { announcementRoutes } from '../modules/announcement';
 import { productsRoutes } from '../modules/products';
 import { imageRoutes } from '../modules/image';
 import { freightRoutes } from '../modules/freight';
+import { neighborhoodRoutes } from '../modules/neighborhood';
 
 const routes = Router();
 
@@ -34,6 +35,7 @@ routes.use([
   productsRoutes,
   imageRoutes,
   freightRoutes,
+  neighborhoodRoutes,
 ]);
 
 export default routes;

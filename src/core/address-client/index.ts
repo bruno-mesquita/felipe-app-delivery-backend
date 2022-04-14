@@ -1,6 +1,7 @@
 import { DataTypes, Sequelize, HasManyGetAssociationsMixin } from 'sequelize';
 
 import Order from '@core/order';
+import Neighborhood from '@core/neighborhood';
 import AddressModel from '../_Bases/address';
 
 class AddressClient extends AddressModel {
@@ -10,7 +11,11 @@ class AddressClient extends AddressModel {
 
   declare active: boolean;
 
+  declare neighborhoodId: number;
+
   declare getOrders: HasManyGetAssociationsMixin<Order>;
+
+  declare district?: Neighborhood;
 
   static start(sequelize: Sequelize) {
     this.init(
@@ -29,6 +34,7 @@ class AddressClient extends AddressModel {
   }
 
   static associate(models) {
+    this.belongsTo(models.Neighborhood, { foreignKey: 'neighborhoodId', as: 'district' });
     this.belongsTo(models.City, { foreignKey: 'city_id', as: 'city' });
     this.hasMany(models.Order, {
       foreignKey: 'address_id',
